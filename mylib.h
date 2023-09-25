@@ -44,6 +44,7 @@ void SetBGColor(WORD color)
 }
 
 // dieu chinh kich co man hinh console
+// Adjust console screen size
 void SetWindowSize(SHORT width, SHORT height)
 {
     HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -66,19 +67,22 @@ void SetScreenBufferSize(SHORT width, SHORT height)
 
     SetConsoleScreenBufferSize(hStdout, NewSize);
 }
-//vo hieu thay doi kich thuoc console
+// vo hieu thay doi kich thuoc console
+// Disable console resizing
 void DisableResizeWindow()
 {
     HWND hWnd = GetConsoleWindow();
     SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
 }
-//an thanh cuon
+// an thanh cuon
+// hide mouse scrollbar
 void ShowScrollbar(BOOL Show)
 {
     HWND hWnd = GetConsoleWindow();
     ShowScrollBar(hWnd, SB_BOTH, Show);
 }
-//vo hieu nut min, max, close
+// vo hieu nut min, max, close
+// Disable window resizing and app close buttons
 void DisableCtrButton(bool Close, bool Min, bool Max)
 {
     HWND hWnd = GetConsoleWindow();
@@ -97,7 +101,8 @@ void DisableCtrButton(bool Close, bool Min, bool Max)
         DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
     }
 }
-//an hien con tro 
+// an hien con tro 
+// Hide and show the cursor
 void ShowCur(bool CursorVisibility)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -109,6 +114,7 @@ void ShowCur(bool CursorVisibility)
     SetConsoleCursorInfo(handle, &ConCurInf);
 }
 //vo hieu boi den
+// Disable highlighting
 void DisableSelection()
 {
     HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
@@ -116,6 +122,7 @@ void DisableSelection()
     SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
 }
 // cai dat console tuong doi
+// Relative console settings
 void SetDefaultConsole()
 {
 	SetWindowSize(180,13);
