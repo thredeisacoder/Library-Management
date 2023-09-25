@@ -17,14 +17,14 @@ class Subject
 			this->NumOfTheoreCre=new char[5]; 
 			this->NumOfPracCre=new char[5];
 		}
-		Student(char* SID,char* SName,char* NumOfTheoreCre,char* NumOfPracCre)
+		Subject(char* SID,char* SName,char* NumOfTheoreCre,char* NumOfPracCre)
 		{
 			this->SID=SID; 
 			this->SName=SName;
 			this->NumOfTheoreCre=NumOfTheoreCre;
 			this->NumOfPracCre=NumOfPracCre;
 		}
-		~Student()
+		~Subject()
 		{
 			delete this->SID;
 			delete this->SName;
@@ -47,7 +47,7 @@ class Subject
 		{
 			return this->SName;
 		}
-		void SetNumOfTheoreCre(char* NumOfTheoreCre);
+		void SetNumOfTheoreCre(char* NumOfTheoreCre)
 		{
 			this->NumOfTheoreCre=NumOfTheoreCre;
 		}
@@ -66,9 +66,9 @@ class Subject
 		
 	void display()
 	{
-		cout<<"Subject ID: "<<this->SID<endl;
-		cout<<"Subject Name: "<<this->FirstName<<endl;
-		cout<<"Number of Theoretical Credits: "<<this->NumOfTheoreCre<<endl;
-		cout<<"Number of Theoretical Credits: "<<this->NumOfPracCre<<endl;
+		cout<<"Subject ID: "<<GetSID()<<endl;
+		cout<<"Subject Name: "<<GetFirstName()<<endl;
+		cout<<"Number of Theoretical Credits: "<<GetNumOfTheoreCre()<<endl;
+		cout<<"Number of Theoretical Credits: "<<GetNumOfPracCre()<<endl;
 	}
 };
