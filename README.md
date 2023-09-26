@@ -1,5 +1,5 @@
-<center> This is a library management project
-Đồ án chủ đề về Quản lí thư viện. </center>
+<br> This is a library management project
+<br> Đồ án chủ đề về Quản lí thư viện.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Thư viện: Ta tổ chức các danh sách sau: 
 - Đầu sách : danh sách tuyến tính là 1 mảng con trỏ (ISBN , Tên sách, Số trang, Tác giả, năm xuất bản, thể loại, con trỏ dms): con trỏ sẽ trỏ đến các sách thuộc đầu sách tương ứng. Danh sách đầu sách luôn tăng dần theo tên sách.
