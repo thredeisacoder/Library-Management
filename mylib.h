@@ -9,8 +9,25 @@ void gotoxy(short x,short y)
         COORD Cursor_an_Pos = { x,y};
         hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
-} 
+}
 
+int wherex( )
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+    return screen_buffer_info.dwCursorPosition.X;
+}
+
+int wherey()
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+    return screen_buffer_info.dwCursorPosition.Y;
+}
 void SetColor(WORD color)
 {
     HANDLE hConsoleOutput;
@@ -53,7 +70,7 @@ void SetWindowSize(SHORT width, SHORT height)
     WindowSize.Left = 0;
     WindowSize.Right = width;
     WindowSize.Bottom = height;
- 
+
     SetConsoleWindowInfo(hStdout, 1, &WindowSize);
 }
 
@@ -87,7 +104,7 @@ void DisableCtrButton(bool Close, bool Min, bool Max)
 {
     HWND hWnd = GetConsoleWindow();
     HMENU hMenu = GetSystemMenu(hWnd, false);
-    
+
     if (Close == 1)
     {
         DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
@@ -101,16 +118,16 @@ void DisableCtrButton(bool Close, bool Min, bool Max)
         DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
     }
 }
-// an hien con tro 
+// an hien con tro
 // Hide and show the cursor
 void ShowCur(bool CursorVisibility)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConCurInf;
-    
+
     ConCurInf.dwSize = 10;
     ConCurInf.bVisible = CursorVisibility;
-    
+
     SetConsoleCursorInfo(handle, &ConCurInf);
 }
 //vo hieu boi den
@@ -120,15 +137,4 @@ void DisableSelection()
     HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
     SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
-}
-// cai dat console tuong doi
-// Relative console settings
-void SetDefaultConsole()
-{
-	SetWindowSize(180,13);
-	ShowScrollbar(false);
-	DisableResizeWindow();
-	DisableCtrButton(1,1,1);
-	ShowCur(0);
-	DisableSelection();
 }
