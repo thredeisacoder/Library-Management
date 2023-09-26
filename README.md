@@ -1,1 +1,1 @@
-# Data-structure-and-algorithm-project-PTIT
+Đồ án chủ đề về Quản lí sinh viên.
