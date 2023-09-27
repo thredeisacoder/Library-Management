@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 void gotoxy(short x,short y)
 {
         HANDLE hConsoleOutput;
@@ -62,16 +63,12 @@ void SetBGColor(WORD color)
 
 // dieu chinh kich co man hinh console
 // Adjust console screen size
-void SetWindowSize(SHORT width, SHORT height)
+void resizeConsole(int width, int height)
 {
-    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-    SMALL_RECT WindowSize;
-    WindowSize.Top = 0;
-    WindowSize.Left = 0;
-    WindowSize.Right = width;
-    WindowSize.Bottom = height;
-
-    SetConsoleWindowInfo(hStdout, 1, &WindowSize);
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
+	MoveWindow(console, r.left, r.top, width, height, TRUE);
 }
 
 void SetScreenBufferSize(SHORT width, SHORT height)

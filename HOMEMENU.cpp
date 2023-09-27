@@ -7,9 +7,9 @@ using namespace std;
 //Khung tieu de
 void Tittle(int x, int y, int width, int height, string tittle)
 {
-	for (int i = x + width / 6; i <= x + width * 5 / 6 - 12; i++)
+	for (int i = x + width / 6; i <= x + width * 5 / 6 - 12; i++)//so cot 
 	{
-		for (int j = y - 2; j <= y + height / 6 - 2; j++)
+		for (int j = y - 2; j <= y + height / 6 - 2; j++)//to tung o cua tung cot
 		{
 			SetBGColor(15);//mau nen trang
 			gotoxy(i, j);
@@ -26,7 +26,7 @@ void Tittle(int x, int y, int width, int height, string tittle)
 
 void Option(int x, int y, int width, int height, string option)
 {
-	for (int i = x-6; i <= x + width / 3-6 ; i++)
+	for (int i = x-6; i <= x + width / 3-6 ; i++)//vong lap chay tu dau den het chieu dai option
 	{
 		SetBGColor(15);
 		SetColor(16);
@@ -43,8 +43,12 @@ void Option(int x, int y, int width, int height, string option)
 }
 
 //tao menu
-void boxMenu(int x,int y,int width,int height)
+void boxMenu()
 {
+	int x=6;
+	int y=2;
+	int width=120;
+	int height=30;
 
 	if(width<=1||height<=1) return;
 	Tittle(x,y,width,height, "QUAN LI THU VIEN");
@@ -109,8 +113,9 @@ void UnHighLight(int x,int y,int width)
 }
 
 //dieu khien tren menu
-void Control(int x,int y,int width,int height)
+void Control()
 {
+	int x=6;int y=2;int width=120;int height=30;
 	//danh dau lua chon dau
     gotoxy(x+width/3-6,y+height/4-1);
     HighLight(wherex(),wherey(),width);
@@ -194,11 +199,12 @@ void Control(int x,int y,int width,int height)
 int main()
 {
 	DisableSelection();
-	boxMenu(6,2,120,30);
+	resizeConsole(1200,600);
 	DisableCtrButton(0,1,1);
 	DisableResizeWindow();
+	boxMenu();
 	ShowCur(0);
-	Control(6,2,120,30);
+	Control();
 
 	return 0;
 }
