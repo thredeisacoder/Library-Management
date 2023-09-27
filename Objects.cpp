@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <string>
 
 using namespace std;
@@ -36,12 +35,15 @@ public:
     string ho;
     string ten;
     int trangThaiThe;
-    vector<Sach*> danhSachSachMuon;
-    TheDocGia* left;
-    TheDocGia* right;
+    Sach* danhSachSachMuon[10]; // Mảng lưu trữ tối đa 10 cuốn sách mà độc giả mượn
+    int soLuongSachMuon;
 
     TheDocGia(int ma, int phai, const string& ho, const string& ten, int trangThaiThe) : 
-        maThe(ma), phai(phai), ho(ho), ten(ten), trangThaiThe(trangThaiThe), left(nullptr), right(nullptr) {}
+        maThe(ma), phai(phai), ho(ho), ten(ten), trangThaiThe(trangThaiThe), soLuongSachMuon(0) {
+            for (int i = 0; i < 3; i++) {
+                danhSachSachMuon[i] = nullptr;
+            }
+        }
 };
 
 // Định nghĩa các hàm thành viên của lớp để thêm/xóa/sửa thông tin và thực hiện các chức năng khác.
