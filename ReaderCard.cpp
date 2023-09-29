@@ -76,23 +76,41 @@ nodeRC* AddReader(nodeRC* head,ReaderCard RC,int &size)
 nodeRC* DeleteReader(nodeRC* head,string ID,int size)
 {
 	if(head==NULL) return head;
-	else if(head->left->data.ID==ID)
-	{
-		
-	}
-	else if(head->right->data.ID==ID)
-	{
-		
-	}
 	else
 	{
 		if(ID<head->data.ID)
 		{
 			head->left=DeleteReader(head->left,ID,size);
 		}
-		else
+		else if(ID>head->data.ID)
 		{
 			head->right=DeleteReader(head->right,ID,size);
+		}
+		else 
+		{
+			nodeRC* tmp=head;
+			if(head->left==NULL)
+			{
+				head=head->right;
+				delete tmp;
+
+			}
+			else if(head->right==NULL)
+			{
+				head=head->left;
+				delete tmp;
+
+			}
+			else//head->left!=NULL &&head->right!=NULL
+			{
+				nodeRC* t=head->right;
+				while(t->left!=NULL)
+				{
+					t=t->left;
+				}
+				swap(head->data,t->data);
+				delete t;
+			}
 		}
 	}
 }

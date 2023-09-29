@@ -1,9 +1,48 @@
-#include <iostream>
-#include <string.h>
-#include "mylib.h"
+#include "TableOfContent.cpp"
 #include <conio.h>
-
+#include <string.h>
 using namespace std;
+
+string enterISBN()
+{
+	string ISBN="";
+	char c;
+	while(true)
+	{
+		c=getch();
+		if(c==13)
+		{
+			break;
+		}
+		else if(c==8)
+		{
+			if(ISBN=="") continue;
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+			ISBN.pop_back();
+		}
+		else
+		{
+			if(c>='a'&&c<='z')
+			{
+				c=toupper(c);
+				putchar(c);
+			}
+			else if((c>='A'&&c<='Z')||c>='0'&&c<='9')
+			{
+				putchar(c);
+			}
+			else
+			{
+				continue;
+			}
+			ISBN+=c;
+		}
+	}
+	return ISBN;
+}
+
 
 string EnterName()
 {
@@ -78,45 +117,4 @@ string EnterName()
 		}
 	}
 	return Name;
-}
-
-int EnterCardStatus()
-{
-	char c;
-	while(true)
-	{
-		c=getch();
-		if(c=='0'||c=='1')
-		{
-			putchar(c);
-			return c-'0';
-		}
-		else
-		{
-			putchar('\b');
-			putchar(' ');
-			putchar('\b');
-		}
-	}
-}
-
-string EnterSex()
-{
-	char c;
-	while(true)
-	{
-		c=getch();
-		if(c=='1'||c=='2')
-		{
-			putchar(c);
-			if(c=='1') return "Nam";
-			else return "Nu";
-		}
-		else
-		{
-			putchar('\b');
-			putchar(' ');
-			putchar('\b');
-		}
-	}
 }

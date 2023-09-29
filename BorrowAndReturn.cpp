@@ -9,15 +9,15 @@ struct BorrowAndReturn
 		int Status;
 };
 
-struct nodeBorrowAndReturn
+struct nodeBAR
 {
 	BorrowAndReturn data;
-	nodeBorrowAndReturn* next;
+	nodeBAR* next;
 };
 
 struct BorrowAndReturnList
 {
-	nodeBorrowAndReturn* head;
-	nodeBorrowAndReturn* tail;
+	nodeBAR* head;
+	nodeBAR* tail;
 	int size=-1;
 };

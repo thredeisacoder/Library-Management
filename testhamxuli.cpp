@@ -1,9 +1,9 @@
-#include "process.cpp"
-
+#include "processRC.cpp"
+#include "processTOC.cpp"
 int main()
 {
 	string n;
-	n=EnterSex();
+	n=enterISBN();
 	cout<<"thanh cong\n";
 	cout<<n;
 	return 0;
