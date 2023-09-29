@@ -45,7 +45,7 @@ void Option(int x, int y, int width, int height, string option)
 //tao menu
 void boxMenu()
 {
-	int x=6;
+	int x=20;
 	int y=2;
 	int width=120;
 	int height=30;
@@ -115,7 +115,7 @@ void UnHighLight(int x,int y,int width)
 //dieu khien tren menu
 void Control()
 {
-	int x=6;int y=2;int width=120;int height=30;
+	int x=20;int y=2;int width=120;int height=30;
 	//danh dau lua chon dau
     gotoxy(x+width/3-6,y+height/4-1);
     HighLight(wherex(),wherey(),width);

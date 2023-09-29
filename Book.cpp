@@ -1,15 +1,9 @@
-#pragma once
+#include <iostream>
+#include <string.h>
 
-class Book{
-public:
+using namespace std;
+struct Book
+{
     string BookID;
     int BookStatus;
-
-	Book(){
-	}
-	Book(string BookID,int BookStatus)
-	{
-		this->BookID=BookID;
-		this->BookStatus=BookStatus;
-	}
 };

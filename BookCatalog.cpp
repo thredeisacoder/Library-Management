@@ -1,20 +1,14 @@
 #include "Book.cpp"
 
+using namespace std;
 //danh muc sach
-class BookCatalog : public Book{
-public:
+struct BookCatalog 
+{
+	Book book;
     string BookLocation;
-	
-	BookCatalog() :Book()
-	{
-	}
-	BookCatalog(string BookID,int BookStatus,string BookLocation ): Book(BookID,BookStatus)
-	{
-		this->BookLocation=BookLocation;
-	}
 };
 
-struct nodeBookCataLog
+struct nodeBookCatalog
 {
 	BookCatalog data;
 	nodeBookCatalog* next;
