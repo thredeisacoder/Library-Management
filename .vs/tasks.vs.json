@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-HOMEMENU",
+      "appliesTo": "HOMEMENU.cpp",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-HOMEMENU",
+      "appliesTo": "HOMEMENU.cpp",
+      "type": "launch"
+    }
+  ]
+}

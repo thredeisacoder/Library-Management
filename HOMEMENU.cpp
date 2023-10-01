@@ -1,7 +1,5 @@
-#include <iostream>
 #include "mylib.h"
-#include <windows.h>
-#include <conio.h>
+
 using namespace std;
 
 //Khung tieu de
@@ -90,7 +88,7 @@ void HighLight(int x,int y,int width)
 	{
 		for(int j=y;j<=y+2;j+=2)
 		{
-			SetBGColor(2);
+			SetBGColor(9);
 			gotoxy(i,j);
 			cout<<" ";
 		}

@@ -2,6 +2,7 @@
 
 using namespace std;
 //danh muc sach
+
 struct BookCatalog 
 {
 	Book book;
@@ -28,7 +29,7 @@ nodeBC* makenode(BookCatalog data)
 	p->next=NULL;
 	return p;
 }
-
+//them danh muc sach
 BookCatalogList addNodeBC(BookCatalogList l,BookCatalog data)
 {
 	if(l.head==NULL)

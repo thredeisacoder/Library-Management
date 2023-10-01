@@ -3,7 +3,7 @@
 int main()
 {
 	string n;
-	n=enterISBN();
+	n=EnterNumOfPage();
 	cout<<"thanh cong\n";
 	cout<<n;
 	return 0;

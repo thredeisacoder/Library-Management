@@ -6,7 +6,7 @@ struct TableOfContent
 {
 	string ISBN;
 	string BookName;
-	int NumOfPage;
+	string NumOfPage;
 	string Author;
 	string PublicYear;
 	string Genre;
@@ -22,8 +22,8 @@ struct TableOfContentList
 void addTableOfContent(TableOfContentList &l, TableOfContent TOC)
 {
 	l.n++;
-	l.ds[n]=new TableOfContent;
-	l.ds[n]=TOC;
+	l.ds[l.n]=new TableOfContent(TOC);
+	//l.ds[l.n];
 }
 
 TableOfContent EnterInforTOC()
@@ -31,7 +31,16 @@ TableOfContent EnterInforTOC()
 	TableOfContent TOC;
 	cout<<"enter ISBN:";
 	TOC.ISBN=enterISBN();
-	
-	
-	
+	cout<<"enter Book's Name :";
+	TOC.BookName=enterName();
+	cout<<"enter Number of Page: ";
+	TOC.NumOfPage=enterNumOfPage();
+	cout<<"enter Author: ";
+	TOC.Author=enterName();
+	cout<<"enter publication year: ";
+	TOC.PublicYear=enterNumOfPage();
+	cout<<"enter genre: ";
+	TOC.Genre=enterName();
+	return TOC;
+
 }

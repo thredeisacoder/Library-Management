@@ -39,9 +39,9 @@ ReaderCard EnterInfor()
 {
 	ReaderCard RC;
 	cout<<"\nFirst Name  : ";
-	RC.FirstName=EnterName();
+	RC.FirstName=EnterFirstName();
 	cout<<"\nLast Name: ";
-	RC.LastName=EnterName();
+	RC.LastName=EnterLastName();
 	cout<<"\nSex: ";
 	RC.Sex=EnterSex();
 	cout<<"\nStatus: ";

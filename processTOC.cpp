@@ -1,6 +1,4 @@
-#include "TableOfContent.cpp"
-#include <conio.h>
-#include <string.h>
+#include "mylib.h"
 using namespace std;
 
 string enterISBN()
@@ -44,7 +42,7 @@ string enterISBN()
 }
 
 
-string EnterName()
+string enterName()
 {
 	string Name="";
 	char c;
@@ -117,4 +115,38 @@ string EnterName()
 		}
 	}
 	return Name;
+}
+
+string enterNumOfPage()
+{
+	int x;
+	char c;
+	string n="";
+	while(true)
+	{
+		c=getch();
+		if(c==13)
+		{
+			break;
+		}
+		else if(c==8)
+		{
+			if(n=="") continue;
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+			continue;
+		}
+		else if(c>='0'&&c<='9')
+		{
+			if(n.length()==4) continue;
+			else putchar(c);
+			n+=c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return n;
 }

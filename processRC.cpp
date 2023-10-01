@@ -1,10 +1,8 @@
-#include <iostream>
-#include <string.h>
 #include "mylib.h"
 
 using namespace std;
 
-string EnterName()
+string EnterFirstName()
 {
 	string Name="";
 	char c;
@@ -97,6 +95,46 @@ int EnterCardStatus()
 			putchar('\b');
 		}
 	}
+}
+
+string EnterLastName()
+{
+	string s="";
+	char c;
+	while(true)
+	{
+		c=getch();
+		if(c==13)
+		{
+			break;
+		}
+		else if(c==8)
+		{
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+		}
+		else if((c>='a'&&c<'z')||(c>='A'&&c<='Z'))
+		{
+			if(s.length()==0)
+			{
+				if(c>='a'&&c<='z')
+				{
+					c=toupper(c);
+					putchar(c);	
+				}
+				else
+				{
+					putchar(c);
+				}
+			}
+			else putchar(c);
+		}
+		else continue;
+		
+		s+=c;
+	}
+	return s;
 }
 
 string EnterSex()
