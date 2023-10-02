@@ -23,7 +23,6 @@ void addTableOfContent(TableOfContentList &l, TableOfContent TOC)
 {
 	l.n++;
 	l.ds[l.n]=new TableOfContent(TOC);
-	//l.ds[l.n];
 }
 
 TableOfContent EnterInforTOC()

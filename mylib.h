@@ -2,7 +2,7 @@
 #include <iostream>
 #include <conio.h>
 #include <string.h>
-#include <Windows.h>
+#include <windows.h>
 
 using namespace std;
 
