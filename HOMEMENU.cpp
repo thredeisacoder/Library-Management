@@ -13,9 +13,9 @@ void loading()
 			SetBGColor(15);
 			cout<<" ";
 			SetBGColor(16);
-			Sleep(100);
+			Sleep(80);
 		}
-		Sleep(2000);
+		Sleep(1500);
 		system("cls");
 }
 
@@ -69,14 +69,16 @@ void boxMenu()
 
 	if(width<=1||height<=1) return;
 	Tittle(x,y,width,height, "QUAN LI THU VIEN");
-	Option(x + width / 3, y + height / 4 , width, height, "OPTION 1!");
-	Option(x + width / 3, y + height / 4 + 4 , width, height, "OPTION 2!");
-	Option(x + width / 3, y + height / 4 + 8, width, height, "OPTION 3!");
-	Option(x + width / 3, y + height / 4 +12, width, height, "OPTION 4!");
-	Option(x + width / 3, y + height / 4 + 16 , width, height, "QUIT!");
+	Option(x + width / 3, y + height / 4 , width, height, "TABLE OF CONTENT LIST");
+	Option(x + width / 3, y + height / 4 + 4 , width, height, "READER LIST");
+	Option(x + width / 3, y + height / 4 + 8, width, height, "BORROW AND RETURN LIST");
+	Option(x + width / 3, y + height / 4 +12, width, height, "BOOK CATALOG LIST");
+	Option(x + width / 3, y + height / 4 + 16 , width, height, "option 5");
+	Option(x + width / 3, y + height / 4 + 20 , width, height, "QUIT!");
+	
 
 	//in 2 canh ben cua khung menu
-	for(int i=y-2;i<=y+height-2;i++)
+	for(int i=y-2;i<=y+height+2;i++)
     {
         gotoxy(x+width/6,i);
         cout<<"  ";
@@ -88,12 +90,12 @@ void boxMenu()
 	//in khung duoi cua menu
 	for (int i = x + width / 6; i < x + width * 5 / 6 - 12; i++)
 	{
-		gotoxy(i, y + height - 2);
+		gotoxy(i, y + height +2);
 		cout << " ";
 	}
 
 		//in huong dan
-	gotoxy(x + width / 6 + 10, y + height * 5 / 6 + 2);
+	gotoxy(x + width / 6 + 10, y + height * 5 / 6 + 6);
 	cout << "Press Up and Down to move and Enter to choose!!! ";
 
 	SetBGColor(16);
@@ -150,7 +152,7 @@ void Control()
 			if(wherey()==y+height/4-1)
 			{
 				UnHighLight(wherex(),wherey(),width);
-                gotoxy(x+width/3-6,y+height/4+16-1);
+                gotoxy(x+width/3-6,y+height/4+20-1);
                 HighLight(wherex(),wherey(),width);
 
 			}
@@ -163,7 +165,7 @@ void Control()
 		}
 		else if(c==80)//khi nguoi dung nhan Down
         {
-			if(wherey()==y+height/4+16-1)
+			if(wherey()==y+height/4+20-1)
 			{
 				UnHighLight(wherex(),wherey(),width);
                 gotoxy(x+width/3-6,y+height/4-1);
