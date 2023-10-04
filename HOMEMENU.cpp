@@ -2,6 +2,23 @@
 
 using namespace std;
 
+void loading()
+{
+	string s="HOC VIEN CONG NGHE BUU CHINH VIEN THONG CO SO TAI TP HCM!!!";
+		for(int i=0;i<s.length();i++)
+		{
+			gotoxy(40+i,10);
+			cout<<s[i];
+			gotoxy(40+i,12);
+			SetBGColor(15);
+			cout<<" ";
+			SetBGColor(16);
+			Sleep(100);
+		}
+		Sleep(2000);
+		system("cls");
+}
+
 //Khung tieu de
 void Tittle(int x, int y, int width, int height, string tittle)
 {
@@ -39,6 +56,8 @@ void Option(int x, int y, int width, int height, string option)
 	gotoxy(x, y);
 	cout <<option;
 }
+
+
 
 //tao menu
 void boxMenu()
@@ -200,6 +219,7 @@ int main()
 	resizeConsole(1200,600);
 	DisableCtrButton(0,1,1);
 	DisableResizeWindow();
+	loading();
 	boxMenu();
 	ShowCur(0);
 	Control();
