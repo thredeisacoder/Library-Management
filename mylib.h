@@ -7,15 +7,15 @@
 using namespace std;
 
 
-void gotoxy(short x,short y)
+void gotoxy(short x, short y)
 {
-        HANDLE hConsoleOutput;
-        COORD Cursor_an_Pos = { x,y};
-        hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleCursorPosition(hConsoleOutput , Cursor_an_Pos);
+    HANDLE hConsoleOutput;
+    COORD Cursor_an_Pos = { x,y };
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
 }
 
-int wherex( )
+int wherex()
 {
     HANDLE hConsoleOutput;
     hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -68,10 +68,10 @@ void SetBGColor(WORD color)
 // Adjust console screen size
 void resizeConsole(int width, int height)
 {
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r);
-	MoveWindow(console, r.left, r.top, width, height, TRUE);
+    HWND console = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(console, &r);
+    MoveWindow(console, r.left, r.top, width, height, TRUE);
 }
 
 void SetScreenBufferSize(SHORT width, SHORT height)
@@ -122,7 +122,7 @@ void DisableCtrButton(bool Close, bool Min, bool Max)
 // Hide and show the cursor
 void ShowCur(bool CursorVisibility)
 {
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConCurInf;
 
     ConCurInf.dwSize = 10;
