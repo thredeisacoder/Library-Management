@@ -1,3 +1,5 @@
 ﻿  Source.cpp
-C:\Users\macos\source\repos\Librarymanagement\struct.h(380): warning C4715: 'deleteNodeReader': not all control paths return a value
+C:\Users\macos\source\repos\Librarymanagement\struct.h(291,7): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\macos\source\repos\Librarymanagement\process.h(11,7): warning C4101: 'c': unreferenced local variable
+C:\Users\macos\source\repos\Librarymanagement\struct.h(403): warning C4715: 'deleteNodeReader': not all control paths return a value
   Librarymanagement.vcxproj -> C:\Users\macos\source\repos\Librarymanagement\Debug\Librarymanagement.exe

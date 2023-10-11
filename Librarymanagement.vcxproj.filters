@@ -30,4 +30,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source.exe" />
+    <None Include="process.h.gch" />
+  </ItemGroup>
 </Project>

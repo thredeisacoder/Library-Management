@@ -1,8 +1,88 @@
-#pragma once
 #include "struct.h"
 #include "mylib.h"
+
 using namespace std;
+
 //Reader//
+
+string EnterID()
+{
+	string s = "";
+	char c;
+	while (true)
+	{
+		char c = _getch();
+		if (c == 13)
+		{
+			if (s == "")
+			{
+				continue;
+			}
+			else break;
+		}
+		else if (c == 8)
+		{
+			if (s.empty()) continue;
+			s.pop_back();
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+		}
+		else if (s.length() == 10)
+		{
+			continue;
+		}
+		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_'||(c>='0'&&c<='9'))
+		{
+			if (s == "")
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == '_') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else if (s[s.length() - 1] == '_')
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == '_') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else
+			{
+				if (c >= 'A' && c <= 'Z')
+				{
+					c = tolower(c);
+					putchar(c);
+				}
+				else
+				{
+					putchar(c);
+				}
+			}
+			s += c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return s;
+
+}
+
 string EnterFirstName()
 {
 	string Name = "";
@@ -25,7 +105,7 @@ string EnterFirstName()
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (Name.length() == 10)
+		else if (Name.length() == 20)
 		{
 			continue;
 		}
@@ -79,24 +159,6 @@ string EnterFirstName()
 	return Name;
 }
 
-int EnterCardStatus()
-{
-	char c;
-	while (true)
-	{
-		c = _getch();
-		if (c == '0' || c == '1')
-		{
-			putchar(c);
-			return c - '0';
-		}
-		else
-		{
-			continue;
-		}
-	}
-}
-
 string EnterLastName()
 {
 	string s = "";
@@ -106,7 +168,8 @@ string EnterLastName()
 		c = _getch();
 		if (c == 13)
 		{
-			break;
+			if (s == "") continue;
+			else break;
 		}
 		if (c == 8)
 		{
@@ -158,9 +221,16 @@ string EnterGender()
 		c = _getch();
 		if (c == '1' || c == '2')
 		{
-			putchar(c);
-			if (c == '1') return "MALE";
-			else return "FEMALE";
+			if (c == '1')
+			{
+				cout << "MALE";
+				return "MALE";
+			}
+			else
+			{
+				cout << "FEMALE";
+				return "FEMALE";
+			}
 		}
 		else
 		{
@@ -169,51 +239,7 @@ string EnterGender()
 	}
 }
 
-string EnterID()
-{
-	string ID = "";
-	char c;
-	while (true)
-	{
-		c = _getch();
-		if (c == 13)
-		{
-			break;
-		}
-		else if (c == 8)
-		{
-			if (ID == "") continue;
-			putchar('\b');
-			putchar(' ');
-			putchar('\b');
-			ID.pop_back();
-		}
-		else if (ID.length() == 6)
-		{
-			continue;
-		}
-		else
-		{
-			if (c >= 'a' && c <= 'z')
-			{
-				c = toupper(c);
-				putchar(c);
-			}
-			else if ((c >= 'A' && c <= 'Z') || c >= '0' && c <= '9')
-			{
-				putchar(c);
-			}
-			else
-			{
-				continue;
-			}
-			ID += c;
-		}
-	}
-	return ID;
-}
 //Table of content//
-using namespace std;
 
 string enterName()
 {
@@ -300,7 +326,8 @@ string enterNumOfPage()
 		c = _getch();
 		if (c == 13)
 		{
-			break;
+			if (n == "") continue;
+			else break;
 		}
 		else if (c == 8)
 		{
@@ -308,11 +335,11 @@ string enterNumOfPage()
 			putchar('\b');
 			putchar(' ');
 			putchar('\b');
-			continue;
+			n.pop_back();
 		}
 		else if (c >= '0' && c <= '9')
 		{
-			if (n.length() == 4) continue;
+			if (n.length() >= 4)  continue;
 			else putchar(c);
 			n += c;
 		}

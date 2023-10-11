@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <conio.h>
 #include <string.h>
@@ -6,6 +6,14 @@
 
 using namespace std;
 
+void setConsoleFontSize(int width, int height) {
+    CONSOLE_FONT_INFOEX fontInfo;
+    fontInfo.cbSize = sizeof(fontInfo);
+    GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &fontInfo);
+    fontInfo.dwFontSize.X = width;
+    fontInfo.dwFontSize.Y = height;
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &fontInfo);
+}
 
 void gotoxy(short x, short y)
 {

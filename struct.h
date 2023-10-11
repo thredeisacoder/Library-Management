@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string.h>
+#include <math.h>
 
 using namespace std;
 
@@ -280,12 +281,32 @@ nodeRC* makeNodeReader(Reader data)
 	return p;
 }
 
+string makeID(nodeRC* pre, nodeRC* p)
+{
+	string s = "";
+	int n = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		int x = int(pre->data.ID[pre->data.ID.length() - 1 - i]-'0');
+		n =n+ pow(10,i) * x;
+	}
+
+	n++;
+
+	while (s.length()<4)
+	{
+		s = char(n % 10 +'0') + s;
+		n /= 10;
+	}
+	return p->data.LastName + '_' + s;
+}
+
 int  addNodeReader(ReaderList& l, Reader data)
 {
 	nodeRC* p = makeNodeReader(data);
 	if (l.size == 0)
 	{
-		p->data.ID = l.size + 1;
+		p->data.ID =p->data.LastName+'_'+"0001";
 		l.head = p;
 		++l.size;
 		return 1;
@@ -300,27 +321,28 @@ int  addNodeReader(ReaderList& l, Reader data)
 			string Name = tmp->data.LastName + tmp->data.FirstName;
 			if (Name > newName)
 			{
-				tmp = tmp->left;
+				tmp = tmp->right;
 			}
 			else
 			{
-				tmp = tmp->right;
+				tmp = tmp->left;
 			}
 		}
-
+		p->data.ID = makeID(tmp, p);
 		if (tmp->left == NULL)
 		{
 			tmp->left = p;
+			++l.size;
 			return 1;
 		}
 
 		if (tmp->right == NULL)
 		{
 			tmp->right = p;
+			++l.size;
 			return 1;
 		}
 	}
-
 	return 0;
 }
 
@@ -335,42 +357,43 @@ nodeRC* findMaxLeft(nodeRC* t)
 
 int  deleteNodeReader(ReaderList& l, string ID) {
 	if (l.head == NULL) return 0;
+
 	else
 	{
-		nodeRC* tmp = l.head;
+		nodeRC* cur = l.head;
 		nodeRC* pre = NULL;
-		while (tmp->left != NULL && tmp->right != NULL)
+		while (cur!=NULL && cur->data.ID != ID)
 		{
-			if (tmp->data.ID < ID)
+			if (cur->data.ID > ID)
 			{
-				pre = tmp;
-				tmp = tmp->left;
+				pre = cur;
+				cur = cur->left;
 			}
-			else if (tmp->data.ID > ID)
+			else if (cur->data.ID < ID)
 			{
-				pre = tmp;
-				tmp = tmp->right;
+				pre = cur;
+				cur = cur->right;
 			}
 			else
 			{
-				if (tmp->left == NULL && tmp->right == NULL)
+				if (cur->left == NULL && cur->right == NULL)
 				{
-					delete tmp;
+					delete cur;
 				}
-				else if (tmp->left == NULL)
+				else if (cur->left == NULL)
 				{
-					pre->right = tmp->right;
-					delete tmp;
+					pre->right = cur->right;
+					delete cur;
 				}
-				else if (tmp->right == NULL)
+				else if (cur->right == NULL)
 				{
-					pre->left = tmp->left;
-					delete tmp;
+					pre->left = cur->left;
+					delete cur;
 				}
 				else
 				{
-					nodeRC* t = findMaxLeft(tmp->right);
-					swap(tmp->data, t->data);
+					nodeRC* t = findMaxLeft(cur->right);
+					swap(cur->data, t->data);
 					delete t;
 				}
 				return 1;
