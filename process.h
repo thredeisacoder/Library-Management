@@ -1,3 +1,4 @@
+#pragma once
 #include "struct.h"
 #include "mylib.h"
 
@@ -5,14 +6,14 @@ using namespace std;
 
 //Reader//
 
-string EnterID()
+string EnterID(string s)
 {
-	string s = "";
+	cout << s;
 	char c;
 	while (true)
 	{
 		char c = _getch();
-		if (c == 13)
+		if (c == 13)//enter
 		{
 			if (s == "")
 			{
@@ -20,7 +21,7 @@ string EnterID()
 			}
 			else break;
 		}
-		else if (c == 8)
+		else if (c == 8)//phim xoa
 		{
 			if (s.empty()) continue;
 			s.pop_back();
@@ -28,7 +29,7 @@ string EnterID()
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (s.length() == 10)
+		else if (s.length() == 12)//dat do dai toi da
 		{
 			continue;
 		}
@@ -80,38 +81,37 @@ string EnterID()
 		}
 	}
 	return s;
-
 }
 
-string EnterFirstName()
+string EnterFirstName(string s)
 {
-	string Name = "";
+	cout << s;
 	while (true)
 	{
 		char c = _getch();
-		if (c == 13)
+		if (c == 13)//enter
 		{
-			if (Name == "")
+			if (s == "")
 			{
 				continue;
 			}
 			else break;
 		}
-		else if (c == 8)
+		else if (c == 8)//xoa
 		{
-			if (Name.empty()) continue;
-			Name.pop_back();
+			if (s.empty()) continue;
+			s.pop_back();
 			putchar('\b');
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (Name.length() == 20)
+		else if (s.length() == 20)
 		{
 			continue;
 		}
 		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ' ')
 		{
-			if (Name == "")
+			if (s == "")
 			{
 				if (c >= 'a' && c <= 'z')
 				{
@@ -124,7 +124,7 @@ string EnterFirstName()
 					putchar(c);
 				}
 			}
-			else if (Name[Name.length() - 1] == ' ')
+			else if (s[s.length() - 1] == ' ')
 			{
 				if (c >= 'a' && c <= 'z')
 				{
@@ -149,19 +149,19 @@ string EnterFirstName()
 					putchar(c);
 				}
 			}
-			Name += c;
+			s += c;
 		}
 		else
 		{
 			continue;
 		}
 	}
-	return Name;
+	return s;
 }
 
-string EnterLastName()
+string EnterLastName(string s)
 {
-	string s = "";
+	cout << s;
 	char c;
 	while (true)
 	{
@@ -213,8 +213,9 @@ string EnterLastName()
 	return s;
 }
 
-string EnterGender()
+string EnterGender(string s)
 {
+	cout << s;
 	char c;
 	while (true)
 	{
@@ -237,6 +238,11 @@ string EnterGender()
 			continue;
 		}
 	}
+}
+
+void editReader(nodeRC* p)
+{
+	
 }
 
 //Table of content//

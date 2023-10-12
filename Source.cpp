@@ -1,6 +1,7 @@
 #include "mylib.h"
 #include "struct.h"
 #include "process.h"
+//#include <iostream>
 
 using namespace std;
 
@@ -200,11 +201,11 @@ void tableEnterRC(ReaderList& rl)
 	gotoxy(x + width / 6 + 62, y + 11);
 	cout << p->CardStatus ;
 	gotoxy(x + width / 6 + 1, y + 11);
-	p->FirstName = EnterFirstName();
+	p->FirstName = EnterFirstName(p->FirstName);
 	gotoxy(x + width / 6 + 28, y + 11);
-	p->LastName = EnterLastName();
+	p->LastName = EnterLastName(p->LastName);
 	gotoxy(x + width / 6 + 47, y + 11);
-	p->Gender = EnterGender();
+	p->Gender = EnterGender(p->Gender);
 
 	gotoxy(x + width / 3, y + 15);
 	int n = addNodeReader(rl, *p);
@@ -231,14 +232,11 @@ void displayReader(nodeRC* p, int y)
 //duyet danh sach doc gia
 void displaytree(nodeRC* head, int &y)
 {
-	if (head == NULL) return;
-	else
-	{
+	if (head == nullptr) return;
 		displayReader(head, y);
 		y += 2;
 		displaytree(head->left, y);
 		displaytree(head->right, y);
-	}
 }
 
 //danh sach doc gia
@@ -253,17 +251,17 @@ void ReaderTable(ReaderList& rl)
 		cout << " ";
 		SetBGColor(16);
 		SetColor(15);
-		for (int j = 4; j < 33; j += 2)
+		for (int j = 4; j <= 3 + rl.size; j += 2)
 		{
 			gotoxy(i, j);
 			cout << char(95);
 		}
 		SetColor(16);
 		SetBGColor(15);
-		gotoxy(i, 35);
+		gotoxy(i, 3+2*rl.size);
 		cout << " ";
 	}
-	for (int i = 1; i < 35; i++)
+	for (int i = 1; i < 3+2*rl.size; i++)
 	{
 		gotoxy(10, i);
 		cout << " ";
@@ -292,7 +290,12 @@ void ReaderTable(ReaderList& rl)
 	cout << "STATUS";
 
 	int y = 3;
-	displaytree(rl.head, y);
+	if (rl.size == 0)
+	{
+		gotoxy( 50, 5);
+		cout << "EMPTY LIST!!!";
+	}
+	else displaytree(rl.head, y);
 
 	SetBGColor(15);
 	SetColor(16);
@@ -324,14 +327,13 @@ void ReaderTable(ReaderList& rl)
 	gotoxy(132, 8);
 	cout << "DELETE";
 	gotoxy(133, 12);
-	cout << "SET";
+	cout << "EDIT";
 	SetColor(15);
 
 	HighLight(130, 3, 9);
 
 	while (true)
 	{
-
 		// nhan phim tu nguoi dung(up/down/enter)
 		char c = _getch();
 		if (c == -32)
@@ -365,7 +367,6 @@ void ReaderTable(ReaderList& rl)
 				UnHighLight(wherex(), wherey(), 9);
 				gotoxy(130, 3);
 				HighLight(wherex(), wherey(), 9);
-
 			}
 			else
 			{
@@ -396,16 +397,19 @@ void ReaderTable(ReaderList& rl)
 					ReaderTable(rl);
 					break;
 				}
-				system("cls");
+				string id = "";
 				SetColor(20);
-				cout << "enter id to delete: ";
-				string s = EnterID();
-				int n=deleteNodeReader(rl, s);
+				gotoxy(130, 20);
+				cout << "enter id: ";
+				gotoxy(130, 21);
+				id = EnterID(id);
+				int n=deleteNodeReader(rl, id);
+				gotoxy(130, 22);
 				if (n == 0) cout << "can not delete";
 				else cout << "successful";
-				system("pause");
-				ReaderTable(rl);
+				Sleep(1000);
 				system("cls");
+				ReaderTable(rl);
 				break;
 			}
 			else
@@ -426,11 +430,8 @@ void tableEnterTOC(TableOfContentList& tl)
 {
 	TableOfContent* p = new TableOfContent;
 	SetColor(15);
-	int x = 10, y = 2, width = 120, height = 80;
-	gotoxy(x + width / 3, y + height / 4);
-	cout << "GENDER: 1 FOR MALE & 2 FOR FEMALE !\n ";
-	gotoxy(x + width / 3, y + height / 4 + 1);
-	cout << "STATUS: 0(LOCKED) & 1(UNLOCKED)";
+	int x =4, y = 4, width = 150, height = 80;
+
 	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
 	{
 		SetBGColor(15);
@@ -442,27 +443,27 @@ void tableEnterTOC(TableOfContentList& tl)
 		cout << " ";
 	}
 	SetBGColor(16);
-	gotoxy(x + width / 6, y + 9);
+	gotoxy(x + width /6 +5, y + 9);
 	cout << " | NAME |";
-	gotoxy(x + width / 6 + 18, y + 9);
+	gotoxy(x + width / 6 + 26, y + 9);
 	cout << "| GENRE | ";
-	gotoxy(x + width / 6 + 28, y + 9);
+	gotoxy(x + width / 6 + 46, y + 9);
 	cout << " | AUTHOR | ";
-	gotoxy(x + width / 6 + 45, y + 9);
+	gotoxy(x + width / 6 + 70, y + 9);
 	cout << " | NUMBER PAGE | ";
-	gotoxy(x + width / 6 + 64, y + 9);
+	gotoxy(x + width / 6 + 84, y + 9);
 	cout << " | PUBLIC YEAR | ";
 
 
 	gotoxy(x + width / 6 + 1, y + 11);
-	p->BookName = EnterFirstName();
-	gotoxy(x + width / 6 + 18, y + 11);
-	p->Genre = EnterFirstName();
-	gotoxy(x + width / 6 + 28, y + 11);
-	p->Author = EnterFirstName();
-	gotoxy(x + width / 6 + 47, y + 11);
+	p->BookName = EnterFirstName(p->BookName);
+	gotoxy(x + width / 6 + 24, y + 11);
+	p->Genre = EnterFirstName(p->Genre);
+	gotoxy(x + width / 6 + 46, y + 11);
+	p->Author = EnterFirstName(p->Author);
+	gotoxy(x + width / 6 + 72, y + 11);
 	p->NumOfPage = enterNumOfPage();
-	gotoxy(x + width / 6 + 62, y + 11);
+	gotoxy(x + width / 6 + 86, y + 11);
 	p->PublicYear = enterNumOfPage();
 
 	gotoxy(x + width / 3, y + 15);
@@ -703,6 +704,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 + 4 - 1)//option 2
 			{
 				system("cls");
+				tableEnterTOC(tl);
+				system("cls");
 				boxMenu();
 				Control(rl, tl);
 				break;
@@ -710,7 +713,6 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 + 8 - 1)//option 3
 			{
 				system("cls");
-				tableEnterTOC(tl);
 				system("cls");
 				boxMenu();
 				Control(rl, tl);
@@ -740,7 +742,7 @@ int main()
 	resizeConsole(1200, 650);
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	//loading();
+	loading();
 	boxMenu();
 	Control(rl, tl);
 

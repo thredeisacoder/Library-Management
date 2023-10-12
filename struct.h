@@ -79,10 +79,10 @@ struct TableOfContentList
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 
 struct Reader {
-	string ID;
-	string Gender;
-	string FirstName;
-	string LastName;
+	string ID="";
+	string Gender="";
+	string FirstName="";
+	string LastName="";
 	int CardStatus = 1;
 
 	BorrowAndReturnList dsmt;
@@ -263,7 +263,6 @@ int deleteNodeBAR(BorrowAndReturnList& l, string ID)
 	return 0;
 }
 //
-
 int addTableOfContent(TableOfContentList& l, TableOfContent TOC)
 {
 	if (l.size == MAX - 1) return 0;
@@ -285,7 +284,7 @@ string makeID(nodeRC* pre, nodeRC* p)
 {
 	string s = "";
 	int n = 0;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		int x = int(pre->data.ID[pre->data.ID.length() - 1 - i]-'0');
 		n =n+ pow(10,i) * x;
@@ -293,7 +292,7 @@ string makeID(nodeRC* pre, nodeRC* p)
 
 	n++;
 
-	while (s.length()<4)
+	while (s.length()<5)
 	{
 		s = char(n % 10 +'0') + s;
 		n /= 10;
@@ -306,7 +305,7 @@ int  addNodeReader(ReaderList& l, Reader data)
 	nodeRC* p = makeNodeReader(data);
 	if (l.size == 0)
 	{
-		p->data.ID =p->data.LastName+'_'+"0001";
+		p->data.ID =p->data.LastName+'_'+"00001";
 		l.head = p;
 		++l.size;
 		return 1;
@@ -321,11 +320,11 @@ int  addNodeReader(ReaderList& l, Reader data)
 			string Name = tmp->data.LastName + tmp->data.FirstName;
 			if (Name > newName)
 			{
-				tmp = tmp->right;
+				tmp = tmp->left;
 			}
 			else
 			{
-				tmp = tmp->left;
+				tmp = tmp->right;
 			}
 		}
 		p->data.ID = makeID(tmp, p);
@@ -355,51 +354,77 @@ nodeRC* findMaxLeft(nodeRC* t)
 	else return findMaxLeft(t->left);
 }
 
-int  deleteNodeReader(ReaderList& l, string ID) {
-	if (l.head == NULL) return 0;
-
-	else
+int  deleteNodeReader(ReaderList& l, string ID) 
+{
+	if (l.size == 0)
 	{
-		nodeRC* cur = l.head;
-		nodeRC* pre = NULL;
-		while (cur!=NULL && cur->data.ID != ID)
-		{
-			if (cur->data.ID > ID)
+		l.head = nullptr;
+		return 0;
+	}
+		nodeRC* parent = nullptr;
+		nodeRC* current = l.head;
+
+		//tim phan tu can xoa va luu node cha cua no
+		while (current != nullptr && current->data.ID != ID) {
+			parent = current;
+			if (ID < current->data.ID) 
 			{
-				pre = cur;
-				cur = cur->left;
+				current = current->left;
 			}
-			else if (cur->data.ID < ID)
+			else 
 			{
-				pre = cur;
-				cur = cur->right;
-			}
-			else
-			{
-				if (cur->left == NULL && cur->right == NULL)
-				{
-					delete cur;
-				}
-				else if (cur->left == NULL)
-				{
-					pre->right = cur->right;
-					delete cur;
-				}
-				else if (cur->right == NULL)
-				{
-					pre->left = cur->left;
-					delete cur;
-				}
-				else
-				{
-					nodeRC* t = findMaxLeft(cur->right);
-					swap(cur->data, t->data);
-					delete t;
-				}
-				return 1;
+				current = current->right;
 			}
 		}
-	}
+
+		if (current == nullptr) 
+		{
+			// phan tu ko ton tai
+			return 0;
+		}
+		// co 1 hoac 0 con
+		if (current->left == nullptr || current->right == nullptr) 
+		{
+			nodeRC* child = (current->left != nullptr) ? current->left : current->right;
+			if (parent == nullptr) 
+			{
+				delete current;
+				l.size--;
+				return 1;
+			}
+			else if (current == parent->left) {
+				parent->left = child;
+			}
+			else {
+				parent->right = child;
+			}
+			delete current;
+			l.size--;
+			if (l.size == 0) l.head = nullptr;
+			return 1;
+		}
+		else 
+		{
+				//nut co 2 con
+			nodeRC* tempParent = current;
+			nodeRC* temp = current->right;
+			while (temp->left != nullptr) {
+				tempParent = temp;
+				temp = temp->left;
+			}
+			current->data = temp->data;
+
+			if (tempParent->left == temp) {
+				tempParent->left = temp->right;
+			}
+			else {
+				tempParent->right = temp->right;
+			}
+			delete temp;
+			l.size--;
+			if (l.size == 0) l.head = nullptr;
+		}
+		return 1;
 }
 
 
