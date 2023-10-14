@@ -19,6 +19,6 @@ Chương trình có các chức năng sau:
 - i. In danh sách độc giả mượn sách quá hạn theo thứ tự thời gian quá hạn giảm dần
 - j. In 10 sách có số lượt mượn nhiều nhất.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-<br>Mindmap
+<h2>Mindmap
 <img src="Lib.jpg" />
 Deadline: 15/12/2023
