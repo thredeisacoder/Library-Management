@@ -147,8 +147,21 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Debug\Librarymanagement.exe" />
+    <None Include="Debug\Librarymanagement.exe.recipe" />
+    <None Include="Debug\Librarymanagement.ilk" />
+    <None Include="Debug\Librarymanagement.pdb" />
+    <None Include="Debug\vc142.idb" />
+    <None Include="Debug\vc142.pdb" />
     <None Include="process.h.gch" />
     <None Include="Source.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Debug\Librarymanagement.log" />
+    <Text Include="Debug\Librarymanagement.vcxproj.FileListAbsolute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Debug\Source.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
