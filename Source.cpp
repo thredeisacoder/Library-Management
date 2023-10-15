@@ -12,37 +12,80 @@ void title(int x,int y) {
 	string s5="\t | |____ | || || (_)| || |    |_|(_)| || |    | |_| |    \n";
 	string s6="\t |_|____||_||_||_|__/_/|_|    |_|___/_||_|     \\\\_/     \n";
 	string s7="\t                                                 /_/      \n";
-	gotoxy(x, y + 1);
-	cout << s1;
 	gotoxy(x, y + 2);
-	cout << s2;
+	cout << s1;
 	gotoxy(x, y + 3);
-	cout << s3;
+	cout << s2;
 	gotoxy(x, y + 4);
-	cout << s4;
+	cout << s3;
 	gotoxy(x, y + 5);
-	cout << s5;
+	cout << s4;
 	gotoxy(x, y + 6);
-	cout << s6;
+	cout << s5;
 	gotoxy(x, y + 7);
+	cout << s6;
+	gotoxy(x, y + 8);
 	cout << s7;
 }
 
 // man hinh loading
 void loading()
 {
-	string s = "POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
+//	SetBGColor(190);
+	string logo[34];
+	logo[0]= "                                                                      ";
+	logo[1]= "                                                                      ";
+	logo[2]= "                                                                      ";
+	logo[3]= "                                                                      ";
+	logo[4]= "                                     .^!7777!~:.                      ";
+	logo[5]= "                                  ^7YYYYYY55PPPY!                     ";
+	logo[6]= "                              .^!JJ!^.     .~?5PP?                    ";
+	logo[7]= "                            :~77~.            ^YPP^                   ";
+	logo[8]= "                          .!!~:                :5P!                   ";
+	logo[9]= "                         ~?:.                   7P~                   ";
+	logo[10] = "                       .??.                     ~P:                   ";
+	logo[11] = "                      ^Y7                       !J                    ";
+	logo[12] = "                     ~P7                        J^                    ";
+	logo[13] = "                    !P?                     .  :7                     ";
+	logo[14] = "                   7PY.                    :^  ~.                     ";
+	logo[15] = "                  ~PP~ ......  ........ . :7: :^::::::                ";
+	logo[16] = "                 .YPY  ?5J??YY!!JJ55JJ!.~~~~^.:??Y5J??.               ";
+	logo[17] = "                 7PP7  JP~  ^P5.  Y5.  :~!!:     !P~                  ";
+	logo[18] = "                .YPP^  JPYJJYJ~   Y5. ..^!Y~     !P~                  ";
+	logo[19] = "                ^P5P^  JP~...     Y5.  !Y7GJ     7G~                  ";
+	logo[20] = "                !P5P~  7Y^        ?J.^JPY~Y7     ~Y^                  ";
+	logo[21] = "                ~P5PJ             .~JPPJ:                             ";
+	logo[22] = "                .5PPP!          ^75PPJ^                               ";
+	logo[23] = "                 :J5PP?^    .^7YPPY7:                                 ";
+	logo[24] = "                  .~?JJJ7!7J5P5J!:                                    ";
+	logo[25] = "                    :~!?JJJ?!^.                                       ";
+	logo[26] = "              :7777777777777777777!7777777777777777777~               ";
+	logo[27] = "              :YYYYYYYYYYYYYYYYYYY7YYYYYYYYYYYYYYYYYYY7               ";
+	logo[28] = "               .......           .::.          .......                ";
+	logo[29] = "                                                                      ";
+	logo[30] = "                                                                      ";
+	string s = "							POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
+	for(int i = 1; i < 34; i++){
+		cout << "\t\t\t\t\t";
+//		SetBGColor(15);
+		SetColor(20);
+		cout << logo[i] << endl;
+//		SetBGColor(16);
+	}
 	for (unsigned int i = 0; i <= s.length() - 1; i++)
 	{
-		gotoxy(40 + i, 10);
+		SetColor(15);
+		gotoxy(40+i, 30);
 		cout << s[i];
-		gotoxy(40 + i, 12);
+		gotoxy(15 + 2*i, 31);
 		SetBGColor(15);
-		cout << " ";
+		cout << "  ";
+		gotoxy(15 + 2*i, 32);
+		cout << "  ";
 		SetBGColor(16);
-		Sleep(20);
+		Sleep(75);
 	}
-	Sleep(1000);
+	Sleep(2000);
 	system("cls");
 }
 
@@ -770,7 +813,7 @@ int main()
 	resizeConsole(1200, 650);
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	//loading();
+	loading();
 	boxMenu();
 	Control(rl, tl);
 
