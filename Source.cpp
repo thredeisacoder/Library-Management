@@ -428,10 +428,10 @@ void tableEnterTOC(TableOfContentList& tl)
 	SetColor(15);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x + width / 3, y + height / 4);
-	cout << "GENDER: 1 FOR MALE & 2 FOR FEMALE !\n ";
+	cout << "GENDER: 1 FOR MALE & 2 FOR FEMALE !\n ";//hdsd
 	gotoxy(x + width / 3, y + height / 4 + 1);
-	cout << "STATUS: 0(LOCKED) & 1(UNLOCKED)";
-	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
+	cout << "STATUS: 0(LOCKED) & 1(UNLOCKED)";//hdsd
+	for (int i = x; i < x + width + 10; i++)
 	{
 		SetBGColor(15);
 		gotoxy(i, y + 8);
@@ -442,38 +442,58 @@ void tableEnterTOC(TableOfContentList& tl)
 		cout << " ";
 	}
 	SetBGColor(16);
-	gotoxy(x + width / 6, y + 9);
-	cout << " | NAME |";
-	gotoxy(x + width / 6 + 18, y + 9);
+	gotoxy(x + 17, y + 9);
+	cout << "| NAME |";
+	gotoxy(x + width - 79, y + 9);
 	cout << "| GENRE | ";
-	gotoxy(x + width / 6 + 28, y + 9);
-	cout << " | AUTHOR | ";
-	gotoxy(x + width / 6 + 45, y + 9);
-	cout << " | NUMBER PAGE | ";
-	gotoxy(x + width / 6 + 64, y + 9);
-	cout << " | PUBLIC YEAR | ";
+	gotoxy(x + width - 49, y + 9);
+	cout << "| AUTHOR | ";
+	gotoxy(x + width - 23, y + 9);
+	cout << "| NUMBER PAGE | ";
+	gotoxy(x + width - 6, y + 9);
+	cout << "| PUBLIC YEAR | ";
 
 
-	gotoxy(x + width / 6 + 1, y + 11);
+	gotoxy(x + 3, y + 11);
 	p->BookName = EnterFirstName();
-	gotoxy(x + width / 6 + 18, y + 11);
-	p->Genre = EnterFirstName();
-	gotoxy(x + width / 6 + 28, y + 11);
-	p->Author = EnterFirstName();
-	gotoxy(x + width / 6 + 47, y + 11);
-	p->NumOfPage = enterNumOfPage();
-	gotoxy(x + width / 6 + 62, y + 11);
-	p->PublicYear = enterNumOfPage();
+	gotoxy(x + width - 79, y + 11);
+	p->Genre = EnterGenre();
+	gotoxy(x + width - 59, y + 11);
+	p->Author = EnterAuthor();
+	gotoxy(x + width - 20, y + 11);
+	p->NumOfPage = enterNumPage();
+	gotoxy(x + width - 2, y + 11);
+	p->PublicYear = enterYear();
 
 	gotoxy(x + width / 3, y + 15);
 	if (addTableOfContent(tl, *p) == 1) cout << "add successful";
 	else cout << "can not add";
 	Sleep(1500);
 }
-
+void displayTOC(TableOfContent data, int &yTOC){
+	gotoxy(2, yTOC);
+	cout << data.ISBN;
+	gotoxy(11, yTOC);
+	cout << data.BookName;
+	gotoxy(49, yTOC);
+	cout << data.Genre;
+	gotoxy(66, yTOC);
+	cout << data.Author;
+	gotoxy(102, yTOC);
+	cout << data.NumOfPage;
+	gotoxy(116, yTOC);
+	cout << data.PublicYear;
+}
+void loadList(TableOfContentList tl) {
+	int yTOC = 3; //chiều cao hàng đầu tiên
+	for (int i = 0; i < tl.size; i++){
+		displayTOC(*tl.ds[i], yTOC);
+		yTOC+=2;
+	}
+}
 void TableTOC(TableOfContentList& tl)
 {
-	for (int i = 10; i <= 120; i++)
+	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
 	{
 		SetBGColor(15);
 		gotoxy(i, 0);
@@ -482,48 +502,56 @@ void TableTOC(TableOfContentList& tl)
 		cout << " ";
 		SetBGColor(16);
 		SetColor(15);
-		for (int j = 4; j < 33; j += 2)
+		for (int j = 4; j < 4 + 2 * tl.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
 		{
 			gotoxy(i, j);
-			cout << char(95);
+			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
 		}
 		SetColor(16);
 		SetBGColor(15);
-		gotoxy(i, 35);
+		gotoxy(i, 4 + 2 * tl.size);
 		cout << " ";
 	}
-	for (int i = 1; i < 35; i++)
+	for (int i = 1; i < 4 + 2 * tl.size; i++)//vẽ cột ngăn cách từng mục 
 	{
-		gotoxy(10, i);
+		gotoxy(0, i);
 		cout << " ";
-		gotoxy(30, i);
+		gotoxy(9, i);
 		cout << " ";
-		gotoxy(65, i);
+		gotoxy(47, i);
 		cout << " ";
-		gotoxy(85, i);
+		gotoxy(64, i);
 		cout << " ";
-		gotoxy(100, i);
+		gotoxy(98, i);
 		cout << " ";
-		gotoxy(120, i);
+		gotoxy(111, i);
 		cout << " ";
+		gotoxy(124, i);
+		cout << " ";
+	}
+	if(tl.size == 0){
+		gotoxy(60, 25);
+		cout << "Empty!!!";
 	}
 	SetBGColor(16);
 	SetColor(15);
-	gotoxy(17, 1);
+	gotoxy(3, 1);
 	cout << "ISBN";
-	gotoxy(45, 1);
+	gotoxy(26, 1);
 	cout << "BOOK NAME";
-	gotoxy(72, 1);
-	cout << "NUMBER OF PAGE";
-	gotoxy(90, 1);
+	gotoxy(55, 1);
+	cout << "Genre";
+	gotoxy(77, 1);
 	cout << "AUTHOR";
-	gotoxy(108, 1);
-	cout << "PUBLIC YEAR";
-
+	gotoxy(103, 1);
+	cout << "PAGE";
+	gotoxy(116, 1);
+	cout << "YEAR";
+	loadList(tl);
 
 	SetBGColor(15);
 	SetColor(16);
-	for (int i = 130; i <= 139; i++)
+	for (int i = 130; i <= 139; i++)//in ra ô chức năng
 	{
 		gotoxy(i, 3);
 		cout << " ";
@@ -548,10 +576,10 @@ void TableTOC(TableOfContentList& tl)
 	}
 	gotoxy(133, 4);
 	cout << "ADD";
-	gotoxy(132, 8);
-	cout << "DELETE";
-	gotoxy(133, 12);
-	cout << "SET";
+	gotoxy(133, 8);
+	cout << "EDIT";
+	gotoxy(132, 12);
+	cout << "SEARCH";
 
 	HighLight(130, 3, 9);
 
@@ -703,6 +731,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 + 4 - 1)//option 2
 			{
 				system("cls");
+				TableTOC(tl);
+				system("cls");
 				boxMenu();
 				Control(rl, tl);
 				break;
@@ -735,7 +765,7 @@ int main()
 {
 	ReaderList rl;
 	TableOfContentList tl;
-
+	
 	DisableSelection();
 	resizeConsole(1200, 650);
 	DisableCtrButton(0, 1, 1);

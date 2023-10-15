@@ -6,7 +6,6 @@
 using namespace std;
 
 #define MAX 10000
-
 struct Book
 {
 	string BookID;
@@ -72,9 +71,29 @@ struct TableOfContent
 
 struct TableOfContentList
 {
-	TableOfContent* ds[MAX];
+	TableOfContent* ds[MAX] = {NULL};
 	int size = 0;
 };
+void addTail(TableOfContentList& tl, TableOfContent data) {
+	tl.ds[tl.size++] = new TableOfContent(data);
+}
+
+TableOfContent* searchByName(TableOfContentList tl, string input) {
+	for (int i = 0; i < tl.size; i++)
+		if (tl.ds[i]->BookName == input)
+			return tl.ds[i];
+	return NULL;
+}
+
+void themTheoThuTuTenSach(TableOfContentList& tl, TableOfContent data) {
+	if (tl.size < MAX) {
+		int locate;
+		for (locate = 0; locate < tl.size && tl.ds[locate]->BookName < data.BookName; locate++);
+		for (int i = tl.size++; i > locate; i--)
+			tl.ds[i] = tl.ds[i - 1];
+		tl.ds[locate] = new TableOfContent(data);
+	}
+}
 
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 

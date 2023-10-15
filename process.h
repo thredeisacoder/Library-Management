@@ -83,7 +83,7 @@ string EnterID()
 
 }
 
-string EnterFirstName()
+string EnterFirstName()// dung cho ca author, ten sach, the loai o dau sach
 {
 	string Name = "";
 	while (true)
@@ -105,7 +105,158 @@ string EnterFirstName()
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (Name.length() == 20)
+		else if (Name.length() == 35)
+		{
+			continue;
+		}
+		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ' ')
+		{
+			if (Name == "")
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == ' ') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else if (Name[Name.length() - 1] == ' ')
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == ' ') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else
+			{
+				if (c >= 'A' && c <= 'Z')
+				{
+					c = tolower(c);
+					putchar(c);
+				}
+				else
+				{
+					putchar(c);
+				}
+			}
+			Name += c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return Name;
+}
+
+string EnterAuthor()
+{
+	string Name = "";
+	while (true)
+	{
+		char c = _getch();
+		if (c == 13)
+		{
+			if (Name == "")
+			{
+				continue;
+			}
+			else break;
+		}
+		else if (c == 8)
+		{
+			if (Name.empty()) continue;
+			Name.pop_back();
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+		}
+		else if (Name.length() == 32)
+		{
+			continue;
+		}
+		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ' ')
+		{
+			if (Name == "")
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == ' ') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else if (Name[Name.length() - 1] == ' ')
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == ' ') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else
+			{
+				if (c >= 'A' && c <= 'Z')
+				{
+					c = tolower(c);
+					putchar(c);
+				}
+				else
+				{
+					putchar(c);
+				}
+			}
+			Name += c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return Name;
+}
+
+string EnterGenre(){
+		string Name = "";
+	while (true)
+	{
+		char c = _getch();
+		if (c == 13)
+		{
+			if (Name == "")
+			{
+				continue;
+			}
+			else break;
+		}
+		else if (c == 8)
+		{
+			if (Name.empty()) continue;
+			Name.pop_back();
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+		}
+		else if (Name.length() == 15)
 		{
 			continue;
 		}
@@ -317,7 +468,7 @@ string enterName()
 	return Name;
 }
 
-string enterNumOfPage()
+string enterYear()
 {
 	char c;
 	string n = "";
@@ -340,6 +491,40 @@ string enterNumOfPage()
 		else if (c >= '0' && c <= '9')
 		{
 			if (n.length() >= 4)  continue;
+			else putchar(c);
+			n += c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	return n;
+}
+
+string enterNumPage()
+{
+	char c;
+	string n = "";
+	while (true)
+	{
+		c = _getch();
+		if (c == 13)
+		{
+			if (n == "") continue;
+			else break;
+		}
+		else if (c == 8)
+		{
+			if (n == "") continue;
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+			n.pop_back();
+		}
+		else if (c >= '0' && c <= '9')
+		{
+			if (n.length() >= 5)  continue;
 			else putchar(c);
 			n += c;
 		}
