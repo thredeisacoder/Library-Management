@@ -6,18 +6,19 @@ using namespace std;
 
 void title(int x, int y) {
 	string s[19];
-	string s1 = " __       __  .______   .______         ___      .______   ____    ____ ";
-	string s2 = "|  |     |  | |   _  |  |   _  |       /   |     |   _  |  |   |  /   / ";
-	string s3 = "|  |     |  | |  |_)  | |  |_)  |     /  ^  |    |  |_)  |  |   |/   /  ";
-	string s4 = "|  |     |  | |   _  <  |      /     /  /_|  |   |      /    |_    _/   ";
-	string s5 = "|  `----.|  | |  |_)  | |  ||  |-.  /  _____  |  |  ||  |-.    |  |     ";
-	string s6 = "|_______||__| |______/  | _| `.__| /__/     |__| | _| `.__|    |__|     ";
-	string s7 = " 				                                                             _  ";
-	string s8  = "				 _ __ ___   __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_";
-	string s9  = "				| '_ ` _ | / _` | '_ | / _` |/ _` |/ _ | '_ ` _  |/ _ | '_ || __|";
-	string s10 = "				| | | | | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_";
-	string s11 = "				|_| |_| |_||__,_|_| |_||__,_||__, ||___|_| |_| |_||___|_| |_||__|";
-	string s12 = "		    		                               |__/                              ";
+	string a[13];
+	a[1] = " __       __   ______    ______         ___       ______   ____    ____ ";
+	a[2] = "|  |     |  | |   _  |  |   _  |       /   |     |   _  |  |   |  /   / ";
+	a[3] = "|  |     |  | |  |_)  | |  |_)  |     /  ^  |    |  |_)  |  |   |/   /  ";
+	a[4] = "|  |     |  | |   _  <  |      /     /  /_|  |   |      /    |_    _/   ";
+	a[5] = "|  `----.|  | |  |_)  | |  ||  |-.  /  _____  |  |  ||  |-.    |  |     ";
+	a[6] = "|_______||__| |______/  | _| `.__| /__/     |__| | _| `.__|    |__|     ";
+	a[7] = " 				                                                             _  ";
+	a[8]  = "				 _ __ ___   __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_";
+	a[9]  = "				| '_ ` _ | / _` | '_ | / _` |/ _` |/ _ | '_ ` _  |/ _ | '_ || __|";
+	a[10] = "				| | | | | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_";
+	a[11] = "				|_| |_| |_||__,_|_| |_||__,_||__, ||___|_| |_| |_||___|_| |_||__|";
+	a[12] = "		    		                               |__/                              ";
 	s[1] = "               __...--~~~~~-._     _.-~~~~~--...__               ";
 	s[2] = "              //               `V'               ||              ";
 	s[3] = "             //                 |                 ||             ";
@@ -36,36 +37,19 @@ void title(int x, int y) {
 	s[16] = "==============================|||||==============================";
 	s[17] = "                               ---                               ";
 	s[18] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
-	gotoxy(x, y + 2); 
-	cout << s1;
-	gotoxy(x, y + 3);
-	cout << s2;
-	gotoxy(x, y + 4);
-	cout << s3;
-	gotoxy(x, y + 5);
-	cout << s4;
-	gotoxy(x, y + 6);
-	cout << s5;
-	gotoxy(x, y + 7);
-	cout << s6;
-	gotoxy(x, y + 8); 
-	cout << s7;
-	gotoxy(x, y + 9);
-	cout << s8;
-	gotoxy(x, y + 10);
-	cout << s9;
-	gotoxy(x, y + 11);
-	cout << s10;
-	gotoxy(x, y + 12);
-	cout << s11;
-	gotoxy(x, y + 13);
-	cout << s12;
+	//draw logo
+	for(int i = 1; i <= 12; i++){
+		SetColor(i);
+		gotoxy(x,y + 1 + i);
+		cout << a[i];
+	}
+	//draw book
 	for(int i = 1; i <= 18; i++){
-		SetColor(15);
+		SetColor(i);
 		SetBGColor(16);
 		gotoxy(x + 35, 19 + i);
 		cout << s[i];
-	}//draw book
+	}
 }
 
 // man hinh loading
@@ -198,7 +182,7 @@ void boxMenu()
 	// }
 
 	//in huong dan
-	gotoxy(x + width / 6 + 20, y + height * 5 / 6 + 6);
+	gotoxy(x + width / 6 + 48, y + height * 5 / 6);
 	cout << "Press Up and Down to move and Enter to choose!!! ";
 
 	SetBGColor(16);
@@ -877,7 +861,7 @@ int main()
 	resizeConsole(1300, 750);
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	loading();
+//	loading();
 	boxMenu();
 	Control(rl, tl);
 	n = saveFileReader(rl);

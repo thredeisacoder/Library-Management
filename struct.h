@@ -74,8 +74,18 @@ struct TableOfContentList
 	TableOfContent* ds[MAX] = {NULL};
 	int size = 0;
 };
+
+int compare(TableOfContentList tl, TableOfContent data){
+	for(int i = 0; i < tl.size; i++){
+		if(tl.ds[i]->BookName == data.BookName && tl.ds[i]->Author == data.Author && tl.ds[i]->NumOfPage == data.NumOfPage && tl.ds[i]->PublicYear == data.PublicYear){
+			return 0;
+		}
+	}
+	return 1;
+}
+
 int addTail(TableOfContentList& tl, TableOfContent data) {
-	if(tl.size == MAX){return 0;}
+	if(tl.size == MAX || compare(tl, data) == 0){return 0;}
 	tl.ds[tl.size++] = new TableOfContent(data);
 	return 1;
 }
