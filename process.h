@@ -5,9 +5,9 @@ using namespace std;
 
 //Reader//
 
-string EnterID()
+string EnterID(string s)
 {
-	string s = "";
+	cout << s;
 	char c;
 	while (true)
 	{
@@ -32,7 +32,7 @@ string EnterID()
 		{
 			continue;
 		}
-		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_'||(c>='0'&&c<='9'))
+		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9'))
 		{
 			if (s == "")
 			{
@@ -83,9 +83,9 @@ string EnterID()
 
 }
 
-string EnterFirstName()// dung cho ca author, ten sach, the loai o dau sach
+string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o dau sach
 {
-	string Name = "";
+	cout << Name;
 	while (true)
 	{
 		char c = _getch();
@@ -159,9 +159,9 @@ string EnterFirstName()// dung cho ca author, ten sach, the loai o dau sach
 	return Name;
 }
 
-string EnterAuthor()
+string EnterAuthor(string Name)
 {
-	string Name = "";
+	cout << Name;
 	while (true)
 	{
 		char c = _getch();
@@ -235,14 +235,14 @@ string EnterAuthor()
 	return Name;
 }
 
-string EnterGenre(){
-		string Name = "";
+string EnterGenre(string s) {
+	cout << s;
 	while (true)
 	{
 		char c = _getch();
 		if (c == 13)
 		{
-			if (Name == "")
+			if (s == "")
 			{
 				continue;
 			}
@@ -250,19 +250,19 @@ string EnterGenre(){
 		}
 		else if (c == 8)
 		{
-			if (Name.empty()) continue;
-			Name.pop_back();
+			if (s.empty()) continue;
+			s.pop_back();
 			putchar('\b');
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (Name.length() == 15)
+		else if (s.length() == 15)
 		{
 			continue;
 		}
 		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ' ')
 		{
-			if (Name == "")
+			if (s == "")
 			{
 				if (c >= 'a' && c <= 'z')
 				{
@@ -275,7 +275,7 @@ string EnterGenre(){
 					putchar(c);
 				}
 			}
-			else if (Name[Name.length() - 1] == ' ')
+			else if (s[s.length() - 1] == ' ')
 			{
 				if (c >= 'a' && c <= 'z')
 				{
@@ -300,19 +300,19 @@ string EnterGenre(){
 					putchar(c);
 				}
 			}
-			Name += c;
+			s += c;
 		}
 		else
 		{
 			continue;
 		}
 	}
-	return Name;
+	return s;
 }
 
-string EnterLastName()
+string EnterLastName(string  s)
 {
-	string s = "";
+	cout << s;
 	char c;
 	while (true)
 	{
@@ -364,8 +364,9 @@ string EnterLastName()
 	return s;
 }
 
-string EnterGender()
+string EnterGender(string s)
 {
+	cout << s;
 	char c;
 	while (true)
 	{
@@ -392,9 +393,9 @@ string EnterGender()
 
 //Table of content//
 
-string enterName()
+string enterName(string Name)
 {
-	string Name = "";
+	cout << Name;
 	while (true)
 	{
 		char c = _getch();
@@ -468,10 +469,10 @@ string enterName()
 	return Name;
 }
 
-string enterYear()
+string enterYear(string n)
 {
+	cout << n;
 	char c;
-	string n = "";
 	while (true)
 	{
 		c = _getch();
@@ -502,10 +503,10 @@ string enterYear()
 	return n;
 }
 
-string enterNumPage()
+string enterNumPage(string n)
 {
+	cout << n;
 	char c;
-	string n = "";
 	while (true)
 	{
 		c = _getch();

@@ -4,14 +4,14 @@
 
 using namespace std;
 
-void title(int x,int y) {
-	string s1="\t  _       _  _                                            \n";
-	string s2="\t | |     |_|| |                                           \n";
-	string s3="\t | |      _ | | ______  _  __  _______  _  __  _   _     \n";
-	string s4="\t | |     | || |/_/__| || |/__|/ /__ | || |/__|| | | |    \n";
-	string s5="\t | |____ | || || (_)| || |    |_|(_)| || |    | |_| |    \n";
-	string s6="\t |_|____||_||_||_|__/_/|_|    |_|___/_||_|     \\\\_/     \n";
-	string s7="\t                                                 /_/      \n";
+void title(int x, int y) {
+
+	string s1 = "@           @   @@@@@@@@@@    @@@@@@@@@        @@@       @@@@@@@@@    @     @@ ";
+	string s2 = "@           @   @        @@   @       @@      @  @@      @       @@    @   @@  ";
+	string s3 = "@           @   @@@@@@@@@     @       @@     @    @@     @       @@     @ @@   ";
+	string s4 = "@           @   @         @   @@@@@@@@      @@@@@@@@@    @&@@@@@@        @     ";
+	string s5 = "@           @   @         @   @      @@    @        @@   @      @@       @     ";
+	string s6 = "@@@@@@@@@@  @   @@@@@@@@@&    @       @@  @          @@  @       @@      @     ";
 	gotoxy(x, y + 2);
 	cout << s1;
 	gotoxy(x, y + 3);
@@ -24,25 +24,23 @@ void title(int x,int y) {
 	cout << s5;
 	gotoxy(x, y + 7);
 	cout << s6;
-	gotoxy(x, y + 8);
-	cout << s7;
 }
 
 // man hinh loading
 void loading()
 {
-//	SetBGColor(190);
+	Sleep(1000);
 	string logo[34];
-	logo[0]= "                                                                      ";
-	logo[1]= "                                                                      ";
-	logo[2]= "                                                                      ";
-	logo[3]= "                                                                      ";
-	logo[4]= "                                     .^!7777!~:.                      ";
-	logo[5]= "                                  ^7YYYYYY55PPPY!                     ";
-	logo[6]= "                              .^!JJ!^.     .~?5PP?                    ";
-	logo[7]= "                            :~77~.            ^YPP^                   ";
-	logo[8]= "                          .!!~:                :5P!                   ";
-	logo[9]= "                         ~?:.                   7P~                   ";
+	logo[0] = "                                                                      ";
+	logo[1] = "                                                                      ";
+	logo[2] = "                                                                      ";
+	logo[3] = "                                                                      ";
+	logo[4] = "                                     .^!7777!~:.                      ";
+	logo[5] = "                                  ^7YYYYYY55PPPY!                     ";
+	logo[6] = "                              .^!JJ!^.     .~?5PP?                    ";
+	logo[7] = "                            :~77~.            ^YPP^                   ";
+	logo[8] = "                          .!!~:                :5P!                   ";
+	logo[9] = "                         ~?:.                   7P~                   ";
 	logo[10] = "                       .??.                     ~P:                   ";
 	logo[11] = "                      ^Y7                       !J                    ";
 	logo[12] = "                     ~P7                        J^                    ";
@@ -65,22 +63,22 @@ void loading()
 	logo[29] = "                                                                      ";
 	logo[30] = "                                                                      ";
 	string s = "							POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
-	for(int i = 1; i < 34; i++){
+	for (int i = 1; i < 34; i++) {
 		cout << "\t\t\t\t\t";
-//		SetBGColor(15);
+		//		SetBGColor(15);
 		SetColor(20);
 		cout << logo[i] << endl;
-//		SetBGColor(16);
+		//		SetBGColor(16);
 	}
 	for (unsigned int i = 0; i <= s.length() - 1; i++)
 	{
 		SetColor(15);
-		gotoxy(40+i, 30);
+		gotoxy(40 + i, 30);
 		cout << s[i];
-		gotoxy(15 + 2*i, 31);
+		gotoxy(15 + 2 * i, 31);
 		SetBGColor(15);
 		cout << "  ";
-		gotoxy(15 + 2*i, 32);
+		gotoxy(15 + 2 * i, 32);
 		cout << "  ";
 		SetBGColor(16);
 		Sleep(75);
@@ -101,8 +99,8 @@ void Tittle(int x, int y, int width, int height)
 			cout << " ";//to mau trang cho khung tieu de
 		}
 	}
-		SetColor(20);//chu mau xanh
-		title(x + 35, y - 5);
+	SetColor(20);//chu mau xanh
+	title(x + 30, y - 4);
 }
 
 //in lua chon
@@ -127,7 +125,7 @@ void Option(int x, int y, int width, int height, string option)
 //tao menu
 void boxMenu()
 {
-	int x =8;
+	int x = 8;
 	int y = 4;
 	int width = 150;
 	int height = 30;
@@ -177,9 +175,9 @@ void HighLight(int x, int y, int width)
 			SetBGColor(3);
 			gotoxy(i, j);
 			cout << " ";
-			if (i == x || i == x + width-1)
+			if (i == x || i == x + width - 1)
 			{
-				gotoxy(i, y +1);
+				gotoxy(i, y + 1);
 				cout << "  ";
 			}
 		}
@@ -198,7 +196,7 @@ void UnHighLight(int x, int y, int width)
 			SetBGColor(15);
 			gotoxy(i, j);
 			cout << " ";
-			if (i == x || i == x + width-1)
+			if (i == x || i == x + width - 1)
 			{
 				gotoxy(i, y + 1);
 				cout << "  ";
@@ -213,7 +211,7 @@ void UnHighLight(int x, int y, int width)
 //nhap doc gia moi
 void tableEnterRC(ReaderList& rl)
 {
-	Reader* p=new Reader;
+	Reader* p = new Reader;
 	SetColor(15);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x + width / 3, y + height / 4);
@@ -241,13 +239,13 @@ void tableEnterRC(ReaderList& rl)
 	cout << " | STATUS | ";
 
 	gotoxy(x + width / 6 + 62, y + 11);
-	cout << p->CardStatus ;
+	cout << p->CardStatus;
 	gotoxy(x + width / 6 + 1, y + 11);
-	p->FirstName = EnterFirstName();
+	p->FirstName = EnterFirstName(p->FirstName);
 	gotoxy(x + width / 6 + 28, y + 11);
-	p->LastName = EnterLastName();
+	p->LastName = EnterLastName(p->LastName);
 	gotoxy(x + width / 6 + 47, y + 11);
-	p->Gender = EnterGender();
+	p->Gender = EnterGender(p->Gender);
 
 	gotoxy(x + width / 3, y + 15);
 	int n = addNodeReader(rl, *p);
@@ -272,7 +270,7 @@ void displayReader(nodeRC* p, int y)
 	cout << p->data.CardStatus;
 }
 //duyet danh sach doc gia
-void displaytree(nodeRC* head, int &y)
+void displaytree(nodeRC* head, int& y)
 {
 	if (head == NULL) return;
 	else
@@ -296,17 +294,17 @@ void ReaderTable(ReaderList& rl)
 		cout << " ";
 		SetBGColor(16);
 		SetColor(15);
-		for (int j = 4; j < 33; j += 2)
+		for (int j = 4; j < 3 + 2 * rl.size; j += 2)
 		{
 			gotoxy(i, j);
 			cout << char(95);
 		}
 		SetColor(16);
 		SetBGColor(15);
-		gotoxy(i, 35);
+		gotoxy(i, 3 + 2 * rl.size);
 		cout << " ";
 	}
-	for (int i = 1; i < 35; i++)
+	for (int i = 1; i < 3 + 2 * rl.size; i++)
 	{
 		gotoxy(10, i);
 		cout << " ";
@@ -442,8 +440,8 @@ void ReaderTable(ReaderList& rl)
 				system("cls");
 				SetColor(20);
 				cout << "enter id to delete: ";
-				string s = EnterID();
-				int n=deleteNodeReader(rl, s);
+				string s = EnterID(s);
+				int n = deleteNodeReader(rl, s);
 				if (n == 0) cout << "can not delete";
 				else cout << "successful";
 				system("pause");
@@ -471,9 +469,9 @@ void tableEnterTOC(TableOfContentList& tl)
 	SetColor(15);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x + width / 3, y + height / 4);
-	cout << "GENDER: 1 FOR MALE & 2 FOR FEMALE !\n ";//hdsd
+	cout << "NOTE 1!\n ";//hdsd
 	gotoxy(x + width / 3, y + height / 4 + 1);
-	cout << "STATUS: 0(LOCKED) & 1(UNLOCKED)";//hdsd
+	cout << "NOTE 2!";//hdsd
 	for (int i = x; i < x + width + 10; i++)
 	{
 		SetBGColor(15);
@@ -498,22 +496,22 @@ void tableEnterTOC(TableOfContentList& tl)
 
 
 	gotoxy(x + 3, y + 11);
-	p->BookName = EnterFirstName();
+	p->BookName = EnterFirstName(p->BookName);
 	gotoxy(x + width - 79, y + 11);
-	p->Genre = EnterGenre();
+	p->Genre = EnterGenre(p->Genre);
 	gotoxy(x + width - 59, y + 11);
-	p->Author = EnterAuthor();
+	p->Author = EnterAuthor(p->Author);
 	gotoxy(x + width - 20, y + 11);
-	p->NumOfPage = enterNumPage();
+	p->NumOfPage = enterNumPage(p->NumOfPage);
 	gotoxy(x + width - 2, y + 11);
-	p->PublicYear = enterYear();
+	p->PublicYear = enterYear(p->PublicYear);
 
 	gotoxy(x + width / 3, y + 15);
 	if (addTableOfContent(tl, *p) == 1) cout << "add successful";
 	else cout << "can not add";
 	Sleep(1500);
 }
-void displayTOC(TableOfContent data, int &yTOC){
+void displayTOC(TableOfContent data, int& yTOC) {
 	gotoxy(2, yTOC);
 	cout << data.ISBN;
 	gotoxy(11, yTOC);
@@ -529,9 +527,9 @@ void displayTOC(TableOfContent data, int &yTOC){
 }
 void loadList(TableOfContentList tl) {
 	int yTOC = 3; //chiều cao hàng đầu tiên
-	for (int i = 0; i < tl.size; i++){
+	for (int i = 0; i < tl.size; i++) {
 		displayTOC(*tl.ds[i], yTOC);
-		yTOC+=2;
+		yTOC += 2;
 	}
 }
 void TableTOC(TableOfContentList& tl)
@@ -572,7 +570,7 @@ void TableTOC(TableOfContentList& tl)
 		gotoxy(124, i);
 		cout << " ";
 	}
-	if(tl.size == 0){
+	if (tl.size == 0) {
 		gotoxy(60, 25);
 		cout << "Empty!!!";
 	}
@@ -808,7 +806,7 @@ int main()
 {
 	ReaderList rl;
 	TableOfContentList tl;
-	
+
 	DisableSelection();
 	resizeConsole(1200, 650);
 	DisableCtrButton(0, 1, 1);
