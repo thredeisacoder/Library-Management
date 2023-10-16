@@ -1,7 +1,7 @@
 #include "mylib.h"
 #include "struct.h"
 #include "process.h"
-
+#include <fstream>
 using namespace std;
 
 void title(int x, int y) {
@@ -473,9 +473,17 @@ void tableEnterTOC(TableOfContentList& tl)
 	SetColor(15);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x + width / 3, y + height / 4);
-	cout << "NOTE 1!\n ";//hdsd
+	cout << "Limit input characters of each category:\n ";//hdsd
 	gotoxy(x + width / 3, y + height / 4 + 1);
-	cout << "NOTE 2!";//hdsd
+	cout << "Name - 34 chars";//hdsd
+	gotoxy(x + width / 3, y + height / 4 + 2);
+	cout << "Genre - 15 chars";//hdsd
+	gotoxy(x + width / 3, y + height / 4 + 3);
+	cout << "Author - 32 chars";//hdsd
+	gotoxy(x + width / 3, y + height / 4 + 4);
+	cout << "Number Page - 5 chars";//hdsd
+	gotoxy(x + width / 3, y + height / 4 + 5);
+	cout << "Public Year - 4 chars";//hdsd
 	for (int i = x; i < x + width + 10; i++)
 	{
 		SetBGColor(15);
@@ -509,7 +517,14 @@ void tableEnterTOC(TableOfContentList& tl)
 	p->NumOfPage = enterNumPage(p->NumOfPage);
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
-
+	int n = addTail(tl, *p);
+	if(n == 1){
+		gotoxy(x + width / 3, 20);
+		cout << "~ADD SUCCESSFULL!!!~";
+	}else{
+		gotoxy(x + width / 3, 20);
+		cout << "~ADD FAILURE!!!~";
+	}
 	gotoxy(x + width / 3, y + 15);
 	Sleep(1500);
 }
@@ -545,17 +560,17 @@ void TableTOC(TableOfContentList& tl)
 		cout << " ";
 		SetBGColor(16);
 		SetColor(15);
-		for (int j = 4; j < 4 + 2 * tl.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		for (int j = 4; j < 3 + 2 * tl.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
 		{
 			gotoxy(i, j);
 			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
 		}
 		SetColor(16);
 		SetBGColor(15);
-		gotoxy(i, 4 + 2 * tl.size);
+		gotoxy(i, 3 + 2 * tl.size);
 		cout << " ";
 	}
-	for (int i = 1; i < 4 + 2 * tl.size; i++)//vẽ cột ngăn cách từng mục 
+	for (int i = 1; i < 3 + 2 * tl.size; i++)//vẽ cột ngăn cách từng mục 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -678,6 +693,7 @@ void TableTOC(TableOfContentList& tl)
 				system("cls");
 				tableEnterTOC(tl);
 				system("cls");
+				TableTOC(tl);
 				break;
 			}
 			else if (wherey() == 7)
@@ -809,12 +825,14 @@ int main()
 	ReaderList rl;
 	TableOfContentList tl;
 	
-	int n=loadFileReader(rl);
-	if (n == 0)
+	int n = loadFileReader(rl);
+	int m = loadFileTOC(tl);
+	/*if (n == 0 || m == 0)
 	{
 		cout << "CAN'T LOAD FILE\n";
 		system("pause");
-	}
+		return 0;
+	}*/
 	DisableSelection();
 	resizeConsole(1300, 750);
 	DisableCtrButton(0, 1, 1);
@@ -823,13 +841,13 @@ int main()
 	boxMenu();
 	Control(rl, tl);
 	n = saveFileReader(rl);
-	if (n == 0)
+	m = saveTOC(tl);
+	if (n == 0||m==0)
 	{
 		cout << "CAN'T SAVE!!!\n";
 		boxMenu();
 		Control(rl, tl);
 	}
 	delete rl.head;
-	delete tl.ds;
 	return 0;
 }

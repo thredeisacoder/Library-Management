@@ -74,8 +74,10 @@ struct TableOfContentList
 	TableOfContent* ds[MAX] = {NULL};
 	int size = 0;
 };
-void addTail(TableOfContentList& tl, TableOfContent data) {
+int addTail(TableOfContentList& tl, TableOfContent data) {
+	if(tl.size == MAX){return 0;}
 	tl.ds[tl.size++] = new TableOfContent(data);
+	return 1;
 }
 
 TableOfContent* searchByName(TableOfContentList tl, string input) {
@@ -94,6 +96,8 @@ void themTheoThuTuTenSach(TableOfContentList& tl, TableOfContent data) {
 		tl.ds[locate] = new TableOfContent(data);
 	}
 }
+//void generate ISBN 
+//void edit
 
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 

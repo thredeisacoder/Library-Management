@@ -597,3 +597,53 @@ int saveFileReader(ReaderList &rl)
 	f.close();
 	return 1;
 }
+
+//_loading file TOC//
+int loadFileTOC(TableOfContentList& tl)
+{
+	fstream f;
+	f.open("TableOfContent.txt", ios::in);
+	if (!f.is_open()) return 0;
+	string l = "";
+	while (!f.eof())
+	{
+		TableOfContent* p = new TableOfContent;
+
+		getline(f, l);
+		p->ISBN = l;
+		getline(f, l);
+		p->BookName = l;
+		getline(f, l);
+		if (l == "") break;
+		p->Author = l;
+		getline(f, l);
+		if (l == "") break;
+		p->Genre = l;
+		getline(f, l);
+		if (l == "") break;
+		p->NumOfPage=l;
+		getline(f, l);
+		p->PublicYear = l;
+
+		addTail(tl, *p);
+	}
+	f.close();
+	return 1;
+}
+
+int saveTOC(TableOfContentList &tl)
+{
+	fstream f;
+	f.open("TableOfContent.txt", ios::out);
+	if (!f.is_open()) return 0;
+	for (int i = 0; i < tl.size; i++)
+	{
+		f << tl.ds[i]->ISBN << endl;
+		f << tl.ds[i]->BookName << endl;
+		f << tl.ds[i]->Author << endl;
+		f << tl.ds[i]->Genre<< endl;
+		f << tl.ds[i]->NumOfPage << endl;
+		f << tl.ds[i]->PublicYear << endl;
+	}
+	return 1;
+}
