@@ -16,13 +16,13 @@ struct Book
 struct nodeB
 {
 	Book data;
-	nodeB* next;
+	nodeB* next=nullptr;
 };
 
 struct BookList
 {
-	nodeB* head = NULL;
-	nodeB* tail = NULL;
+	nodeB* head = nullptr;
+	nodeB* tail = nullptr;
 	int size = 0;
 };
 
@@ -46,13 +46,13 @@ struct BorrowAndReturn
 struct nodeBAR
 {
 	BorrowAndReturn data;
-	nodeBAR* next = NULL;
+	nodeBAR* next = nullptr;
 };
 
 struct BorrowAndReturnList
 {
-	nodeBAR* head = NULL;
-	nodeBAR* tail = NULL;
+	nodeBAR* head = nullptr;
+	nodeBAR* tail = nullptr;
 	int size = 0;
 };
 
@@ -110,13 +110,13 @@ struct Reader {
 struct nodeRC
 {
 	Reader data;
-	nodeRC* left = NULL;
-	nodeRC* right = NULL;
+	nodeRC* left = nullptr;
+	nodeRC* right = nullptr;
 };
 
 struct ReaderList
 {
-	nodeRC* head = NULL;
+	nodeRC* head = nullptr;
 	int size = 0;
 };
 
@@ -133,7 +133,7 @@ nodeB* makeNodeBook(Book data)
 int addNodeBook(BookList& l, Book data)
 {
 	nodeB* p = makeNodeBook(data);
-	if (l.head == NULL)
+	if (l.head == nullptr)
 	{
 		l.head = p;
 		l.tail = p;
@@ -150,7 +150,7 @@ int addNodeBook(BookList& l, Book data)
 			++l.size;
 			return 1;
 		}
-		for (nodeB* i = l.head; i != NULL; i = i->next)//duyet tu dau toi cuoi
+		for (nodeB* i = l.head; i != nullptr; i = i->next)//duyet tu dau toi cuoi
 		{
 			if (p->data.BookID >= i->data.BookID)//khi id cua sach can them >id cua i thi chen p truoc i
 			{
@@ -282,14 +282,6 @@ int deleteNodeBAR(BorrowAndReturnList& l, string ID)
 	return 0;
 }
 //
-int addTableOfContent(TableOfContentList& l, TableOfContent TOC)
-{
-	if (l.size == MAX - 1) return 0;
-	l.ds[l.size] = new TableOfContent(TOC);
-	l.size++;
-	return 1;
-}
-//
 nodeRC* makeNodeReader(Reader data)
 {
 	nodeRC* p = new nodeRC;
@@ -316,7 +308,7 @@ string makeID(nodeRC* pre, nodeRC* p)
 		s = char(n % 10 +'0') + s;
 		n /= 10;
 	}
-	return p->data.LastName + '_' + s;
+	return  s;
 }
 
 int  addNodeReader(ReaderList& l, Reader data)
@@ -324,7 +316,7 @@ int  addNodeReader(ReaderList& l, Reader data)
 	nodeRC* p = makeNodeReader(data);
 	if (l.size == 0)
 	{
-		p->data.ID =p->data.LastName+'_'+"00001";
+		p->data.ID ="00001";
 		l.head = p;
 		++l.size;
 		return 1;
@@ -334,7 +326,7 @@ int  addNodeReader(ReaderList& l, Reader data)
 		string newName = data.LastName + data.LastName;
 		nodeRC* tmp = l.head;
 
-		while (tmp->left != NULL && tmp->right != NULL)
+		while (tmp->left != nullptr && tmp->right != nullptr)
 		{
 			string Name = tmp->data.LastName + tmp->data.FirstName;
 			if (Name > newName)
@@ -347,14 +339,14 @@ int  addNodeReader(ReaderList& l, Reader data)
 			}
 		}
 		p->data.ID = makeID(tmp, p);
-		if (tmp->left == NULL)
+		if (tmp->left == nullptr)
 		{
 			tmp->left = p;
 			++l.size;
 			return 1;
 		}
 
-		if (tmp->right == NULL)
+		if (tmp->right == nullptr)
 		{
 			tmp->right = p;
 			++l.size;
@@ -364,87 +356,71 @@ int  addNodeReader(ReaderList& l, Reader data)
 	return 0;
 }
 
-nodeRC* findMaxLeft(nodeRC* t)
-{
-	if (t->left == NULL)
-	{
-		return t;
-	}
-	else return findMaxLeft(t->left);
-}
-
 int  deleteNodeReader(ReaderList& l, string ID) 
 {
 	if (l.size == 0)
 	{
-		l.head = nullptr;
 		return 0;
 	}
-		nodeRC* parent = nullptr;
-		nodeRC* current = l.head;
+	nodeRC* par = nullptr;
+	nodeRC* cur = l.head;
 
-		//tim phan tu can xoa va luu node cha cua no
-		while (current != nullptr && current->data.ID != ID) {
-			parent = current;
-			if (ID < current->data.ID) 
-			{
-				current = current->left;
-			}
-			else 
-			{
-				current = current->right;
-			}
+	while (cur != nullptr && cur->data.ID != ID)
+	{
+		if (cur->data.ID < ID)
+		{
+			par = cur;
+			cur = cur->right;
+		}
+		else
+		{
+			par = cur;
+			cur = cur->left;
+		}
+	}
+	if (cur == nullptr)//khong tim thay ID
+	{
+		return 0;
+	}
+
+	if (cur->left == nullptr)
+	{
+		delete cur;
+		l.size--;
+		return 1;
+	}
+	else if (cur->right = nullptr)
+	{
+		delete cur;
+		l.size--;
+		return 1;
+	}
+	else
+	{
+		nodeRC* pre = nullptr;
+		nodeRC* tmp = cur->left;
+		while (tmp->left != nullptr)
+		{
+			pre = tmp;
+			tmp = tmp->left;
 		}
 
-		if (current == nullptr) 
+		if (par == nullptr)
 		{
-			// phan tu ko ton tai
-			return 0;
-		}
-		// co 1 hoac 0 con
-		if (current->left == nullptr || current->right == nullptr) 
-		{
-			nodeRC* child = (current->left != nullptr) ? current->left : current->right;
-			if (parent == nullptr) 
-			{
-				delete current;
-				l.size--;
-				return 1;
-			}
-			else if (current == parent->left) {
-				parent->left = child;
-			}
-			else {
-				parent->right = child;
-			}
-			delete current;
+			cur->right = tmp->right;
+			delete tmp;
 			l.size--;
-			if (l.size == 0) l.head = nullptr;
 			return 1;
 		}
-		else 
+		else
 		{
-				//nut co 2 con
-			nodeRC* tempParent = current;
-			nodeRC* temp = current->right;
-			while (temp->left != nullptr) {
-				tempParent = temp;
-				temp = temp->left;
-			}
-			current->data = temp->data;
-
-			if (tempParent->left == temp) {
-				tempParent->left = temp->right;
-			}
-			else {
-				tempParent->right = temp->right;
-			}
-			delete temp;
+			cur->data = tmp->data;
+			pre->left = tmp->right;
+			delete tmp;
 			l.size--;
-			if (l.size == 0) l.head = nullptr;
+			return 1;
 		}
-		return 1;
+	}
 }
-
 
 

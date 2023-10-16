@@ -272,7 +272,7 @@ void displayReader(nodeRC* p, int y)
 //duyet danh sach doc gia
 void displaytree(nodeRC* head, int& y)
 {
-	if (head == NULL) return;
+	if (head == nullptr) return;
 	else
 	{
 		displayReader(head, y);
@@ -432,15 +432,19 @@ void ReaderTable(ReaderList& rl)
 				if (rl.size == 0)
 				{
 					system("cls");
-					cout << "empty list!!!";
+					gotoxy(125, 20);
+					cout << "EMPTY!!!\n";
 					system("pause");
+					system("cls");
 					ReaderTable(rl);
 					break;
 				}
-				system("cls");
+
+				gotoxy(132, 20);
 				SetColor(20);
 				cout << "enter id to delete: ";
-				string s = EnterID(s);
+				string s = "";
+				s= EnterID(s);
 				int n = deleteNodeReader(rl, s);
 				if (n == 0) cout << "can not delete";
 				else cout << "successful";
@@ -507,8 +511,6 @@ void tableEnterTOC(TableOfContentList& tl)
 	p->PublicYear = enterYear(p->PublicYear);
 
 	gotoxy(x + width / 3, y + 15);
-	if (addTableOfContent(tl, *p) == 1) cout << "add successful";
-	else cout << "can not add";
 	Sleep(1500);
 }
 void displayTOC(TableOfContent data, int& yTOC) {
@@ -806,14 +808,28 @@ int main()
 {
 	ReaderList rl;
 	TableOfContentList tl;
-
+	
+	int n=loadFileReader(rl);
+	if (n == 0)
+	{
+		cout << "CAN'T LOAD FILE\n";
+		system("pause");
+	}
 	DisableSelection();
-	resizeConsole(1200, 650);
+	resizeConsole(1300, 750);
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
 	loading();
 	boxMenu();
 	Control(rl, tl);
-
+	n = saveFileReader(rl);
+	if (n == 0)
+	{
+		cout << "CAN'T SAVE!!!\n";
+		boxMenu();
+		Control(rl, tl);
+	}
+	delete rl.head;
+	delete tl.ds;
 	return 0;
 }

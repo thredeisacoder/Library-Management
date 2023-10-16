@@ -1,5 +1,6 @@
 #include "struct.h"
 #include "mylib.h"
+#include <fstream>
 
 using namespace std;
 
@@ -535,4 +536,64 @@ string enterNumPage(string n)
 		}
 	}
 	return n;
+}
+
+
+//loading file//
+
+int loadFileReader(ReaderList& rl)
+{
+	fstream f;
+	f.open("Reader.txt");
+	if (!f.is_open()) return 0;
+	string l="";
+	while (!f.eof())
+	{
+		Reader* p = new Reader;
+
+		getline(f, l);
+		p->ID = l;
+		getline(f, l);
+		p->FirstName = l;
+		getline(f, l);
+		p->LastName = l;
+		getline(f, l);
+		p->Gender = l;
+		getline(f, l);
+		if (l == "") break;
+		p->CardStatus;
+
+		addNodeReader(rl, *p);
+	}
+	f.close();
+	return 1;
+}
+
+void printReader(fstream &f, nodeRC* p)
+{
+	f << p->data.ID << endl;
+	f << p->data.FirstName << endl;
+	f << p->data.LastName << endl;
+	f << p->data.Gender << endl;
+	f << p->data.CardStatus << endl;
+}
+
+void loadlist(nodeRC* head, fstream &f)
+{
+	if (head == nullptr) return ;
+
+	printReader(f, head);
+	loadlist(head->left, f);
+	loadlist(head->right, f);
+}
+
+int saveFileReader(ReaderList &rl)
+{
+	fstream f;
+	f.open("Reader.txt", ios::out);
+	if (!f.is_open()) return 0;
+
+	loadlist(rl.head, f);
+	f.close();
+	return 1;
 }
