@@ -5,14 +5,38 @@
 using namespace std;
 
 void title(int x, int y) {
-
-	string s1 = "@           @   @@@@@@@@@@    @@@@@@@@@        @@@       @@@@@@@@@    @     @@ ";
-	string s2 = "@           @   @        @@   @       @@      @  @@      @       @@    @   @@  ";
-	string s3 = "@           @   @@@@@@@@@     @       @@     @    @@     @       @@     @ @@   ";
-	string s4 = "@           @   @         @   @@@@@@@@      @@@@@@@@@    @&@@@@@@        @     ";
-	string s5 = "@           @   @         @   @      @@    @        @@   @      @@       @     ";
-	string s6 = "@@@@@@@@@@  @   @@@@@@@@@&    @       @@  @          @@  @       @@      @     ";
-	gotoxy(x, y + 2);
+	string s[19];
+	string s1 = " __       __  .______   .______         ___      .______   ____    ____ ";
+	string s2 = "|  |     |  | |   _  |  |   _  |       /   |     |   _  |  |   |  /   / ";
+	string s3 = "|  |     |  | |  |_)  | |  |_)  |     /  ^  |    |  |_)  |  |   |/   /  ";
+	string s4 = "|  |     |  | |   _  <  |      /     /  /_|  |   |      /    |_    _/   ";
+	string s5 = "|  `----.|  | |  |_)  | |  ||  |-.  /  _____  |  |  ||  |-.    |  |     ";
+	string s6 = "|_______||__| |______/  | _| `.__| /__/     |__| | _| `.__|    |__|     ";
+	string s7 = " 				                                                             _  ";
+	string s8  = "				 _ __ ___   __ _ _ __   __ _  __ _  ___ _ __ ___   ___ _ __ | |_";
+	string s9  = "				| '_ ` _ | / _` | '_ | / _` |/ _` |/ _ | '_ ` _  |/ _ | '_ || __|";
+	string s10 = "				| | | | | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_";
+	string s11 = "				|_| |_| |_||__,_|_| |_||__,_||__, ||___|_| |_| |_||___|_| |_||__|";
+	string s12 = "		    		                               |__/                              ";
+	s[1] = "               __...--~~~~~-._     _.-~~~~~--...__               ";
+	s[2] = "              //               `V'               ||              ";
+	s[3] = "             //                 |                 ||             ";
+	s[4] = "            //                  |                  ||            ";
+	s[5] = "           //                   |                   ||           ";
+	s[6] = "          //                    |                    ||          ";
+	s[7] = "         //                     |                     ||         ";
+	s[8] = "        //                      |                      ||        ";
+	s[9] = "       //                       |                       ||       ";
+	s[10] = "      //                        |                        ||      ";
+	s[11] = "     //                         |                         ||     ";
+	s[12] = "    //                          |                          ||    ";
+	s[13] = "   // __......-----~~~~~~~~~-._ | _.-~~~~~~~~~-----......__ ||   ";
+	s[14] = "  //__........-----~~~~~~~~~-._ | _.-~~~~~~~~~-----........__||  ";
+	s[15] = " //__....... ..-------~~~~~~~._|||_.~~~~~~~-------..........__|| ";
+	s[16] = "==============================|||||==============================";
+	s[17] = "                               ---                               ";
+	s[18] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	gotoxy(x, y + 2); 
 	cout << s1;
 	gotoxy(x, y + 3);
 	cout << s2;
@@ -24,6 +48,24 @@ void title(int x, int y) {
 	cout << s5;
 	gotoxy(x, y + 7);
 	cout << s6;
+	gotoxy(x, y + 8); 
+	cout << s7;
+	gotoxy(x, y + 9);
+	cout << s8;
+	gotoxy(x, y + 10);
+	cout << s9;
+	gotoxy(x, y + 11);
+	cout << s10;
+	gotoxy(x, y + 12);
+	cout << s11;
+	gotoxy(x, y + 13);
+	cout << s12;
+	for(int i = 1; i <= 18; i++){
+		SetColor(15);
+		SetBGColor(16);
+		gotoxy(x + 35, 19 + i);
+		cout << s[i];
+	}//draw book
 }
 
 // man hinh loading
@@ -90,9 +132,9 @@ void loading()
 //Khung tieu de
 void Tittle(int x, int y, int width, int height)
 {
-	for (int i = x + width / 6; i <= x + width * 5 / 6 - 12; i++)//so cot 
+	for (int i = x ; i <= x + width - 8; i++)//so cot 
 	{
-		for (int j = y - 4; j <= y + height / 6 - 1; j++)//to tung o cua tung cot
+		for (int j = y - 4; j <= y + height / 3; j++)//to tung o cua tung cot
 		{
 			SetBGColor(15);//mau nen trang
 			gotoxy(i, j);
@@ -106,7 +148,7 @@ void Tittle(int x, int y, int width, int height)
 //in lua chon
 void Option(int x, int y, int width, int height, string option)
 {
-	for (int i = x - 6; i <= x + width / 3 - 6; i++)//vong lap chay tu dau den het chieu dai option
+	for (int i = x - 6; i <= x + width ; i++)//vong lap chay tu dau den het chieu dai option
 	{
 		SetBGColor(15);
 		SetColor(16);
@@ -114,7 +156,6 @@ void Option(int x, int y, int width, int height, string option)
 		cout << " ";
 		gotoxy(i, y);
 		cout << " ";
-		SetBGColor(15);
 		gotoxy(i, y + 1);
 		cout << " ";
 	}
@@ -126,35 +167,35 @@ void Option(int x, int y, int width, int height, string option)
 void boxMenu()
 {
 	int x = 8;
-	int y = 4;
+	int y = 13;
 	int width = 150;
 	int height = 30;
-
+	SetBGColor(11);
 	if (width <= 1 || height <= 1) return;
-	Tittle(x, y, width, height);
-	Option(x + width / 3, y + height / 4, width, height, "READER CARD!");
-	Option(x + width / 3, y + height / 4 + 4, width, height, "TABLE OF CONTENT");
-	Option(x + width / 3, y + height / 4 + 8, width, height, "BORROW AND RETURN!");
-	Option(x + width / 3, y + height / 4 + 12, width, height, "STATISTIC");
-	Option(x + width / 3, y + height / 4 + 16, width, height, "UPDATE INFORMATION!");
-	Option(x + width / 3, y + height / 4 + 20, width, height, "QUIT!");
+	Tittle(x, y - 9, width, height);
+	Option(x , y + height / 4, width / 3 - 6, height, "READER CARD!");//chua chinh
+	Option(x , y + height / 4 + 4, width / 3 - 6, height, "TABLE OF CONTENT");//chua chinh
+	Option(x , y + height / 4 + 8, width/ 3 - 6, height, "BORROW AND RETURN!");//chua chinh
+	Option(x , y + height / 4 + 12, width/ 3 - 6, height, "STATISTIC");//chua chinh
+	Option(x , y + height / 4 + 16, width/ 3 - 6, height, "UPDATE INFORMATION!");//chua chinh
+	Option(x , y + height / 4 + 20, width/ 3 - 6, height, "QUIT!");//chua chinh
 
-	//in 2 canh ben cua khung menu
-	for (int i = y - 4; i <= y + height + 2; i++)
-	{
-		gotoxy(x + width / 6, i);
-		cout << "  ";
-		gotoxy(x + width * 5 / 6 - 12, i);
-		cout << "  ";
-	}
+	// //in 2 canh ben cua khung menu
+	// for (int i = y - 4; i <= y + height + 2; i++)
+	// {
+	// 	gotoxy(x + width / 6, i);
+	// 	cout << "  ";
+	// 	gotoxy(x + width * 5 / 6 - 12, i);
+	// 	cout << "  ";
+	// }
 
 
-	//in khung duoi cua menu
-	for (int i = x + width / 6; i < x + width * 5 / 6 - 12; i++)
-	{
-		gotoxy(i, y + height + 2);
-		cout << " ";
-	}
+	// //in khung duoi cua menu
+	// for (int i = x + width / 6; i < x + width * 5 / 6 - 12; i++)
+	// {
+	// 	gotoxy(i, y + height + 2);
+	// 	cout << " ";
+	// }
 
 	//in huong dan
 	gotoxy(x + width / 6 + 20, y + height * 5 / 6 + 6);
@@ -214,9 +255,9 @@ void tableEnterRC(ReaderList& rl)
 	Reader* p = new Reader;
 	SetColor(15);
 	int x = 10, y = 2, width = 120, height = 80;
-	gotoxy(x + width / 3, y + height / 4);
+	gotoxy(x , y + height / 4);
 	cout << "GENDER: 1 FOR MALE OR 2 FOR FEMALE !";
-	gotoxy(x + width / 3, y + height / 4 + 1);
+	gotoxy(x , y + height / 4 + 1);
 	cout << "STATUS: 0(LOCKED) OR 1(UNLOCKED)";
 	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
 	{
@@ -247,12 +288,12 @@ void tableEnterRC(ReaderList& rl)
 	gotoxy(x + width / 6 + 47, y + 11);
 	p->Gender = EnterGender(p->Gender);
 
-	gotoxy(x + width / 3, y + 15);
+	gotoxy(x , y + 15);
 	int n = addNodeReader(rl, *p);
 	if (n == 1)	cout << "~ADD Successfully~";
 	else cout << "Can not add";
 	delete p;
-	gotoxy(x + width / 3, y + 16);
+	gotoxy(x , y + 16);
 	Sleep(1000);
 }
 //in 1 doc gia
@@ -472,17 +513,17 @@ void tableEnterTOC(TableOfContentList& tl)
 	TableOfContent* p = new TableOfContent;
 	SetColor(15);
 	int x = 10, y = 2, width = 120, height = 80;
-	gotoxy(x + width / 3, y + height / 4);
+	gotoxy(x , y + height / 4);
 	cout << "Limit input characters of each category:\n ";//hdsd
-	gotoxy(x + width / 3, y + height / 4 + 1);
+	gotoxy(x , y + height / 4 + 1);
 	cout << "Name - 34 chars";//hdsd
-	gotoxy(x + width / 3, y + height / 4 + 2);
+	gotoxy(x , y + height / 4 + 2);
 	cout << "Genre - 15 chars";//hdsd
-	gotoxy(x + width / 3, y + height / 4 + 3);
+	gotoxy(x , y + height / 4 + 3);
 	cout << "Author - 32 chars";//hdsd
-	gotoxy(x + width / 3, y + height / 4 + 4);
+	gotoxy(x , y + height / 4 + 4);
 	cout << "Number Page - 5 chars";//hdsd
-	gotoxy(x + width / 3, y + height / 4 + 5);
+	gotoxy(x , y + height / 4 + 5);
 	cout << "Public Year - 4 chars";//hdsd
 	for (int i = x; i < x + width + 10; i++)
 	{
@@ -519,13 +560,13 @@ void tableEnterTOC(TableOfContentList& tl)
 	p->PublicYear = enterYear(p->PublicYear);
 	int n = addTail(tl, *p);
 	if(n == 1){
-		gotoxy(x + width / 3, 20);
+		gotoxy(x , 20);
 		cout << "~ADD SUCCESSFULL!!!~";
 	}else{
-		gotoxy(x + width / 3, 20);
+		gotoxy(x , 20);
 		cout << "~ADD FAILURE!!!~";
 	}
-	gotoxy(x + width / 3, y + 15);
+	gotoxy(x , y + 15);
 	Sleep(1500);
 }
 void displayTOC(TableOfContent data, int& yTOC) {
@@ -717,9 +758,9 @@ void TableTOC(TableOfContentList& tl)
 //dieu khien tren menu chinh
 void Control(ReaderList& rl, TableOfContentList& tl)
 {
-	int x = 8; int y = 4; int width = 150; int height = 30;
+	int x = 8; int y = 13; int width = 150; int height = 30;
 	//danh dau lua chon dau
-	gotoxy(x + width / 3 - 6, y + height / 4 - 1);
+	gotoxy(x - 6, y + height / 4 - 1);
 
 	HighLight(wherex(), wherey(), width / 3);
 	while (true)
@@ -736,14 +777,14 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			if (wherey() == y + height / 4 - 1)
 			{
 				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x + width / 3 - 6, y + height / 4 + 20 - 1);
+				gotoxy(x  - 6, y + height / 4 + 20 - 1);
 				HighLight(wherex(), wherey(), width / 3);
 
 			}
 			else
 			{
 				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x + width / 3 - 6, wherey() - 4);
+				gotoxy(x  - 6, wherey() - 4);
 				HighLight(wherex(), wherey(), width / 3);
 			}
 		}
@@ -752,14 +793,14 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			if (wherey() == y + height / 4 + 20 - 1)
 			{
 				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x + width / 3 - 6, y + height / 4 - 1);
+				gotoxy(x  - 6, y + height / 4 - 1);
 				HighLight(wherex(), wherey(), width / 3);
 
 			}
 			else
 			{
 				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x + width / 3 - 6, wherey() + 4);
+				gotoxy(x  - 6, wherey() + 4);
 				HighLight(wherex(), wherey(), width / 3);
 			}
 		}
@@ -824,7 +865,6 @@ int main()
 {
 	ReaderList rl;
 	TableOfContentList tl;
-	
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
 	/*if (n == 0 || m == 0)
