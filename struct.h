@@ -72,38 +72,71 @@ struct TableOfContentList
 	TableOfContent* ds[MAX] = {NULL};
 	int size = 0;
 };
+void releaseMemory(TableOfContentList& data) {
+    for (int i = 0; i < data.size; i++) {
+        delete data.ds[i];
+        data.ds[i] = nullptr; // Đặt con trỏ thành nullptr để tránh truy cập bộ nhớ sau khi giải phóng
+    }
+    data.size = 0; // Đặt kích thước về 0 để đánh dấu danh sách rỗng
+}
 
 int compare(TableOfContentList tl, TableOfContent data){
 	for(int i = 0; i < tl.size; i++){
-		if(tl.ds[i]->BookName == data.BookName && tl.ds[i]->Author == data.Author && tl.ds[i]->NumOfPage == data.NumOfPage && tl.ds[i]->PublicYear == data.PublicYear){
+		if(tl.ds[i]->BookName == data.BookName && tl.ds[i]->Author == data.Author && tl.ds[i]->Genre == data.Genre){
 			return 0;
 		}
 	}
 	return 1;
-}
-
+}//done
 int addTail(TableOfContentList& tl, TableOfContent data) {
-	if(tl.size == MAX || compare(tl, data) == 0){return 0;}
-	tl.ds[tl.size++] = new TableOfContent(data);
+	if(tl.size == MAX){return 0;}
+	tl.ds[tl.size] = new TableOfContent(data);
+	tl.size++;
 	return 1;
-}
+}//done
+int themTheoThuTuTheLoai(TableOfContentList& tl, TableOfContent data) {
+	int locate;
+	if (tl.size == 0) {
+		return addTail(tl, data);
+	}
+	if (tl.size < MAX && compare(tl, data) != 0) {
+		for (locate = 0; locate < tl.size; locate++) {
+			if (tl.ds[locate]->Genre > data.Genre || (tl.ds[locate]->Genre == data.Genre && tl.ds[locate]->BookName > data.BookName)) {
+				break;
+			}
+		}
+		for (int i = tl.size; i > locate; i--) {
+			tl.ds[i] = tl.ds[i - 1];
+		}
+		tl.ds[locate] = new TableOfContent(data);
+		tl.size++;
+	}else {
+		return 0;
+	}
+	return 1;
+}//done
 
 TableOfContent* searchByName(TableOfContentList tl, string input) {
 	for (int i = 0; i < tl.size; i++)
-		if (tl.ds[i]->BookName == input)
+		if (tl.ds[i]->BookName == input){
 			return tl.ds[i];
+		}
 	return NULL;
 }
 
-void themTheoThuTuTenSach(TableOfContentList& tl, TableOfContent data) {
-	if (tl.size < MAX) {
-		int locate;
-		for (locate = 0; locate < tl.size && tl.ds[locate]->BookName < data.BookName; locate++);
-		for (int i = tl.size++; i > locate; i--)
-			tl.ds[i] = tl.ds[i - 1];
-		tl.ds[locate] = new TableOfContent(data);
+TableOfContentList saveToSearch(TableOfContentList tl, string input){
+	TableOfContentList tmp;
+	int index = 0;
+	for(int i = 0; i < tl.size; i++){
+		if(tl.ds[i]->BookName == input){
+			tmp.size++;
+			tmp.ds[index] = tl.ds[i];
+			index++;
+		}
 	}
+	return tmp;
 }
+
 //void generate ISBN 
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader {

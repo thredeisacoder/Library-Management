@@ -513,7 +513,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	p->NumOfPage = enterNumPage(p->NumOfPage);
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
-	int n = addTail(tl, *p);
+	int n = themTheoThuTuTheLoai(tl, *p);
 	if(n == 1){
 		gotoxy(x , 20);
 		cout << "~ADD SUCCESSFULL!!!~";
@@ -544,6 +544,64 @@ void loadList(TableOfContentList tl) {
 		displayTOC(*tl.ds[i], yTOC);
 		yTOC += 2;
 	}
+}
+
+void filterBySearching(TableOfContentList& tl, string input)
+{
+	TableOfContentList l = saveToSearch(tl, input);
+	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
+	{
+		SetBGColor(14);
+		gotoxy(i, 0);
+		cout << " ";
+		gotoxy(i, 2);
+		cout << " ";
+		SetColor(0);
+		for (int j = 4; j < 3 + 2 * l.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		{
+			gotoxy(i, j);
+			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
+		}
+		gotoxy(i, 3 + 2 * l.size);
+		cout << " ";
+	}
+	for (int i = 1; i < 3 + 2 * l.size; i++)//vẽ cột ngăn cách từng mục 
+	{
+		gotoxy(0, i);
+		cout << " ";
+		gotoxy(9, i);
+		cout << " ";
+		gotoxy(47, i);
+		cout << " ";
+		gotoxy(64, i);
+		cout << " ";
+		gotoxy(98, i);
+		cout << " ";
+		gotoxy(111, i);
+		cout << " ";
+		gotoxy(124, i);
+		cout << " ";
+	}
+	SetBGColor(15);
+	if (l.size == 0) {
+		gotoxy(60, 25);
+		cout << "Empty!!!";
+	}
+	gotoxy(3, 1);
+	cout << "ISBN";
+	gotoxy(26, 1);
+	cout << "BOOK NAME";
+	gotoxy(55, 1);
+	cout << "Genre";
+	gotoxy(77, 1);
+	cout << "AUTHOR";
+	gotoxy(103, 1);
+	cout << "PAGE";
+	gotoxy(116, 1);
+	cout << "YEAR";
+	loadList(l);
+	SetBGColor(11);
+	SetColor(0);
 }
 void TableTOC(TableOfContentList& tl)
 {
@@ -598,7 +656,6 @@ void TableTOC(TableOfContentList& tl)
 	gotoxy(116, 1);
 	cout << "YEAR";
 	loadList(tl);
-
 	SetBGColor(11);
 	SetColor(0);
 	for (int i = 130; i <= 139; i++)//in ra ô chức năng
@@ -696,6 +753,13 @@ void TableTOC(TableOfContentList& tl)
 			else
 			{
 				system("cls");
+				cout << "Enter BookName: ";
+				string inputSearch="";
+				inputSearch = EnterFirstName(inputSearch);
+				system("cls");
+				filterBySearching(tl, inputSearch);
+				gotoxy(120, 20);
+				system("pause");
 				break;
 			}
 		}
@@ -705,6 +769,7 @@ void TableTOC(TableOfContentList& tl)
 		}
 	}
 }
+
 
 //dieu khien tren menu chinh
 void Control(ReaderList& rl, TableOfContentList& tl)
@@ -830,7 +895,7 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	loading();
+//	loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
@@ -843,5 +908,6 @@ int main()
 		Control(rl, tl);
 	}
 	delete rl.head;
+	releaseMemory(tl);
 	return 0;
 }

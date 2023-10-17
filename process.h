@@ -608,7 +608,6 @@ int loadFileTOC(TableOfContentList& tl)
 	while (!f.eof())
 	{
 		TableOfContent* p = new TableOfContent;
-
 		getline(f, l);
 		p->ISBN = l;
 		getline(f, l);
@@ -624,8 +623,7 @@ int loadFileTOC(TableOfContentList& tl)
 		p->NumOfPage=l;
 		getline(f, l);
 		p->PublicYear = l;
-
-		addTail(tl, *p);
+		themTheoThuTuTheLoai(tl, *p);
 	}
 	f.close();
 	return 1;
