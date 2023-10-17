@@ -1,4 +1,0 @@
-﻿  Source.cpp
-C:\Users\macos\source\repos\Librarymanagement\struct.h(290,7): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\macos\source\repos\Librarymanagement\process.h(12,7): warning C4101: 'c': unreferenced local variable
-  Librarymanagement.vcxproj -> C:\Users\macos\source\repos\Librarymanagement\Debug\Librarymanagement.exe

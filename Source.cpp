@@ -86,24 +86,27 @@ void loading()
 	logo[28] = "               .......           .::.          .......                ";
 	logo[29] = "                                                                      ";
 	logo[30] = "                                                                      ";*/
-	string s = " POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
+	string s = " POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY! ";
 	/*for (int i = 1; i < 34; i++) {
 		cout << "\t\t\t\t\t";
 		SetColor(20);
 		cout << logo[i] << endl;
 	}*/
 	printlogo();
-	for (unsigned int i = 0; i <= s.length() - 1; i++)
+	for (unsigned int i = 0; i < s.length() - 1; i++)
 	{
 		SetColor(16);
 		gotoxy(80 + i, 30);
 		cout << s[i];
-		SetBGColor(10);
-		gotoxy(80 + i, 31);
-		cout <<" ";
+		SetBGColor(15);
+		gotoxy(80 + 2*i-5, 31);
+		cout << "  ";
+		gotoxy(80 + 2*i-5, 31);
+		cout << "  ";
 		SetBGColor(15);
 		Sleep(75);
 	}
+
 	Sleep(2000);
 	system("cls");
 }
@@ -811,7 +814,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 
 int main()
 {
-	SetBGColor(11);
+	SetBGColor(0);
+	ShowCur(1);
 	resizeConsole(1300, 750);
 	ReaderList rl;
 	TableOfContentList tl;
