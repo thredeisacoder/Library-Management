@@ -46,12 +46,10 @@ void title(int x, int y) {
 	//draw book
 	for(int i = 1; i <= 18; i++){
 		SetColor(i);
-		SetBGColor(16);
 		gotoxy(x + 35, 19 + i);
 		cout << s[i];
 	}
 }
-
 // man hinh loading
 void loading()
 {
@@ -91,22 +89,20 @@ void loading()
 	string s = "							POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
 	for (int i = 1; i < 34; i++) {
 		cout << "\t\t\t\t\t";
-		//		SetBGColor(15);
 		SetColor(20);
 		cout << logo[i] << endl;
-		//		SetBGColor(16);
 	}
 	for (unsigned int i = 0; i <= s.length() - 1; i++)
 	{
-		SetColor(15);
+		SetColor(16);
 		gotoxy(40 + i, 30);
 		cout << s[i];
+		SetBGColor(10);
 		gotoxy(15 + 2 * i, 31);
-		SetBGColor(15);
 		cout << "  ";
 		gotoxy(15 + 2 * i, 32);
 		cout << "  ";
-		SetBGColor(16);
+		SetBGColor(15);
 		Sleep(75);
 	}
 	Sleep(2000);
@@ -134,7 +130,7 @@ void Option(int x, int y, int width, int height, string option)
 {
 	for (int i = x - 6; i <= x + width ; i++)//vong lap chay tu dau den het chieu dai option
 	{
-		SetBGColor(15);
+		SetBGColor(11);
 		SetColor(16);
 		gotoxy(i, y - 1);
 		cout << " ";
@@ -154,7 +150,6 @@ void boxMenu()
 	int y = 13;
 	int width = 150;
 	int height = 30;
-	SetBGColor(11);
 	if (width <= 1 || height <= 1) return;
 	Tittle(x, y - 9, width, height);
 	Option(x , y + height / 4, width / 3 - 6, height, "READER CARD!");//chua chinh
@@ -164,29 +159,8 @@ void boxMenu()
 	Option(x , y + height / 4 + 16, width/ 3 - 6, height, "UPDATE INFORMATION!");//chua chinh
 	Option(x , y + height / 4 + 20, width/ 3 - 6, height, "QUIT!");//chua chinh
 
-	// //in 2 canh ben cua khung menu
-	// for (int i = y - 4; i <= y + height + 2; i++)
-	// {
-	// 	gotoxy(x + width / 6, i);
-	// 	cout << "  ";
-	// 	gotoxy(x + width * 5 / 6 - 12, i);
-	// 	cout << "  ";
-	// }
-
-
-	// //in khung duoi cua menu
-	// for (int i = x + width / 6; i < x + width * 5 / 6 - 12; i++)
-	// {
-	// 	gotoxy(i, y + height + 2);
-	// 	cout << " ";
-	// }
-
-	//in huong dan
 	gotoxy(x + width / 6 + 48, y + height * 5 / 6);
 	cout << "Press Up and Down to move and Enter to choose!!! ";
-
-	SetBGColor(16);
-	SetColor(15);
 
 }
 
@@ -197,7 +171,7 @@ void HighLight(int x, int y, int width)
 	{
 		for (int j = y; j <= y + 2; j += 2)
 		{
-			SetBGColor(3);
+			SetBGColor(10);
 			gotoxy(i, j);
 			cout << " ";
 			if (i == x || i == x + width - 1)
@@ -207,7 +181,7 @@ void HighLight(int x, int y, int width)
 			}
 		}
 	}
-	SetBGColor(16);
+	SetBGColor(15);
 	gotoxy(x, y);
 }
 
@@ -218,7 +192,7 @@ void UnHighLight(int x, int y, int width)
 	{
 		for (int j = y; j <= y + 2; j += 2)
 		{
-			SetBGColor(15);
+			SetBGColor(11);
 			gotoxy(i, j);
 			cout << " ";
 			if (i == x || i == x + width - 1)
@@ -228,16 +202,15 @@ void UnHighLight(int x, int y, int width)
 			}
 		}
 	}
-	SetBGColor(16);
+	SetBGColor(15);
 	gotoxy(x, y);
-
 }
 
 //nhap doc gia moi
 void tableEnterRC(ReaderList& rl)
 {
 	Reader* p = new Reader;
-	SetColor(15);
+	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x , y + height / 4);
 	cout << "GENDER: 1 FOR MALE OR 2 FOR FEMALE !";
@@ -245,7 +218,7 @@ void tableEnterRC(ReaderList& rl)
 	cout << "STATUS: 0(LOCKED) OR 1(UNLOCKED)";
 	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
 	{
-		SetBGColor(15);
+		SetBGColor(14);
 		gotoxy(i, y + 8);
 		cout << " ";
 		gotoxy(i, y + 10);
@@ -253,7 +226,7 @@ void tableEnterRC(ReaderList& rl)
 		gotoxy(i, y + 12);
 		cout << " ";
 	}
-	SetBGColor(16);
+	SetBGColor(15);
 	gotoxy(x + width / 6 + 1, y + 9);
 	cout << "| FIRST NAME | ";
 	gotoxy(x + width / 6 + 25, y + 9);
@@ -312,20 +285,17 @@ void ReaderTable(ReaderList& rl)
 {
 	for (int i = 10; i <= 120; i++)
 	{
-		SetBGColor(15);
+		SetBGColor(14);
 		gotoxy(i, 0);
 		cout << " ";
 		gotoxy(i, 2);
 		cout << " ";
-		SetBGColor(16);
-		SetColor(15);
+		SetColor(16);
 		for (int j = 4; j < 3 + 2 * rl.size; j += 2)
 		{
 			gotoxy(i, j);
 			cout << char(95);
 		}
-		SetColor(16);
-		SetBGColor(15);
 		gotoxy(i, 3 + 2 * rl.size);
 		cout << " ";
 	}
@@ -344,8 +314,7 @@ void ReaderTable(ReaderList& rl)
 		gotoxy(120, i);
 		cout << " ";
 	}
-	SetBGColor(16);
-	SetColor(15);
+	SetBGColor(15);
 	gotoxy(17, 1);
 	cout << "ID";
 	gotoxy(45, 1);
@@ -360,7 +329,7 @@ void ReaderTable(ReaderList& rl)
 	int y = 3;
 	displaytree(rl.head, y);
 
-	SetBGColor(15);
+	SetBGColor(11);
 	SetColor(16);
 	for (int i = 130; i <= 139; i++)
 	{
@@ -391,8 +360,8 @@ void ReaderTable(ReaderList& rl)
 	cout << "DELETE";
 	gotoxy(133, 12);
 	cout << "SET";
-	SetColor(15);
 
+	SetBGColor(15);
 	HighLight(130, 3, 9);
 
 	while (true)
@@ -442,7 +411,7 @@ void ReaderTable(ReaderList& rl)
 		}
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
-			SetBGColor(16);
+			SetBGColor(15);
 			if (wherey() == 3)
 			{
 				system("cls");
@@ -495,7 +464,7 @@ void ReaderTable(ReaderList& rl)
 void tableEnterTOC(TableOfContentList& tl)
 {
 	TableOfContent* p = new TableOfContent;
-	SetColor(15);
+	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x , y + height / 4);
 	cout << "Limit input characters of each category:\n ";//hdsd
@@ -511,7 +480,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	cout << "Public Year - 4 chars";//hdsd
 	for (int i = x; i < x + width + 10; i++)
 	{
-		SetBGColor(15);
+		SetBGColor(14);
 		gotoxy(i, y + 8);
 		cout << " ";
 		gotoxy(i, y + 10);
@@ -519,7 +488,7 @@ void tableEnterTOC(TableOfContentList& tl)
 		gotoxy(i, y + 12);
 		cout << " ";
 	}
-	SetBGColor(16);
+	SetBGColor(15);
 	gotoxy(x + 17, y + 9);
 	cout << "| NAME |";
 	gotoxy(x + width - 79, y + 9);
@@ -578,20 +547,17 @@ void TableTOC(TableOfContentList& tl)
 {
 	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
 	{
-		SetBGColor(15);
+		SetBGColor(14);
 		gotoxy(i, 0);
 		cout << " ";
 		gotoxy(i, 2);
 		cout << " ";
-		SetBGColor(16);
-		SetColor(15);
+		SetColor(0);
 		for (int j = 4; j < 3 + 2 * tl.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
 		{
 			gotoxy(i, j);
 			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
 		}
-		SetColor(16);
-		SetBGColor(15);
 		gotoxy(i, 3 + 2 * tl.size);
 		cout << " ";
 	}
@@ -612,12 +578,11 @@ void TableTOC(TableOfContentList& tl)
 		gotoxy(124, i);
 		cout << " ";
 	}
+	SetBGColor(15);
 	if (tl.size == 0) {
 		gotoxy(60, 25);
 		cout << "Empty!!!";
 	}
-	SetBGColor(16);
-	SetColor(15);
 	gotoxy(3, 1);
 	cout << "ISBN";
 	gotoxy(26, 1);
@@ -632,8 +597,8 @@ void TableTOC(TableOfContentList& tl)
 	cout << "YEAR";
 	loadList(tl);
 
-	SetBGColor(15);
-	SetColor(16);
+	SetBGColor(11);
+	SetColor(0);
 	for (int i = 130; i <= 139; i++)//in ra ô chức năng
 	{
 		gotoxy(i, 3);
@@ -712,7 +677,7 @@ void TableTOC(TableOfContentList& tl)
 		}
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
-			SetBGColor(16);
+			SetBGColor(15);
 			if (wherey() == 3)
 			{
 				system("cls");
@@ -790,7 +755,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 		}
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
-			SetBGColor(16);
+			SetBGColor(15);
 			if (wherey() == y + height / 4 + 20 - 1)//Quit
 			{
 				system("cls");
@@ -847,21 +812,23 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 
 int main()
 {
+	SetBGColor(11);
+	resizeConsole(1300, 750);
 	ReaderList rl;
 	TableOfContentList tl;
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
-	/*if (n == 0 || m == 0)
+	if (n == 0 || m == 0)
 	{
 		cout << "CAN'T LOAD FILE\n";
 		system("pause");
 		return 0;
-	}*/
+	}
 	DisableSelection();
-	resizeConsole(1300, 750);
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-//	loading();
+	loading();
+	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
 	n = saveFileReader(rl);

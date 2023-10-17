@@ -25,9 +25,7 @@ struct BookList
 	nodeB* tail = nullptr;
 	int size = 0;
 };
-
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
-
 struct Date
 {
 	int day;
@@ -107,10 +105,7 @@ void themTheoThuTuTenSach(TableOfContentList& tl, TableOfContent data) {
 	}
 }
 //void generate ISBN 
-//void edit
-
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
-
 struct Reader {
 	string ID="";
 	string Gender="";
