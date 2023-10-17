@@ -54,7 +54,7 @@ void title(int x, int y) {
 void loading()
 {
 	Sleep(1000);
-	string logo[34];
+/*	string logo[34];
 	logo[0] = "                                                                      ";
 	logo[1] = "                                                                      ";
 	logo[2] = "                                                                      ";
@@ -85,23 +85,22 @@ void loading()
 	logo[27] = "              :YYYYYYYYYYYYYYYYYYY7YYYYYYYYYYYYYYYYYYY7               ";
 	logo[28] = "               .......           .::.          .......                ";
 	logo[29] = "                                                                      ";
-	logo[30] = "                                                                      ";
-	string s = "							POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
-	for (int i = 1; i < 34; i++) {
+	logo[30] = "                                                                      ";*/
+	string s = " POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY!!!";
+	/*for (int i = 1; i < 34; i++) {
 		cout << "\t\t\t\t\t";
 		SetColor(20);
 		cout << logo[i] << endl;
-	}
+	}*/
+	printlogo();
 	for (unsigned int i = 0; i <= s.length() - 1; i++)
 	{
 		SetColor(16);
-		gotoxy(40 + i, 30);
+		gotoxy(80 + i, 30);
 		cout << s[i];
 		SetBGColor(10);
-		gotoxy(15 + 2 * i, 31);
-		cout << "  ";
-		gotoxy(15 + 2 * i, 32);
-		cout << "  ";
+		gotoxy(80 + i, 31);
+		cout <<" ";
 		SetBGColor(15);
 		Sleep(75);
 	}

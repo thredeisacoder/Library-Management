@@ -647,3 +647,24 @@ int saveTOC(TableOfContentList &tl)
 	}
 	return 1;
 }
+
+void printlogo()
+{
+	fstream f;
+	f.open("logo.txt",ios::in);
+	if(!f.is_open()) cout<<"can not open file";
+	string l="";
+	while(!f.eof())
+	{
+		SetColor(20);
+		getline(f,l);
+		for (int i = 0; i < l.length(); i++)
+		{
+			if (l[i] == '@') cout << " ";
+			else cout << '*';
+		}
+		cout << endl;
+	}
+	f.close();
+}
+
