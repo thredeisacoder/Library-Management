@@ -12,7 +12,7 @@ struct Book
 	int BookStatus;
 	string BookLocation;
 };
-
+/////////////////////////////////////////////Danh muc sach/////////////////////////////////////////////////
 struct nodeB
 {
 	Book data;
@@ -25,6 +25,32 @@ struct BookList
 	nodeB* tail = nullptr;
 	int size = 0;
 };
+// string generateBookID(TableOfContent tl){
+// 	string tmp = "";
+// 	for(int i=0; i < tl.BookName.length(); i++){
+// 		if(tl.BookName[i] >= 'A' && tl.BookName[i] <= 'Z'){
+// 			if(tmp.length() < 2){
+// 				tmp+= tl.BookName[i];
+// 			}else{
+// 				break;
+// 			}
+// 		}
+// 	}
+// 	while(tmp.length() < 2){
+// 		tmp+= tmp[0];
+// 	}
+// 	double num = 0.00000000;
+// 	if(stoi(tl.NumOfPage) < stoi(tl.PublicYear)){
+// 		num = stod(tl.PublicYear) / stod(tl.NumOfPage);
+// 	}else{
+// 		num = stod(tl.NumOfPage) / stod(tl.PublicYear);
+// 	}
+// 	while(num < 1000){
+// 		num*=10;
+// 	}
+// 	int numTail = num;
+// 	return tmp + to_string(numTail);
+// }//chua sua 
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
 struct Date
 {
@@ -88,6 +114,7 @@ int compare(TableOfContentList tl, TableOfContent data){
 	}
 	return 1;
 }//done
+
 int addTail(TableOfContentList& tl, TableOfContent data) {
 	if(tl.size == MAX){return 0;}
 	tl.ds[tl.size] = new TableOfContent(data);
@@ -136,8 +163,18 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input){
 	}
 	return tmp;
 }
+TableOfContent* searchByISBN(TableOfContentList tl, string data){
+	if(tl.size == 0) return NULL;
+	for(int i=0; i<tl.size; i++){
+		if(tl.ds[i]->ISBN == data){
+			TableOfContent* p = tl.ds[i];
+			tl.ds[i] = NULL;
+			return p;
+		}
+	}
+	return NULL;
+}
 
-//void generate ISBN 
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader {
 	string ID="";

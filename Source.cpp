@@ -86,28 +86,52 @@ void loading()
 	logo[28] = "               .......           .::.          .......                ";
 	logo[29] = "                                                                      ";
 	logo[30] = "                                                                      ";*/
-	string s = " POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY! ";
+	string s = "          POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY! ";
 	/*for (int i = 1; i < 34; i++) {
 		cout << "\t\t\t\t\t";
 		SetColor(20);
 		cout << logo[i] << endl;
 	}*/
+	// printlogo();
+	// for (unsigned int i = 0; i < s.length() - 1; i++)
+	// {
+	// 	SetColor(16);
+	// 	gotoxy(80 + i, 30);
+	// 	cout << s[i];
+	// 	SetBGColor(15);
+	// 	gotoxy(80 + 2*i-5, 31);
+	// 	cout << "  ";
+	// 	gotoxy(80 + 2*i-5, 31);
+	// 	cout << "  ";
+	// 	SetBGColor(15);
+	// 	Sleep(75);
+	// }
+
+	// Sleep(2000);
+	// system("cls");
 	printlogo();
 	for (unsigned int i = 0; i < s.length() - 1; i++)
 	{
-		SetColor(16);
+		SetColor(15);
 		gotoxy(80 + i, 30);
 		cout << s[i];
+		Sleep(60);
+	}
+	
+	for(int i=0;i<70;i++)
+	{
 		SetBGColor(15);
-		gotoxy(80 + 2*i-5, 31);
-		cout << "  ";
-		gotoxy(80 + 2*i-5, 31);
-		cout << "  ";
+		gotoxy(80 + 3/2*i, 31);
+		cout << " ";
+		gotoxy(80 + 3/2*i, 32);
+		cout << " ";
+		gotoxy(80 + 3/2*i, 33);
+		cout << " ";
 		SetBGColor(15);
-		Sleep(75);
+		Sleep(60);
 	}
 
-	Sleep(2000);
+	Sleep(1500);
 	system("cls");
 }
 
@@ -154,12 +178,12 @@ void boxMenu()
 	int height = 30;
 	if (width <= 1 || height <= 1) return;
 	Tittle(x, y - 9, width, height);
-	Option(x , y + height / 4, width / 3 - 6, height, "READER CARD!");//chua chinh
-	Option(x , y + height / 4 + 4, width / 3 - 6, height, "TABLE OF CONTENT");//chua chinh
-	Option(x , y + height / 4 + 8, width/ 3 - 6, height, "BORROW AND RETURN!");//chua chinh
-	Option(x , y + height / 4 + 12, width/ 3 - 6, height, "STATISTIC");//chua chinh
-	Option(x , y + height / 4 + 16, width/ 3 - 6, height, "UPDATE INFORMATION!");//chua chinh
-	Option(x , y + height / 4 + 20, width/ 3 - 6, height, "QUIT!");//chua chinh
+	Option(x + 10, y + height / 5 , width / 3 - 6, height, "READER CARD!");//chua chinh
+	Option(x + 10, y + height / 5 + 4, width / 3 - 6, height, "TABLE OF CONTENT");//chua chinh
+	Option(x + 10, y + height / 5 + 8, width/ 3 - 6, height, "BORROW AND RETURN!");//chua chinh
+	Option(x + 10, y + height / 5 + 12, width/ 3 - 6, height, "STATISTIC");//chua chinh
+	Option(x + 10, y + height / 5 + 16, width/ 3 - 6, height, "UPDATE INFORMATION!");//chua chinh
+	Option(x + 10, y + height / 5 + 20, width/ 3 - 6, height, "QUIT!");//chua chinh
 
 	gotoxy(x + width / 6 + 48, y + height * 5 / 6);
 	cout << "Press Up and Down to move and Enter to choose!!! ";
@@ -440,7 +464,7 @@ void ReaderTable(ReaderList& rl)
 				SetColor(20);
 				cout << "enter id to delete: ";
 				string s = "";
-				s= EnterID(s);
+				s= EnterID_ISBN(s);
 				int n = deleteNodeReader(rl, s);
 				if (n == 0) cout << "can not delete";
 				else cout << "successful";
@@ -480,7 +504,9 @@ void tableEnterTOC(TableOfContentList& tl)
 	cout << "Number Page - 5 chars";//hdsd
 	gotoxy(x , y + height / 4 + 5);
 	cout << "Public Year - 4 chars";//hdsd
-	for (int i = x; i < x + width + 10; i++)
+	gotoxy(x , y + height / 4 + 6);
+	cout << "ISBN - 6 chars";//hdsd
+	for (int i = x; i < x + width + 25; i++)
 	{
 		SetBGColor(14);
 		gotoxy(i, y + 8);
@@ -501,6 +527,8 @@ void tableEnterTOC(TableOfContentList& tl)
 	cout << "| NUMBER PAGE | ";
 	gotoxy(x + width - 6, y + 9);
 	cout << "| PUBLIC YEAR | ";
+	gotoxy(x + width + 10, y + 9);
+	cout << "| ISBN | ";
 
 
 	gotoxy(x + 3, y + 11);
@@ -513,6 +541,8 @@ void tableEnterTOC(TableOfContentList& tl)
 	p->NumOfPage = enterNumPage(p->NumOfPage);
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
+	gotoxy(x + width + 10, y + 11);
+	p->ISBN = EnterID_ISBN(p->ISBN);
 	int n = themTheoThuTuTheLoai(tl, *p);
 	if(n == 1){
 		gotoxy(x , 20);
@@ -546,9 +576,16 @@ void loadList(TableOfContentList tl) {
 	}
 }
 
-void filterBySearching(TableOfContentList& tl, string input)
+void filterBySearching(TableOfContentList& tl)
 {
-	TableOfContentList l = saveToSearch(tl, input);
+	gotoxy(50, 43);
+	SetBGColor(7);
+	cout << "Enter BookName: ";
+	string inputSearch="";
+	inputSearch = EnterFirstName(inputSearch);	
+	SetBGColor(15);
+	system("cls");
+	TableOfContentList l = saveToSearch(tl, inputSearch);
 	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
 	{
 		SetBGColor(14);
@@ -602,6 +639,80 @@ void filterBySearching(TableOfContentList& tl, string input)
 	loadList(l);
 	SetBGColor(11);
 	SetColor(0);
+}
+void editTOC(TableOfContentList& tl){
+	gotoxy(130, 40);
+	cout << "Enter ISBN: ";
+	string input = "";
+	input = EnterID_ISBN(input);
+	TableOfContent* tmp = searchByISBN(tl, input);
+	if(tmp == NULL){
+		gotoxy(130, 41);
+		cout << "ISBN not found!!!!!!";
+		Sleep(1000);
+		return ;
+	}
+	SetColor(16);
+	system("cls");
+	int x = 10, y = 2, width = 120, height = 80;
+	gotoxy(x , y + height / 4);
+	cout << "Limit input characters of each category:\n ";//hdsd
+	gotoxy(x , y + height / 4 + 1);
+	cout << "Name - 34 chars";//hdsd
+	gotoxy(x , y + height / 4 + 2);
+	cout << "Genre - 15 chars";//hdsd
+	gotoxy(x , y + height / 4 + 3);
+	cout << "Author - 32 chars";//hdsd
+	gotoxy(x , y + height / 4 + 4);
+	cout << "Number Page - 5 chars";//hdsd
+	gotoxy(x , y + height / 4 + 5);
+	cout << "Public Year - 4 chars";//hdsd
+	for (int i = x; i < x + width + 25; i++)
+	{
+		SetBGColor(14);
+		gotoxy(i, y + 8);
+		cout << " ";
+		gotoxy(i, y + 10);
+		cout << " ";
+		gotoxy(i, y + 12);
+		cout << " ";
+	}
+	SetBGColor(15);
+	gotoxy(x + 17, y + 9);
+	cout << "| NAME |";
+	gotoxy(x + width - 79, y + 9);
+	cout << "| GENRE | ";
+	gotoxy(x + width - 49, y + 9);
+	cout << "| AUTHOR | ";
+	gotoxy(x + width - 23, y + 9);
+	cout << "| NUMBER PAGE | ";
+	gotoxy(x + width - 6, y + 9);
+	cout << "| PUBLIC YEAR | ";
+	gotoxy(x + width + 10, y + 9);
+	cout << "| ISBN | ";
+
+	gotoxy(x + 3, y + 11);
+	tmp->BookName = EnterFirstName(tmp->BookName);
+	gotoxy(x + width - 79, y + 11);
+	tmp->Genre = EnterGenre(tmp->Genre);
+	gotoxy(x + width - 59, y + 11);
+	tmp->Author = EnterAuthor(tmp->Author);
+	gotoxy(x + width - 20, y + 11);
+	tmp->NumOfPage = enterNumPage(tmp->NumOfPage);
+	gotoxy(x + width - 2, y + 11);
+	tmp->PublicYear = enterYear(tmp->PublicYear);
+	gotoxy(x + width + 10, y + 11);
+	tmp->ISBN = EnterID_ISBN(tmp->ISBN);
+	int n = themTheoThuTuTheLoai(tl, *tmp);
+	if(n == 0){
+		gotoxy(x , 20);
+		cout << "~EDIT SUCCESSFULL!!!~";
+	}else{
+		gotoxy(x , 20);
+		cout << "~EDIT FAILURE!!!~";
+	}
+	gotoxy(x , y + 15);
+	Sleep(1500);
 }
 void TableTOC(TableOfContentList& tl)
 {
@@ -747,19 +858,28 @@ void TableTOC(TableOfContentList& tl)
 			}
 			else if (wherey() == 7)
 			{
+				editTOC(tl);
 				system("cls");
+				TableTOC(tl);
 				break;
 			}
 			else
 			{
-				system("cls");
-				cout << "Enter BookName: ";
-				string inputSearch="";
-				inputSearch = EnterFirstName(inputSearch);
-				system("cls");
-				filterBySearching(tl, inputSearch);
+				filterBySearching(tl);
 				gotoxy(120, 20);
-				system("pause");
+				while(true){
+					gotoxy(127, 5);
+					cout << "ESC : Return to menu!";
+					char a=_getch();
+					SetBGColor(15);
+					if(a == 27){
+						system("cls");
+						TableTOC(tl);
+						break;
+					}else{
+						continue;
+					}
+				}
 				break;
 			}
 		}
@@ -774,7 +894,7 @@ void TableTOC(TableOfContentList& tl)
 //dieu khien tren menu chinh
 void Control(ReaderList& rl, TableOfContentList& tl)
 {
-	int x = 8; int y = 13; int width = 150; int height = 30;
+	int x = 18; int y = 12; int width = 150; int height = 30;
 	//danh dau lua chon dau
 	gotoxy(x - 6, y + height / 4 - 1);
 
@@ -895,7 +1015,7 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-//	loading();
+	loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);

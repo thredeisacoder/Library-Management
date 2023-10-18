@@ -6,7 +6,7 @@ using namespace std;
 
 //Reader//
 
-string EnterID(string s)
+string EnterID_ISBN(string s)
 {
 	cout << s;
 	char c;
@@ -29,7 +29,7 @@ string EnterID(string s)
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (s.length() == 10)
+		else if (s.length() == 6)
 		{
 			continue;
 		}
@@ -310,6 +310,7 @@ string EnterGenre(string s) {
 	}
 	return s;
 }
+
 
 string EnterLastName(string  s)
 {
