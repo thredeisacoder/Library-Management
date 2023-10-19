@@ -54,61 +54,9 @@ void title(int x, int y) {
 void loading()
 {
 	Sleep(1000);
-/*	string logo[34];
-	logo[0] = "                                                                      ";
-	logo[1] = "                                                                      ";
-	logo[2] = "                                                                      ";
-	logo[3] = "                                                                      ";
-	logo[4] = "                                     .^!7777!~:.                      ";
-	logo[5] = "                                  ^7YYYYYY55PPPY!                     ";
-	logo[6] = "                              .^!JJ!^.     .~?5PP?                    ";
-	logo[7] = "                            :~77~.            ^YPP^                   ";
-	logo[8] = "                          .!!~:                :5P!                   ";
-	logo[9] = "                         ~?:.                   7P~                   ";
-	logo[10] = "                       .??.                     ~P:                   ";
-	logo[11] = "                      ^Y7                       !J                    ";
-	logo[12] = "                     ~P7                        J^                    ";
-	logo[13] = "                    !P?                     .  :7                     ";
-	logo[14] = "                   7PY.                    :^  ~.                     ";
-	logo[15] = "                  ~PP~ ......  ........ . :7: :^::::::                ";
-	logo[16] = "                 .YPY  ?5J??YY!!JJ55JJ!.~~~~^.:??Y5J??.               ";
-	logo[17] = "                 7PP7  JP~  ^P5.  Y5.  :~!!:     !P~                  ";
-	logo[18] = "                .YPP^  JPYJJYJ~   Y5. ..^!Y~     !P~                  ";
-	logo[19] = "                ^P5P^  JP~...     Y5.  !Y7GJ     7G~                  ";
-	logo[20] = "                !P5P~  7Y^        ?J.^JPY~Y7     ~Y^                  ";
-	logo[21] = "                ~P5PJ             .~JPPJ:                             ";
-	logo[22] = "                .5PPP!          ^75PPJ^                               ";
-	logo[23] = "                 :J5PP?^    .^7YPPY7:                                 ";
-	logo[24] = "                  .~?JJJ7!7J5P5J!:                                    ";
-	logo[25] = "                    :~!?JJJ?!^.                                       ";
-	logo[26] = "              :7777777777777777777!7777777777777777777~               ";
-	logo[27] = "              :YYYYYYYYYYYYYYYYYYY7YYYYYYYYYYYYYYYYYYY7               ";
-	logo[28] = "               .......           .::.          .......                ";
-	logo[29] = "                                                                      ";
-	logo[30] = "                                                                      ";*/
-	string s = "          POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY! ";
-	/*for (int i = 1; i < 34; i++) {
-		cout << "\t\t\t\t\t";
-		SetColor(20);
-		cout << logo[i] << endl;
-	}*/
-	// printlogo();
-	// for (unsigned int i = 0; i < s.length() - 1; i++)
-	// {
-	// 	SetColor(16);
-	// 	gotoxy(80 + i, 30);
-	// 	cout << s[i];
-	// 	SetBGColor(15);
-	// 	gotoxy(80 + 2*i-5, 31);
-	// 	cout << "  ";
-	// 	gotoxy(80 + 2*i-5, 31);
-	// 	cout << "  ";
-	// 	SetBGColor(15);
-	// 	Sleep(75);
-	// }
 
-	// Sleep(2000);
-	// system("cls");
+	string s = "          POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY! ";
+
 	printlogo();
 	for (unsigned int i = 0; i < s.length() - 1; i++)
 	{
@@ -134,7 +82,6 @@ void loading()
 	Sleep(1500);
 	system("cls");
 }
-
 //Khung tieu de
 void Tittle(int x, int y, int width, int height)
 {
@@ -150,7 +97,6 @@ void Tittle(int x, int y, int width, int height)
 	SetColor(20);//chu mau xanh
 	title(x + 30, y - 4);
 }
-
 //in lua chon
 void Option(int x, int y, int width, int height, string option)
 {
@@ -168,7 +114,6 @@ void Option(int x, int y, int width, int height, string option)
 	gotoxy(x, y);
 	cout << option;
 }
-
 //tao menu
 void boxMenu()
 {
@@ -282,32 +227,53 @@ void tableEnterRC(ReaderList& rl)
 //in 1 doc gia
 void displayReader(nodeRC* p, int y)
 {
-	gotoxy(14, y);
+	while(y>=20)
+	{
+		y-=20;
+	}
+	gotoxy(14, 3+ 2*y);
 	cout << p->data.ID;
-	gotoxy(35, y);
+	gotoxy(35, 3+2*y);
 	cout << p->data.FirstName;
-	gotoxy(70, y);
+	gotoxy(70, 3+2*y);
 	cout << p->data.LastName;
-	gotoxy(90, y);
+	gotoxy(90, 3+2*y);
 	cout << p->data.Gender;
-	gotoxy(110, y);
+	gotoxy(110,3+2*y);
 	cout << p->data.CardStatus;
 }
 //duyet danh sach doc gia
-void displaytree(nodeRC* head, int& y)
+void displaytree(nodeRC* head, int& y,int count)
 {
 	if (head == nullptr) return;
 	else
 	{
-		displayReader(head, y);
-		y += 2;
-		displaytree(head->left, y);
-		displaytree(head->right, y);
+		if(y>=count-20&&y<count) displayReader(head, y);
+		y ++;
+		displaytree(head->left, y,count);
+		displaytree(head->right, y,count);
+	}
+}
+
+void clearReaderTable()
+{
+	for (int i = 3; i <  3+ 2 * 20; i+=2)
+	{
+		gotoxy(14, i);
+		for(int j=14;j<30;j++) cout << " ";
+		gotoxy(35, i);
+		for(int j=35;j<65;j++) cout << " ";
+		gotoxy(70, i);
+		for(int j=70;j<85;j++) cout << " ";
+		gotoxy(90, i);
+		for(int j=90;j<100;j++) cout << " ";
+		gotoxy(110,i);
+		for(int j=110;j<120;j++) cout << " ";
 	}
 }
 
 //danh sach doc gia
-void ReaderTable(ReaderList& rl)
+void ReaderTable(ReaderList& rl,int count)
 {
 	for (int i = 10; i <= 120; i++)
 	{
@@ -317,28 +283,28 @@ void ReaderTable(ReaderList& rl)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(16);
-		for (int j = 4; j < 3 + 2 * rl.size; j += 2)
+		for (int j = 4; j < 3 + 2 * 20; j += 2)
 		{
 			gotoxy(i, j);
 			cout << char(95);
 		}
-		gotoxy(i, 3 + 2 * rl.size);
+		gotoxy(i, 3 + 2 * 20);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * rl.size; i++)
+	for (int i = 1; i < 3 + 2 * 20; i++)
 	{
 		gotoxy(10, i);
-		cout << " ";
+		cout << "|";
 		gotoxy(30, i);
-		cout << " ";
+		cout << "|";
 		gotoxy(65, i);
-		cout << " ";
+		cout << "|";
 		gotoxy(85, i);
-		cout << " ";
+		cout << "|";
 		gotoxy(100, i);
-		cout << " ";
+		cout << "|";
 		gotoxy(120, i);
-		cout << " ";
+		cout << "|";
 	}
 	SetBGColor(15);
 	gotoxy(17, 1);
@@ -352,9 +318,13 @@ void ReaderTable(ReaderList& rl)
 	gotoxy(108, 1);
 	cout << "STATUS";
 
-	int y = 3;
-	displaytree(rl.head, y);
+	int y = 0;
+	displaytree(rl.head, y,count);
+}
 
+void controlReaderTable(ReaderList &rl,int count)
+{
+	int y;
 	SetBGColor(11);
 	SetColor(16);
 	for (int i = 130; i <= 139; i++)
@@ -404,7 +374,7 @@ void ReaderTable(ReaderList& rl)
 			system("cls");
 			break;
 		}
-		if (c == 72)//khi nguoi dung nhan UP
+		else if (c == 72)//khi nguoi dung nhan UP
 		{
 			if (wherey() == 3)
 			{
@@ -426,7 +396,6 @@ void ReaderTable(ReaderList& rl)
 				UnHighLight(wherex(), wherey(), 9);
 				gotoxy(130, 3);
 				HighLight(wherex(), wherey(), 9);
-
 			}
 			else
 			{
@@ -434,6 +403,32 @@ void ReaderTable(ReaderList& rl)
 				gotoxy(130, wherey() + 4);
 				HighLight(wherex(), wherey(), 9);
 			}
+		}
+		else if(c==75)///left
+		{
+			if(_kbhit()) char k=_getch();
+			y=0;
+			if(count==20) continue;
+			UnHighLight(wherex(),wherey(),9);
+			count-=20;
+			clearReaderTable();
+			displaytree(rl.head,y,count);
+			gotoxy(130,3);
+			HighLight(wherex(),wherey(),9);
+
+		}
+		else if(c==77)//right
+		{
+			if(_kbhit()) char k=_getch();
+			y=0;
+			if(count>=rl.size) continue;
+			UnHighLight(wherex(),wherey(),9);
+			count+=20;
+			clearReaderTable();
+			displaytree(rl.head,y,count);
+			gotoxy(130,3);
+			HighLight(wherex(),wherey(),9);
+
 		}
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
@@ -443,7 +438,8 @@ void ReaderTable(ReaderList& rl)
 				system("cls");
 				tableEnterRC(rl);
 				system("cls");
-				ReaderTable(rl);
+				ReaderTable(rl,count);
+				controlReaderTable(rl,count);
 				system("cls");
 				break;
 			}
@@ -456,7 +452,8 @@ void ReaderTable(ReaderList& rl)
 					cout << "EMPTY!!!\n";
 					system("pause");
 					system("cls");
-					ReaderTable(rl);
+					ReaderTable(rl,count);
+					controlReaderTable(rl,count);
 					break;
 				}
 
@@ -469,7 +466,8 @@ void ReaderTable(ReaderList& rl)
 				if (n == 0) cout << "can not delete";
 				else cout << "successful";
 				system("pause");
-				ReaderTable(rl);
+				ReaderTable(rl,count);
+				controlReaderTable(rl,count);
 				system("cls");
 				break;
 			}
@@ -890,7 +888,6 @@ void TableTOC(TableOfContentList& tl)
 	}
 }
 
-
 //dieu khien tren menu chinh
 void Control(ReaderList& rl, TableOfContentList& tl)
 {
@@ -951,6 +948,22 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 + 16 - 1)//option 5
 			{
 				system("cls");
+				int n = saveFileReader(rl);
+				int m = saveTOC(tl);
+				if (n == 0||m==0)
+				{
+					system("cls");
+					gotoxy(60,20);
+					cout << "CAN'T SAVE!!!\n";
+					Sleep(1000);
+				}
+				else
+				{
+					system("cls");
+					gotoxy(60,20); 
+					cout<<"SAVING SUCCESSFUL!!!";
+					Sleep(1000);
+			    }
 				boxMenu();
 				Control(rl, tl);
 				break;
@@ -958,7 +971,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 - 1)//option 1
 			{
 				system("cls");
-				ReaderTable(rl);
+				ReaderTable(rl,20);
+				controlReaderTable(rl,20);
 				system("cls");
 				boxMenu();
 				Control(rl, tl);
@@ -1015,18 +1029,10 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	loading();
+	//loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
-	n = saveFileReader(rl);
-	m = saveTOC(tl);
-	if (n == 0||m==0)
-	{
-		cout << "CAN'T SAVE!!!\n";
-		boxMenu();
-		Control(rl, tl);
-	}
 	delete rl.head;
 	releaseMemory(tl);
 	return 0;
