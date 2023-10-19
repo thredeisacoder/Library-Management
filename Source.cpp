@@ -964,6 +964,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 					cout<<"SAVING SUCCESSFUL!!!";
 					Sleep(1000);
 			    }
+			    system("cls");
 				boxMenu();
 				Control(rl, tl);
 				break;
@@ -1029,7 +1030,7 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	//loading();
+	loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
