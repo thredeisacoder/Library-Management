@@ -177,6 +177,19 @@ void UnHighLight(int x, int y, int width)
 	gotoxy(x, y);
 }
 
+void Tick(int x,int y)//danh dau
+{
+	SetBGColor(20);
+	cout<<"  ";
+	gotoxy(x,y);
+	SetBGColor(15);
+}
+void UnTick(int x,int y)//huy danh dau
+{
+	SetBGColor(15);
+	cout<<"  ";
+	gotoxy(x,y);
+}
 //nhap doc gia moi
 void tableEnterRC(ReaderList& rl)
 {
@@ -277,7 +290,7 @@ void ReaderTable(ReaderList& rl,int count)
 {
 	for (int i = 10; i <= 120; i++)
 	{
-		SetBGColor(14);
+		SetBGColor(6);
 		gotoxy(i, 0);
 		cout << " ";
 		gotoxy(i, 2);
@@ -294,17 +307,17 @@ void ReaderTable(ReaderList& rl,int count)
 	for (int i = 1; i < 3 + 2 * 20; i++)
 	{
 		gotoxy(10, i);
-		cout << "|";
+		cout << " ";
 		gotoxy(30, i);
-		cout << "|";
+		cout << " ";
 		gotoxy(65, i);
-		cout << "|";
+		cout << " ";
 		gotoxy(85, i);
-		cout << "|";
+		cout << " ";
 		gotoxy(100, i);
-		cout << "|";
+		cout << " ";
 		gotoxy(120, i);
-		cout << "|";
+		cout << " ";
 	}
 	SetBGColor(15);
 	gotoxy(17, 1);
@@ -322,11 +335,172 @@ void ReaderTable(ReaderList& rl,int count)
 	displaytree(rl.head, y,count);
 }
 
+void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
+{
+	char c;
+	gotoxy(11,3);
+	Tick(wherex(),wherey());
+	while (true)
+	{
+		c=_getch();
+		if(c==13) //enter
+		{
+			UnTick(wherex(),wherey());
+			int pos=count-20+(wherey()-3)/2;
+			cout<<pos;
+			system("pause");
+			break;
+		}
+		else if(c==27)//esc
+		{
+			UnTick(wherex(),wherey());
+			break;
+		}
+		else if(c==80)//down
+		{
+			if(wherey()!=3+2*19)
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),wherey()+2);
+				Tick(wherex(),wherey());
+			}
+			else
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3);
+				Tick(wherex(),wherey());
+			}
+		}
+		else if(c==72)//up
+		{
+			if(wherey()!=3)
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),wherey()-2);
+				Tick(wherex(),wherey());
+			}
+			else
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3+2*19);
+				Tick(wherex(),wherey());
+			}
+		}
+		else if(c==75)///left
+		{
+			int y=0;
+			if(count==20) continue;
+			UnTick(wherex(),wherey());
+			count-=20;
+			clearReaderTable();
+			displaytree(rl.head,y,count);
+			gotoxy(11,3);
+			Tick(wherex(),wherey());
+		}
+		else if(c==77)//right
+		{
+			int y=0;
+			if(count>=rl.size) continue;
+			UnTick(wherex(),wherey());
+			count+=20;
+			clearReaderTable();
+			displaytree(rl.head,y,count);
+			gotoxy(11,3);
+			Tick(wherex(),wherey());
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
+
+
+void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
+{
+	char c;
+	gotoxy(11,3);
+	Tick(wherex(),wherey());
+	while (true)
+	{
+		c=_getch();
+		if(c==13) //enter
+		{
+			UnTick(wherex(),wherey());
+			int pos=count-20+(wherey()-3)/2;
+			cout<<pos;
+			system("pause");
+			break;
+		}
+		else if(c==27)//esc
+		{
+			UnTick(wherex(),wherey());
+			break;
+		}
+		else if(c==80)//down
+		{
+			if(wherey()!=3+2*19)
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),wherey()+2);
+				Tick(wherex(),wherey());
+			}
+			else
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3);
+				Tick(wherex(),wherey());
+			}
+		}
+		else if(c==72)//up
+		{
+			if(wherey()!=3)
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),wherey()-2);
+				Tick(wherex(),wherey());
+			}
+			else
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3+2*19);
+				Tick(wherex(),wherey());
+			}
+		}
+		else if(c==75)///left
+		{
+			int y=0;
+			if(count==20) continue;
+			UnTick(wherex(),wherey());
+			count-=20;
+			clearReaderTable();
+			displaytree(rl.head,y,count);
+			gotoxy(11,3);
+			Tick(wherex(),wherey());
+		}
+		else if(c==77)//right
+		{
+			int y=0;
+			if(count>=rl.size) continue;
+			UnTick(wherex(),wherey());
+			count+=20;
+			clearReaderTable();
+			displaytree(rl.head,y,count);
+			gotoxy(11,3);
+			Tick(wherex(),wherey());
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
+
 void controlReaderTable(ReaderList &rl,int count)
 {
 	int y;
 	SetBGColor(11);
-	SetColor(16);
+	SetColor(0);
 	for (int i = 130; i <= 139; i++)
 	{
 		gotoxy(i, 3);
@@ -406,7 +580,6 @@ void controlReaderTable(ReaderList &rl,int count)
 		}
 		else if(c==75)///left
 		{
-			if(_kbhit()) char k=_getch();
 			y=0;
 			if(count==20) continue;
 			UnHighLight(wherex(),wherey(),9);
@@ -419,7 +592,6 @@ void controlReaderTable(ReaderList &rl,int count)
 		}
 		else if(c==77)//right
 		{
-			if(_kbhit()) char k=_getch();
 			y=0;
 			if(count>=rl.size) continue;
 			UnHighLight(wherex(),wherey(),9);
@@ -428,7 +600,6 @@ void controlReaderTable(ReaderList &rl,int count)
 			displaytree(rl.head,y,count);
 			gotoxy(130,3);
 			HighLight(wherex(),wherey(),9);
-
 		}
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
@@ -458,14 +629,7 @@ void controlReaderTable(ReaderList &rl,int count)
 				}
 
 				gotoxy(132, 20);
-				SetColor(20);
-				cout << "enter id to delete: ";
-				string s = "";
-				s= EnterID_ISBN(s);
-				int n = deleteNodeReader(rl, s);
-				if (n == 0) cout << "can not delete";
-				else cout << "successful";
-				system("pause");
+				deleteReaderMode(rl,count);
 				ReaderTable(rl,count);
 				controlReaderTable(rl,count);
 				system("cls");
@@ -483,7 +647,6 @@ void controlReaderTable(ReaderList &rl,int count)
 		}
 	}
 }
-
 //danh sach dau sach
 void tableEnterTOC(TableOfContentList& tl)
 {
