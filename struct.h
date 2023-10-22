@@ -108,7 +108,9 @@ void releaseMemory(TableOfContentList& data) {
 
 int compare(TableOfContentList tl, TableOfContent data){
 	for(int i = 0; i < tl.size; i++){
-		if(tl.ds[i]->BookName == data.BookName && tl.ds[i]->Author == data.Author && tl.ds[i]->Genre == data.Genre){
+		if(tl.ds[i]->ISBN == data.ISBN){
+			return 0;
+		}else if(tl.ds[i]->BookName == data.BookName && tl.ds[i]->Author == data.Author && tl.ds[i]->Genre == data.Genre){
 			return 0;
 		}
 	}

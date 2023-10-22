@@ -729,19 +729,24 @@ void displayTOC(TableOfContent data, int& yTOC) {
 	gotoxy(116, yTOC);
 	cout << data.PublicYear;
 }
-void loadList(TableOfContentList tl) {
+void loadListTOC(TableOfContentList tl, int count) {
 	int yTOC = 3; //chiều cao hàng đầu tiên
-	for (int i = 0; i < tl.size; i++) {
+	for (int i = count - 19; i < count; i++) {
+		if(i == tl.size){
+			break;
+		}
 		displayTOC(*tl.ds[i], yTOC);
 		yTOC += 2;
 	}
 }
 
-void filterBySearching(TableOfContentList& tl)
+void filterBySearching(TableOfContentList& tl, int count)
 {
-	gotoxy(50, 43);
-	SetBGColor(7);
-	cout << "Enter BookName: ";
+	gotoxy(1, 43);
+	SetBGColor(20);
+	cout << "Enter BookName:";
+	SetBGColor(15);
+	cout << " ";
 	string inputSearch="";
 	inputSearch = EnterFirstName(inputSearch);	
 	SetBGColor(15);
@@ -749,7 +754,7 @@ void filterBySearching(TableOfContentList& tl)
 	TableOfContentList l = saveToSearch(tl, inputSearch);
 	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
 	{
-		SetBGColor(14);
+		SetBGColor(6);
 		gotoxy(i, 0);
 		cout << " ";
 		gotoxy(i, 2);
@@ -797,7 +802,7 @@ void filterBySearching(TableOfContentList& tl)
 	cout << "PAGE";
 	gotoxy(116, 1);
 	cout << "YEAR";
-	loadList(l);
+	loadListTOC(l, count);
 	SetBGColor(11);
 	SetColor(0);
 }
@@ -875,25 +880,25 @@ void editTOC(TableOfContentList& tl){
 	gotoxy(x , y + 15);
 	Sleep(1500);
 }
-void TableTOC(TableOfContentList& tl)
+void TableTOC(TableOfContentList& tl, int count)
 {
 	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
 	{
-		SetBGColor(14);
+		SetBGColor(6);
 		gotoxy(i, 0);
 		cout << " ";
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * tl.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		for (int j = 4; j < 3 + 2 * 19; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
 		{
 			gotoxy(i, j);
 			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
 		}
-		gotoxy(i, 3 + 2 * tl.size);
+		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * tl.size; i++)//vẽ cột ngăn cách từng mục 
+	for (int i = 1; i < 3 + 2 * 19; i++)//vẽ cột ngăn cách từng mục 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -927,9 +932,33 @@ void TableTOC(TableOfContentList& tl)
 	cout << "PAGE";
 	gotoxy(116, 1);
 	cout << "YEAR";
-	loadList(tl);
+	loadListTOC(tl, count);
 	SetBGColor(11);
 	SetColor(0);
+}
+
+void clearTableTOC(){
+	for (int i = 3; i <  3+ 2 * 19; i+=2)
+	{
+		gotoxy(2, i);
+		for(int j=0;j<6;j++) cout << " ";
+		gotoxy(10, i);
+		for(int j=0;j<36;j++) cout << " ";
+		gotoxy(48, i);
+		for(int j=0;j<15;j++) cout << " ";
+		gotoxy(65, i);
+		for(int j=0;j<32;j++) cout << " ";
+		gotoxy(99, i);
+		for(int j=0;j<11;j++) cout << " ";
+		gotoxy(112,i);
+		for(int j=0;j<11;j++) cout << " ";
+		gotoxy(125,i);
+		for(int j=0;j<5;j++) cout << " ";
+	}
+}
+
+void controlTOCTable(TableOfContentList &tl, int count){
+	SetBGColor(11);
 	for (int i = 130; i <= 139; i++)//in ra ô chức năng
 	{
 		gotoxy(i, 3);
@@ -997,7 +1026,6 @@ void TableTOC(TableOfContentList& tl)
 				UnHighLight(wherex(), wherey(), 9);
 				gotoxy(130, 3);
 				HighLight(wherex(), wherey(), 9);
-
 			}
 			else
 			{
@@ -1006,27 +1034,50 @@ void TableTOC(TableOfContentList& tl)
 				HighLight(wherex(), wherey(), 9);
 			}
 		}
+		else if(c==75)///left
+		{
+			if(count == 19) {continue;}
+			UnHighLight(wherex(),wherey(),9);
+			count -= 19;
+			clearTableTOC();
+			loadListTOC(tl, count);
+			gotoxy(130,3);
+			HighLight(wherex(),wherey(),9);
+		}
+		else if(c==77)//right
+		{
+			if(count > tl.size) {continue;}
+			UnHighLight(wherex(),wherey(),9);
+			count +=19;
+			clearTableTOC();
+			loadListTOC(tl, count);
+			gotoxy(130,3);
+			HighLight(wherex(),wherey(),9);
+		}
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
+			count = 19;
 			SetBGColor(15);
 			if (wherey() == 3)
 			{
 				system("cls");
 				tableEnterTOC(tl);
 				system("cls");
-				TableTOC(tl);
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
 				break;
 			}
 			else if (wherey() == 7)
 			{
 				editTOC(tl);
 				system("cls");
-				TableTOC(tl);
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
 				break;
 			}
 			else
 			{
-				filterBySearching(tl);
+				filterBySearching(tl, count);
 				gotoxy(120, 20);
 				while(true){
 					gotoxy(127, 5);
@@ -1035,7 +1086,8 @@ void TableTOC(TableOfContentList& tl)
 					SetBGColor(15);
 					if(a == 27){
 						system("cls");
-						TableTOC(tl);
+						TableTOC(tl, count);
+						controlTOCTable(tl, count);
 						break;
 					}else{
 						continue;
@@ -1126,8 +1178,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 					gotoxy(60,20); 
 					cout<<"SAVING SUCCESSFUL!!!";
 					Sleep(1000);
-			    }
-			    system("cls");
+				}
+				system("cls");
 				boxMenu();
 				Control(rl, tl);
 				break;
@@ -1145,7 +1197,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 + 4 - 1)//option 2
 			{
 				system("cls");
-				TableTOC(tl);
+				TableTOC(tl, 19);
+				controlTOCTable(tl, 19);
 				system("cls");
 				boxMenu();
 				Control(rl, tl);
@@ -1193,7 +1246,7 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	loading();
+//	loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
