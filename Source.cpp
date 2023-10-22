@@ -250,6 +250,19 @@ void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
 	gotoxy(110,3+2*y);
 	cout << p->data.CardStatus;
 }
+void sortbyID(nodeRC* tmp[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if(tmp[i]->data.ID>tmp[j]->data.ID)
+			{
+				swap(tmp[i],tmp[j]);
+			}
+		}
+	}
+}
 //duyet danh sach doc gia
 void displaytree(nodeRC* tmp[],int n,int count)//duyet mang de in ra 
 {
@@ -289,6 +302,79 @@ void clearReaderTable()
 		gotoxy(110,i);
 		for(int j=110;j<120;j++) cout << " ";
 	}
+}
+
+int selectDisplayMode()
+{
+	SetColor(0);
+	Option(70,21,30,3,"Sort By ID!!");
+
+	Option(70,26,30,3,"Sort By Name!!");
+
+	HighLight(64,20,36);
+
+	while (true)
+	{
+
+		// nhan phim tu nguoi dung(up/down/enter)
+		char c = _getch();
+		if (c == -32)
+		{
+			c = _getch();
+		}
+		if (c == 27)//khi nguoi dung nhan esc
+		{
+			system("cls");
+			return 0;
+		}
+		else if (c == 72)//khi nguoi dung nhan UP
+		{
+			if (wherey() == 20)
+			{
+				UnHighLight(wherex(), wherey(), 36);
+				gotoxy(wherex(),wherey()+5);
+				HighLight(wherex(), wherey(), 36);
+			}
+			else
+			{
+				UnHighLight(wherex(), wherey(), 36);
+				gotoxy(wherex(), wherey() - 5);
+				HighLight(wherex(), wherey(), 36);
+			}
+		}
+		else if (c == 80)//khi nguoi dung nhan Down
+		{
+			if (wherey() == 25)
+			{
+				UnHighLight(wherex(), wherey(), 36);
+				gotoxy(wherex(),wherey()-5);
+				HighLight(wherex(), wherey(), 36);
+			}
+			else
+			{
+				UnHighLight(wherex(), wherey(), 36);
+				gotoxy(wherex(), wherey() + 5);
+				HighLight(wherex(), wherey(), 36);
+			}
+		}
+		else if (c == 13)//Khi nguoi dung nhan ENTER
+		{
+			SetBGColor(15);
+			if (wherey() == 20)
+			{
+				return 1;
+			}
+			else if (wherey() == 25)
+			{
+				return 2;
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+	
 }
 
 //danh sach doc gia
@@ -1213,6 +1299,16 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 				int n=0;
 				nodeRC* tmp[MAX];
 				tranvertree(rl.head,tmp,n);
+				int x=selectDisplayMode();
+				if(x==0) 
+				{
+					system("cls");
+					boxMenu();
+					Control(rl, tl);
+					break;
+				}
+				else if(x==1) sortbyID(tmp,rl.size);
+				system("cls");
 				ReaderTable(tmp,rl.size,20);
 				controlReaderTable(rl,tmp,20);
 				system("cls");
