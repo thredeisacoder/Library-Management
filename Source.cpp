@@ -73,8 +73,6 @@ void loading()
 		cout << " ";
 		gotoxy(80 + 3/2*i, 32);
 		cout << " ";
-		gotoxy(80 + 3/2*i, 33);
-		cout << " ";
 		SetBGColor(15);
 		Sleep(60);
 	}
@@ -135,8 +133,7 @@ void boxMenu()
 
 }
 
-// bat thanh sang
-void HighLight(int x, int y, int width)
+void HighLight(int x, int y, int width)//bat thanh sang
 {
 	for (int i = x; i <= x + width; i++)
 	{
@@ -155,9 +152,7 @@ void HighLight(int x, int y, int width)
 	SetBGColor(15);
 	gotoxy(x, y);
 }
-
-//tat thanh sang
-void UnHighLight(int x, int y, int width)
+void UnHighLight(int x, int y, int width)//tat thanh sang
 {
 	for (int i = x; i <= x + width; i++)
 	{
@@ -238,7 +233,7 @@ void tableEnterRC(ReaderList& rl)
 	Sleep(1000);
 }
 //in 1 doc gia
-void displayReader(nodeRC* p, int y)
+void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
 {
 	while(y>=20)
 	{
@@ -256,15 +251,26 @@ void displayReader(nodeRC* p, int y)
 	cout << p->data.CardStatus;
 }
 //duyet danh sach doc gia
-void displaytree(nodeRC* head, int& y,int count)
+void displaytree(nodeRC* tmp[],int n,int count)//duyet mang de in ra 
+{
+	int y=0;
+	for(int i=count-20;i<count;i++)
+	{
+		if(i==n) break;
+		displayReader(tmp[i],y);
+		y++;
+	}
+}
+
+void tranvertree(nodeRC* head,nodeRC* tmp[],int& n)//duyet cay dua vao mang con tro tmp
 {
 	if (head == nullptr) return;
 	else
 	{
-		if(y>=count-20&&y<count) displayReader(head, y);
-		y ++;
-		displaytree(head->left, y,count);
-		displaytree(head->right, y,count);
+		tmp[n]=head;
+		n++;
+		tranvertree(head->left,tmp,n);
+		tranvertree(head->right,tmp,n);
 	}
 }
 
@@ -286,7 +292,7 @@ void clearReaderTable()
 }
 
 //danh sach doc gia
-void ReaderTable(ReaderList& rl,int count)
+void ReaderTable(nodeRC* tmp[],int n,int count)
 {
 	for (int i = 10; i <= 120; i++)
 	{
@@ -331,11 +337,10 @@ void ReaderTable(ReaderList& rl,int count)
 	gotoxy(108, 1);
 	cout << "STATUS";
 
-	int y = 0;
-	displaytree(rl.head, y,count);
+	displaytree(tmp,n,count);
 }
 
-void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
+void deleteReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do xoa
 {
 	char c;
 	gotoxy(11,3);
@@ -358,8 +363,13 @@ void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
 		}
 		else if(c==80)//down
 		{
-			if(wherey()!=3+2*19)
+			if(count>rl.size&&wherey()==3+2*(rl.size-1-(count-20))) 
 			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3);
+				Tick(wherex(),wherey());
+			}
+			else if(wherey()!=3+2*19){
 				UnTick(wherex(),wherey());
 				gotoxy(wherex(),wherey()+2);
 				Tick(wherex(),wherey());
@@ -373,7 +383,13 @@ void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
 		}
 		else if(c==72)//up
 		{
-			if(wherey()!=3)
+			if(count>rl.size&&wherey()==3) 
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3+2*(rl.size-1-(count-20)));
+				Tick(wherex(),wherey());
+			}
+			else if(wherey()!=3)
 			{
 				UnTick(wherex(),wherey());
 				gotoxy(wherex(),wherey()-2);
@@ -393,7 +409,7 @@ void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
 			UnTick(wherex(),wherey());
 			count-=20;
 			clearReaderTable();
-			displaytree(rl.head,y,count);
+			displaytree(tmp,rl.size,count);
 			gotoxy(11,3);
 			Tick(wherex(),wherey());
 		}
@@ -404,7 +420,7 @@ void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
 			UnTick(wherex(),wherey());
 			count+=20;
 			clearReaderTable();
-			displaytree(rl.head,y,count);
+			displaytree(tmp,rl.size,count);
 			gotoxy(11,3);
 			Tick(wherex(),wherey());
 		}
@@ -415,8 +431,7 @@ void deleteReaderMode(ReaderList& rl,int& count)//che do xoa
 	}
 }
 
-
-void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
+void SettingReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do chinh sua
 {
 	char c;
 	gotoxy(11,3);
@@ -437,10 +452,15 @@ void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
 			UnTick(wherex(),wherey());
 			break;
 		}
-		else if(c==80)//down
+			else if(c==80)//down
 		{
-			if(wherey()!=3+2*19)
+			if(count>rl.size&&wherey()==3+2*(rl.size-1-(count-20))) 
 			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3);
+				Tick(wherex(),wherey());
+			}
+			else if(wherey()!=3+2*19){
 				UnTick(wherex(),wherey());
 				gotoxy(wherex(),wherey()+2);
 				Tick(wherex(),wherey());
@@ -454,7 +474,13 @@ void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
 		}
 		else if(c==72)//up
 		{
-			if(wherey()!=3)
+			if(count>rl.size&&wherey()==3) 
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3+2*(rl.size-1-(count-20)));
+				Tick(wherex(),wherey());
+			}
+			else if(wherey()!=3)
 			{
 				UnTick(wherex(),wherey());
 				gotoxy(wherex(),wherey()-2);
@@ -474,7 +500,7 @@ void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
 			UnTick(wherex(),wherey());
 			count-=20;
 			clearReaderTable();
-			displaytree(rl.head,y,count);
+			displaytree(tmp,rl.size,count);
 			gotoxy(11,3);
 			Tick(wherex(),wherey());
 		}
@@ -485,7 +511,7 @@ void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
 			UnTick(wherex(),wherey());
 			count+=20;
 			clearReaderTable();
-			displaytree(rl.head,y,count);
+			displaytree(tmp,rl.size,count);
 			gotoxy(11,3);
 			Tick(wherex(),wherey());
 		}
@@ -496,9 +522,8 @@ void SettingReaderMode(ReaderList& rl,int& count)//che do chinh sua
 	}
 }
 
-void controlReaderTable(ReaderList &rl,int count)
+void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 {
-	int y;
 	SetBGColor(11);
 	SetColor(0);
 	for (int i = 130; i <= 139; i++)
@@ -580,24 +605,22 @@ void controlReaderTable(ReaderList &rl,int count)
 		}
 		else if(c==75)///left
 		{
-			y=0;
 			if(count==20) continue;
 			UnHighLight(wherex(),wherey(),9);
 			count-=20;
 			clearReaderTable();
-			displaytree(rl.head,y,count);
+			displaytree(tmp,rl.size,count);
 			gotoxy(130,3);
 			HighLight(wherex(),wherey(),9);
 
 		}
 		else if(c==77)//right
 		{
-			y=0;
 			if(count>=rl.size) continue;
 			UnHighLight(wherex(),wherey(),9);
 			count+=20;
 			clearReaderTable();
-			displaytree(rl.head,y,count);
+			displaytree(tmp,rl.size,count);
 			gotoxy(130,3);
 			HighLight(wherex(),wherey(),9);
 		}
@@ -609,8 +632,8 @@ void controlReaderTable(ReaderList &rl,int count)
 				system("cls");
 				tableEnterRC(rl);
 				system("cls");
-				ReaderTable(rl,count);
-				controlReaderTable(rl,count);
+				ReaderTable(tmp,rl.size,count);
+				controlReaderTable(rl,tmp,count);
 				system("cls");
 				break;
 			}
@@ -623,15 +646,15 @@ void controlReaderTable(ReaderList &rl,int count)
 					cout << "EMPTY!!!\n";
 					system("pause");
 					system("cls");
-					ReaderTable(rl,count);
-					controlReaderTable(rl,count);
+					ReaderTable(tmp,rl.size,count);
+					controlReaderTable(rl,tmp,count);
 					break;
 				}
 
 				gotoxy(132, 20);
-				deleteReaderMode(rl,count);
-				ReaderTable(rl,count);
-				controlReaderTable(rl,count);
+				deleteReaderMode(rl,tmp,count);
+				ReaderTable(tmp,rl.size,count);
+				controlReaderTable(rl,tmp,count);
 				system("cls");
 				break;
 			}
@@ -1187,8 +1210,11 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 - 1)//option 1
 			{
 				system("cls");
-				ReaderTable(rl,20);
-				controlReaderTable(rl,20);
+				int n=0;
+				nodeRC* tmp[MAX];
+				tranvertree(rl.head,tmp,n);
+				ReaderTable(tmp,rl.size,20);
+				controlReaderTable(rl,tmp,20);
 				system("cls");
 				boxMenu();
 				Control(rl, tl);
