@@ -1246,7 +1246,7 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-//	loading();
+	loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
