@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string.h>
 #include <math.h>
+#include <random>
+#include <ctime>
 
 using namespace std;
 
@@ -25,32 +27,114 @@ struct BookList
 	nodeB* tail = nullptr;
 	int size = 0;
 };
-// string generateBookID(TableOfContent tl){
-// 	string tmp = "";
-// 	for(int i=0; i < tl.BookName.length(); i++){
-// 		if(tl.BookName[i] >= 'A' && tl.BookName[i] <= 'Z'){
-// 			if(tmp.length() < 2){
-// 				tmp+= tl.BookName[i];
-// 			}else{
-// 				break;
-// 			}
-// 		}
-// 	}
-// 	while(tmp.length() < 2){
-// 		tmp+= tmp[0];
-// 	}
-// 	double num = 0.00000000;
-// 	if(stoi(tl.NumOfPage) < stoi(tl.PublicYear)){
-// 		num = stod(tl.PublicYear) / stod(tl.NumOfPage);
-// 	}else{
-// 		num = stod(tl.NumOfPage) / stod(tl.PublicYear);
-// 	}
-// 	while(num < 1000){
-// 		num*=10;
-// 	}
-// 	int numTail = num;
-// 	return tmp + to_string(numTail);
-// }//chua sua 
+void generateID(int size){
+	int min = 1000;
+	int max = 10000;
+    string a[MAX] = {"DA"};
+    bool b[MAX] = {false}; 
+    srand(time(0)); // Sử dụng thời gian hiện tại làm seed
+    for (int i = min; i < max; i++) {
+        if(i < size){
+			int tmp;
+			do {
+				tmp = rand() % (max - min) + min; // Tạo số ngẫu nhiên trong khoảng [min, max)
+			} while (b[tmp]);
+			a[i] += to_string(tmp); 
+			b[tmp] = true;
+		}else{
+			break;
+		}
+    }
+	string res = "";
+    for(int i = 0; i < size; i++){
+		cout << a[i];
+	}
+}
+
+nodeB *createNode(BookList x){
+    nodeB *temp = new nodeB; 
+    temp->next = NULL; 
+    temp->data = x;  
+    return temp;
+}
+
+nodeB *addElement(nodeB* p, int x){
+	nodeB *temp = createNode(x);
+	p->next = temp;
+	return temp;
+}
+
+nodeB *addHead(nodeB *l, int x){
+	nodeB *temp = new nodeB;
+	temp->data = x;
+	temp->next = l;
+	l = temp;
+	return l;
+}
+
+nodeB *addAtPos(nodeB *l, int pos, int x){
+	nodeB *p = l;
+	for (int i = 0; i < pos-1; i++){
+		p = p->next;
+	}
+	nodeB *temp = new nodeB;
+	temp->data = x;
+	temp->next = p->next;
+	p->next = temp;
+	return l;
+}
+
+nodeB *addTail(nodeB *l, int x){
+	nodeB *p = l;
+	while (p->next != NULL){
+		p= p->next;
+	}
+	nodeB *temp = new nodeB;
+	temp->data = x;
+	temp->next = NULL;
+	p->next = temp;
+	return l;
+}
+
+nodeB *deleteHead(nodeB *l){
+	node *p = l;
+	p = p->next;
+	delete(l);
+	return p;
+}
+
+nodeB *deleteTail(nodeB *l){
+	nodeB *p = l;
+	while (p->next->next != NULL){
+		p = p->next;
+	}
+	delete(p->next);
+	p->next = NULL;
+	return l;
+}
+
+nodeB *deleteAtPos(nodeB *l, int pos){
+	nodeB *p = l;
+	for (int i = 0; i < pos-1; i++){
+		p = p->next;
+	}
+	nodeB *temp = p->next;
+	p->next = p->next->next;
+	delete(temp);
+	return l;
+}
+
+nodeB *edit(nodeB *l, int input, int data){
+	nodeB *p = l;
+	while (p != NULL){
+		if (p->data == input){
+			p->data = data;
+		}
+		p = p->next;
+	}
+	return l;
+}
+
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
 struct Date
 {
