@@ -13,7 +13,7 @@ string EnterID_ISBN(string s)
 	while (true)
 	{
 		char c = _getch();
-		if (c == 13)
+		if (c == 13)//enter
 		{
 			if (s == "")
 			{
@@ -21,7 +21,7 @@ string EnterID_ISBN(string s)
 			}
 			else break;
 		}
-		else if (c == 8)
+		else if (c == 8)//backspace
 		{
 			if (s.empty()) continue;
 			s.pop_back();
@@ -29,7 +29,7 @@ string EnterID_ISBN(string s)
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (s.length() == 6)
+		else if (s.length() == 6)//dat kich co toi da
 		{
 			continue;
 		}
@@ -48,7 +48,7 @@ string EnterID_ISBN(string s)
 					putchar(c);
 				}
 			}
-			else if (s[s.length() - 1] == '_')
+			else if (s[s.length() - 1] == '_')//ki tu phia truoc
 			{
 				if (c >= 'a' && c <= 'z')
 				{
@@ -106,7 +106,7 @@ string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o da
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (Name.length() == 35)
+		else if (Name.length() == 25)
 		{
 			continue;
 		}
@@ -373,17 +373,42 @@ string EnterGender(string s)
 	while (true)
 	{
 		c = _getch();
-		if (c == '1' || c == '2')
+		if(c==13)//enter
 		{
-			if (c == '1')
+			if(s=="") continue;
+			else return s;
+		}
+		else if(c==8)
+		{
+			if (s.empty()) continue;
+			else if(s=="FEMALE")
+			{	
+				cout<<"\b\b\b\b\b\b";
+				cout<<"      ";
+				cout<<"\b\b\b\b\b\b";
+			}
+			else 
 			{
-				cout << "MALE";
-				return "MALE";
+				cout<<"\b\b\b\b";
+				cout<<"    ";
+				cout<<"\b\b\b\b";
+			}
+			s="";
+			
+		}
+		else if (c == '1' || c == '2')
+		{
+			if(s!="") continue;
+			else if (c == '1')
+			{
+				s= "MALE";
+				cout<<s;
+				
 			}
 			else
 			{
-				cout << "FEMALE";
-				return "FEMALE";
+				s= "FEMALE";
+				cout<<s;
 			}
 		}
 		else
@@ -392,6 +417,48 @@ string EnterGender(string s)
 		}
 	}
 }
+
+
+int EnterStatus(int s)
+{
+	cout << s;
+	char c;
+	while (true)
+	{
+		c = _getch();
+		if(c==13)//enter
+		{
+			if (s==-1) continue;
+			return s;
+		}
+		else if(c==8)//delete
+		{
+			if(s==-1) continue;
+			else s=-1;
+			cout<<"\b  \b\b";
+		}
+		else if (c=='0'||c == '1')
+		{
+			if(c=='0')
+			{
+				putchar(c);
+				s=0;
+				return s;
+			}
+			else
+			{
+				putchar(c);
+				s=1;
+				return s;
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
+
 
 //Table of content//
 
@@ -553,18 +620,21 @@ int loadFileReader(ReaderList& rl)
 		Reader* p = new Reader;
 
 		getline(f, l);
+		if (l == "") break;
 		p->ID = l;
 		getline(f, l);
 		p->FirstName = l;
 		getline(f, l);
+		if (l == "") break;
 		p->LastName = l;
 		getline(f, l);
+		if (l == "") break;
 		p->Gender = l;
 		getline(f, l);
 		if (l == "") break;
 		p->CardStatus;
-
-		addNodeReader(rl, *p);
+		addNodeReader(rl,*p);
+		//delete p;
 	}
 	f.close();
 	return 1;
@@ -666,4 +736,3 @@ void printlogo()
 	}
 	f.close();
 }
-

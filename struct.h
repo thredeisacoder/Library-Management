@@ -349,6 +349,7 @@ nodeBAR *makeNodeBAR(BorrowAndReturn data)
 	return p;
 }
 
+
 int addNodeBAR(BorrowAndReturnList &l, BorrowAndReturn data)
 {
 	nodeBAR *p = makeNodeBAR(data);
@@ -444,6 +445,56 @@ string makeID(nodeRC *pre, nodeRC *p)
 	return s;
 }
 
+int treeLevel(nodeRC *t){
+	if (t == NULL) return -1;
+	return 1 + max(treeLevel(t->left), treeLevel(t->right));
+}
+bool checkAvl(nodeRC* root){
+	if (root == NULL) 	return true;
+	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1) return false;
+	return checkAvl(root->left) && checkAvl(root->right);
+}
+nodeRC *turnRight(nodeRC *a){
+	nodeRC *b = a->left;
+	nodeRC *d = b->right;
+	a->left = d;
+	b->right = a;
+	return b;
+}
+nodeRC *turnLeft(nodeRC *a){
+	nodeRC *b = a->right;
+	nodeRC *c = b->left;
+	a->right = c;
+	b->left = a;
+	return b;
+}
+
+nodeRC *updateTreeAvl(nodeRC *t){
+	if (abs(treeLevel(t->left) - treeLevel(t->right)) > 1){
+		if (treeLevel(t->left) > treeLevel(t->right)){
+			nodeRC *p = t->left;
+			if (treeLevel(p->left) >= treeLevel(p->right)){
+				t = turnRight(t);
+			} else{
+				t->left = turnLeft(t->left);
+				t = turnRight(t);
+			}
+		} else {
+			nodeRC *p = t->right;
+			if (treeLevel(p->right) >= treeLevel(p->left)){
+				t = turnLeft(t);
+			} else{
+				t->right = turnRight(t->right);
+				t = turnLeft(t);
+			
+			}
+		}	
+	}
+	if (t->left != NULL) t->left = updateTreeAvl(t->left);
+	if (t->right != NULL) t->right = updateTreeAvl(t->right);
+	return t;
+}
+
 int addNodeReader(ReaderList &l, Reader data)
 {
 	nodeRC *p = makeNodeReader(data);
@@ -485,6 +536,8 @@ int addNodeReader(ReaderList &l, Reader data)
 			++l.size;
 			return 1;
 		}
+
+		updateTreeAvl(l.head);
 	}
 	return 0;
 }

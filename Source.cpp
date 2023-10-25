@@ -232,6 +232,46 @@ void tableEnterRC(ReaderList& rl)
 	gotoxy(x , y + 16);
 	Sleep(1000);
 }
+
+void tableSettingRC(nodeRC* p)
+{
+	SetColor(16);
+	int x = 10, y = 2, width = 120, height = 80;
+	gotoxy(x , y + height / 4);
+	cout << "GENDER: 1 FOR MALE OR 2 FOR FEMALE !";
+	gotoxy(x , y + height / 4 + 1);
+	cout << "STATUS: 0(LOCKED) OR 1(UNLOCKED)";
+	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
+	{
+		SetBGColor(14);
+		gotoxy(i, y + 8);
+		cout << " ";
+		gotoxy(i, y + 10);
+		cout << " ";
+		gotoxy(i, y + 12);
+		cout << " ";
+	}
+	SetBGColor(15);
+	gotoxy(x + width / 6 + 1, y + 9);
+	cout << "| FIRST NAME | ";
+	gotoxy(x + width / 6 + 25, y + 9);
+	cout << " | LAST NAME | ";
+	gotoxy(x + width / 6 + 45, y + 9);
+	cout << " | GENDER | ";
+	gotoxy(x + width / 6 + 60, y + 9);
+	cout << " | STATUS | ";
+
+
+	gotoxy(x + width / 6 + 1, y + 11);
+	p->data.FirstName = EnterFirstName(p->data.FirstName);
+	gotoxy(x + width / 6 + 28, y + 11);
+	p->data.LastName = EnterLastName(p->data.LastName);
+	gotoxy(x + width / 6 + 47, y + 11);
+	p->data.Gender = EnterGender(p->data.Gender);
+	gotoxy(x + width / 6 + 62, y + 11);
+	p->data.CardStatus=EnterStatus(p->data.CardStatus);
+	Sleep(1000);
+}
 //in 1 doc gia
 void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
 {
@@ -257,6 +297,20 @@ void sortbyID(nodeRC* tmp[],int n)
 		for(int j=i+1;j<n;j++)
 		{
 			if(tmp[i]->data.ID>tmp[j]->data.ID)
+			{
+				swap(tmp[i],tmp[j]);
+			}
+		}
+	}
+}
+//sap xep theo ten
+void sortbyname(nodeRC* tmp[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if(tmp[i]->data.LastName > tmp[j]->data.LastName)
 			{
 				swap(tmp[i],tmp[j]);
 			}
@@ -529,8 +583,8 @@ void SettingReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do chinh su
 		{
 			UnTick(wherex(),wherey());
 			int pos=count-20+(wherey()-3)/2;
-			cout<<pos;
-			system("pause");
+			system("cls");
+			tableSettingRC(tmp[pos]);
 			break;
 		}
 		else if(c==27)//esc
@@ -546,7 +600,8 @@ void SettingReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do chinh su
 				gotoxy(wherex(),3);
 				Tick(wherex(),wherey());
 			}
-			else if(wherey()!=3+2*19){
+			else if(wherey()!=3+2*19)
+			{
 				UnTick(wherex(),wherey());
 				gotoxy(wherex(),wherey()+2);
 				Tick(wherex(),wherey());
@@ -718,6 +773,12 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 				system("cls");
 				tableEnterRC(rl);
 				system("cls");
+				int n=0;
+				tranvertree(rl.head,tmp,n);
+				int x=selectDisplayMode();
+				if(x==1) sortbyID(tmp,rl.size);
+				else sortbyname(tmp,rl.size);
+				system("cls");
 				ReaderTable(tmp,rl.size,count);
 				controlReaderTable(rl,tmp,count);
 				system("cls");
@@ -746,7 +807,14 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 			}
 			else
 			{
+				SettingReaderMode(rl,tmp,count);
 				system("cls");
+				int n=selectDisplayMode();
+				if(n==1) sortbyID(tmp,rl.size);
+				else sortbyname(tmp,rl.size);
+				system("cls");
+				ReaderTable(tmp,rl.size,count);
+				controlReaderTable(rl,tmp,count);
 				break;
 			}
 		}
@@ -1309,6 +1377,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 					break;
 				}
 				else if(x==1) sortbyID(tmp,rl.size);
+				else sortbyname(tmp,rl.size);
+				
 				system("cls");
 				ReaderTable(tmp,rl.size,20);
 				controlReaderTable(rl,tmp,20);
