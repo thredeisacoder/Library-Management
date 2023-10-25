@@ -813,6 +813,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	p->PublicYear = enterYear(p->PublicYear);
 	gotoxy(x + width + 10, y + 11);
 	p->ISBN = EnterID_ISBN(p->ISBN);
+	p->dms = *createBookList();
 	int n = themTheoThuTuTheLoai(tl, *p);
 	if(n == 1){
 		gotoxy(x , 20);

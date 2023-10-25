@@ -27,7 +27,6 @@ struct BookList
 	nodeB *tail = nullptr;
 	int size = 0;
 	int random = rand() % 10 + 1;
-	TableOfContent toc;
 };
 void generateID(BookList &bookList)
 {
@@ -62,11 +61,17 @@ BookList *createBookList()
 
 	for (int i = 0; i < list->random; i++)
 	{
-		nodeB *Book = new nodeB;
+		nodeB *newNode = new nodeB;
 		generateID(*list);
-		Book->data.BookStatus = 0;
-		Book->data.BookLocation = " " + to_string(i);
-		// rest of adding node to list
+		newNode->data.BookStatus = 0;
+		newNode->data.BookLocation = " " + to_string(i);
+		if (list->tail == nullptr) {
+            list->head = newNode;
+            list->tail = newNode;
+        } else {
+            list->tail->next = newNode;
+            list->tail = newNode;
+        }
 	}
 	return list;
 }
@@ -99,7 +104,7 @@ struct BorrowAndReturnList
 	nodeBAR *tail = nullptr;
 	int size = 0;
 };
-///////////////////////////////////////////////dau sach////////////////////////////////
+///////////////////////////////////////////////dau sach/////////////////////////////////
 struct TableOfContent
 {
 	string ISBN;
