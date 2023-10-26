@@ -1067,6 +1067,10 @@ void clearTableTOC(){
 	}
 }
 
+// void printBooklist(){
+
+// }
+
 void controlTOCTable(TableOfContentList &tl, int count){
 	SetBGColor(11);
 	for (int i = 130; i <= 139; i++)//in ra ô chức năng
