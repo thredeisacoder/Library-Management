@@ -188,6 +188,7 @@ void UnTick(int x,int y)//huy danh dau
 //nhap doc gia moi
 void tableEnterRC(ReaderList& rl)
 {
+	ShowCur(true);
 	Reader* p = new Reader;
 	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
@@ -223,7 +224,7 @@ void tableEnterRC(ReaderList& rl)
 	p->LastName = EnterLastName(p->LastName);
 	gotoxy(x + width / 6 + 47, y + 11);
 	p->Gender = EnterGender(p->Gender);
-
+	ShowCur(false);
 	gotoxy(x , y + 15);
 	int n = addNodeReader(rl, *p);
 	if (n == 1)	cout << "~ADD Successfully~";
@@ -235,6 +236,7 @@ void tableEnterRC(ReaderList& rl)
 
 void tableSettingRC(nodeRC* p)
 {
+	ShowCur(true);
 	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x , y + height / 4);
@@ -270,6 +272,8 @@ void tableSettingRC(nodeRC* p)
 	p->data.Gender = EnterGender(p->data.Gender);
 	gotoxy(x + width / 6 + 62, y + 11);
 	p->data.CardStatus=EnterStatus(p->data.CardStatus);
+
+	ShowCur(false);
 	Sleep(1000);
 }
 //in 1 doc gia
@@ -320,6 +324,8 @@ void sortbyname(nodeRC* tmp[],int n)
 //duyet danh sach doc gia
 void displaytree(nodeRC* tmp[],int n,int count)//duyet mang de in ra 
 {
+	gotoxy(2,1);
+	cout<<"       ";
 	int y=0;
 	for(int i=count-20;i<count;i++)
 	{
@@ -327,6 +333,9 @@ void displaytree(nodeRC* tmp[],int n,int count)//duyet mang de in ra
 		displayReader(tmp[i],y);
 		y++;
 	}
+
+	gotoxy(2,1);
+	cout<<count/20<<"/"<<n/20+1;
 }
 
 void tranvertree(nodeRC* head,nodeRC* tmp[],int& n)//duyet cay dua vao mang con tro tmp
@@ -1424,10 +1433,15 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 int main()
 {
 	SetBGColor(0);
-	ShowCur(1);
 	resizeConsole(1300, 750);
 	ReaderList rl;
 	TableOfContentList tl;
+	DisableSelection();
+	DisableCtrButton(0, 1, 1);
+	DisableResizeWindow();
+	ShowCur(false);
+	loading();
+//	resetIDRCfile(); return 0;//dieu chinh lai danh sach ID tu dau //
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
 	if (n == 0 || m == 0)
@@ -1436,10 +1450,6 @@ int main()
 		system("pause");
 		return 0;
 	}
-	DisableSelection();
-	DisableCtrButton(0, 1, 1);
-	DisableResizeWindow();
-	loading();
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);

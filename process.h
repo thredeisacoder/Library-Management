@@ -736,3 +736,22 @@ void printlogo()
 	}
 	f.close();
 }
+
+void resetIDRCfile()
+{
+	fstream f("idrcnotused.txt");
+	for(int i=0;i<10000;i++)
+	{
+		string s=to_string(i);
+		while(s.length()<4)
+		{
+			s='0'+s;
+		}
+		f<<s<<endl;
+	}
+	f.close();
+	
+	f.open("idrcused.txt");
+	f<<"";
+	f.close();
+}
