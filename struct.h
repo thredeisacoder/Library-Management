@@ -4,6 +4,7 @@
 #include <math.h>
 #include <random>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -349,6 +350,7 @@ nodeBAR *makeNodeBAR(BorrowAndReturn data)
 	return p;
 }
 
+
 int addNodeBAR(BorrowAndReturnList &l, BorrowAndReturn data)
 {
 	nodeBAR *p = makeNodeBAR(data);
@@ -414,7 +416,7 @@ int deleteNodeBAR(BorrowAndReturnList &l, string ID)
 	}
 	return 0;
 }
-//
+////////////////////////////////////////////////////////////////////////////////////////
 nodeRC *makeNodeReader(Reader data)
 {
 	nodeRC *p = new nodeRC;
@@ -424,7 +426,88 @@ nodeRC *makeNodeReader(Reader data)
 	return p;
 }
 
-string makeID(nodeRC *pre, nodeRC *p)
+void loadfileID(string* usedID,string* notusedID,int&ul,int&nl)//cap nhat 2 file id
+{
+	fstream f("idrcnotused.txt",ios::in);
+	if(f.is_open())
+	{
+		string l="";
+		while(!f.eof())
+		{
+			getline(f,l);
+			if(!l.empty()) notusedID[nl++]=l;
+		}
+		f.close();
+	}
+	
+	f.open("idrcused.txt",ios::in);
+	if(f.is_open())
+	{
+		string s="";
+		while(!f.eof())
+		{
+			getline(f,s);
+			if(!s.empty())	usedID[ul++]=s;
+		}
+		f.close();
+	}
+}
+
+void savefileID(string* usedID,string* notusedID,int ul,int nl)//luu lai 2 file ID
+{
+	fstream f("idrcnotused.txt",ios::out);
+	for(int i=0;i<nl;i++)
+	{
+		f<<notusedID[i]<<endl;
+	}
+	f.close();
+	f.open("idrcused.txt",ios::out);
+	for(int i=0;i<ul;i++)
+	{
+		f<<usedID[i]<<endl;
+	}
+	f.close();
+}
+
+string createID()//tao ID doc gia
+{
+	string *usedID=new string[MAX];
+	string *notusedID=new string[MAX];
+	int ul=0,nl=0;
+	loadfileID(usedID,notusedID,ul,nl);
+
+	string s=notusedID[0];
+
+	for(int i=0;i<nl-1;i++)
+	{
+		notusedID[i]=notusedID[i+1];
+	}
+	nl--;
+	for(int i=0;i<ul;i++)
+	{
+		if(s<usedID[i])
+		{
+			for(int j=ul;j>i;j--)
+			{
+				usedID[j]=usedID[j-1];
+			}
+			usedID[i]=s;
+			ul++;
+			break;
+		}
+		else if(i==ul-1)
+		{
+			 usedID[ul]=s;
+			 ul++;
+		}
+	}
+	savefileID(usedID,notusedID,ul,nl);
+	delete[] usedID;
+	delete[] notusedID;
+	return s;
+}
+
+/*string makeID(nodeRC *pre, nodeRC *p)
 {
 	string s = "";
 	int n = 0;
@@ -442,6 +525,61 @@ string makeID(nodeRC *pre, nodeRC *p)
 		n /= 10;
 	}
 	return s;
+}*/
+
+int treeLevel(nodeRC *t)//tim do cao cua node
+{
+	if (t == nullptr) return -1;
+	return 1 + max(treeLevel(t->left), treeLevel(t->right));
+}
+bool checkAvl(nodeRC* root)//kiem tra cay la AVL hay chua
+{
+	if (root == NULL) 	return true;
+	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1) return false;
+	return checkAvl(root->left) && checkAvl(root->right);
+}
+nodeRC *turnRight(nodeRC *a)//xoay phai
+{
+	nodeRC *b = a->left;
+	nodeRC *d = b->right;
+	a->left = d;
+	b->right = a;
+	return b;
+}
+nodeRC *turnLeft(nodeRC *a)//xoay trai
+{
+	nodeRC *b = a->right;
+	nodeRC *c = b->left;
+	a->right = c;
+	b->left = a;
+	return b;
+}
+
+nodeRC *updateTreeAvl(nodeRC *t)//dieu chinh cay thanh AVL
+{
+	if (abs(treeLevel(t->left) - treeLevel(t->right)) > 1){
+		if (treeLevel(t->left) > treeLevel(t->right)){
+			nodeRC *p = t->left;
+			if (treeLevel(p->left) >= treeLevel(p->right)){
+				t = turnRight(t);
+			} else{
+				t->left = turnLeft(t->left);
+				t = turnRight(t);
+			}
+		} else {
+			nodeRC *p = t->right;
+			if (treeLevel(p->right) >= treeLevel(p->left)){
+				t = turnLeft(t);
+			} else{
+				t->right = turnRight(t->right);
+				t = turnLeft(t);
+			
+			}
+		}	
+	}
+	if (t->left != nullptr) t->left = updateTreeAvl(t->left);
+	if (t->right != nullptr) t->right = updateTreeAvl(t->right);
+	return t;
 }
 
 int addNodeReader(ReaderList &l, Reader data)
@@ -449,7 +587,7 @@ int addNodeReader(ReaderList &l, Reader data)
 	nodeRC *p = makeNodeReader(data);
 	if (l.size == 0)
 	{
-		p->data.ID = "00001";
+		if(p->data.ID=="")p->data.ID = createID();
 		l.head = p;
 		++l.size;
 		return 1;
@@ -471,7 +609,7 @@ int addNodeReader(ReaderList &l, Reader data)
 				tmp = tmp->right;
 			}
 		}
-		p->data.ID = makeID(tmp, p);
+		if(p->data.ID=="")	p->data.ID = createID();
 		if (tmp->left == nullptr)
 		{
 			tmp->left = p;
@@ -485,6 +623,7 @@ int addNodeReader(ReaderList &l, Reader data)
 			++l.size;
 			return 1;
 		}
+		if(!checkAvl(l.head)) updateTreeAvl(l.head);
 	}
 	return 0;
 }

@@ -128,16 +128,15 @@ void DisableCtrButton(bool Close, bool Min, bool Max)
         DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
     }
 }
-// an hien con tro
-// Hide and show the cursor
+// an con tro
 void ShowCur(bool CursorVisibility)
 {
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO ConCurInf;
-
+    
     ConCurInf.dwSize = 10;
     ConCurInf.bVisible = CursorVisibility;
-
+    
     SetConsoleCursorInfo(handle, &ConCurInf);
 }
 //vo hieu boi den
