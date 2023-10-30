@@ -445,6 +445,7 @@ void savefileID(string* usedID,string* notusedID,int ul,int nl)//luu lai 2 file 
 	f.close();
 }
 
+
 string createID()//tao ID doc gia
 {
 	string *usedID=new string[MAX];
@@ -483,25 +484,38 @@ string createID()//tao ID doc gia
 	return s;
 }
 
-/*string makeID(nodeRC *pre, nodeRC *p)
+void returnIDAfterDelete(string s)//tra lai id sau khi xoa
 {
-	string s = "";
-	int n = 0;
-	for (int i = 0; i < 5; i++)
+	fstream f("idrcnotused.txt");
+	string a[MAX];
+	string l;
+	int n=0;
+	while(!f.eof())
 	{
-		int x = int(pre->data.ID[pre->data.ID.length() - 1 - i] - '0');
-		n = n + pow(10, i) * x;
+		getline(f,l);
+		if(l=="") break;
+		a[n]=l;
+		n++;
+	}
+	a[n]=s;
+	for(int i=0;i<n-1;i++)
+	{
+		for(int j=1;j<n;j++)
+		{
+			if(a[j]<a[j-1])
+			{
+				swap(a[j],a[j-1]);
+			}
+		}
 	}
 
-	n++;
-
-	while (s.length() < 5)
+	for(int i=0;i<n;i++)
 	{
-		s = char(n % 10 + '0') + s;
-		n /= 10;
+		f<<a[i]<<endl;
 	}
-	return s;
-}*/
+	f.close();
+}
+
 
 int treeLevel(nodeRC *t)//tim do cao cua node
 {
@@ -561,22 +575,22 @@ nodeRC *updateTreeAvl(nodeRC *t)//dieu chinh cay thanh AVL
 int addNodeReader(ReaderList &l, Reader data)
 {
 	nodeRC *p = makeNodeReader(data);
+	if(p->data.ID=="") p->data.ID = createID();
 	if (l.size == 0)
 	{
-		if(p->data.ID=="")p->data.ID = createID();
 		l.head = p;
 		++l.size;
 		return 1;
 	}
 	else
 	{
-		string newName = data.LastName + data.LastName;
+		string newID = p->data.ID;
 		nodeRC *tmp = l.head;
 
 		while (tmp->left != nullptr && tmp->right != nullptr)
 		{
-			string Name = tmp->data.LastName + tmp->data.FirstName;
-			if (Name > newName)
+			string ID = tmp->data.ID;
+			if (ID > newID)
 			{
 				tmp = tmp->left;
 			}
@@ -585,7 +599,6 @@ int addNodeReader(ReaderList &l, Reader data)
 				tmp = tmp->right;
 			}
 		}
-		if(p->data.ID=="")	p->data.ID = createID();
 		if (tmp->left == nullptr)
 		{
 			tmp->left = p;
@@ -635,12 +648,14 @@ int deleteNodeReader(ReaderList &l, string ID)
 	{
 		delete cur;
 		l.size--;
+		if(checkAvl(l.head)==1) updateTreeAvl(l.head);
 		return 1;
 	}
 	else if (cur->right = nullptr)
 	{
 		delete cur;
 		l.size--;
+		if(checkAvl(l.head)==1) updateTreeAvl(l.head);
 		return 1;
 	}
 	else
@@ -658,6 +673,7 @@ int deleteNodeReader(ReaderList &l, string ID)
 			cur->right = tmp->right;
 			delete tmp;
 			l.size--;
+			if(checkAvl(l.head)==1) updateTreeAvl(l.head);
 			return 1;
 		}
 		else
@@ -666,7 +682,63 @@ int deleteNodeReader(ReaderList &l, string ID)
 			pre->left = tmp->right;
 			delete tmp;
 			l.size--;
+			if(checkAvl(l.head)==1) updateTreeAvl(l.head);
 			return 1;
 		}
+		
 	}
 }
+
+/*
+nodeRC* remove(nodeRC* p,string& ID)
+{
+   nodeRC* rp, f;     // rp la nut the mang cho nut p, f la nut cha cua rp
+   if(p == nullptr)
+   {
+      cout<<"CAN NOT DELETE";
+      return nullptr;
+   }
+      if(p->right == nullptr)      // nut p khong co cay con ben phai
+	 rp = p->left;
+      else
+      {
+	 if(p->left == nullptr)    // nut p khong co cay con ben trai
+		 rp = p->right;
+	 else    // nut p co hai cay con ben trai va ben phai
+	 {
+	    /* tim nut the mang rp la nut trai nhat cua cay con ben phai,
+	    goi f la nut cha cua nut rp */
+	  /*  f = p;
+	    rp = p->right;
+	    while(rp->left != nullptr)
+	    {
+	       f = rp;
+	       rp = rp->left;
+	    }
+	    if(f != p)
+	    {
+	       f->left = rp->right;
+	       rp->right = p->right;
+	    }
+	    rp->left = p->left;
+	 }
+      }
+      delete p;
+      return(rp);
+}
+*/
+
+/*
+nodeRC* search(nodeRC* root, string ID)
+{
+   nodeRC* p;
+   p = root;
+   while(p != nullptr && x!=p->data.ID)
+   {
+	      if(x < p->key)
+		 p = p->left;
+	      else
+		 p = p->right;
+   }
+   return(p);
+}*/

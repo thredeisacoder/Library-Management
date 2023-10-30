@@ -185,6 +185,65 @@ void UnTick(int x,int y)//huy danh dau
 	cout<<"  ";
 	gotoxy(x,y);
 }
+
+void clearReaderLine(int i)
+{
+	gotoxy(6,i);
+	cout<<"   ";
+	gotoxy(14, i);
+	for(int j=14;j<30;j++) cout << " ";
+	gotoxy(35, i);
+	for(int j=35;j<65;j++) cout << " ";
+	gotoxy(70, i);
+	for(int j=70;j<85;j++) cout << " ";
+	gotoxy(90, i);
+	for(int j=90;j<100;j++) cout << " ";
+	gotoxy(105,i);
+	for(int j=105;j<120;j++) cout << " ";
+}
+
+void clearReaderTable()
+{
+	for (int i = 3; i <  3+ 2 * 20; i+=2)
+	{
+		clearReaderLine(i);
+	}
+}
+
+//in 1 doc gia
+void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
+{
+	while(y>=20)
+	{
+		y-=20;
+	}
+	gotoxy(14, 3+2*y);
+	cout << p->data.ID;
+	gotoxy(35, 3+2*y);
+	cout << p->data.FirstName;
+	gotoxy(70, 3+2*y);
+	cout << p->data.LastName;
+	gotoxy(90, 3+2*y);
+	cout << p->data.Gender;
+	gotoxy(105,3+2*y);
+	int s= p->data.CardStatus;
+	if(s==1) cout<<"1 (activated)";
+	else if(s==0) cout<<"0 (locked)";
+}
+void sortbyID(nodeRC* tmp[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i+1;j<n;j++)
+		{
+			if(tmp[i]->data.ID>tmp[j]->data.ID)
+			{
+				swap(tmp[i],tmp[j]);
+			}
+		}
+	}
+}
+
 //nhap doc gia moi
 void tableEnterRC(ReaderList& rl)
 {
@@ -220,10 +279,25 @@ void tableEnterRC(ReaderList& rl)
 	cout << p->CardStatus;
 	gotoxy(x + width / 6 + 1, y + 11);
 	p->FirstName = EnterFirstName(p->FirstName);
+	if(p->FirstName=="")
+	{
+		delete p;
+		return ;
+	}
 	gotoxy(x + width / 6 + 28, y + 11);
 	p->LastName = EnterLastName(p->LastName);
+	if(p->LastName=="")
+	{
+		delete p;
+		return ;
+	}
 	gotoxy(x + width / 6 + 47, y + 11);
 	p->Gender = EnterGender(p->Gender);
+	if(p->Gender=="")
+	{
+		delete p;
+		return ;
+	}
 	ShowCur(false);
 	gotoxy(x , y + 15);
 	int n = addNodeReader(rl, *p);
@@ -234,87 +308,71 @@ void tableEnterRC(ReaderList& rl)
 	Sleep(1000);
 }
 
-void tableSettingRC(nodeRC* p)
+void tableSettingRC(nodeRC* p,int y)//chinh sua thong tin doc gia
 {
 	ShowCur(true);
 	SetColor(16);
-	int x = 10, y = 2, width = 120, height = 80;
-	gotoxy(x , y + height / 4);
-	cout << "GENDER: 1 FOR MALE OR 2 FOR FEMALE !";
-	gotoxy(x , y + height / 4 + 1);
-	cout << "STATUS: 0(LOCKED) OR 1(UNLOCKED)";
-	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
+	Reader* data=new Reader(p->data);
+	gotoxy(6,wherey());
+	SetColor(20);
+	cout<<"->>";
+	SetColor(16);
+
+
+	gotoxy(35, y);
+	data->FirstName = EnterFirstName(p->data.FirstName);
+	if(data->FirstName=="")
 	{
-		SetBGColor(14);
-		gotoxy(i, y + 8);
-		cout << " ";
-		gotoxy(i, y + 10);
-		cout << " ";
-		gotoxy(i, y + 12);
-		cout << " ";
+		delete data;
+		clearReaderLine(y);
+		displayReader(p,(y-3)/2);
+		return;
 	}
-	SetBGColor(15);
-	gotoxy(x + width / 6 + 1, y + 9);
-	cout << "| FIRST NAME | ";
-	gotoxy(x + width / 6 + 25, y + 9);
-	cout << " | LAST NAME | ";
-	gotoxy(x + width / 6 + 45, y + 9);
-	cout << " | GENDER | ";
-	gotoxy(x + width / 6 + 60, y + 9);
-	cout << " | STATUS | ";
-
-
-	gotoxy(x + width / 6 + 1, y + 11);
-	p->data.FirstName = EnterFirstName(p->data.FirstName);
-	gotoxy(x + width / 6 + 28, y + 11);
-	p->data.LastName = EnterLastName(p->data.LastName);
-	gotoxy(x + width / 6 + 47, y + 11);
-	p->data.Gender = EnterGender(p->data.Gender);
-	gotoxy(x + width / 6 + 62, y + 11);
-	p->data.CardStatus=EnterStatus(p->data.CardStatus);
-
+	gotoxy(70,y);
+	data->LastName = EnterLastName(p->data.LastName);
+	if(data->LastName=="")
+	{
+		delete data;
+		clearReaderLine(y);
+		displayReader(p,(y-3)/2);
+		return;
+	}
+	gotoxy(90, y );
+	data->Gender = EnterGender(p->data.Gender);
+	if(data->Gender=="")
+	{
+		delete data;
+		clearReaderLine(y);
+		displayReader(p,(y-3)/2);
+		return;
+	}
+	gotoxy(105, y);
+	data->CardStatus=EnterStatus(p->data.CardStatus);
+	if(data->CardStatus==-1)
+	{
+		delete data;
+		clearReaderLine(y);
+		displayReader(p,(y-3)/2);
+		return;
+	}
+	p->data=*data;
+	
+	
+	clearReaderLine(y);
+	displayReader(p,(y-3)/2);
 	ShowCur(false);
 	Sleep(1000);
-}
-//in 1 doc gia
-void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
-{
-	while(y>=20)
-	{
-		y-=20;
-	}
-	gotoxy(14, 3+ 2*y);
-	cout << p->data.ID;
-	gotoxy(35, 3+2*y);
-	cout << p->data.FirstName;
-	gotoxy(70, 3+2*y);
-	cout << p->data.LastName;
-	gotoxy(90, 3+2*y);
-	cout << p->data.Gender;
-	gotoxy(110,3+2*y);
-	cout << p->data.CardStatus;
-}
-void sortbyID(nodeRC* tmp[],int n)
-{
-	for(int i=0;i<n;i++)
-	{
-		for(int j=i+1;j<n;j++)
-		{
-			if(tmp[i]->data.ID>tmp[j]->data.ID)
-			{
-				swap(tmp[i],tmp[j]);
-			}
-		}
-	}
 }
 //sap xep theo ten
 void sortbyname(nodeRC* tmp[],int n)
 {
 	for(int i=0;i<n;i++)
 	{
+		string s1=tmp[i]->data.LastName+tmp[i]->data.FirstName;
 		for(int j=i+1;j<n;j++)
 		{
-			if(tmp[i]->data.LastName > tmp[j]->data.LastName)
+			string s2=tmp[j]->data.LastName+tmp[j]->data.FirstName;
+			if(s1 >s2)
 			{
 				swap(tmp[i],tmp[j]);
 			}
@@ -350,22 +408,6 @@ void tranvertree(nodeRC* head,nodeRC* tmp[],int& n)//duyet cay dua vao mang con 
 	}
 }
 
-void clearReaderTable()
-{
-	for (int i = 3; i <  3+ 2 * 20; i+=2)
-	{
-		gotoxy(14, i);
-		for(int j=14;j<30;j++) cout << " ";
-		gotoxy(35, i);
-		for(int j=35;j<65;j++) cout << " ";
-		gotoxy(70, i);
-		for(int j=70;j<85;j++) cout << " ";
-		gotoxy(90, i);
-		for(int j=90;j<100;j++) cout << " ";
-		gotoxy(110,i);
-		for(int j=110;j<120;j++) cout << " ";
-	}
-}
 
 int selectDisplayMode()
 {
@@ -501,8 +543,9 @@ void deleteReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do xoa
 		{
 			UnTick(wherex(),wherey());
 			int pos=count-20+(wherey()-3)/2;
-			cout<<pos;
-			system("pause");
+			string s=tmp[pos]->data.ID;
+			deleteNodeReader(rl,s);
+			returnIDAfterDelete(s);
 			break;
 		}
 		else if(c==27)//esc
@@ -592,8 +635,7 @@ void SettingReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do chinh su
 		{
 			UnTick(wherex(),wherey());
 			int pos=count-20+(wherey()-3)/2;
-			system("cls");
-			tableSettingRC(tmp[pos]);
+			tableSettingRC(tmp[pos],wherey());
 			break;
 		}
 		else if(c==27)//esc
@@ -601,7 +643,7 @@ void SettingReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do chinh su
 			UnTick(wherex(),wherey());
 			break;
 		}
-			else if(c==80)//down
+		else if(c==80)//down
 		{
 			if(count>rl.size&&wherey()==3+2*(rl.size-1-(count-20))) 
 			{
@@ -784,9 +826,7 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 				system("cls");
 				int n=0;
 				tranvertree(rl.head,tmp,n);
-				int x=selectDisplayMode();
-				if(x==1) sortbyID(tmp,rl.size);
-				else sortbyname(tmp,rl.size);
+				sortbyID(tmp,rl.size);
 				system("cls");
 				ReaderTable(tmp,rl.size,count);
 				controlReaderTable(rl,tmp,count);
@@ -809,6 +849,11 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 
 				gotoxy(132, 20);
 				deleteReaderMode(rl,tmp,count);
+				int n=0;
+				system("cls");
+				tranvertree(rl.head,tmp,n);
+				sortbyID(tmp,n);
+				system("cls");
 				ReaderTable(tmp,rl.size,count);
 				controlReaderTable(rl,tmp,count);
 				system("cls");
@@ -817,12 +862,6 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 			else
 			{
 				SettingReaderMode(rl,tmp,count);
-				system("cls");
-				int n=selectDisplayMode();
-				if(n==1) sortbyID(tmp,rl.size);
-				else sortbyname(tmp,rl.size);
-				system("cls");
-				ReaderTable(tmp,rl.size,count);
 				controlReaderTable(rl,tmp,count);
 				break;
 			}
@@ -1186,9 +1225,7 @@ void clearTableTOC(){
 	}
 }
 
-// void printBooklist(){
-
-// }
+// void printBooklist(){}
 
 void controlTOCTable(TableOfContentList &tl, int count){
 	SetBGColor(11);
@@ -1360,7 +1397,6 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 				UnHighLight(wherex(), wherey(), width / 3);
 				gotoxy(x  - 6, y + height / 4 + 20 - 1);
 				HighLight(wherex(), wherey(), width / 3);
-
 			}
 			else
 			{

@@ -90,6 +90,10 @@ string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o da
 	while (true)
 	{
 		char c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)
 		{
 			if (Name == "")
@@ -157,6 +161,7 @@ string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o da
 			continue;
 		}
 	}
+	if(Name[Name.length()-1]==' ') Name.pop_back();
 	return Name;
 }
 
@@ -319,6 +324,10 @@ string EnterLastName(string  s)
 	while (true)
 	{
 		c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)
 		{
 			if (s == "") continue;
@@ -332,6 +341,7 @@ string EnterLastName(string  s)
 			putchar('\b');
 			s.pop_back();
 		}
+		if(s.length()==8) continue;
 		if ((c >= 'a' && c < 'z') || (c >= 'A' && c <= 'Z'))
 		{
 			if (s == "")
@@ -373,6 +383,10 @@ string EnterGender(string s)
 	while (true)
 	{
 		c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if(c==13)//enter
 		{
 			if(s=="") continue;
@@ -422,10 +436,24 @@ string EnterGender(string s)
 int EnterStatus(int s)
 {
 	cout << s;
+	if(s==1) 
+	{
+		cout<<" (activated)";
+		cout<<"\b\b\b\b\b\b\b\b\b\b\b\b";
+	}
+	else 
+	{
+		cout<<" (locked)";
+		cout<<"\b\b\b\b\b\b\b\b\b";
+	}
 	char c;
 	while (true)
 	{
 		c = _getch();
+		if(c==27)//esc
+		{
+			return -1;
+		}
 		if(c==13)//enter
 		{
 			if (s==-1) continue;
@@ -435,21 +463,25 @@ int EnterStatus(int s)
 		{
 			if(s==-1) continue;
 			else s=-1;
-			cout<<"\b  \b\b";
+			cout<<"\b             \b\b\b\b\b\b\b\b\b\b\b\b\b";
 		}
 		else if (c=='0'||c == '1')
 		{
 			if(c=='0')
 			{
+				if(s!=-1) continue;
 				putchar(c);
+				cout<<" (locked)";
+				cout<<"\b\b\b\b\b\b\b\b\b";
 				s=0;
-				return s;
 			}
 			else
 			{
+				if(s!=-1) continue;
 				putchar(c);
+				cout<<" (activated)";
+				cout<<"\b\b\b\b\b\b\b\b\b\b\b\b";
 				s=1;
-				return s;
 			}
 		}
 		else
