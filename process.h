@@ -6,7 +6,7 @@ using namespace std;
 
 //Reader//
 
-string EnterID_ISBN(string s)
+string EnterISBN(string s)
 {
 	cout << s;
 	char c;
@@ -29,7 +29,7 @@ string EnterID_ISBN(string s)
 			putchar(' ');
 			putchar('\b');
 		}
-		else if (s.length() == 6)//dat kich co toi da
+		else if (s.length() == 4)//dat kich co toi da
 		{
 			continue;
 		}

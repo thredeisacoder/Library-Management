@@ -27,55 +27,7 @@ struct BookList
 	nodeB *head = nullptr;
 	nodeB *tail = nullptr;
 	int size = 0;
-	int random = rand() % 10 + 1;
 };
-void generateID(BookList &bookList)
-{
-	int min = 1000;
-	int max = 10000;
-	string a[MAX] = {"DA"};
-	bool b[MAX] = {false};
-	srand(time(0)); // Sử dụng thời gian hiện tại làm seed
-
-	nodeB *p = bookList.head;
-	int i = min;
-
-	while (p && i < max)
-	{
-		int tmp;
-		do
-		{
-			tmp = rand() % (max - min) + min;
-		} while (b[tmp]);
-		a[i] = "DA" + to_string(tmp);
-		b[tmp] = true;
-
-		p->data.BookID = a[i]; // Gán BookID cho cuốn sách trong danh sách
-		p = p->next;
-		i++;
-	}
-}
-
-BookList *createBookList()
-{
-	BookList *list = new BookList;
-
-	for (int i = 0; i < list->random; i++)
-	{
-		nodeB *newNode = new nodeB;
-		generateID(*list);
-		newNode->data.BookStatus = 0;
-		newNode->data.BookLocation = " " + to_string(i);
-		if (list->tail == nullptr) {
-            list->head = newNode;
-            list->tail = newNode;
-        } else {
-            list->tail->next = newNode;
-            list->tail = newNode;
-        }
-	}
-	return list;
-}
 
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
 struct Date
@@ -209,7 +161,7 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 		{
 			tmp.size++;
 			tmp.ds[index] = tl.ds[i];
-			index++;
+			index ++;
 		}
 	}
 	return tmp;
@@ -230,6 +182,30 @@ TableOfContent *searchByISBN(TableOfContentList tl, string data)
 	return NULL;
 }
 
+string generateID(TableOfContent* p, int i)
+{
+	string id = p->ISBN + "_0" + to_string(i);
+	return id;
+}
+
+BookList createBookList(TableOfContent* p)
+{
+	BookList *list = new BookList;
+	for (int i = 0; i < p->dms.size; i++)
+	{
+		nodeB *newNode = new nodeB;
+		newNode->data.BookStatus = 0;
+		newNode->data.BookID = generateID(p, i);
+		if (list->tail == nullptr) {
+            list->head = newNode;
+            list->tail = newNode;
+        } else {
+            list->tail->next = newNode;
+            list->tail = newNode;
+        }
+	}
+	return *list;
+}
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader
 {

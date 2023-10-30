@@ -853,6 +853,8 @@ void tableEnterTOC(TableOfContentList& tl)
 	cout << "Public Year - 4 chars";//hdsd
 	gotoxy(x , y + height / 4 + 6);
 	cout << "ISBN - 6 chars";//hdsd
+	gotoxy(x , y + height / 4 + 7);
+	cout << "The number of books - 2 chars";//hdsd
 	for (int i = x; i < x + width + 25; i++)
 	{
 		SetBGColor(14);
@@ -876,7 +878,9 @@ void tableEnterTOC(TableOfContentList& tl)
 	cout << "| PUBLIC YEAR | ";
 	gotoxy(x + width + 10, y + 9);
 	cout << "| ISBN | ";
-
+	gotoxy(x + width - 59, y + 15);
+	cout << "| Enter the number of books | ";
+	ShowCur(true);
 
 	gotoxy(x + 3, y + 11);
 	p->BookName = EnterFirstName(p->BookName);
@@ -889,8 +893,13 @@ void tableEnterTOC(TableOfContentList& tl)
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
 	gotoxy(x + width + 10, y + 11);
-	p->ISBN = EnterID_ISBN(p->ISBN);
-	p->dms = *createBookList();
+	p->ISBN = EnterISBN(p->ISBN);
+	gotoxy(x + width - 49, y + 16);
+	int sizedms;
+	cin >> sizedms;
+	p->dms.size = sizedms;
+	p->dms = createBookList(p);
+	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *p);
 	if(n == 1){
 		gotoxy(x , 20);
@@ -901,6 +910,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	}
 	gotoxy(x , y + 15);
 	Sleep(1500);
+	delete p;
 }
 void displayTOC(TableOfContent data, int& yTOC) {
 	gotoxy(2, yTOC);
@@ -927,8 +937,26 @@ void loadListTOC(TableOfContentList tl, int count) {
 	}
 }
 
+void loadListSearch(TableOfContentList tl, int count) {
+	int yTOC = 3; //chiều cao hàng đầu tiên
+	for (int i = count - 19; i < count; i++) {
+		if(i == tl.size){
+			break;
+		}
+		if(tl.ds[i]->dms.size == 0){
+			displayTOC(*tl.ds[i], yTOC);
+			yTOC += 2;
+		}
+		for(int j = 0; j < tl.ds[i]->dms.size; j++){
+			displayTOC(*tl.ds[i], yTOC);
+			yTOC += 2;
+		}
+	}
+}
+
 void filterBySearching(TableOfContentList& tl, int count)
 {
+	int k = 0;
 	gotoxy(1, 43);
 	SetBGColor(20);
 	cout << "Enter BookName:";
@@ -939,7 +967,13 @@ void filterBySearching(TableOfContentList& tl, int count)
 	SetBGColor(15);
 	system("cls");
 	TableOfContentList l = saveToSearch(tl, inputSearch);
-	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
+	for(int i = 0; i < l.size; i++){
+		k += l.ds[i]->dms.size;
+	}
+	if(k == 0){
+		k = l.size;
+	}
+	for (int i = 0; i <= 143; i++)//chạy theo chiều dài, trái -> phải
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -947,15 +981,15 @@ void filterBySearching(TableOfContentList& tl, int count)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * l.size; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		for (int j = 4; j < 3 + 2 * k; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
 		{
 			gotoxy(i, j);
 			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
 		}
-		gotoxy(i, 3 + 2 * l.size);
+		gotoxy(i, 3 + 2 * k);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * l.size; i++)//vẽ cột ngăn cách từng mục 
+	for (int i = 1; i < 3 + 2 * k; i++)//vẽ cột ngăn cách từng mục 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -970,6 +1004,10 @@ void filterBySearching(TableOfContentList& tl, int count)
 		gotoxy(111, i);
 		cout << " ";
 		gotoxy(124, i);
+		cout << " ";
+		gotoxy(134, i);
+		cout << " ";
+		gotoxy(143, i);
 		cout << " ";
 	}
 	SetBGColor(15);
@@ -989,7 +1027,11 @@ void filterBySearching(TableOfContentList& tl, int count)
 	cout << "PAGE";
 	gotoxy(116, 1);
 	cout << "YEAR";
-	loadListTOC(l, count);
+	gotoxy(126, 1);
+	cout << "BOOK ID";
+	gotoxy(136, 1);
+	cout << "STATUS";
+	loadListSearch(l, count);
 	SetBGColor(11);
 	SetColor(0);
 }
@@ -997,7 +1039,7 @@ void editTOC(TableOfContentList& tl){
 	gotoxy(130, 40);
 	cout << "Enter ISBN: ";
 	string input = "";
-	input = EnterID_ISBN(input);
+	input = EnterISBN(input);
 	TableOfContent* tmp = searchByISBN(tl, input);
 	if(tmp == NULL){
 		gotoxy(130, 41);
@@ -1055,7 +1097,7 @@ void editTOC(TableOfContentList& tl){
 	gotoxy(x + width - 2, y + 11);
 	tmp->PublicYear = enterYear(tmp->PublicYear);
 	gotoxy(x + width + 10, y + 11);
-	tmp->ISBN = EnterID_ISBN(tmp->ISBN);
+	tmp->ISBN = EnterISBN(tmp->ISBN);
 	int n = themTheoThuTuTheLoai(tl, *tmp);
 	if(n == 0){
 		gotoxy(x , 20);
@@ -1271,8 +1313,8 @@ void controlTOCTable(TableOfContentList &tl, int count){
 				filterBySearching(tl, count);
 				gotoxy(120, 20);
 				while(true){
-					gotoxy(127, 5);
-					cout << "ESC : Return to menu!";
+					// gotoxy(127, 5);
+					// cout << "ESC : Return to menu!";
 					char a=_getch();
 					SetBGColor(15);
 					if(a == 27){
@@ -1444,7 +1486,7 @@ int main()
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
 	ShowCur(false);
-	loading();
+//	loading();
 //	resetIDRCfile(); return 0;//dieu chinh lai danh sach ID tu dau //
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
