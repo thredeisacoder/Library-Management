@@ -11,9 +11,9 @@ using namespace std;
 #define MAX 10000
 struct Book
 {
-	string BookID;
-	int BookStatus;
-	string BookLocation;
+	string BookID ="";
+	int BookStatus = 0;
+	string BookLocation = "";
 };
 /////////////////////////////////////////////Danh muc sach/////////////////////////////////////////////////
 struct nodeB
@@ -260,31 +260,8 @@ int addNodeBook(BookList &l, Book data)
 	}
 	else
 	{
-		nodeB *preB = l.head;
-		if (p->data.BookID >= l.head->data.BookID)
-		{
-			p->next = l.head;
-			l.head = p;
-			++l.size;
-			return 1;
-		}
-		for (nodeB *i = l.head; i != nullptr; i = i->next) // duyet tu dau toi cuoi
-		{
-			if (p->data.BookID >= i->data.BookID) // khi id cua sach can them >id cua i thi chen p truoc i
-			{
-				p->next = i;
-				preB->next = p;
-				++l.size;
-				return 1;
-			}
-			else // neu khong thi cap nhat phan tu pre va i
-			{
-				preB = i;
-				i = i->next;
-			}
-		}
-		// khi khong co phan tu nao co id >p
 		l.tail->next = p;
+		l.tail = p;
 		++l.size;
 		return 1;
 	}

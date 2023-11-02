@@ -791,6 +791,25 @@ int loadFileTOC(TableOfContentList& tl)
 		p->NumOfPage=l;
 		getline(f, l);
 		p->PublicYear = l;
+		getline(f,l);
+		if (l == "") break;
+		int index = 0;
+		for(int i = 0; i < l.length(); i++){
+			index = index * pow(10, i) + (int)(l[i] - '0');
+		}
+		for(int i=0; i < index; i++){
+			nodeB* b = new nodeB;
+			getline(f,l);
+			if (l == "") break;
+			b->data.BookID = l;
+			getline(f,l);
+			if (l == "") break;
+			for(int i = 0; i < l.length(); i++){
+				if(l[i] != 0 && l[i] != 1){continue;}
+				b->data.BookStatus = b->data.BookStatus * pow(10, i) + (int)(l[i] - '0');
+			}
+			addNodeBook(p->dms, b->data);
+		}
 		themTheoThuTuTheLoai(tl, *p);
 	}
 	f.close();
@@ -810,6 +829,13 @@ int saveTOC(TableOfContentList &tl)
 		f << tl.ds[i]->Genre<< endl;
 		f << tl.ds[i]->NumOfPage << endl;
 		f << tl.ds[i]->PublicYear << endl;
+		f << tl.ds[i]->dms.size << endl;
+		nodeB* b = tl.ds[i]->dms.head;
+		for(int j = 0; j < tl.ds[i]->dms.size; j++){
+			f << b->data.BookID << endl;
+			f << b->data.BookStatus << endl;
+			b = b->next;
+		}
 	}
 	return 1;
 }
