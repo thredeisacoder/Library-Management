@@ -13,6 +13,10 @@ string EnterISBN(string s)
 	while (true)
 	{
 		char c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)//enter
 		{
 			if (s == "")
@@ -171,6 +175,10 @@ string EnterAuthor(string Name)
 	while (true)
 	{
 		char c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)
 		{
 			if (Name == "")
@@ -246,6 +254,10 @@ string EnterGenre(string s) {
 	while (true)
 	{
 		char c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)
 		{
 			if (s == "")
@@ -577,6 +589,10 @@ string enterYear(string n)
 	while (true)
 	{
 		c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)
 		{
 			if (n == "") continue;
@@ -611,6 +627,10 @@ string enterNumPage(string n)
 	while (true)
 	{
 		c = _getch();
+		if(c==27)//esc
+		{
+			return "";
+		}
 		if (c == 13)
 		{
 			if (n == "") continue;
@@ -636,6 +656,51 @@ string enterNumPage(string n)
 		}
 	}
 	return n;
+}
+int enterNumBooks(int p)
+{
+	string n = to_string(p);
+	n.pop_back();
+	if(p != 0 ){
+		cout << n;
+	}
+	char c;
+	while (true)
+	{
+		c = _getch();
+		if(c==27)//esc
+		{
+			return 0;
+		}
+		if (c == 13) //enter
+		{
+			if (n == "") continue;
+			else break;
+		}
+		else if (c == 8)//xoa
+		{
+			if (n == "") continue;
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+			n.pop_back();
+		}
+		else if (c >= '0' && c <= '9')
+		{
+			if (n.length() >= 2)  continue;
+			else putchar(c);
+			n += c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	int res = 0;
+	for(int i = 0; i < n.length(); i++){
+		res = res * pow(10, i) + (int)(n[i] - '0');
+	}
+	return res;
 }
 
 
