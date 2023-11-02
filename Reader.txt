@@ -57,7 +57,7 @@ MALE
 Nguyen Van
 Thanh
 MALE
-0
+1
 0013
 Do Viet 
 Hung

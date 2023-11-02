@@ -922,20 +922,25 @@ void tableEnterTOC(TableOfContentList& tl)
 
 	gotoxy(x + 3, y + 11);
 	p->BookName = EnterFirstName(p->BookName);
+	if(p->BookName == ""){return ;}
 	gotoxy(x + width - 79, y + 11);
 	p->Genre = EnterGenre(p->Genre);
+	if(p->Genre == ""){return ;}
 	gotoxy(x + width - 59, y + 11);
 	p->Author = EnterAuthor(p->Author);
+	if(p->Author == ""){return ;}
 	gotoxy(x + width - 20, y + 11);
 	p->NumOfPage = enterNumPage(p->NumOfPage);
+	if(p->NumOfPage == ""){return ;}
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
+	if(p->PublicYear == ""){return ;}
 	gotoxy(x + width + 10, y + 11);
 	p->ISBN = EnterISBN(p->ISBN);
-	gotoxy(x + width - 49, y + 16);
-	int sizedms;
-	cin >> sizedms;
-	p->dms.size = sizedms;
+	if(p->ISBN == ""){return ;}
+	gotoxy(x + width - 45, y + 16);
+	p->dms.size = enterNumBooks(p->dms.size);
+	if(p->dms.size == 0){return ;}
 	p->dms = createBookList(p);
 	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *p);
@@ -948,7 +953,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	}
 	gotoxy(x , y + 15);
 	Sleep(1500);
-	delete p;
+	// delete p;
 }
 void displayTOC(TableOfContent data, int& yTOC) {
 	gotoxy(2, yTOC);
@@ -964,6 +969,18 @@ void displayTOC(TableOfContent data, int& yTOC) {
 	gotoxy(116, yTOC);
 	cout << data.PublicYear;
 }
+
+void displayBookList(TableOfContent data, int yTOC, int pos) {
+	nodeB* p = data.dms.head;
+		for(int i = 0; i < pos; i++){
+			p = p->next;
+		}
+		gotoxy(126, yTOC);
+		cout << p->data.BookID;
+		gotoxy(136, yTOC);
+		cout << p->data.BookStatus;
+}
+
 void loadListTOC(TableOfContentList tl, int count) {
 	int yTOC = 3; //chiều cao hàng đầu tiên
 	for (int i = count - 19; i < count; i++) {
@@ -975,26 +992,76 @@ void loadListTOC(TableOfContentList tl, int count) {
 	}
 }
 
-void loadListSearch(TableOfContentList tl, int count) {
+void loadListSearch(TableOfContentList tl, int count, int& flag) {
 	int yTOC = 3; //chiều cao hàng đầu tiên
 	for (int i = count - 19; i < count; i++) {
 		if(i == tl.size){
 			break;
 		}
-		if(tl.ds[i]->dms.size == 0){
-			displayTOC(*tl.ds[i], yTOC);
-			yTOC += 2;
+		if(tl.ds[i] != tl.ds[i-1]){
+			flag = i;
 		}
-		for(int j = 0; j < tl.ds[i]->dms.size; j++){
-			displayTOC(*tl.ds[i], yTOC);
-			yTOC += 2;
+		displayTOC(*tl.ds[i], yTOC);
+		displayBookList(*tl.ds[i], yTOC, i - flag);
+		yTOC += 2;
+	}
+}
+
+void clearfilterBySearching(){
+	for (int i = 3; i <  3+ 2 * 19; i+=2)
+	{
+		gotoxy(2, i);
+		for(int j=0;j<6;j++) cout << " ";
+		gotoxy(10, i);
+		for(int j=0;j<36;j++) cout << " ";
+		gotoxy(48, i);
+		for(int j=0;j<15;j++) cout << " ";
+		gotoxy(65, i);
+		for(int j=0;j<32;j++) cout << " ";
+		gotoxy(99, i);
+		for(int j=0;j<11;j++) cout << " ";
+		gotoxy(112,i);
+		for(int j=0;j<11;j++) cout << " ";
+		gotoxy(125,i);
+		for(int j=0;j<9;j++) cout << " ";
+		gotoxy(135, i);
+		for(int j=0;j<4;j++) cout << " ";
+	}
+}//thieu 2 cot chua xu li
+
+void controlfilterBySearching(TableOfContentList &tl, int count, int &flag){
+	while (true)
+	{
+		// nhan phim tu nguoi dung(up/down/enter)
+		char c = _getch();
+		if (c == -32)
+		{
+			c = _getch();
+		}
+		if (c == 27)//khi nguoi dung nhan esc
+		{
+			system("cls");
+			break;
+		}
+		else if(c==75)///left
+		{
+			if(count == 19) {continue;}
+			count -= 19;
+			clearfilterBySearching();
+			loadListSearch(tl, count, flag);
+		}
+		else if(c==77)//right
+		{
+			if(count > tl.size) {continue;}
+			count +=19;
+			clearfilterBySearching();
+			loadListSearch(tl, count, flag);
 		}
 	}
 }
 
-void filterBySearching(TableOfContentList& tl, int count)
+void filterBySearching(TableOfContentList& tl, int count, int &flag)
 {
-	int k = 0;
 	gotoxy(1, 43);
 	SetBGColor(20);
 	cout << "Enter BookName:";
@@ -1005,12 +1072,6 @@ void filterBySearching(TableOfContentList& tl, int count)
 	SetBGColor(15);
 	system("cls");
 	TableOfContentList l = saveToSearch(tl, inputSearch);
-	for(int i = 0; i < l.size; i++){
-		k += l.ds[i]->dms.size;
-	}
-	if(k == 0){
-		k = l.size;
-	}
 	for (int i = 0; i <= 143; i++)//chạy theo chiều dài, trái -> phải
 	{
 		SetBGColor(6);
@@ -1019,15 +1080,15 @@ void filterBySearching(TableOfContentList& tl, int count)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * k; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		for (int j = 4; j < 3 + 2 * 19; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
 		{
 			gotoxy(i, j);
 			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
 		}
-		gotoxy(i, 3 + 2 * k);
+		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * k; i++)//vẽ cột ngăn cách từng mục 
+	for (int i = 1; i < 3 + 2 * 19; i++)//vẽ cột ngăn cách từng mục 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1069,7 +1130,8 @@ void filterBySearching(TableOfContentList& tl, int count)
 	cout << "BOOK ID";
 	gotoxy(136, 1);
 	cout << "STATUS";
-	loadListSearch(l, count);
+	loadListSearch(l, count, flag);
+	controlfilterBySearching(l, count, flag);
 	SetBGColor(11);
 	SetColor(0);
 }
@@ -1327,7 +1389,7 @@ void controlTOCTable(TableOfContentList &tl, int count){
 		{
 			count = 19;
 			SetBGColor(15);
-			if (wherey() == 3)
+			if (wherey() == 3) //add
 			{
 				system("cls");
 				tableEnterTOC(tl);
@@ -1336,7 +1398,7 @@ void controlTOCTable(TableOfContentList &tl, int count){
 				controlTOCTable(tl, count);
 				break;
 			}
-			else if (wherey() == 7)
+			else if (wherey() == 7) //edit
 			{
 				editTOC(tl);
 				system("cls");
@@ -1344,24 +1406,12 @@ void controlTOCTable(TableOfContentList &tl, int count){
 				controlTOCTable(tl, count);
 				break;
 			}
-			else
+			else //search
 			{
-				filterBySearching(tl, count);
-				gotoxy(120, 20);
-				while(true){
-					// gotoxy(127, 5);
-					// cout << "ESC : Return to menu!";
-					char a=_getch();
-					SetBGColor(15);
-					if(a == 27){
-						system("cls");
-						TableTOC(tl, count);
-						controlTOCTable(tl, count);
-						break;
-					}else{
-						continue;
-					}
-				}
+				int flag = count - 19;
+				filterBySearching(tl, count, flag);
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
 				break;
 			}
 		}
