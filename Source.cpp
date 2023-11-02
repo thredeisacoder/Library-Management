@@ -1,7 +1,6 @@
 #include "mylib.h"
 #include "struct.h"
 #include "process.h"
-#include <fstream>
 using namespace std;
 
 void title(int x, int y) {
@@ -1521,7 +1520,7 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-	ShowCur(false);
+//	ShowCur(false);
 //	loading();
 //	resetIDRCfile(); return 0;//dieu chinh lai danh sach ID tu dau //
 	int n = loadFileReader(rl);
