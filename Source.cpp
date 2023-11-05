@@ -1133,7 +1133,7 @@ void editTOC(TableOfContentList& tl){
 	cout << "| PUBLIC YEAR | ";
 	gotoxy(x + width + 10, y + 9);
 	cout << "| ISBN | ";
-
+	ShowCur(true);
 	gotoxy(x + 3, y + 11);
 	tmp->BookName = EnterFirstName(tmp->BookName);
 	gotoxy(x + width - 79, y + 11);
@@ -1146,7 +1146,10 @@ void editTOC(TableOfContentList& tl){
 	tmp->PublicYear = enterYear(tmp->PublicYear);
 	gotoxy(x + width + 10, y + 11);
 	tmp->ISBN = EnterISBN(tmp->ISBN);
+	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *tmp);
+	delete tmp->dms.head;
+	tmp->dms = createBookList(tmp);
 	if(n == 0){
 		gotoxy(x , 20);
 		cout << "~EDIT SUCCESSFULL!!!~";

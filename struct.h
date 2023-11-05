@@ -27,7 +27,6 @@ struct BookList
 	nodeB *head = nullptr;
 	nodeB *tail = nullptr;
 	int size = 0;
-	int random = rand() % 10 + 1;
 };
 
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
