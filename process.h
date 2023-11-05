@@ -804,7 +804,7 @@ int loadFileTOC(TableOfContentList& tl)
 	string l = "";
 	while (!f.eof())
 	{
-		TableOfContent* p = new TableOfContent();
+		TableOfContent* p = new TableOfContent;
 		getline(f, l);
 		p->ISBN = l;
 		getline(f, l);
@@ -822,11 +822,11 @@ int loadFileTOC(TableOfContentList& tl)
 		p->PublicYear = l;
 		getline(f,l);
 		if (l == "") break;
-		int index = 0;
+		int size = 0;
 		for(int i = 0; i < l.length(); i++){
-			index = index * pow(10, i) + (int)(l[i] - '0');
+			size = size * pow(10, i) + (int)(l[i] - '0');
 		}
-		for(int i=0; i < index; i++){
+		for(int i=0; i < size; i++){
 			nodeB* b = new nodeB;
 			getline(f,l);
 			if (l == "") break;
@@ -836,12 +836,11 @@ int loadFileTOC(TableOfContentList& tl)
 			int s=0;
 			for(int i = 0; i < l.length(); i++){
 				if(l[i] != 0 && l[i] != 1){continue;}
-				
-				s =  s* pow(10, i) + (int)(l[i] - '0');
+				s =  s* pow(10, i) + (int)(l[i] - '0');//chuyen trang thai chu thanh so 
 			}
+			b->data.BookStatus = s;
 			int n=addNodeBook(p->dms, b->data);
 			if(n==0) break;
-
 			delete b;
 		}
 		themTheoThuTuTheLoai(tl, *p);

@@ -29,53 +29,6 @@ struct BookList
 	int size = 0;
 	int random = rand() % 10 + 1;
 };
-void generateID(BookList &bookList)
-{
-	int min = 1000;
-	int max = 10000;
-	string a[MAX] = {"DA"};
-	bool b[MAX] = {false};
-	srand(time(0)); // S? d?ng th?i gian hi?n t?i làm seed
-
-	nodeB *p = bookList.head;
-	int i = min;
-
-	while (p && i < max)
-	{
-		int tmp;
-		do
-		{
-			tmp = rand() % (max - min) + min;
-		} while (b[tmp]);
-		a[i] = "DA" + to_string(tmp);
-		b[tmp] = true;
-
-		p->data.BookID = a[i]; // Gán BookID cho cu?n sách trong danh sách
-		p = p->next;
-		i++;
-	}
-}
-
-BookList *createBookList()
-{
-	BookList *list = new BookList;
-
-	for (int i = 0; i < list->random; i++)
-	{
-		nodeB *newNode = new nodeB;
-		generateID(*list);
-		newNode->data.BookStatus = 0;
-		newNode->data.BookLocation = " " + to_string(i);
-		if (list->tail == nullptr) {
-            list->head = newNode;
-            list->tail = newNode;
-        } else {
-            list->tail->next = newNode;
-            list->tail = newNode;
-        }
-	}
-	return list;
-}
 
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
 struct Date
@@ -128,9 +81,9 @@ void releaseMemory(TableOfContentList &data)
 	for (int i = 0; i < data.size; i++)
 	{
 		delete data.ds[i];
-		data.ds[i] = nullptr; // Ð?t con tr? thành nullptr d? tránh truy c?p b? nh? sau khi gi?i phóng
+		data.ds[i] = nullptr; // ï¿½?t con tr? thï¿½nh nullptr d? trï¿½nh truy c?p b? nh? sau khi gi?i phï¿½ng
 	}
-	data.size = 0; // Ð?t kích thu?c v? 0 d? dánh d?u danh sách r?ng
+	data.size = 0; // ï¿½?t kï¿½ch thu?c v? 0 d? dï¿½nh d?u danh sï¿½ch r?ng
 }
 
 int compare(TableOfContentList tl, TableOfContent data)
@@ -189,15 +142,15 @@ int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent data)
 	return 1;
 } // done
 
-TableOfContent *searchByName(TableOfContentList tl, string input)
-{
-	for (int i = 0; i < tl.size; i++)
-		if (tl.ds[i]->BookName == input)
-		{
-			return tl.ds[i];
-		}
-	return NULL;
-}
+// TableOfContent *searchByName(TableOfContentList tl, string input)
+// {
+// 	for (int i = 0; i < tl.size; i++)
+// 		if (tl.ds[i]->BookName.find(input))
+// 		{
+// 			return tl.ds[i];
+// 		}
+// 	return NULL;
+// }
 
 TableOfContentList saveToSearch(TableOfContentList tl, string input)
 {
@@ -205,7 +158,7 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 	int index = 0;
 	for (int i = 0; i < tl.size; i++)
 	{
-		if (tl.ds[i]->BookName == input)
+		if (!tl.ds[i]->BookName.find(input)) // tim ten sach chua chuoi nguoi dung nhap
 		{
 			for(int j=0;j<tl.ds[i]->dms.size;j++)
 			{
@@ -232,7 +185,36 @@ TableOfContent *searchByISBN(TableOfContentList tl, string data)
 	}
 	return NULL;
 }
+string generateID(TableOfContent* p, int i)
+{
+	string id = "";
+	if(i >= 0 && i < 9){
+		id = p->ISBN + "_0" + to_string(i + 1);
+	}else{
+		id = p->ISBN + "_" + to_string(i + 1);
+	}
+	return id;
+}
 
+BookList createBookList(TableOfContent* p)
+{
+	BookList *list = new BookList;
+	for (int i = 0; i < p->dms.size; i++)
+	{
+		nodeB *newNode = new nodeB;
+		newNode->data.BookStatus = 0;
+		newNode->data.BookID = generateID(p, i);
+		if (list->tail == nullptr) {
+            list->head = newNode;
+            list->tail = newNode;
+        } else {
+            list->tail->next = newNode;
+            list->tail = newNode;
+        }
+	}
+	list->size = p->dms.size;
+	return *list;
+}
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader
 {

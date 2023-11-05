@@ -886,7 +886,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	gotoxy(x + width - 45, y + 16);
 	p->dms.size = enterNumBooks(p->dms.size);
 	if(p->dms.size == 0){return ;}
-	p->dms = *createBookList();
+	p->dms = createBookList(p);
 	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *p);
 	if(n == 1){
@@ -927,7 +927,7 @@ void displayBookList(TableOfContent data, int yTOC, int pos) {
 }
 
 void loadListTOC(TableOfContentList tl, int count) {
-	int yTOC = 3; //chiê`u cao ha`ng dâ`u tiên
+	int yTOC = 3; //chiï¿½`u cao ha`ng dï¿½`u tiï¿½n
 	for (int i = count - 19; i < count; i++) {
 		if(i == tl.size){
 			break;
@@ -938,7 +938,7 @@ void loadListTOC(TableOfContentList tl, int count) {
 }
 
 void loadListSearch(TableOfContentList tl, int count, int& flag) {
-	int yTOC = 3; //chiê`u cao ha`ng dâ`u tiên
+	int yTOC = 3; //chiï¿½`u cao ha`ng dï¿½`u tiï¿½n
 	for (int i = count - 19; i < count; i++) {
 		if(i == tl.size){
 			break;
@@ -1017,7 +1017,7 @@ void filterBySearching(TableOfContentList& tl, int count, int &flag)
 	SetBGColor(15);
 	system("cls");
 	TableOfContentList l = saveToSearch(tl, inputSearch);
-	for (int i = 0; i <= 143; i++)//cha?y theo chiê`u da`i, tra´i -> pha?i
+	for (int i = 0; i <= 143; i++)//cha?y theo chiï¿½`u da`i, traï¿½i -> pha?i
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1025,15 +1025,15 @@ void filterBySearching(TableOfContentList& tl, int count, int &flag)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2)//co´ bao nhiêu thg in ra tu` trên xuô´ng duo´i
+		for (int j = 4; j < 3 + 2 * 19; j += 2)//coï¿½ bao nhiï¿½u thg in ra tu` trï¿½n xuï¿½ï¿½ng duoï¿½i
 		{
 			gotoxy(i, j);
-			cout << char(95);//in ra dâ´u ga?ch ngang ngan ca´ch tu`ng ha`ng
+			cout << char(95);//in ra dï¿½u ga?ch ngang ngan caï¿½ch tu`ng ha`ng
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ cô?t ngan ca´ch tu`ng mu?c 
+	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ cï¿½?t ngan caï¿½ch tu`ng mu?c 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1156,7 +1156,7 @@ void editTOC(TableOfContentList& tl){
 }
 void TableTOC(TableOfContentList& tl, int count)
 {
-	for (int i = 0; i <= 124; i++)//cha?y theo chiê`u da`i, tra´i -> pha?i
+	for (int i = 0; i <= 124; i++)//cha?y theo chiï¿½`u da`i, traï¿½i -> pha?i
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1164,15 +1164,15 @@ void TableTOC(TableOfContentList& tl, int count)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2)//co´ bao nhiêu thg in ra tu` trên xuô´ng duo´i
+		for (int j = 4; j < 3 + 2 * 19; j += 2)//coï¿½ bao nhiï¿½u thg in ra tu` trï¿½n xuï¿½ï¿½ng duoï¿½i
 		{
 			gotoxy(i, j);
-			cout << char(95);//in ra dâ´u ga?ch ngang ngan ca´ch tu`ng ha`ng
+			cout << char(95);//in ra dï¿½u ga?ch ngang ngan caï¿½ch tu`ng ha`ng
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ cô?t ngan ca´ch tu`ng mu?c 
+	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ cï¿½?t ngan caï¿½ch tu`ng mu?c 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1235,7 +1235,7 @@ void clearTableTOC(){
 
 void controlTOCTable(TableOfContentList &tl, int count){
 	SetBGColor(11);
-	for (int i = 130; i <= 139; i++)//in ra ô chu´c nang
+	for (int i = 130; i <= 139; i++)//in ra ï¿½ chuï¿½c nang
 	{
 		gotoxy(i, 3);
 		cout << " ";
