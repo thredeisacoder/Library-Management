@@ -731,7 +731,26 @@ int loadFileReader(ReaderList& rl)
 		if (l == "") break;
 		p->CardStatus;
 		addNodeReader(rl,*p);
-		//delete p;
+		delete p;
+	}
+	f.close();
+	f.open("idrcnotused.txt",ios::in);
+	if(f.is_open())
+	{
+		int i=0;
+		string l;
+		while(!f.eof())
+		{
+			getline(f,l);
+			if(l=="") break;
+			rl.notusedid[i]=l;
+			i++;
+		}
+	}
+	else
+	{
+		cout<<"can not open file ID";
+		system("pause");
 	}
 	f.close();
 	return 1;
@@ -763,6 +782,16 @@ int saveFileReader(ReaderList &rl)
 
 	loadlist(rl.head, f);
 	f.close();
+
+	f.open("idrcnotused.txt",ios::out);
+	if(f.is_open())
+	{
+		for(int i=0;i<MAX-rl.size;i++)
+		{
+			f<<rl.notusedid[i]<<endl;
+		}
+	}
+	f.close();
 	return 1;
 }
 
@@ -775,7 +804,7 @@ int loadFileTOC(TableOfContentList& tl)
 	string l = "";
 	while (!f.eof())
 	{
-		TableOfContent* p = new TableOfContent;
+		TableOfContent* p = new TableOfContent();
 		getline(f, l);
 		p->ISBN = l;
 		getline(f, l);
@@ -804,11 +833,16 @@ int loadFileTOC(TableOfContentList& tl)
 			b->data.BookID = l;
 			getline(f,l);
 			if (l == "") break;
+			int s=0;
 			for(int i = 0; i < l.length(); i++){
 				if(l[i] != 0 && l[i] != 1){continue;}
-				b->data.BookStatus = b->data.BookStatus * pow(10, i) + (int)(l[i] - '0');
+				
+				s =  s* pow(10, i) + (int)(l[i] - '0');
 			}
-			addNodeBook(p->dms, b->data);
+			int n=addNodeBook(p->dms, b->data);
+			if(n==0) break;
+
+			delete b;
 		}
 		themTheoThuTuTheLoai(tl, *p);
 	}
@@ -878,3 +912,4 @@ void resetIDRCfile()
 	f<<"";
 	f.close();
 }
+

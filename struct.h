@@ -11,9 +11,9 @@ using namespace std;
 #define MAX 10000
 struct Book
 {
-	string BookID ="";
-	int BookStatus = 0;
-	string BookLocation = "";
+	string BookID="";
+	int BookStatus=0;
+	string BookLocation="";
 };
 /////////////////////////////////////////////Danh muc sach/////////////////////////////////////////////////
 struct nodeB
@@ -27,19 +27,67 @@ struct BookList
 	nodeB *head = nullptr;
 	nodeB *tail = nullptr;
 	int size = 0;
+	int random = rand() % 10 + 1;
 };
+void generateID(BookList &bookList)
+{
+	int min = 1000;
+	int max = 10000;
+	string a[MAX] = {"DA"};
+	bool b[MAX] = {false};
+	srand(time(0)); // S? d?ng th?i gian hi?n t?i l�m seed
+
+	nodeB *p = bookList.head;
+	int i = min;
+
+	while (p && i < max)
+	{
+		int tmp;
+		do
+		{
+			tmp = rand() % (max - min) + min;
+		} while (b[tmp]);
+		a[i] = "DA" + to_string(tmp);
+		b[tmp] = true;
+
+		p->data.BookID = a[i]; // G�n BookID cho cu?n s�ch trong danh s�ch
+		p = p->next;
+		i++;
+	}
+}
+
+BookList *createBookList()
+{
+	BookList *list = new BookList;
+
+	for (int i = 0; i < list->random; i++)
+	{
+		nodeB *newNode = new nodeB;
+		generateID(*list);
+		newNode->data.BookStatus = 0;
+		newNode->data.BookLocation = " " + to_string(i);
+		if (list->tail == nullptr) {
+            list->head = newNode;
+            list->tail = newNode;
+        } else {
+            list->tail->next = newNode;
+            list->tail = newNode;
+        }
+	}
+	return list;
+}
 
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
 struct Date
 {
-	int day;
-	int month;
-	int year;
+	int day=0;
+	int month=0;
+	int year=0;
 };
 
 struct BorrowAndReturn
 {
-	string BookID;
+	string BookID="";
 	Date BorrowDate;
 	Date ReturnDate;
 	int Status = 0;
@@ -72,7 +120,7 @@ struct TableOfContent
 
 struct TableOfContentList
 {
-	TableOfContent *ds[MAX] = {NULL};
+	TableOfContent *ds[MAX] = {nullptr};
 	int size = 0;
 };
 void releaseMemory(TableOfContentList &data)
@@ -80,9 +128,9 @@ void releaseMemory(TableOfContentList &data)
 	for (int i = 0; i < data.size; i++)
 	{
 		delete data.ds[i];
-		data.ds[i] = nullptr; // Đặt con trỏ thành nullptr để tránh truy cập bộ nhớ sau khi giải phóng
+		data.ds[i] = nullptr; // �?t con tr? th�nh nullptr d? tr�nh truy c?p b? nh? sau khi gi?i ph�ng
 	}
-	data.size = 0; // Đặt kích thước về 0 để đánh dấu danh sách rỗng
+	data.size = 0; // �?t k�ch thu?c v? 0 d? d�nh d?u danh s�ch r?ng
 }
 
 int compare(TableOfContentList tl, TableOfContent data)
@@ -154,19 +202,21 @@ TableOfContent *searchByName(TableOfContentList tl, string input)
 TableOfContentList saveToSearch(TableOfContentList tl, string input)
 {
 	TableOfContentList tmp;
+	int index = 0;
 	for (int i = 0; i < tl.size; i++)
 	{
 		if (tl.ds[i]->BookName == input)
 		{
-			for(int j = 0; j < tl.ds[i]->dms.size; j++){
-				tmp.ds[tmp.size] = tl.ds[i];
+			for(int j=0;j<tl.ds[i]->dms.size;j++)
+			{
+				tmp.ds[index] = tl.ds[i];
+				index++;
 				tmp.size++;
 			}
 		}
 	}
 	return tmp;
 }
-
 TableOfContent *searchByISBN(TableOfContentList tl, string data)
 {
 	if (tl.size == 0)
@@ -183,36 +233,6 @@ TableOfContent *searchByISBN(TableOfContentList tl, string data)
 	return NULL;
 }
 
-string generateID(TableOfContent* p, int i)
-{
-	string id = "";
-	if(i >= 0 && i < 9){
-		id = p->ISBN + "_0" + to_string(i + 1);
-	}else{
-		id = p->ISBN + "_" + to_string(i + 1);
-	}
-	return id;
-}
-
-BookList createBookList(TableOfContent* p)
-{
-	BookList *list = new BookList;
-	for (int i = 0; i < p->dms.size; i++)
-	{
-		nodeB *newNode = new nodeB;
-		newNode->data.BookStatus = 0;
-		newNode->data.BookID = generateID(p, i);
-		if (list->tail == nullptr) {
-            list->head = newNode;
-            list->tail = newNode;
-        } else {
-            list->tail->next = newNode;
-            list->tail = newNode;
-        }
-	}
-	list->size = p->dms.size;
-	return *list;
-}
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader
 {
@@ -236,6 +256,7 @@ struct ReaderList
 {
 	nodeRC *head = nullptr;
 	int size = 0;
+	string *notusedid=new string[MAX];
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,7 +265,7 @@ nodeB *makeNodeBook(Book data)
 {
 	nodeB *p = new nodeB;
 	p->data = data;
-	p->next = NULL;
+	p->next = nullptr;
 	return p;
 }
 
@@ -260,6 +281,25 @@ int addNodeBook(BookList &l, Book data)
 	}
 	else
 	{
+		nodeB *preB = l.head;
+		if (p->data.BookID >= l.head->data.BookID)
+		{
+			p->next = l.head;
+			l.head = p;
+			++l.size;
+			return 1;
+		}
+		for (nodeB *i = l.head; i->next != nullptr; i = i->next) // duyet tu dau toi cuoi
+		{
+			if (p->data.BookID >= i->data.BookID) // khi id cua sach can them >id cua i thi chen p truoc i
+			{
+				p->next = i;
+				preB->next = p;
+				++l.size;
+				return 1;
+			}
+		}
+		// khi khong co phan tu nao co id >p
 		l.tail->next = p;
 		l.tail = p;
 		++l.size;
@@ -386,120 +426,21 @@ nodeRC *makeNodeReader(Reader data)
 	return p;
 }
 
-void loadfileID(string* usedID,string* notusedID,int&ul,int&nl)//cap nhat 2 file id
+string createID(string* notusedid,int n)//tao ID doc gia
 {
-	fstream f("idrcnotused.txt",ios::in);
-	if(f.is_open())
-	{
-		string l="";
-		while(!f.eof())
-		{
-			getline(f,l);
-			if(!l.empty()) notusedID[nl++]=l;
-		}
-		f.close();
-	}
-	
-	f.open("idrcused.txt",ios::in);
-	if(f.is_open())
-	{
-		string s="";
-		while(!f.eof())
-		{
-			getline(f,s);
-			if(!s.empty())	usedID[ul++]=s;
-		}
-		f.close();
-	}
-}
 
-void savefileID(string* usedID,string* notusedID,int ul,int nl)//luu lai 2 file ID
-{
-	fstream f("idrcnotused.txt",ios::out);
-	for(int i=0;i<nl;i++)
+	string s=notusedid[0];
+	for(int i=0;i<n;i++)
 	{
-		f<<notusedID[i]<<endl;
+		notusedid[i]=notusedid[i+1];
 	}
-	f.close();
-	f.open("idrcused.txt",ios::out);
-	for(int i=0;i<ul;i++)
-	{
-		f<<usedID[i]<<endl;
-	}
-	f.close();
-}
-
-
-string createID()//tao ID doc gia
-{
-	string *usedID=new string[MAX];
-	string *notusedID=new string[MAX];
-	int ul=0,nl=0;
-	loadfileID(usedID,notusedID,ul,nl);
-
-	string s=notusedID[0];
-
-	for(int i=0;i<nl-1;i++)
-	{
-		notusedID[i]=notusedID[i+1];
-	}
-	nl--;
-	for(int i=0;i<ul;i++)
-	{
-		if(s<usedID[i])
-		{
-			for(int j=ul;j>i;j--)
-			{
-				usedID[j]=usedID[j-1];
-			}
-			usedID[i]=s;
-			ul++;
-			break;
-		}
-		else if(i==ul-1)
-		{
-			 usedID[ul]=s;
-			 ul++;
-		}
-	}
-	savefileID(usedID,notusedID,ul,nl);
-	delete[] usedID;
-	delete[] notusedID;
 	return s;
 }
 
-void returnIDAfterDelete(string s)//tra lai id sau khi xoa
+void releaseID(string* notusedid,int n, string ID)//tra lai id sau khi xoa de dung cho lan sau
 {
-	fstream f("idrcnotused.txt");
-	string a[MAX];
-	string l;
-	int n=0;
-	while(!f.eof())
-	{
-		getline(f,l);
-		if(l=="") break;
-		a[n]=l;
-		n++;
-	}
-	a[n]=s;
-	for(int i=0;i<n-1;i++)
-	{
-		for(int j=1;j<n;j++)
-		{
-			if(a[j]<a[j-1])
-			{
-				swap(a[j],a[j-1]);
-			}
-		}
-	}
-
-	for(int i=0;i<n;i++)
-	{
-		f<<a[i]<<endl;
-	}
-	f.close();
+	notusedid[n]=ID;
 }
-
 
 int treeLevel(nodeRC *t)//tim do cao cua node
 {
@@ -559,7 +500,7 @@ nodeRC *updateTreeAvl(nodeRC *t)//dieu chinh cay thanh AVL
 int addNodeReader(ReaderList &l, Reader data)
 {
 	nodeRC *p = makeNodeReader(data);
-	if(p->data.ID=="") p->data.ID = createID();
+	if(p->data.ID=="") p->data.ID = createID(l.notusedid,MAX-l.size);
 	if (l.size == 0)
 	{
 		l.head = p;
@@ -578,9 +519,14 @@ int addNodeReader(ReaderList &l, Reader data)
 			{
 				tmp = tmp->left;
 			}
-			else
+			else if(ID<newID)
 			{
 				tmp = tmp->right;
+			}
+			else
+			{
+				delete p;
+				return 0;
 			}
 		}
 		if (tmp->left == nullptr)
@@ -598,131 +544,40 @@ int addNodeReader(ReaderList &l, Reader data)
 		}
 		if(!checkAvl(l.head)) updateTreeAvl(l.head);
 	}
-	return 0;
 }
 
-int deleteNodeReader(ReaderList &l, string ID)
-{
-	if (l.size == 0)
-	{
-		return 0;
-	}
-	nodeRC *par = nullptr;
-	nodeRC *cur = l.head;
-
-	while (cur != nullptr && cur->data.ID != ID)
-	{
-		if (cur->data.ID < ID)
-		{
-			par = cur;
-			cur = cur->right;
-		}
-		else
-		{
-			par = cur;
-			cur = cur->left;
-		}
-	}
-	if (cur == nullptr) // khong tim thay ID
-	{
-		return 0;
-	}
-
-	if (cur->left == nullptr)
-	{
-		delete cur;
-		l.size--;
-		if(checkAvl(l.head)==1) updateTreeAvl(l.head);
-		return 1;
-	}
-	else if (cur->right = nullptr)
-	{
-		delete cur;
-		l.size--;
-		if(checkAvl(l.head)==1) updateTreeAvl(l.head);
-		return 1;
-	}
-	else
-	{
-		nodeRC *pre = nullptr;
-		nodeRC *tmp = cur->left;
-		while (tmp->left != nullptr)
-		{
-			pre = tmp;
-			tmp = tmp->left;
-		}
-
-		if (par == nullptr)
-		{
-			cur->right = tmp->right;
-			delete tmp;
-			l.size--;
-			if(checkAvl(l.head)==1) updateTreeAvl(l.head);
-			return 1;
-		}
-		else
-		{
-			cur->data = tmp->data;
-			pre->left = tmp->right;
-			delete tmp;
-			l.size--;
-			if(checkAvl(l.head)==1) updateTreeAvl(l.head);
-			return 1;
-		}
-		
-	}
+nodeRC* findMinIDNode(nodeRC* node) {
+    while (node->left != nullptr) {
+        node = node->left;
+    }
+    return node;
 }
 
-/*
-nodeRC* remove(nodeRC* p,string& ID)
-{
-   nodeRC* rp, f;     // rp la nut the mang cho nut p, f la nut cha cua rp
-   if(p == nullptr)
-   {
-      cout<<"CAN NOT DELETE";
-      return nullptr;
-   }
-      if(p->right == nullptr)      // nut p khong co cay con ben phai
-	 rp = p->left;
-      else
-      {
-	 if(p->left == nullptr)    // nut p khong co cay con ben trai
-		 rp = p->right;
-	 else    // nut p co hai cay con ben trai va ben phai
-	 {
-	    /* tim nut the mang rp la nut trai nhat cua cay con ben phai,
-	    goi f la nut cha cua nut rp */
-	  /*  f = p;
-	    rp = p->right;
-	    while(rp->left != nullptr)
-	    {
-	       f = rp;
-	       rp = rp->left;
-	    }
-	    if(f != p)
-	    {
-	       f->left = rp->right;
-	       rp->right = p->right;
-	    }
-	    rp->left = p->left;
-	 }
-      }
-      delete p;
-      return(rp);
-}
-*/
+nodeRC* deleteNodeReader(nodeRC* root, string ID) {
+    if (root == nullptr) {
+        return root;
+    }
 
-/*
-nodeRC* search(nodeRC* root, string ID)
-{
-   nodeRC* p;
-   p = root;
-   while(p != nullptr && x!=p->data.ID)
-   {
-	      if(x < p->key)
-		 p = p->left;
-	      else
-		 p = p->right;
-   }
-   return(p);
-}*/
+    if (ID < root->data.ID) {
+        root->left = deleteNodeReader(root->left, ID);
+    } else if (ID > root->data.ID) {
+        root->right = deleteNodeReader(root->right, ID);
+    } else {
+        if (root->left == nullptr) {
+            nodeRC* temp = root->right;
+            delete root;
+            return temp;
+        } else if (root->right == nullptr) {
+            nodeRC* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        nodeRC* minIDNode = findMinIDNode(root->right);
+        root->data.ID = minIDNode->data.ID;
+        root->right = deleteNodeReader(root->right, minIDNode->data.ID);
+    }
+	if(!checkAvl(root)) updateTreeAvl(root);
+    return root;
+}
+

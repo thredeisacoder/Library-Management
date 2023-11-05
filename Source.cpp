@@ -120,12 +120,11 @@ void boxMenu()
 	int height = 30;
 	if (width <= 1 || height <= 1) return;
 	Tittle(x, y - 9, width, height);
-	Option(x + 10, y + height / 5 , width / 3 - 6, height, "READER CARD!");//chua chinh
-	Option(x + 10, y + height / 5 + 4, width / 3 - 6, height, "TABLE OF CONTENT");//chua chinh
-	Option(x + 10, y + height / 5 + 8, width/ 3 - 6, height, "BORROW AND RETURN!");//chua chinh
-	Option(x + 10, y + height / 5 + 12, width/ 3 - 6, height, "STATISTIC");//chua chinh
-	Option(x + 10, y + height / 5 + 16, width/ 3 - 6, height, "UPDATE INFORMATION!");//chua chinh
-	Option(x + 10, y + height / 5 + 20, width/ 3 - 6, height, "QUIT!");//chua chinh
+	Option(x + 10, y + height / 5+2 , width / 3 - 6, height, "READER CARD!");//the doc gia
+	Option(x + 10, y + height / 5 + 4+2, width / 3 - 6, height, "TABLE OF CONTENT");// dau sach
+	Option(x + 10, y + height / 5 + 8+2, width/ 3 - 6, height, "BORROW AND RETURN!");//muon tra sach
+	Option(x + 10, y + height / 5 + 12+2, width/ 3 - 6, height, "STATISTIC");//thong ke
+	Option(x + 10, y + height / 5 + 16+2, width/ 3 - 6, height, "QUIT!");//thoat
 
 	gotoxy(x + width / 6 + 48, y + height * 5 / 6);
 	cout << "Press Up and Down to move and Enter to choose!!! ";
@@ -242,7 +241,6 @@ void sortbyID(nodeRC* tmp[],int n)
 		}
 	}
 }
-
 //nhap doc gia moi
 void tableEnterRC(ReaderList& rl)
 {
@@ -365,18 +363,18 @@ void tableSettingRC(nodeRC* p,int y)//chinh sua thong tin doc gia
 //sap xep theo ten
 void sortbyname(nodeRC* tmp[],int n)
 {
-	for(int i=0;i<n;i++)
+	for (int i = 0; i < n - 1; i++) 
 	{
-		string s1=tmp[i]->data.LastName+tmp[i]->data.FirstName;
-		for(int j=i+1;j<n;j++)
-		{
-			string s2=tmp[j]->data.LastName+tmp[j]->data.FirstName;
-			if(s1 >s2)
-			{
-				swap(tmp[i],tmp[j]);
-			}
-		}
-	}
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (tmp[j]->data.LastName < tmp[minIndex]->data.LastName) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            std::swap(tmp[i], tmp[minIndex]);
+        }
+    }
 }
 //duyet danh sach doc gia
 void displaytree(nodeRC* tmp[],int n,int count)//duyet mang de in ra 
@@ -405,80 +403,6 @@ void tranvertree(nodeRC* head,nodeRC* tmp[],int& n)//duyet cay dua vao mang con 
 		tranvertree(head->left,tmp,n);
 		tranvertree(head->right,tmp,n);
 	}
-}
-
-
-int selectDisplayMode()
-{
-	SetColor(0);
-	Option(70,21,30,3,"Sort By ID!!");
-
-	Option(70,26,30,3,"Sort By Name!!");
-
-	HighLight(64,20,36);
-
-	while (true)
-	{
-
-		// nhan phim tu nguoi dung(up/down/enter)
-		char c = _getch();
-		if (c == -32)
-		{
-			c = _getch();
-		}
-		if (c == 27)//khi nguoi dung nhan esc
-		{
-			system("cls");
-			return 0;
-		}
-		else if (c == 72)//khi nguoi dung nhan UP
-		{
-			if (wherey() == 20)
-			{
-				UnHighLight(wherex(), wherey(), 36);
-				gotoxy(wherex(),wherey()+5);
-				HighLight(wherex(), wherey(), 36);
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), 36);
-				gotoxy(wherex(), wherey() - 5);
-				HighLight(wherex(), wherey(), 36);
-			}
-		}
-		else if (c == 80)//khi nguoi dung nhan Down
-		{
-			if (wherey() == 25)
-			{
-				UnHighLight(wherex(), wherey(), 36);
-				gotoxy(wherex(),wherey()-5);
-				HighLight(wherex(), wherey(), 36);
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), 36);
-				gotoxy(wherex(), wherey() + 5);
-				HighLight(wherex(), wherey(), 36);
-			}
-		}
-		else if (c == 13)//Khi nguoi dung nhan ENTER
-		{
-			SetBGColor(15);
-			if (wherey() == 20)
-			{
-				return 1;
-			}
-			else if (wherey() == 25)
-			{
-				return 2;
-			}
-		}
-		else
-		{
-			continue;
-		}
-	}
-	
 }
 
 //danh sach doc gia
@@ -543,8 +467,8 @@ void deleteReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do xoa
 			UnTick(wherex(),wherey());
 			int pos=count-20+(wherey()-3)/2;
 			string s=tmp[pos]->data.ID;
-			deleteNodeReader(rl,s);
-			returnIDAfterDelete(s);
+			deleteNodeReader(rl.head,s);
+			releaseID(rl.notusedid,MAX-rl.size,s);
 			break;
 		}
 		else if(c==27)//esc
@@ -749,7 +673,7 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 
 	SetBGColor(15);
 	HighLight(130, 3, 9);
-
+	bool x=true;
 	while (true)
 	{
 
@@ -763,6 +687,25 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 		{
 			system("cls");
 			break;
+		}
+		else if(c==32)
+		{
+			UnHighLight(wherex(),wherey(),9);
+			if(x==true)
+			{
+				x=false;
+				sortbyname(tmp,rl.size);
+				clearReaderTable();
+				displaytree(tmp,rl.size,count);
+			}
+			else
+			{
+				x=true;
+				sortbyID(tmp,rl.size);
+				clearReaderTable();
+				displaytree(tmp,rl.size,count);
+			}
+			HighLight(130, 3, 9);//quay lai highlight option 1
 		}
 		else if (c == 72)//khi nguoi dung nhan UP
 		{
@@ -849,11 +792,10 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 				gotoxy(132, 20);
 				deleteReaderMode(rl,tmp,count);
 				int n=0;
-				system("cls");
 				tranvertree(rl.head,tmp,n);
-				sortbyID(tmp,n);
-				system("cls");
-				ReaderTable(tmp,rl.size,count);
+				sortbyID(tmp,0);
+				clearReaderTable();
+				displaytree(tmp,rl.size,count);
 				controlReaderTable(rl,tmp,count);
 				system("cls");
 				break;
@@ -861,6 +803,9 @@ void controlReaderTable(ReaderList &rl,nodeRC* tmp[],int count)
 			else
 			{
 				SettingReaderMode(rl,tmp,count);
+				sortbyID(tmp,0);
+				clearReaderTable();
+				displaytree(tmp,rl.size,count);
 				controlReaderTable(rl,tmp,count);
 				break;
 			}
@@ -941,7 +886,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	gotoxy(x + width - 45, y + 16);
 	p->dms.size = enterNumBooks(p->dms.size);
 	if(p->dms.size == 0){return ;}
-	p->dms = createBookList(p);
+	p->dms = *createBookList();
 	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *p);
 	if(n == 1){
@@ -982,7 +927,7 @@ void displayBookList(TableOfContent data, int yTOC, int pos) {
 }
 
 void loadListTOC(TableOfContentList tl, int count) {
-	int yTOC = 3; //chiều cao hàng đầu tiên
+	int yTOC = 3; //chi�`u cao ha`ng d�`u ti�n
 	for (int i = count - 19; i < count; i++) {
 		if(i == tl.size){
 			break;
@@ -993,7 +938,7 @@ void loadListTOC(TableOfContentList tl, int count) {
 }
 
 void loadListSearch(TableOfContentList tl, int count, int& flag) {
-	int yTOC = 3; //chiều cao hàng đầu tiên
+	int yTOC = 3; //chi�`u cao ha`ng d�`u ti�n
 	for (int i = count - 19; i < count; i++) {
 		if(i == tl.size){
 			break;
@@ -1072,7 +1017,7 @@ void filterBySearching(TableOfContentList& tl, int count, int &flag)
 	SetBGColor(15);
 	system("cls");
 	TableOfContentList l = saveToSearch(tl, inputSearch);
-	for (int i = 0; i <= 143; i++)//chạy theo chiều dài, trái -> phải
+	for (int i = 0; i <= 143; i++)//cha?y theo chi�`u da`i, tra�i -> pha?i
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1080,15 +1025,15 @@ void filterBySearching(TableOfContentList& tl, int count, int &flag)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		for (int j = 4; j < 3 + 2 * 19; j += 2)//co� bao nhi�u thg in ra tu` tr�n xu��ng duo�i
 		{
 			gotoxy(i, j);
-			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
+			cout << char(95);//in ra d�u ga?ch ngang ngan ca�ch tu`ng ha`ng
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++)//vẽ cột ngăn cách từng mục 
+	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ c�?t ngan ca�ch tu`ng mu?c 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1211,7 +1156,7 @@ void editTOC(TableOfContentList& tl){
 }
 void TableTOC(TableOfContentList& tl, int count)
 {
-	for (int i = 0; i <= 124; i++)//chạy theo chiều dài, trái -> phải
+	for (int i = 0; i <= 124; i++)//cha?y theo chi�`u da`i, tra�i -> pha?i
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1219,15 +1164,15 @@ void TableTOC(TableOfContentList& tl, int count)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2)//có bao nhiêu thg in ra từ trên xuống dưới
+		for (int j = 4; j < 3 + 2 * 19; j += 2)//co� bao nhi�u thg in ra tu` tr�n xu��ng duo�i
 		{
 			gotoxy(i, j);
-			cout << char(95);//in ra dấu gạch ngang ngăn cách từng hàng
+			cout << char(95);//in ra d�u ga?ch ngang ngan ca�ch tu`ng ha`ng
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++)//vẽ cột ngăn cách từng mục 
+	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ c�?t ngan ca�ch tu`ng mu?c 
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1290,7 +1235,7 @@ void clearTableTOC(){
 
 void controlTOCTable(TableOfContentList &tl, int count){
 	SetBGColor(11);
-	for (int i = 130; i <= 139; i++)//in ra ô chức năng
+	for (int i = 130; i <= 139; i++)//in ra � chu�c nang
 	{
 		gotoxy(i, 3);
 		cout << " ";
@@ -1427,7 +1372,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 {
 	int x = 18; int y = 12; int width = 150; int height = 30;
 	//danh dau lua chon dau
-	gotoxy(x - 6, y + height / 4 - 1);
+	gotoxy(x - 6, y + height / 4 +1);
 
 	HighLight(wherex(), wherey(), width / 3);
 	while (true)
@@ -1441,10 +1386,10 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 		if (c == 27) continue;
 		else if (c == 72)//khi nguoi dung nhan UP
 		{
-			if (wherey() == y + height / 4 - 1)
+			if (wherey() == y + height / 4 +1)
 			{
 				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x  - 6, y + height / 4 + 20 - 1);
+				gotoxy(x  - 6, y + height / 4 + 16 +1);
 				HighLight(wherex(), wherey(), width / 3);
 			}
 			else
@@ -1456,10 +1401,10 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 		}
 		else if (c == 80)//khi nguoi dung nhan Down
 		{
-			if (wherey() == y + height / 4 + 20 - 1)
+			if (wherey() == y + height / 4 + 16 +1)
 			{
 				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x  - 6, y + height / 4 - 1);
+				gotoxy(x  - 6, y + height / 4 +1);
 				HighLight(wherex(), wherey(), width / 3);
 
 			}
@@ -1473,12 +1418,8 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 		else if (c == 13)//Khi nguoi dung nhan ENTER
 		{
 			SetBGColor(15);
-			if (wherey() == y + height / 4 + 20 - 1)//Quit
-			{
-				system("cls");
-				break;
-			}
-			else if (wherey() == y + height / 4 + 16 - 1)//option 5
+
+			if (wherey() == y + height / 4 + 16 +1)//quit
 			{
 				system("cls");
 				int n = saveFileReader(rl);
@@ -1498,27 +1439,14 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 					Sleep(1000);
 				}
 				system("cls");
-				boxMenu();
-				Control(rl, tl);
 				break;
 			}
-			else if (wherey() == y + height / 4 - 1)//option 1
+			else if (wherey() == y + height / 4 +1)//option 1 (reader card)
 			{
 				system("cls");
 				int n=0;
 				nodeRC* tmp[MAX];
-				tranvertree(rl.head,tmp,n);
-				int x=selectDisplayMode();
-				if(x==0) 
-				{
-					system("cls");
-					boxMenu();
-					Control(rl, tl);
-					break;
-				}
-				else if(x==1) sortbyID(tmp,rl.size);
-				else sortbyname(tmp,rl.size);
-				
+				tranvertree(rl.head,tmp,n);				
 				system("cls");
 				ReaderTable(tmp,rl.size,20);
 				controlReaderTable(rl,tmp,20);
@@ -1527,7 +1455,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 				Control(rl, tl);
 				break;
 			}
-			else if (wherey() == y + height / 4 + 4 - 1)//option 2
+			else if (wherey() == y + height / 4 + 4 +1)//option 2(table of content)
 			{
 				system("cls");
 				TableTOC(tl, 19);
@@ -1537,7 +1465,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 				Control(rl, tl);
 				break;
 			}
-			else if (wherey() == y + height / 4 + 8 - 1)//option 3
+			else if (wherey() == y + height / 4 + 8 +1)//option 3 (borrow and return)
 			{
 				system("cls");
 				tableEnterTOC(tl);
@@ -1546,7 +1474,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 				Control(rl, tl);
 				break;
 			}
-			else if (wherey() == y + height / 4 + 12 - 1)//option 4;
+			else if (wherey() == y + height / 4 + 12 +1)//option 4;
 			{
 				system("cls");
 				boxMenu();
@@ -1570,9 +1498,8 @@ int main()
 	DisableSelection();
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
-//	ShowCur(false);
+	ShowCur(false);
 //	loading();
-//	resetIDRCfile(); return 0;//dieu chinh lai danh sach ID tu dau //
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
 	if (n == 0 || m == 0)
@@ -1588,3 +1515,4 @@ int main()
 	releaseMemory(tl);
 	return 0;
 }
+
