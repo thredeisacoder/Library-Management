@@ -457,6 +457,7 @@ void ReaderTable(nodeRC* tmp[],int n,int count)
 void deleteReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do xoa
 {
 	char c;
+	int n = 0; //dung tam
 	gotoxy(11,3);
 	Tick(wherex(),wherey());
 	while (true)
@@ -468,7 +469,9 @@ void deleteReaderMode(ReaderList& rl,nodeRC* tmp[],int& count)//che do xoa
 			int pos=count-20+(wherey()-3)/2;
 			string s=tmp[pos]->data.ID;
 			deleteNodeReader(rl.head,s);
+			rl.size--;
 			releaseID(rl.notusedid,MAX-rl.size,s);
+			tranvertree(rl.head, tmp, n);
 			break;
 		}
 		else if(c==27)//esc

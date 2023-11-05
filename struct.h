@@ -11,9 +11,9 @@ using namespace std;
 #define MAX 10000
 struct Book
 {
-	string BookID="";
-	int BookStatus=0;
-	string BookLocation="";
+	string BookID = "";
+	int BookStatus = 0;
+	string BookLocation = "";
 };
 /////////////////////////////////////////////Danh muc sach/////////////////////////////////////////////////
 struct nodeB
@@ -33,14 +33,14 @@ struct BookList
 /////////////////////////////////////////////muon tra/////////////////////////////////////////////////
 struct Date
 {
-	int day=0;
-	int month=0;
-	int year=0;
+	int day = 0;
+	int month = 0;
+	int year = 0;
 };
 
 struct BorrowAndReturn
 {
-	string BookID="";
+	string BookID = "";
 	Date BorrowDate;
 	Date ReturnDate;
 	int Status = 0;
@@ -160,7 +160,7 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 	{
 		if (!tl.ds[i]->BookName.find(input)) // tim ten sach chua chuoi nguoi dung nhap
 		{
-			for(int j=0;j<tl.ds[i]->dms.size;j++)
+			for (int j = 0; j < tl.ds[i]->dms.size; j++)
 			{
 				tmp.ds[index] = tl.ds[i];
 				index++;
@@ -185,18 +185,21 @@ TableOfContent *searchByISBN(TableOfContentList tl, string data)
 	}
 	return NULL;
 }
-string generateID(TableOfContent* p, int i)
+string generateID(TableOfContent *p, int i)
 {
 	string id = "";
-	if(i >= 0 && i < 9){
+	if (i >= 0 && i < 9)
+	{
 		id = p->ISBN + "_0" + to_string(i + 1);
-	}else{
+	}
+	else
+	{
 		id = p->ISBN + "_" + to_string(i + 1);
 	}
 	return id;
 }
 
-BookList createBookList(TableOfContent* p)
+BookList createBookList(TableOfContent *p)
 {
 	BookList *list = new BookList;
 	for (int i = 0; i < p->dms.size; i++)
@@ -204,13 +207,16 @@ BookList createBookList(TableOfContent* p)
 		nodeB *newNode = new nodeB;
 		newNode->data.BookStatus = 0;
 		newNode->data.BookID = generateID(p, i);
-		if (list->tail == nullptr) {
-            list->head = newNode;
-            list->tail = newNode;
-        } else {
-            list->tail->next = newNode;
-            list->tail = newNode;
-        }
+		if (list->tail == nullptr)
+		{
+			list->head = newNode;
+			list->tail = newNode;
+		}
+		else
+		{
+			list->tail->next = newNode;
+			list->tail = newNode;
+		}
 	}
 	list->size = p->dms.size;
 	return *list;
@@ -238,7 +244,7 @@ struct ReaderList
 {
 	nodeRC *head = nullptr;
 	int size = 0;
-	string *notusedid=new string[MAX];
+	string *notusedid = new string[MAX];
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -332,7 +338,6 @@ nodeBAR *makeNodeBAR(BorrowAndReturn data)
 	return p;
 }
 
-
 int addNodeBAR(BorrowAndReturnList &l, BorrowAndReturn data)
 {
 	nodeBAR *p = makeNodeBAR(data);
@@ -408,34 +413,37 @@ nodeRC *makeNodeReader(Reader data)
 	return p;
 }
 
-string createID(string* notusedid,int n)//tao ID doc gia
+string createID(string *notusedid, int n) // tao ID doc gia
 {
 
-	string s=notusedid[0];
-	for(int i=0;i<n;i++)
+	string s = notusedid[0];
+	for (int i = 0; i < n; i++)
 	{
-		notusedid[i]=notusedid[i+1];
+		notusedid[i] = notusedid[i + 1];
 	}
 	return s;
 }
 
-void releaseID(string* notusedid,int n, string ID)//tra lai id sau khi xoa de dung cho lan sau
+void releaseID(string *notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
 {
-	notusedid[n]=ID;
+	notusedid[n] = ID;
 }
 
-int treeLevel(nodeRC *t)//tim do cao cua node
+int treeLevel(nodeRC *t) // tim do cao cua node
 {
-	if (t == nullptr) return -1;
+	if (t == nullptr)
+		return -1;
 	return 1 + max(treeLevel(t->left), treeLevel(t->right));
 }
-bool checkAvl(nodeRC* root)//kiem tra cay la AVL hay chua
+bool checkAvl(nodeRC *root) // kiem tra cay la AVL hay chua
 {
-	if (root == NULL) 	return true;
-	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1) return false;
+	if (root == NULL)
+		return true;
+	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1)
+		return false;
 	return checkAvl(root->left) && checkAvl(root->right);
 }
-nodeRC *turnRight(nodeRC *a)//xoay phai
+nodeRC *turnRight(nodeRC *a) // xoay phai
 {
 	nodeRC *b = a->left;
 	nodeRC *d = b->right;
@@ -443,7 +451,7 @@ nodeRC *turnRight(nodeRC *a)//xoay phai
 	b->right = a;
 	return b;
 }
-nodeRC *turnLeft(nodeRC *a)//xoay trai
+nodeRC *turnLeft(nodeRC *a) // xoay trai
 {
 	nodeRC *b = a->right;
 	nodeRC *c = b->left;
@@ -452,37 +460,49 @@ nodeRC *turnLeft(nodeRC *a)//xoay trai
 	return b;
 }
 
-nodeRC *updateTreeAvl(nodeRC *t)//dieu chinh cay thanh AVL
+nodeRC *updateTreeAvl(nodeRC *t) // dieu chinh cay thanh AVL
 {
-	if (abs(treeLevel(t->left) - treeLevel(t->right)) > 1){
-		if (treeLevel(t->left) > treeLevel(t->right)){
+	if (abs(treeLevel(t->left) - treeLevel(t->right)) > 1)
+	{
+		if (treeLevel(t->left) > treeLevel(t->right))
+		{
 			nodeRC *p = t->left;
-			if (treeLevel(p->left) >= treeLevel(p->right)){
+			if (treeLevel(p->left) >= treeLevel(p->right))
+			{
 				t = turnRight(t);
-			} else{
+			}
+			else
+			{
 				t->left = turnLeft(t->left);
 				t = turnRight(t);
 			}
-		} else {
+		}
+		else
+		{
 			nodeRC *p = t->right;
-			if (treeLevel(p->right) >= treeLevel(p->left)){
+			if (treeLevel(p->right) >= treeLevel(p->left))
+			{
 				t = turnLeft(t);
-			} else{
+			}
+			else
+			{
 				t->right = turnRight(t->right);
 				t = turnLeft(t);
-			
 			}
-		}	
+		}
 	}
-	if (t->left != nullptr) t->left = updateTreeAvl(t->left);
-	if (t->right != nullptr) t->right = updateTreeAvl(t->right);
+	if (t->left != nullptr)
+		t->left = updateTreeAvl(t->left);
+	if (t->right != nullptr)
+		t->right = updateTreeAvl(t->right);
 	return t;
 }
 
 int addNodeReader(ReaderList &l, Reader data)
 {
 	nodeRC *p = makeNodeReader(data);
-	if(p->data.ID=="") p->data.ID = createID(l.notusedid,MAX-l.size);
+	if (p->data.ID == "")
+		p->data.ID = createID(l.notusedid, MAX - l.size);
 	if (l.size == 0)
 	{
 		l.head = p;
@@ -501,7 +521,7 @@ int addNodeReader(ReaderList &l, Reader data)
 			{
 				tmp = tmp->left;
 			}
-			else if(ID<newID)
+			else if (ID < newID)
 			{
 				tmp = tmp->right;
 			}
@@ -524,7 +544,8 @@ int addNodeReader(ReaderList &l, Reader data)
 			++l.size;
 			return 1;
 		}
-		if(!checkAvl(l.head)) updateTreeAvl(l.head);
+		if (!checkAvl(l.head))
+			updateTreeAvl(l.head);
 	}
 }
 
@@ -563,3 +584,14 @@ nodeRC* deleteNodeReader(nodeRC* root, string ID) {
     return root;
 }
 
+// void releaseID(vector<int> &notusedid, int MAX, string id)
+// {
+// 	for (int i = 0; i < notusedid.size(); i++)
+// 	{
+// 		if (id == to_string(notusedid[i]))
+// 		{
+// 			notusedid.erase(notusedid.begin() + i);
+// 			break;
+// 		}
+// 	}
+// }
