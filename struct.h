@@ -19,13 +19,13 @@ struct Book
 struct nodeB
 {
 	Book data;
-	nodeB *next = nullptr;
+	nodeB* next = nullptr;
 };
 
 struct BookList
 {
-	nodeB *head = nullptr;
-	nodeB *tail = nullptr;
+	nodeB* head = nullptr;
+	nodeB* tail = nullptr;
 	int size = 0;
 };
 
@@ -48,13 +48,13 @@ struct BorrowAndReturn
 struct nodeBAR
 {
 	BorrowAndReturn data;
-	nodeBAR *next = nullptr;
+	nodeBAR* next = nullptr;
 };
 
 struct BorrowAndReturnList
 {
-	nodeBAR *head = nullptr;
-	nodeBAR *tail = nullptr;
+	nodeBAR* head = nullptr;
+	nodeBAR* tail = nullptr;
 	int size = 0;
 };
 ///////////////////////////////////////////////dau sach/////////////////////////////////
@@ -72,17 +72,17 @@ struct TableOfContent
 
 struct TableOfContentList
 {
-	TableOfContent *ds[MAX] = {nullptr};
+	TableOfContent* ds[MAX] = { nullptr };
 	int size = 0;
 };
-void releaseMemory(TableOfContentList &data)
+void releaseMemory(TableOfContentList& data)
 {
 	for (int i = 0; i < data.size; i++)
 	{
 		delete data.ds[i];
-		data.ds[i] = nullptr; // ï¿½?t con tr? thï¿½nh nullptr d? trï¿½nh truy c?p b? nh? sau khi gi?i phï¿½ng
+		data.ds[i] = nullptr; // ??t con tr? th?nh nullptr d? tr?nh truy c?p b? nh? sau khi gi?i ph?ng
 	}
-	data.size = 0; // ï¿½?t kï¿½ch thu?c v? 0 d? dï¿½nh d?u danh sï¿½ch r?ng
+	data.size = 0; // ??t k?ch thu?c v? 0 d? d?nh d?u danh s?ch r?ng
 }
 
 int compare(TableOfContentList tl, TableOfContent data)
@@ -101,7 +101,7 @@ int compare(TableOfContentList tl, TableOfContent data)
 	return 1;
 } // done
 
-int addTail(TableOfContentList &tl, TableOfContent data)
+int addTail(TableOfContentList& tl, TableOfContent data)
 {
 	if (tl.size == MAX)
 	{
@@ -111,7 +111,7 @@ int addTail(TableOfContentList &tl, TableOfContent data)
 	tl.size++;
 	return 1;
 } // done
-int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent data)
+int themTheoThuTuTheLoai(TableOfContentList& tl, TableOfContent data)
 {
 	int locate;
 	if (tl.size == 0)
@@ -169,7 +169,7 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 	}
 	return tmp;
 }
-TableOfContent *searchByISBN(TableOfContentList tl, string data)
+TableOfContent* searchByISBN(TableOfContentList tl, string data)
 {
 	if (tl.size == 0)
 		return NULL;
@@ -177,14 +177,14 @@ TableOfContent *searchByISBN(TableOfContentList tl, string data)
 	{
 		if (tl.ds[i]->ISBN == data)
 		{
-			TableOfContent *p = tl.ds[i];
+			TableOfContent* p = tl.ds[i];
 			tl.ds[i] = NULL;
 			return p;
 		}
 	}
 	return NULL;
 }
-string generateID(TableOfContent *p, int i)
+string generateID(TableOfContent* p, int i)
 {
 	string id = "";
 	if (i >= 0 && i < 9)
@@ -198,12 +198,12 @@ string generateID(TableOfContent *p, int i)
 	return id;
 }
 
-BookList createBookList(TableOfContent *p)
+BookList createBookList(TableOfContent* p)
 {
-	BookList *list = new BookList;
+	BookList* list = new BookList;
 	for (int i = 0; i < p->dms.size; i++)
 	{
-		nodeB *newNode = new nodeB;
+		nodeB* newNode = new nodeB;
 		newNode->data.BookStatus = 0;
 		newNode->data.BookID = generateID(p, i);
 		if (list->tail == nullptr)
@@ -235,30 +235,30 @@ struct Reader
 struct nodeRC
 {
 	Reader data;
-	nodeRC *left = nullptr;
-	nodeRC *right = nullptr;
+	nodeRC* left = nullptr;
+	nodeRC* right = nullptr;
 };
 
 struct ReaderList
 {
-	nodeRC *head = nullptr;
+	nodeRC* head = nullptr;
 	int size = 0;
-	string *notusedid = new string[MAX];
+	string* notusedid = new string[MAX];
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-nodeB *makeNodeBook(Book data)
+nodeB* makeNodeBook(Book data)
 {
-	nodeB *p = new nodeB;
+	nodeB* p = new nodeB;
 	p->data = data;
 	p->next = nullptr;
 	return p;
 }
 
-int addNodeBook(BookList &l, Book data)
+int addNodeBook(BookList& l, Book data)
 {
-	nodeB *p = makeNodeBook(data);
+	nodeB* p = makeNodeBook(data);
 	if (l.head == nullptr)
 	{
 		l.head = p;
@@ -268,7 +268,7 @@ int addNodeBook(BookList &l, Book data)
 	}
 	else
 	{
-		nodeB *preB = l.head;
+		nodeB* preB = l.head;
 		if (p->data.BookID >= l.head->data.BookID)
 		{
 			p->next = l.head;
@@ -276,7 +276,7 @@ int addNodeBook(BookList &l, Book data)
 			++l.size;
 			return 1;
 		}
-		for (nodeB *i = l.head; i->next != nullptr; i = i->next) // duyet tu dau toi cuoi
+		for (nodeB* i = l.head; i->next != nullptr; i = i->next) // duyet tu dau toi cuoi
 		{
 			if (p->data.BookID >= i->data.BookID) // khi id cua sach can them >id cua i thi chen p truoc i
 			{
@@ -295,7 +295,7 @@ int addNodeBook(BookList &l, Book data)
 	return 0;
 }
 
-int deleteNodeBC(BookList &l, string ID)
+int deleteNodeBC(BookList& l, string ID)
 {
 	if (l.head == NULL) // khi danh sach rong thi ko xoa duoc
 	{
@@ -303,15 +303,15 @@ int deleteNodeBC(BookList &l, string ID)
 	}
 	else if (l.head->data.BookID == ID) // phan tu dau co id can xoa
 	{
-		nodeB *tmp = l.head;
+		nodeB* tmp = l.head;
 		l.head = tmp->next;
 		delete tmp;
 		return 1;
 	}
 	else
 	{
-		nodeB *tmp = l.head->next;
-		nodeB *pre = l.head;
+		nodeB* tmp = l.head->next;
+		nodeB* pre = l.head;
 		while (tmp != NULL)
 		{
 			if (tmp->data.BookID == ID)
@@ -330,16 +330,16 @@ int deleteNodeBC(BookList &l, string ID)
 	}
 }
 //
-nodeBAR *makeNodeBAR(BorrowAndReturn data)
+nodeBAR* makeNodeBAR(BorrowAndReturn data)
 {
-	nodeBAR *p = new nodeBAR;
+	nodeBAR* p = new nodeBAR;
 	p->data = data;
 	return p;
 }
 
-int addNodeBAR(BorrowAndReturnList &l, BorrowAndReturn data)
+int addNodeBAR(BorrowAndReturnList& l, BorrowAndReturn data)
 {
-	nodeBAR *p = makeNodeBAR(data);
+	nodeBAR* p = makeNodeBAR(data);
 	if (l.head == NULL)
 	{
 		l.head = p;
@@ -353,8 +353,8 @@ int addNodeBAR(BorrowAndReturnList &l, BorrowAndReturn data)
 	}
 	else
 	{
-		nodeBAR *tmp = l.head->next;
-		nodeBAR *pre = l.head;
+		nodeBAR* tmp = l.head->next;
+		nodeBAR* pre = l.head;
 		while (tmp != NULL)
 		{
 			if (tmp->data.BookID > data.BookID)
@@ -368,7 +368,7 @@ int addNodeBAR(BorrowAndReturnList &l, BorrowAndReturn data)
 	return 0;
 }
 
-int deleteNodeBAR(BorrowAndReturnList &l, string ID)
+int deleteNodeBAR(BorrowAndReturnList& l, string ID)
 {
 	if (l.head == NULL) // kiem tra danh sach rong
 	{
@@ -376,15 +376,15 @@ int deleteNodeBAR(BorrowAndReturnList &l, string ID)
 	}
 	else if (l.head->data.BookID == ID) // khi phan tu dau co id can xoa
 	{
-		nodeBAR *tmp = l.head;
+		nodeBAR* tmp = l.head;
 		l.head = l.head->next;
 		delete tmp;
 		return 1;
 	}
 	else
 	{
-		nodeBAR *tmp = l.head->next;
-		nodeBAR *pre = l.head;
+		nodeBAR* tmp = l.head->next;
+		nodeBAR* pre = l.head;
 		while (tmp != NULL)
 		{
 			if (tmp->data.BookID == ID)
@@ -403,38 +403,38 @@ int deleteNodeBAR(BorrowAndReturnList &l, string ID)
 	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
-nodeRC *makeNodeReader(Reader data)
+nodeRC* makeNodeReader(Reader data)
 {
-	nodeRC *p = new nodeRC;
+	nodeRC* p = new nodeRC;
 	p->data = data;
 	p->left = NULL;
 	p->right = NULL;
 	return p;
 }
 
-string createID(string *notusedid, int n) // tao ID doc gia
+string createID(string* notusedid, int n) // tao ID doc gia
 {
 
 	string s = notusedid[0];
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n - 1; i++)
 	{
 		notusedid[i] = notusedid[i + 1];
 	}
 	return s;
 }
 
-void releaseID(string *notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
+void releaseID(string* notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
 {
 	notusedid[n] = ID;
 }
 
-int treeLevel(nodeRC *t) // tim do cao cua node
+int treeLevel(nodeRC* t) // tim do cao cua node
 {
 	if (t == nullptr)
 		return -1;
 	return 1 + max(treeLevel(t->left), treeLevel(t->right));
 }
-bool checkAvl(nodeRC *root) // kiem tra cay la AVL hay chua
+bool checkAvl(nodeRC* root) // kiem tra cay la AVL hay chua
 {
 	if (root == NULL)
 		return true;
@@ -442,64 +442,66 @@ bool checkAvl(nodeRC *root) // kiem tra cay la AVL hay chua
 		return false;
 	return checkAvl(root->left) && checkAvl(root->right);
 }
-nodeRC *turnRight(nodeRC *a) // xoay phai
+nodeRC* turnRight(nodeRC* a) // xoay phai
 {
-	nodeRC *b = a->left;
-	nodeRC *d = b->right;
+	nodeRC* b = a->left;
+	nodeRC* d = b->right;
 	a->left = d;
 	b->right = a;
 	return b;
 }
-nodeRC *turnLeft(nodeRC *a) // xoay trai
+nodeRC* turnLeft(nodeRC* a) // xoay trai
 {
-	nodeRC *b = a->right;
-	nodeRC *c = b->left;
+	nodeRC* b = a->right;
+	nodeRC* c = b->left;
 	a->right = c;
 	b->left = a;
 	return b;
 }
 
-nodeRC *updateTreeAvl(nodeRC *t) // dieu chinh cay thanh AVL
-{
-	if (abs(treeLevel(t->left) - treeLevel(t->right)) > 1)
-	{
-		if (treeLevel(t->left) > treeLevel(t->right))
-		{
-			nodeRC *p = t->left;
-			if (treeLevel(p->left) >= treeLevel(p->right))
-			{
-				t = turnRight(t);
-			}
-			else
-			{
-				t->left = turnLeft(t->left);
-				t = turnRight(t);
-			}
-		}
-		else
-		{
-			nodeRC *p = t->right;
-			if (treeLevel(p->right) >= treeLevel(p->left))
-			{
-				t = turnLeft(t);
-			}
-			else
-			{
-				t->right = turnRight(t->right);
-				t = turnLeft(t);
-			}
-		}
-	}
-	if (t->left != nullptr)
-		t->left = updateTreeAvl(t->left);
-	if (t->right != nullptr)
-		t->right = updateTreeAvl(t->right);
-	return t;
+int height(nodeRC* t) {
+	if (t == NULL)
+		return -1;
+	return max(height(t->left), height(t->right)) + 1;
 }
 
-int addNodeReader(ReaderList &l, Reader data)
+nodeRC* updateTreeAvl(nodeRC* t)
 {
-	nodeRC *p = makeNodeReader(data);
+	if (t == NULL)
+		return t;
+
+	int balance = height(t->left) - height(t->right);
+
+	// Nút trái n?ng hon
+	if (balance > 1) {
+		if (height(t->left->left) >= height(t->left->right)) {
+			t = turnRight(t);
+		}
+		else {
+			t->left = turnLeft(t->left);
+			t = turnRight(t);
+		}
+	}
+	// Nút ph?i n?ng hon
+	else if (balance < -1) {
+		if (height(t->right->right) >= height(t->right->left)) {
+			t = turnLeft(t);
+		}
+		else {
+			t->right = turnRight(t->right);
+			t = turnLeft(t);
+		}
+
+		t->left = updateTreeAvl(t->left);
+		t->right = updateTreeAvl(t->right);
+
+		return t;
+	}
+}
+
+int addNodeReader(ReaderList& l, Reader data)
+{
+	nodeRC* p = makeNodeReader(data);
 	if (p->data.ID == "")
 		p->data.ID = createID(l.notusedid, MAX - l.size);
 	if (l.size == 0)
@@ -511,7 +513,7 @@ int addNodeReader(ReaderList &l, Reader data)
 	else
 	{
 		string newID = p->data.ID;
-		nodeRC *tmp = l.head;
+		nodeRC* tmp = l.head;
 
 		while (tmp->left != nullptr && tmp->right != nullptr)
 		{
@@ -536,61 +538,96 @@ int addNodeReader(ReaderList &l, Reader data)
 			++l.size;
 			return 1;
 		}
-
 		if (tmp->right == nullptr)
 		{
 			tmp->right = p;
 			++l.size;
 			return 1;
 		}
-		if (!checkAvl(l.head))
-			updateTreeAvl(l.head);
+		l.head = updateTreeAvl(l.head);
 	}
 }
 
-nodeRC* findMinIDNode(nodeRC* node) {
-    while (node->left != nullptr) {
-        node = node->left;
-    }
-    return node;
+
+nodeRC* findmin(nodeRC* root)
+{
+	if (root->left == nullptr) return root;
+
+	while (root->left != nullptr)
+	{
+		root = root->left;
+	}
+	return root;
 }
 
-nodeRC* deleteNodeReader(nodeRC* root, string ID) {
-    if (root == nullptr) {
-        return root;
-    }
-
-    if (ID < root->data.ID) {
-        root->left = deleteNodeReader(root->left, ID);
-    } else if (ID > root->data.ID) {
-        root->right = deleteNodeReader(root->right, ID);
-    } else {
-        if (root->left == nullptr) {
-            nodeRC* temp = root->right;
-            delete root;
-            return temp;
-        } else if (root->right == nullptr) {
-            nodeRC* temp = root->left;
-            delete root;
-            return temp;
-        }
-
-        nodeRC* minIDNode = findMinIDNode(root->right);
-        root->data.ID = minIDNode->data.ID;
-        root->right = deleteNodeReader(root->right, minIDNode->data.ID);
-    }
-	if(!checkAvl(root)) updateTreeAvl(root);
-    return root;
+int checknode(nodeRC* p)
+{
+	if (p->left == nullptr && p->right == nullptr) return 1;
+	else if (p->left == nullptr) return 2;
+	else if (p->right == nullptr) return 3;
+	else return 4;
 }
 
-// void releaseID(vector<int> &notusedid, int MAX, string id)
-// {
-// 	for (int i = 0; i < notusedid.size(); i++)
-// 	{
-// 		if (id == to_string(notusedid[i]))
-// 		{
-// 			notusedid.erase(notusedid.begin() + i);
-// 			break;
-// 		}
-// 	}
-// }
+nodeRC* findprenode(nodeRC* root, nodeRC* p)
+{
+	if (root == p) return nullptr;
+	if (root == nullptr) return nullptr;
+	nodeRC* pre = root;
+	if (pre != nullptr)
+	{
+		while (pre->left != nullptr && pre->right != nullptr)
+		{
+			if (pre->left == p || pre->right == p) break;
+			else if (pre->data.ID > p->data.ID)
+			{
+				pre = pre->left;
+			}
+			else
+			{
+				pre = pre->right;
+			}
+		}
+		return pre;
+	}
+	else return nullptr;
+}
+
+nodeRC* deletenode(nodeRC* p)
+{
+	if (p->left == nullptr && p->right == nullptr)
+	{
+		return nullptr;
+	}
+	else if (p->left == nullptr)
+	{
+		nodeRC* a = p->right;
+		delete p;
+		return a;
+	}
+	else if (p->right == nullptr)
+	{
+		nodeRC* a = p->left;
+		delete p;
+		return a;
+	}
+	else
+	{
+		nodeRC* tmp = findmin(p->left);
+		p->data.ID= tmp->data.ID;
+		p->data.FirstName= tmp->data.FirstName;
+		p->data.LastName=tmp->data.LastName;
+		p->data.Gender= tmp->data.Gender;
+		p->data.CardStatus=tmp->data.CardStatus;
+		p->data.dsmt=tmp->data.dsmt;
+
+		nodeRC* pre = findprenode(p->right, tmp);
+		if (pre == nullptr) p->right = deletenode(tmp);
+		else
+		{
+			pre->left = tmp->right;
+		}
+		delete tmp;
+		return p;
+	}
+}
+
