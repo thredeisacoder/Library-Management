@@ -612,21 +612,20 @@ nodeRC* deletenode(nodeRC* p)
 	}
 	else
 	{
-		nodeRC* tmp = findmin(p->left);
+		nodeRC* tmp = findmin(p->right);
 		p->data.ID= tmp->data.ID;
 		p->data.FirstName= tmp->data.FirstName;
 		p->data.LastName=tmp->data.LastName;
 		p->data.Gender= tmp->data.Gender;
 		p->data.CardStatus=tmp->data.CardStatus;
 		p->data.dsmt=tmp->data.dsmt;
-
 		nodeRC* pre = findprenode(p->right, tmp);
 		if (pre == nullptr) p->right = deletenode(tmp);
 		else
 		{
 			pre->left = tmp->right;
-		}
-		delete tmp;
+			delete tmp;
+		}		
 		return p;
 	}
 }

@@ -406,8 +406,6 @@ void tranvertree(nodeRC* head, nodeRC* tmp[], int& n)//duyet cay dua vao mang co
 	if (head == nullptr) return;
 	else
 	{
-		cout << head->data.ID<<endl;
-		system("pause");
 		tmp[n] = head;
 		n++;
 		tranvertree(head->left, tmp, n);
@@ -484,6 +482,8 @@ void deleteReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do xoa
 			gotoxy(130, 30);
 			cout << "DELETE SUCCESSFULLY!!!!";
 			Sleep(2000);
+			cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
+			cout << "                             ";
 			releaseID(rl.notusedid, MAX - rl.size, s);
 			break;
 		}
@@ -1538,6 +1538,5 @@ int main()
 	releaseMemory(tl);
 	return 0;
 }
-
 
 
