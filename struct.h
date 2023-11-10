@@ -430,23 +430,21 @@ void releaseID(string* notusedid, int n, string ID) // tra lai id sau khi xoa de
 
 int treeLevel(nodeRC* t) // tim do cao cua node
 {
-	if (t == nullptr)
-		return -1;
+	if (t == nullptr) return -1;
+	if (t->left == nullptr && t->right == nullptr) return 1;
 	return 1 + max(treeLevel(t->left), treeLevel(t->right));
 }
 bool checkAvl(nodeRC* root) // kiem tra cay la AVL hay chua
 {
-	if (root == NULL)
-		return true;
-	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1)
-		return false;
+	if (root == nullptr)	return true;
+	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1) return false;
 	return checkAvl(root->left) && checkAvl(root->right);
 }
 nodeRC* turnRight(nodeRC* a) // xoay phai
 {
 	nodeRC* b = a->left;
-	nodeRC* d = b->right;
-	a->left = d;
+	nodeRC* c = b->right;
+	a->left = c;
 	b->right = a;
 	return b;
 }
@@ -460,51 +458,47 @@ nodeRC* turnLeft(nodeRC* a) // xoay trai
 }
 
 int height(nodeRC* t) {
-	if (t == NULL)
-		return -1;
+	if (t == nullptr) return -1;
 	return max(height(t->left), height(t->right)) + 1;
 }
 
-nodeRC* updateTreeAvl(nodeRC* t)
+nodeRC* updateTreeAvl(nodeRC* root)
 {
-	if (t == NULL)
-		return t;
+	if (root == nullptr) return root;
+	else if (checkAvl(root)) return root;
+	
+	int balance = height(root->left) - height(root->right);
 
-	int balance = height(t->left) - height(t->right);
-
-	// Nút trái n?ng hon
 	if (balance > 1) {
-		if (height(t->left->left) >= height(t->left->right)) {
-			t = turnRight(t);
+		if (height(root->left->left) >= height(root->left->right)) {
+			root = turnRight(root);
 		}
 		else {
-			t->left = turnLeft(t->left);
-			t = turnRight(t);
+			root->left = turnLeft(root->left);
+			root = turnRight(root);
 		}
 	}
-	// Nút ph?i n?ng hon
 	else if (balance < -1) {
-		if (height(t->right->right) >= height(t->right->left)) {
-			t = turnLeft(t);
+		if (height(root->right->right) >= height(root->right->left)) {
+			root = turnLeft(root);
 		}
 		else {
-			t->right = turnRight(t->right);
-			t = turnLeft(t);
+			root->right = turnRight(root->right);
+			root = turnLeft(root);
 		}
-
-		t->left = updateTreeAvl(t->left);
-		t->right = updateTreeAvl(t->right);
-
-		return t;
 	}
+	
+	root->left = updateTreeAvl(root->left);
+	root->right = updateTreeAvl(root->right);
+
+	return root;
 }
 
 int addNodeReader(ReaderList& l, Reader data)
 {
 	nodeRC* p = makeNodeReader(data);
-	if (p->data.ID == "")
-		p->data.ID = createID(l.notusedid, MAX - l.size);
-	if (l.size == 0)
+	if (p->data.ID == "") p->data.ID = createID(l.notusedid, MAX - l.size);
+	if (l.head == nullptr)
 	{
 		l.head = p;
 		++l.size;
@@ -515,15 +509,27 @@ int addNodeReader(ReaderList& l, Reader data)
 		string newID = p->data.ID;
 		nodeRC* tmp = l.head;
 
-		while (tmp->left != nullptr && tmp->right != nullptr)
+		while (tmp!=nullptr)
 		{
 			string ID = tmp->data.ID;
 			if (ID > newID)
 			{
+				if (tmp->left == nullptr)
+				{
+					tmp->left = p;
+					++l.size;
+					return 1;
+				}
 				tmp = tmp->left;
 			}
 			else if (ID < newID)
 			{
+				if (tmp->right == nullptr)
+				{
+					tmp->right = p;
+					++l.size;
+					return 1;
+				}
 				tmp = tmp->right;
 			}
 			else
@@ -532,20 +538,8 @@ int addNodeReader(ReaderList& l, Reader data)
 				return 0;
 			}
 		}
-		if (tmp->left == nullptr)
-		{
-			tmp->left = p;
-			++l.size;
-			return 1;
-		}
-		if (tmp->right == nullptr)
-		{
-			tmp->right = p;
-			++l.size;
-			return 1;
-		}
-		l.head = updateTreeAvl(l.head);
 	}
+	return 0;
 }
 
 
@@ -560,12 +554,15 @@ nodeRC* findmin(nodeRC* root)
 	return root;
 }
 
-int checknode(nodeRC* p)
+nodeRC* findReader(nodeRC* root, string id)
 {
-	if (p->left == nullptr && p->right == nullptr) return 1;
-	else if (p->left == nullptr) return 2;
-	else if (p->right == nullptr) return 3;
-	else return 4;
+	if (root == nullptr) return nullptr;
+	else
+	{
+		if (root->data.ID == id) return root;
+		else if (root->data.ID < id) return findReader(root->right, id);
+		else return findReader(root->left, id);
+	}
 }
 
 nodeRC* findprenode(nodeRC* root, nodeRC* p)
@@ -613,20 +610,33 @@ nodeRC* deletenode(nodeRC* p)
 	else
 	{
 		nodeRC* tmp = findmin(p->right);
-		p->data.ID= tmp->data.ID;
-		p->data.FirstName= tmp->data.FirstName;
-		p->data.LastName=tmp->data.LastName;
-		p->data.Gender= tmp->data.Gender;
-		p->data.CardStatus=tmp->data.CardStatus;
-		p->data.dsmt=tmp->data.dsmt;
+		p->data.ID = tmp->data.ID;
+		p->data.FirstName = tmp->data.FirstName;
+		p->data.LastName = tmp->data.LastName;
+		p->data.Gender = tmp->data.Gender;
+		p->data.CardStatus = tmp->data.CardStatus;
+		p->data.dsmt = tmp->data.dsmt;
 		nodeRC* pre = findprenode(p->right, tmp);
 		if (pre == nullptr) p->right = deletenode(tmp);
 		else
 		{
 			pre->left = tmp->right;
 			delete tmp;
-		}		
+		}
 		return p;
 	}
 }
+///////////////muon tra////////
 
+string findBookName(TableOfContentList tl,string id)
+{
+	string isbn = "";
+	isbn+= id[0] + id[1] + id[2] + id[3] + id[4];
+	for (int i = 0; i < tl.size; i++)
+	{
+		if (tl.ds[i]->ISBN == isbn)
+		{
+			return tl.ds[i]->BookName;
+		}
+	}
+}

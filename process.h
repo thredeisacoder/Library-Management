@@ -6,14 +6,61 @@ using namespace std;
 
 //Reader//
 
-string EnterISBN(string s)
+string EnterID()
 {
-	cout << s;
+	string s = "";
 	char c;
 	while (true)
 	{
+		c = _getch();
+		if (c == 27)
+		{
+			return "";
+		}
+		else if (c == 32)//dau cach
+		{
+			return " ";
+		}
+		else if (c == 13)
+		{
+			if (s == ""||s.length()<4)
+			{
+				continue;
+			}
+			else return s;
+		}
+		else if (c == 8)
+		{
+			if (s.length() == 0) continue;
+			s.pop_back();
+			cout << "\b \b";
+		}
+		else if (c >= '0' && c <= '9')
+		{
+			if (s.length() == 4)
+			{
+				continue;
+			}
+			else
+			{
+				s += c;
+				cout << c;
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
+
+string EnterISBN(string s)
+{
+	cout << s;
+	while (true)
+	{
 		char c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -94,7 +141,7 @@ string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o da
 	while (true)
 	{
 		char c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -165,7 +212,7 @@ string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o da
 			continue;
 		}
 	}
-	if(Name[Name.length()-1]==' ') Name.pop_back();
+	if (Name[Name.length() - 1] == ' ') Name.pop_back();
 	return Name;
 }
 
@@ -175,7 +222,7 @@ string EnterAuthor(string Name)
 	while (true)
 	{
 		char c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -254,7 +301,7 @@ string EnterGenre(string s) {
 	while (true)
 	{
 		char c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -336,7 +383,7 @@ string EnterLastName(string  s)
 	while (true)
 	{
 		c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -353,7 +400,7 @@ string EnterLastName(string  s)
 			putchar('\b');
 			s.pop_back();
 		}
-		if(s.length()==8) continue;
+		if (s.length() == 8) continue;
 		if ((c >= 'a' && c < 'z') || (c >= 'A' && c <= 'Z'))
 		{
 			if (s == "")
@@ -395,46 +442,46 @@ string EnterGender(string s)
 	while (true)
 	{
 		c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
-		if(c==13)//enter
+		if (c == 13)//enter
 		{
-			if(s=="") continue;
+			if (s == "") continue;
 			else return s;
 		}
-		else if(c==8)
+		else if (c == 8)
 		{
 			if (s.empty()) continue;
-			else if(s=="FEMALE")
-			{	
-				cout<<"\b\b\b\b\b\b";
-				cout<<"      ";
-				cout<<"\b\b\b\b\b\b";
-			}
-			else 
+			else if (s == "FEMALE")
 			{
-				cout<<"\b\b\b\b";
-				cout<<"    ";
-				cout<<"\b\b\b\b";
-			}
-			s="";
-			
-		}
-		else if (c == '1' || c == '2')
-		{
-			if(s!="") continue;
-			else if (c == '1')
-			{
-				s= "MALE";
-				cout<<s;
-				
+				cout << "\b\b\b\b\b\b";
+				cout << "      ";
+				cout << "\b\b\b\b\b\b";
 			}
 			else
 			{
-				s= "FEMALE";
-				cout<<s;
+				cout << "\b\b\b\b";
+				cout << "    ";
+				cout << "\b\b\b\b";
+			}
+			s = "";
+
+		}
+		else if (c == '1' || c == '2')
+		{
+			if (s != "") continue;
+			else if (c == '1')
+			{
+				s = "MALE";
+				cout << s;
+
+			}
+			else
+			{
+				s = "FEMALE";
+				cout << s;
 			}
 		}
 		else
@@ -448,52 +495,52 @@ string EnterGender(string s)
 int EnterStatus(int s)
 {
 	cout << s;
-	if(s==1) 
+	if (s == 1)
 	{
-		cout<<" (activated)";
-		cout<<"\b\b\b\b\b\b\b\b\b\b\b\b";
+		cout << " (activated)";
+		cout << "\b\b\b\b\b\b\b\b\b\b\b\b";
 	}
-	else 
+	else
 	{
-		cout<<" (locked)";
-		cout<<"\b\b\b\b\b\b\b\b\b";
+		cout << " (locked)";
+		cout << "\b\b\b\b\b\b\b\b\b";
 	}
 	char c;
 	while (true)
 	{
 		c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return -1;
 		}
-		if(c==13)//enter
+		if (c == 13)//enter
 		{
-			if (s==-1) continue;
+			if (s == -1) continue;
 			return s;
 		}
-		else if(c==8)//delete
+		else if (c == 8)//delete
 		{
-			if(s==-1) continue;
-			else s=-1;
-			cout<<"\b             \b\b\b\b\b\b\b\b\b\b\b\b\b";
+			if (s == -1) continue;
+			else s = -1;
+			cout << "\b             \b\b\b\b\b\b\b\b\b\b\b\b\b";
 		}
-		else if (c=='0'||c == '1')
+		else if (c == '0' || c == '1')
 		{
-			if(c=='0')
+			if (c == '0')
 			{
-				if(s!=-1) continue;
+				if (s != -1) continue;
 				putchar(c);
-				cout<<" (locked)";
-				cout<<"\b\b\b\b\b\b\b\b\b";
-				s=0;
+				cout << " (locked)";
+				cout << "\b\b\b\b\b\b\b\b\b";
+				s = 0;
 			}
 			else
 			{
-				if(s!=-1) continue;
+				if (s != -1) continue;
 				putchar(c);
-				cout<<" (activated)";
-				cout<<"\b\b\b\b\b\b\b\b\b\b\b\b";
-				s=1;
+				cout << " (activated)";
+				cout << "\b\b\b\b\b\b\b\b\b\b\b\b";
+				s = 1;
 			}
 		}
 		else
@@ -589,7 +636,7 @@ string enterYear(string n)
 	while (true)
 	{
 		c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -627,7 +674,7 @@ string enterNumPage(string n)
 	while (true)
 	{
 		c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return "";
 		}
@@ -661,14 +708,14 @@ int enterNumBooks(int p)
 {
 	string n = to_string(p);
 	n.pop_back();
-	if(p != 0 ){
+	if (p != 0) {
 		cout << n;
 	}
 	char c;
 	while (true)
 	{
 		c = _getch();
-		if(c==27)//esc
+		if (c == 27)//esc
 		{
 			return 0;
 		}
@@ -697,7 +744,7 @@ int enterNumBooks(int p)
 		}
 	}
 	int res = 0;
-	for(int i = 0; i < n.length(); i++){
+	for (int i = 0; i < n.length(); i++) {
 		res = res * pow(10, i) + (int)(n[i] - '0');
 	}
 	return res;
@@ -711,7 +758,7 @@ int loadFileReader(ReaderList& rl)
 	fstream f;
 	f.open("Reader.txt");
 	if (!f.is_open()) return 0;
-	string l="";
+	string l = "";
 	while (!f.eof())
 	{
 		Reader* p = new Reader;
@@ -730,33 +777,34 @@ int loadFileReader(ReaderList& rl)
 		getline(f, l);
 		if (l == "") break;
 		p->CardStatus;
-		addNodeReader(rl,*p);
+		addNodeReader(rl, *p);
+		rl.head = updateTreeAvl(rl.head);
 		delete p;
 	}
 	f.close();
-	f.open("idrcnotused.txt",ios::in);
-	if(f.is_open())
+	f.open("idrcnotused.txt", ios::in);
+	if (f.is_open())
 	{
-		int i=0;
+		int i = 0;
 		string l;
-		while(!f.eof())
+		while (!f.eof())
 		{
-			getline(f,l);
-			if(l=="") break;
-			rl.notusedid[i]=l;
+			getline(f, l);
+			if (l == "") break;
+			rl.notusedid[i] = l;
 			i++;
 		}
 	}
 	else
 	{
-		cout<<"can not open file ID";
+		cout << "can not open file ID";
 		system("pause");
 	}
 	f.close();
 	return 1;
 }
 
-void printReader(fstream &f, nodeRC* p)
+void printReader(fstream& f, nodeRC* p)
 {
 	f << p->data.ID << endl;
 	f << p->data.FirstName << endl;
@@ -765,16 +813,16 @@ void printReader(fstream &f, nodeRC* p)
 	f << p->data.CardStatus << endl;
 }
 
-void loadlist(nodeRC* head, fstream &f)
+void loadlist(nodeRC* head, fstream& f)
 {
-	if (head == nullptr) return ;
+	if (head == nullptr) return;
 
 	printReader(f, head);
 	loadlist(head->left, f);
 	loadlist(head->right, f);
 }
 
-int saveFileReader(ReaderList &rl)
+int saveFileReader(ReaderList& rl)
 {
 	fstream f;
 	f.open("Reader.txt", ios::out);
@@ -783,12 +831,12 @@ int saveFileReader(ReaderList &rl)
 	loadlist(rl.head, f);
 	f.close();
 
-	f.open("idrcnotused.txt",ios::out);
-	if(f.is_open())
+	f.open("idrcnotused.txt", ios::out);
+	if (f.is_open())
 	{
-		for(int i=0;i<MAX-rl.size;i++)
+		for (int i = 0; i < MAX - rl.size; i++)
 		{
-			f<<rl.notusedid[i]<<endl;
+			f << rl.notusedid[i] << endl;
 		}
 	}
 	f.close();
@@ -817,30 +865,30 @@ int loadFileTOC(TableOfContentList& tl)
 		p->Genre = l;
 		getline(f, l);
 		if (l == "") break;
-		p->NumOfPage=l;
+		p->NumOfPage = l;
 		getline(f, l);
 		p->PublicYear = l;
-		getline(f,l);
+		getline(f, l);
 		if (l == "") break;
 		int size = 0;
-		for(int i = 0; i < l.length(); i++){
+		for (int i = 0; i < l.length(); i++) {
 			size = size * pow(10, i) + (int)(l[i] - '0');
 		}
-		for(int i=0; i < size; i++){
+		for (unsigned int i = 0; i < size; i++) {
 			nodeB* b = new nodeB;
-			getline(f,l);
+			getline(f, l);
 			if (l == "") break;
 			b->data.BookID = l;
-			getline(f,l);
+			getline(f, l);
 			if (l == "") break;
-			int s=0;
-			for(int i = 0; i < l.length(); i++){
-				if(l[i] != 0 && l[i] != 1){continue;}
-				s =  s* pow(10, i) + (int)(l[i] - '0');//chuyen trang thai chu thanh so 
+			int s = 0;
+			for (int i = 0; i < l.length(); i++) {
+				if (l[i] != 0 && l[i] != 1) { continue; }
+				s = s * pow(10, i) + (int)(l[i] - '0');//chuyen trang thai chu thanh so 
 			}
 			b->data.BookStatus = s;
-			int n=addNodeBook(p->dms, b->data);
-			if(n==0) break;
+			int n = addNodeBook(p->dms, b->data);
+			if (n == 0) break;
 			delete b;
 		}
 		themTheoThuTuTheLoai(tl, *p);
@@ -849,7 +897,7 @@ int loadFileTOC(TableOfContentList& tl)
 	return 1;
 }
 
-int saveTOC(TableOfContentList &tl)
+int saveTOC(TableOfContentList& tl)
 {
 	fstream f;
 	f.open("TableOfContent.txt", ios::out);
@@ -859,12 +907,12 @@ int saveTOC(TableOfContentList &tl)
 		f << tl.ds[i]->ISBN << endl;
 		f << tl.ds[i]->BookName << endl;
 		f << tl.ds[i]->Author << endl;
-		f << tl.ds[i]->Genre<< endl;
+		f << tl.ds[i]->Genre << endl;
 		f << tl.ds[i]->NumOfPage << endl;
 		f << tl.ds[i]->PublicYear << endl;
 		f << tl.ds[i]->dms.size << endl;
 		nodeB* b = tl.ds[i]->dms.head;
-		for(int j = 0; j < tl.ds[i]->dms.size; j++){
+		for (int j = 0; j < tl.ds[i]->dms.size; j++) {
 			f << b->data.BookID << endl;
 			f << b->data.BookStatus << endl;
 			b = b->next;
@@ -876,13 +924,13 @@ int saveTOC(TableOfContentList &tl)
 void printlogo()
 {
 	fstream f;
-	f.open("logo.txt",ios::in);
-	if(!f.is_open()) cout<<"can not open file";
-	string l="";
-	while(!f.eof())
+	f.open("logo.txt", ios::in);
+	if (!f.is_open()) cout << "can not open file";
+	string l = "";
+	while (!f.eof())
 	{
 		SetColor(20);
-		getline(f,l);
+		getline(f, l);
 		for (int i = 0; i < l.length(); i++)
 		{
 			if (l[i] == '@') cout << " ";
@@ -896,19 +944,19 @@ void printlogo()
 void resetIDRCfile()
 {
 	fstream f("idrcnotused.txt");
-	for(int i=0;i<10000;i++)
+	for (int i = 0; i < 10000; i++)
 	{
-		string s=to_string(i);
-		while(s.length()<4)
+		string s = to_string(i);
+		while (s.length() < 4)
 		{
-			s='0'+s;
+			s = '0' + s;
 		}
-		f<<s<<endl;
+		f << s << endl;
 	}
 	f.close();
-	
+
 	f.open("idrcused.txt");
-	f<<"";
+	f << "";
 	f.close();
 }
 

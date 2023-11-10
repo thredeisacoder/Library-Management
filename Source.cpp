@@ -1,3 +1,4 @@
+#pragma once
 #include "mylib.h"
 #include "struct.h"
 #include "process.h"
@@ -300,6 +301,7 @@ void tableEnterRC(ReaderList& rl)
 	int n = addNodeReader(rl, *p);
 	if (n == 1)	cout << "~ADD Successfully~";
 	else cout << "Can not add";
+	rl.head = updateTreeAvl(rl.head);
 	delete p;
 	gotoxy(x, y + 16);
 	Sleep(1000);
@@ -395,7 +397,7 @@ void displaytree(nodeRC* tmp[], int n, int count)//duyet mang de in ra
 
 void resetpointerarray(nodeRC* tmp[], int n)
 {
-	for (int i = 0; i < n+1; i++)
+	for (int i = 0; i < n + 1; i++)
 	{
 		tmp[i] = nullptr;
 	}
@@ -460,6 +462,98 @@ void ReaderTable(nodeRC* tmp[], int n, int count)
 	cout << "STATUS";
 
 	displaytree(tmp, n, count);
+}
+
+void displayDate(Date data)
+{
+	cout << data.day << "/" << data.month << "/" << data.year;
+}
+
+void displayBAR(nodeBAR* head, int y,string name)
+{
+	gotoxy(10, y); cout << name;
+	gotoxy(30, y); cout << head->data.BookID;
+	gotoxy(40, y); displayDate(head->data.BorrowDate);
+	gotoxy(55, y); displayDate(head->data.ReturnDate);
+}
+
+void BARofReader(ReaderList& rl, TableOfContentList & tl)
+{
+	ShowCur(true);
+	gotoxy(50, 22);
+	cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";
+	gotoxy(50, 20);
+	cout << "ENTER CARD ID: ";
+	gotoxy(70, 20);
+	string id = EnterID();
+	
+	if (id == "") return;
+	if (id == " ")
+	{
+		int count = 20, n = 0;
+		nodeRC* tmp[MAX];
+		tranvertree(rl.head, tmp, n);
+		ReaderTable(tmp, rl.size, count);
+		gotoxy(130, 10); cout << "ESC: Return to enter ID";
+		while (true)
+		{
+			char c = _getch();
+			if (c == 27)//esc
+			{
+				system("cls");
+				BARofReader(rl, tl);
+				return;
+			}
+		}
+	}
+	ShowCur(false);
+	nodeRC* p = findReader(rl.head, id);
+	system("cls");
+	if (p == nullptr)
+	{
+		gotoxy(80, 20);
+		cout << "READER NOT FOUND";
+		Sleep(1000);
+		cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                    ";
+		system("pause");
+		system("cls");
+		BARofReader(rl,tl);
+		return;
+	}
+	for (int i = 10; i <= 120; i++)
+	{
+		SetBGColor(6);
+		gotoxy(i, 0);
+		cout << " ";
+		gotoxy(i, 2);
+		cout << " ";
+		SetColor(16);
+		gotoxy(10, 1);
+		cout << " ";
+		gotoxy(30, 1);
+		cout << " ";
+		gotoxy(65, 1);
+		cout << " ";
+		gotoxy(85, 1);
+		cout << " ";
+		gotoxy(100, 1);
+		cout << " ";
+		gotoxy(120, 1);
+		cout << " ";
+	}
+	SetBGColor(15);
+	gotoxy(50, 3);
+	if (p->data.dsmt.size == 0) cout << "EMPTY";
+	else for (int i = 0; i < p->data.dsmt.size; i++)
+	{
+		nodeBAR* a = p->data.dsmt.head;
+		string name = findBookName(tl, a->data.BookID);
+		displayBAR(a, 2 + i, name);
+		a = a->next;
+	}
+	SetBGColor(15);
+	displayReader(p, -1);
+	gotoxy(50, 4); system("pause");
 }
 
 void deleteReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do xoa
@@ -1470,7 +1564,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 				int n = 0;
 				nodeRC* tmp[MAX];
 				tranvertree(rl.head, tmp, n);
-				//sortbyID(tmp, n);
+				sortbyID(tmp, n);
 				ReaderTable(tmp, rl.size, 20);
 				controlReaderTable(rl, tmp, 20);
 				system("cls");
@@ -1491,7 +1585,14 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 			else if (wherey() == y + height / 4 + 8 + 1)//option 3 (borrow and return)
 			{
 				system("cls");
-				tableEnterTOC(tl);
+				if (rl.size == 0)
+				{
+					gotoxy(80, 20);
+					cout << "EMPTY";
+					Sleep(2000);
+					cout << "\b\b\b\b\b     ";
+				}
+				else BARofReader(rl,tl);
 				system("cls");
 				boxMenu();
 				Control(rl, tl);
