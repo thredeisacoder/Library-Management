@@ -5,15 +5,53 @@ Chuyen Nganh
 240
 2001
 5
-It01_01
-0
-It01_02
-0
-It01_03
+It01_05
 0
 It01_04
 0
-It01_05
+It01_03
+0
+It01_02
+0
+It01_01
+0
+It03
+Lap Trinh Java
+Na
+Chuyen Nganh
+300
+2001
+5
+It03_05
+0
+It03_04
+0
+It03_03
+0
+It03_02
+0
+It03_01
+0
+It04
+Lap Trinh Javascript
+Na
+Chuyen Nganh
+310
+2004
+7
+It04_07
+0
+It04_06
+0
+It04_05
+0
+It04_04
+0
+It04_03
+0
+It04_02
+0
+It04_01
 0
 It02
 Lap Trinh Python
@@ -22,13 +60,13 @@ Chuyen Nganh
 230
 2010
 4
-It02_01
-0
-It02_02
+It02_04
 0
 It02_03
 0
-It02_04
+It02_02
+0
+It02_01
 0
 B002
 Dai So Tuyen Tinh
@@ -72,20 +110,75 @@ B004
 Giai Tich Fake
 Na
 Co Ban
-100
-2003
+222
+2004
 6
-B004_06
-0
-B004_05
-0
-B004_04
-0
-B004_03
+B004_01
 0
 B004_02
 0
-B004_01
+B004_03
+0
+B004_04
+0
+B004_05
+0
+B004_06
+0
+B009
+Hoa Dai Cuong 1
+Na
+Co Ban
+300
+2004
+6
+B009_01
+0
+B009_02
+0
+B009_03
+0
+B009_04
+0
+B009_05
+0
+B009_06
+0
+B005
+Tieng Anh Course 1
+Na
+Co Ban
+400
+2015
+7
+B005_01
+0
+B005_02
+0
+B005_03
+0
+B005_04
+0
+B005_05
+0
+B005_06
+0
+B005_07
+0
+B008
+Toan Logic
+Na
+Co Ban
+102
+2004
+4
+B008_01
+0
+B008_02
+0
+B008_03
+0
+B008_04
 0
 B003
 Toan Roi Rac
@@ -94,13 +187,56 @@ Co Ban
 152
 2004
 5
-B003_01
-0
-B003_02
-0
-B003_03
+B003_05
 0
 B003_04
 0
-B003_05
+B003_03
+0
+B003_02
+0
+B003_01
+0
+B006
+Tieng Anh Course 2
+Na
+Co Ban
+500
+2017
+4
+B006_01
+0
+B006_02
+0
+B006_03
+0
+B006_04
+0
+B007
+Tieng Anh Course 3
+Na
+Co Ban 
+400
+2019
+3
+B007_01
+0
+B007_02
+0
+B007_03
+0
+Kn01
+Ki Nang Thuyet Trinh
+Na
+Ki Nang
+2001
+2022
+4
+Kn01_01
+0
+Kn01_02
+0
+Kn01_03
+0
+Kn01_04
 0
