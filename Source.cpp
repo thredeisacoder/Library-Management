@@ -918,7 +918,7 @@ void tableEnterTOC(TableOfContentList& tl)
 	ShowCur(true);
 
 	gotoxy(x + 3, y + 11);
-	p->BookName = EnterFirstName(p->BookName);
+	p->BookName = EnterBookName(p->BookName);
 	if (p->BookName == "") { return; }
 	gotoxy(x + width - 79, y + 11);
 	p->Genre = EnterGenre(p->Genre);
@@ -1066,9 +1066,10 @@ void filterBySearching(TableOfContentList& tl, int count, int& flag)
 	SetBGColor(15);
 	cout << " ";
 	string inputSearch = "";
-	inputSearch = EnterFirstName(inputSearch);
+	inputSearch = EnterBookName(inputSearch);
 	SetBGColor(15);
 	system("cls");
+	if (inputSearch == "") { return; }
 	TableOfContentList l = saveToSearch(tl, inputSearch);
 	for (int i = 0; i <= 143; i++)//cha?y theo chi?`u da`i, tra?i -> pha?i
 	{
@@ -1139,6 +1140,7 @@ void editTOC(TableOfContentList& tl) {
 	string input = "";
 	input = EnterISBN(input);
 	TableOfContent* tmp = searchByISBN(tl, input);
+
 	if (tmp == NULL) {
 		gotoxy(130, 41);
 		cout << "ISBN not found!!!!!!";
@@ -1185,17 +1187,23 @@ void editTOC(TableOfContentList& tl) {
 	cout << "| ISBN | ";
 	ShowCur(true);
 	gotoxy(x + 3, y + 11);
-	tmp->BookName = EnterFirstName(tmp->BookName);
+	tmp->BookName = EnterBookName(tmp->BookName);
+	if (tmp->BookName == "") { return; }
 	gotoxy(x + width - 79, y + 11);
 	tmp->Genre = EnterGenre(tmp->Genre);
+	if (tmp->Genre == "") { return; }
 	gotoxy(x + width - 59, y + 11);
 	tmp->Author = EnterAuthor(tmp->Author);
+	if (tmp->Author == "") { return; }
 	gotoxy(x + width - 20, y + 11);
 	tmp->NumOfPage = enterNumPage(tmp->NumOfPage);
+	if (tmp->NumOfPage == "") { return; }
 	gotoxy(x + width - 2, y + 11);
 	tmp->PublicYear = enterYear(tmp->PublicYear);
+	if (tmp->PublicYear == "") { return; }
 	gotoxy(x + width + 10, y + 11);
 	tmp->ISBN = EnterISBN(tmp->ISBN);
+	if (tmp->ISBN == "") { return; }
 	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *tmp);
 	delete tmp->dms.head;
@@ -1292,6 +1300,7 @@ void clearTableTOC() {
 
 void controlTOCTable(TableOfContentList& tl, int count) {
 	SetBGColor(11);
+	ShowCur(false);
 	for (int i = 130; i <= 139; i++)//in ra ? chu?c nang
 	{
 		gotoxy(i, 3);

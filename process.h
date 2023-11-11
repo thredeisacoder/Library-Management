@@ -216,6 +216,86 @@ string EnterFirstName(string Name)// dung cho ca author, ten sach, the loai o da
 	return Name;
 }
 
+string EnterBookName(string Name)
+{
+	cout << Name;
+	while (true)
+	{
+		char c = _getch();
+		if (c == 27)//esc
+		{
+			return "";
+		}
+		if (c == 13)
+		{
+			if (Name == "")
+			{
+				continue;
+			}
+			else break;
+		}
+		else if (c == 8)
+		{
+			if (Name.empty()) continue;
+			Name.pop_back();
+			putchar('\b');
+			putchar(' ');
+			putchar('\b');
+		}
+		else if (Name.length() == 25)
+		{
+			continue;
+		}
+		else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ' ' || (c >= '0' && c <= '9'))
+		{
+			if (Name == "")
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == ' ') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else if (Name[Name.length() - 1] == ' ')
+			{
+				if (c >= 'a' && c <= 'z')
+				{
+					c = toupper(c);
+					putchar(c);
+				}
+				else if (c == ' ') continue;
+				else
+				{
+					putchar(c);
+				}
+			}
+			else
+			{
+				if (c >= 'A' && c <= 'Z')
+				{
+					c = tolower(c);
+					putchar(c);
+				}
+				else
+				{
+					putchar(c);
+				}
+			}
+			Name += c;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	if (Name[Name.length() - 1] == ' ') Name.pop_back();
+	return Name;
+}
 string EnterAuthor(string Name)
 {
 	cout << Name;
