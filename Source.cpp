@@ -369,7 +369,7 @@ void sortbyname(nodeRC* tmp[], int n)
 	{
 		int minIndex = i;
 		for (int j = i + 1; j < n; j++) {
-			if (tmp[j]->data.LastName < tmp[minIndex]->data.LastName) {
+			if (tmp[j]->data.LastName+tmp[j]->data.FirstName < tmp[minIndex]->data.LastName+tmp[minIndex]->data.FirstName) {
 				minIndex = j;
 			}
 		}
@@ -477,6 +477,25 @@ void displayBAR(nodeBAR* head, int y,string name)
 	gotoxy(55, y); displayDate(head->data.ReturnDate);
 }
 
+void watchingReaderMode(ReaderList& rl)
+{
+	int count = 20, n = 0;
+	nodeRC* tmp[MAX];
+	tranvertree(rl.head, tmp, n);
+	ReaderTable(tmp, rl.size, count);
+	gotoxy(130, 10); cout << "ESC: Return to enter ID";
+
+	while (true)
+	{
+		char c = _getch();
+		if (c == 27)//esc
+		{
+			break;
+		}
+		else continue;
+	}
+}
+
 void BARofReader(ReaderList& rl, TableOfContentList & tl)
 {
 	ShowCur(true);
@@ -486,36 +505,25 @@ void BARofReader(ReaderList& rl, TableOfContentList & tl)
 	cout << "ENTER CARD ID: ";
 	gotoxy(70, 20);
 	string id = EnterID();
-	
+	ShowCur(false);
+
 	if (id == "") return;
 	if (id == " ")
 	{
-		int count = 20, n = 0;
-		nodeRC* tmp[MAX];
-		tranvertree(rl.head, tmp, n);
-		ReaderTable(tmp, rl.size, count);
-		gotoxy(130, 10); cout << "ESC: Return to enter ID";
-		while (true)
-		{
-			char c = _getch();
-			if (c == 27)//esc
-			{
-				system("cls");
-				BARofReader(rl, tl);
-				return;
-			}
-		}
+		system("cls");
+		watchingReaderMode(rl);
+		system("cls");
+		BARofReader(rl, tl);
+		return;
 	}
-	ShowCur(false);
 	nodeRC* p = findReader(rl.head, id);
 	system("cls");
 	if (p == nullptr)
 	{
 		gotoxy(80, 20);
 		cout << "READER NOT FOUND";
-		Sleep(1000);
+		Sleep(1500);
 		cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                    ";
-		system("pause");
 		system("cls");
 		BARofReader(rl,tl);
 		return;
@@ -543,7 +551,7 @@ void BARofReader(ReaderList& rl, TableOfContentList & tl)
 	}
 	SetBGColor(15);
 	gotoxy(50, 3);
-	if (p->data.dsmt.size == 0) cout << "EMPTY";
+	if (p->data.dsmt.size == 0) cout << "NO BORROWED BOOK";
 	else for (int i = 0; i < p->data.dsmt.size; i++)
 	{
 		nodeBAR* a = p->data.dsmt.head;
