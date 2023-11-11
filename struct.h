@@ -29,34 +29,6 @@ struct BookList
 	int size = 0;
 };
 
-/////////////////////////////////////////////muon tra/////////////////////////////////////////////////
-struct Date
-{
-	int day = 0;
-	int month = 0;
-	int year = 0;
-};
-
-struct BorrowAndReturn
-{
-	string BookID = "";
-	Date BorrowDate;
-	Date ReturnDate;
-	int Status = 0;
-};
-
-struct nodeBAR
-{
-	BorrowAndReturn data;
-	nodeBAR* next = nullptr;
-};
-
-struct BorrowAndReturnList
-{
-	nodeBAR* head = nullptr;
-	nodeBAR* tail = nullptr;
-	int size = 0;
-};
 ///////////////////////////////////////////////dau sach/////////////////////////////////
 struct TableOfContent
 {
@@ -220,6 +192,106 @@ BookList createBookList(TableOfContent* p)
 	list->size = p->dms.size;
 	return *list;
 }
+
+/////////////////////////////////////////////muon tra/////////////////////////////////////////////////
+struct Date
+{
+	int day = 0;
+	int month = 0;
+	int year = 0;
+};
+
+struct BorrowAndReturn
+{
+	nodeB* book = nullptr;
+	Date BorrowDate;
+	Date ReturnDate;
+};
+
+struct nodeBAR
+{
+	BorrowAndReturn data;
+	nodeBAR* next = nullptr;
+};
+
+struct BorrowAndReturnList
+{
+	nodeBAR* head = nullptr;
+	nodeBAR* tail = nullptr;
+	int size = 0;
+};
+
+Date borrowTime(){
+	Date timeeee;
+	// thời gian hiện tại tính theo hệ thống
+	time_t now = time(0);
+   	tm *ltm = localtime(&now);
+	// in ra các thành phần của cấu trúc tm struct
+	timeeee.year = 1900 + ltm->tm_year;
+	timeeee.month = 1 + ltm->tm_mon;
+	timeeee.day = ltm->tm_mday;
+	return timeeee;
+}
+int addBorrowedBook(BorrowAndReturnList& dsmt, nodeB* data)
+{
+	if(dsmt.size >= 3){
+		return 0;
+	}
+	nodeBAR* newNode = new nodeBAR;
+	newNode->data.book = data;
+	newNode->data.BorrowDate = borrowTime();
+	// newNode->data.ReturnDate = ... ; thoi gian tra
+	newNode->data.book->data.BookStatus = 1;
+	if(dsmt.size == 0){
+		dsmt.head = newNode;
+		dsmt.tail = newNode;
+		dsmt.size++;
+		return 1;
+	}
+	else{
+		dsmt.tail->next = newNode;
+		dsmt.tail = newNode;
+		dsmt.size++;
+		return 1;
+	}
+	return 0;
+} 
+int returnedBook(BorrowAndReturnList& dsmt, nodeB* data){
+	if(dsmt.size == 0){
+		return 0;
+	}
+	nodeBAR* tmp = dsmt.head;
+	while(tmp != nullptr){
+		data->data.BookStatus = 0;
+		if(tmp->data.book == data){
+			if(tmp == dsmt.head){
+				dsmt.head = tmp->next;
+				tmp->data.book = nullptr;
+				dsmt.size--;
+				delete tmp;
+				return 1;
+			}else if(tmp == dsmt.tail){
+				if(dsmt.head->next == tmp){
+					dsmt.tail = dsmt.head;
+				}else{
+					dsmt.tail = dsmt.head->next;
+				}
+				tmp->data.book = nullptr;
+				dsmt.size--;
+				delete tmp;
+				return 1;
+			}else{
+				dsmt.head->next = dsmt.tail;
+				tmp->data.book = nullptr;
+				dsmt.size--;
+				delete tmp;
+				return 1;
+			}
+		}
+		tmp = tmp->next;
+	}
+	return 0;
+}
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader
 {
@@ -328,79 +400,6 @@ int deleteNodeBC(BookList& l, string ID)
 		}
 		return 0;
 	}
-}
-//
-nodeBAR* makeNodeBAR(BorrowAndReturn data)
-{
-	nodeBAR* p = new nodeBAR;
-	p->data = data;
-	return p;
-}
-
-int addNodeBAR(BorrowAndReturnList& l, BorrowAndReturn data)
-{
-	nodeBAR* p = makeNodeBAR(data);
-	if (l.head == NULL)
-	{
-		l.head = p;
-		return 1;
-	}
-	else if (l.head->data.BookID > data.BookID)
-	{
-		p->next = l.head;
-		l.head = p;
-		return 1;
-	}
-	else
-	{
-		nodeBAR* tmp = l.head->next;
-		nodeBAR* pre = l.head;
-		while (tmp != NULL)
-		{
-			if (tmp->data.BookID > data.BookID)
-			{
-				p->next = tmp;
-				pre->next = p;
-				return 1;
-			}
-		}
-	}
-	return 0;
-}
-
-int deleteNodeBAR(BorrowAndReturnList& l, string ID)
-{
-	if (l.head == NULL) // kiem tra danh sach rong
-	{
-		return 0;
-	}
-	else if (l.head->data.BookID == ID) // khi phan tu dau co id can xoa
-	{
-		nodeBAR* tmp = l.head;
-		l.head = l.head->next;
-		delete tmp;
-		return 1;
-	}
-	else
-	{
-		nodeBAR* tmp = l.head->next;
-		nodeBAR* pre = l.head;
-		while (tmp != NULL)
-		{
-			if (tmp->data.BookID == ID)
-			{
-				pre->next = tmp->next;
-				delete tmp;
-				return 1;
-			}
-			else
-			{
-				pre = tmp;
-				tmp = tmp->next;
-			}
-		}
-	}
-	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 nodeRC* makeNodeReader(Reader data)

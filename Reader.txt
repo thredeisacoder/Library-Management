@@ -1,21 +1,6 @@
-0000
-Tran Phi
+0008
+Do Viet
 Hung
-MALE
-1
-0001
-Nguyen Hai 
-Dong
-MALE
-1
-0006
-Pham Van
-An
-MALE
-1
-0009
-Ta Quang 
-An
 MALE
 1
 0005
@@ -28,6 +13,16 @@ Nguyen Doan Cong
 Tien
 MALE
 1
+0001
+Nguyen Hai 
+Dong
+MALE
+1
+0000
+Tran Phi
+Hung
+MALE
+1
 0004
 Nguyen Van 
 Quang
@@ -38,14 +33,9 @@ Ly Trong
 An
 MALE
 1
-0010
-Nguyen Quoc
+0006
+Pham Van
 An
-MALE
-1
-0008
-Do Viet
-Hung
 MALE
 1
 0007
@@ -58,9 +48,14 @@ Nguyen Van
 Thanh
 MALE
 1
-0013
-Lai Phuc
-Tuan
+0010
+Nguyen Quoc
+An
+MALE
+1
+0009
+Ta Quang 
+An
 MALE
 1
 0011
@@ -71,6 +66,11 @@ MALE
 0014
 Pham Nguyen Quoc
 Huy
+MALE
+1
+0013
+Lai Phuc
+Tuan
 MALE
 1
 0015

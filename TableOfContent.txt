@@ -1,3 +1,35 @@
+It01
+Lap Trinh Cpp
+Na
+Chuyen Nganh
+240
+2001
+5
+It01_01
+0
+It01_02
+0
+It01_03
+0
+It01_04
+0
+It01_05
+0
+It02
+Lap Trinh Python
+Na
+Chuyen Nganh
+230
+2010
+4
+It02_01
+0
+It02_02
+0
+It02_03
+0
+It02_04
+0
 B002
 Dai So Tuyen Tinh
 Na
@@ -54,4 +86,21 @@ B004_03
 B004_02
 0
 B004_01
+0
+B003
+Toan Roi Rac
+Na
+Co Ban
+152
+2004
+5
+B003_01
+0
+B003_02
+0
+B003_03
+0
+B003_04
+0
+B003_05
 0
