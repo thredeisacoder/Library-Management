@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string.h>
 #include <math.h>
-#include <random>
 #include <ctime>
 #include <fstream>
 
@@ -141,21 +140,21 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 	}
 	return tmp;
 }
-TableOfContent* searchByISBN(TableOfContentList tl, string data)
-{
-	if (tl.size == 0)
-		return NULL;
-	for (int i = 0; i < tl.size; i++)
-	{
-		if (tl.ds[i]->ISBN == data)
-		{
-			TableOfContent* p = tl.ds[i];
-			tl.ds[i] = NULL;
-			return p;
-		}
-	}
-	return NULL;
-}
+// TableOfContent* searchByISBN(TableOfContentList tl, string data)
+// {
+// 	if (tl.size == 0)
+// 		return NULL;
+// 	for (int i = 0; i < tl.size; i++)
+// 	{
+// 		if (tl.ds[i]->ISBN == data)
+// 		{
+// 			TableOfContent* p = tl.ds[i];
+// 			tl.ds[i] = NULL;
+// 			return p;
+// 		}
+// 	}
+// 	return NULL;
+// }
 string generateID(TableOfContent* p, int i)
 {
 	string id = "";
@@ -221,19 +220,15 @@ struct BorrowAndReturnList
 	int size = 0;
 };
 
-Date borrowTime() {
+Date borrowTime(){
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
-	time_t currentTime; // Assuming you have a time_t variable
-	time(&currentTime); // Get the current time
-
-	struct tm timeinfo;
-	localtime_s(&timeinfo, &currentTime);
-
+	time_t now = time(0);
+   	tm *ltm = localtime(&now);
 	// in ra các thành phần của cấu trúc tm struct
-	timeeee.year = 1900 + timeinfo.tm_year;
-	timeeee.month = 1 + timeinfo.tm_mon;
-	timeeee.day = timeinfo.tm_mday;
+	timeeee.year = 1900 + ltm->tm_year;
+	timeeee.month = 1 + ltm->tm_mon;
+	timeeee.day = ltm->tm_mday;
 	return timeeee;
 }
 int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)

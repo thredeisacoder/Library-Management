@@ -4,7 +4,8 @@
 #include "process.h"
 using namespace std;
 
-void title(int x, int y) {
+void title(int x, int y)
+{
 	string s[19];
 	string a[13];
 	a[1] = " __       __   ______    ______         ___       ______   ____    ____ ";
@@ -37,14 +38,16 @@ void title(int x, int y) {
 	s[16] = "==============================|||||==============================";
 	s[17] = "                               ---                               ";
 	s[18] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
-	//draw logo
-	for (int i = 1; i <= 12; i++) {
+	// draw logo
+	for (int i = 1; i <= 12; i++)
+	{
 		SetColor(i);
 		gotoxy(x, y + 1 + i);
 		cout << a[i];
 	}
-	//draw book
-	for (int i = 1; i <= 18; i++) {
+	// draw book
+	for (int i = 1; i <= 18; i++)
+	{
 		SetColor(i);
 		gotoxy(x + 35, 19 + i);
 		cout << s[i];
@@ -80,25 +83,25 @@ void loading()
 	Sleep(1500);
 	system("cls");
 }
-//Khung tieu de
+// Khung tieu de
 void Tittle(int x, int y, int width, int height)
 {
-	for (int i = x; i <= x + width - 8; i++)//so cot 
+	for (int i = x; i <= x + width - 8; i++) // so cot
 	{
-		for (int j = y - 4; j <= y + height / 3; j++)//to tung o cua tung cot
+		for (int j = y - 4; j <= y + height / 3; j++) // to tung o cua tung cot
 		{
-			SetBGColor(15);//mau nen trang
+			SetBGColor(15); // mau nen trang
 			gotoxy(i, j);
-			cout << " ";//to mau trang cho khung tieu de
+			cout << " "; // to mau trang cho khung tieu de
 		}
 	}
-	SetColor(20);//chu mau xanh
+	SetColor(20); // chu mau xanh
 	title(x + 30, y - 4);
 }
-//in lua chon
+// in lua chon
 void Option(int x, int y, int width, int height, string option)
 {
-	for (int i = x - 6; i <= x + width; i++)//vong lap chay tu dau den het chieu dai option
+	for (int i = x - 6; i <= x + width; i++) // vong lap chay tu dau den het chieu dai option
 	{
 		SetBGColor(11);
 		SetColor(16);
@@ -112,27 +115,27 @@ void Option(int x, int y, int width, int height, string option)
 	gotoxy(x, y);
 	cout << option;
 }
-//tao menu
+// tao menu
 void boxMenu()
 {
 	int x = 8;
 	int y = 13;
 	int width = 150;
 	int height = 30;
-	if (width <= 1 || height <= 1) return;
+	if (width <= 1 || height <= 1)
+		return;
 	Tittle(x, y - 9, width, height);
-	Option(x + 10, y + height / 5 + 2, width / 3 - 6, height, "READER CARD!");//the doc gia
-	Option(x + 10, y + height / 5 + 4 + 2, width / 3 - 6, height, "TABLE OF CONTENT");// dau sach
-	Option(x + 10, y + height / 5 + 8 + 2, width / 3 - 6, height, "BORROW AND RETURN!");//muon tra sach
-	Option(x + 10, y + height / 5 + 12 + 2, width / 3 - 6, height, "STATISTIC");//thong ke
-	Option(x + 10, y + height / 5 + 16 + 2, width / 3 - 6, height, "QUIT!");//thoat
+	Option(x + 10, y + height / 5 + 2, width / 3 - 6, height, "READER CARD!");			 // the doc gia
+	Option(x + 10, y + height / 5 + 4 + 2, width / 3 - 6, height, "TABLE OF CONTENT");	 // dau sach
+	Option(x + 10, y + height / 5 + 8 + 2, width / 3 - 6, height, "BORROW AND RETURN!"); // muon tra sach
+	Option(x + 10, y + height / 5 + 12 + 2, width / 3 - 6, height, "STATISTIC");		 // thong ke
+	Option(x + 10, y + height / 5 + 16 + 2, width / 3 - 6, height, "QUIT!");			 // thoat
 
 	gotoxy(x + width / 6 + 48, y + height * 5 / 6);
 	cout << "Press Up and Down to move and Enter to choose!!! ";
-
 }
 
-void HighLight(int x, int y, int width)//bat thanh sang
+void HighLight(int x, int y, int width) // bat thanh sang
 {
 	for (int i = x; i <= x + width; i++)
 	{
@@ -151,7 +154,7 @@ void HighLight(int x, int y, int width)//bat thanh sang
 	SetBGColor(15);
 	gotoxy(x, y);
 }
-void UnHighLight(int x, int y, int width)//tat thanh sang
+void UnHighLight(int x, int y, int width) // tat thanh sang
 {
 	for (int i = x; i <= x + width; i++)
 	{
@@ -171,14 +174,14 @@ void UnHighLight(int x, int y, int width)//tat thanh sang
 	gotoxy(x, y);
 }
 
-void Tick(int x, int y)//danh dau
+void Tick(int x, int y) // danh dau
 {
 	SetBGColor(20);
 	cout << "  ";
 	gotoxy(x, y);
 	SetBGColor(15);
 }
-void UnTick(int x, int y)//huy danh dau
+void UnTick(int x, int y) // huy danh dau
 {
 	SetBGColor(15);
 	cout << "  ";
@@ -190,15 +193,20 @@ void clearReaderLine(int i)
 	gotoxy(6, i);
 	cout << "   ";
 	gotoxy(14, i);
-	for (int j = 14; j < 30; j++) cout << " ";
+	for (int j = 14; j < 30; j++)
+		cout << " ";
 	gotoxy(35, i);
-	for (int j = 35; j < 65; j++) cout << " ";
+	for (int j = 35; j < 65; j++)
+		cout << " ";
 	gotoxy(70, i);
-	for (int j = 70; j < 85; j++) cout << " ";
+	for (int j = 70; j < 85; j++)
+		cout << " ";
 	gotoxy(90, i);
-	for (int j = 90; j < 100; j++) cout << " ";
+	for (int j = 90; j < 100; j++)
+		cout << " ";
 	gotoxy(105, i);
-	for (int j = 105; j < 120; j++) cout << " ";
+	for (int j = 105; j < 120; j++)
+		cout << " ";
 }
 
 void clearReaderTable()
@@ -209,8 +217,8 @@ void clearReaderTable()
 	}
 }
 
-//in 1 doc gia
-void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
+// in 1 doc gia
+void displayReader(nodeRC *p, int y) // in doc gia tren do cao y
 {
 	while (y >= 20)
 	{
@@ -226,10 +234,12 @@ void displayReader(nodeRC* p, int y)//in doc gia tren do cao y
 	cout << p->data.Gender;
 	gotoxy(105, 3 + 2 * y);
 	int s = p->data.CardStatus;
-	if (s == 1) cout << "1 (activated)";
-	else if (s == 0) cout << "0 (locked)";
+	if (s == 1)
+		cout << "1 (activated)";
+	else if (s == 0)
+		cout << "0 (locked)";
 }
-void sortbyID(nodeRC* tmp[], int n)
+void sortbyID(nodeRC *tmp[], int n)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -242,11 +252,11 @@ void sortbyID(nodeRC* tmp[], int n)
 		}
 	}
 }
-//nhap doc gia moi
-void tableEnterRC(ReaderList& rl)
+// nhap doc gia moi
+void tableEnterRC(ReaderList &rl)
 {
 	ShowCur(true);
-	Reader* p = new Reader;
+	Reader *p = new Reader;
 	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x, y + height / 4);
@@ -299,24 +309,25 @@ void tableEnterRC(ReaderList& rl)
 	ShowCur(false);
 	gotoxy(x, y + 15);
 	int n = addNodeReader(rl, *p);
-	if (n == 1)	cout << "~ADD Successfully~";
-	else cout << "Can not add";
+	if (n == 1)
+		cout << "~ADD Successfully~";
+	else
+		cout << "Can not add";
 	rl.head = updateTreeAvl(rl.head);
 	delete p;
 	gotoxy(x, y + 16);
 	Sleep(1000);
 }
 
-void tableSettingRC(nodeRC* p, int y)//chinh sua thong tin doc gia
+void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
 {
 	ShowCur(true);
 	SetColor(16);
-	Reader* data = new Reader(p->data);
+	Reader *data = new Reader(p->data);
 	gotoxy(6, wherey());
 	SetColor(20);
 	cout << "->>";
 	SetColor(16);
-
 
 	gotoxy(35, y);
 	data->FirstName = EnterFirstName(p->data.FirstName);
@@ -356,37 +367,40 @@ void tableSettingRC(nodeRC* p, int y)//chinh sua thong tin doc gia
 	}
 	p->data = *data;
 
-
 	clearReaderLine(y);
 	displayReader(p, (y - 3) / 2);
 	ShowCur(false);
 	Sleep(1000);
 }
-//sap xep theo ten
-void sortbyname(nodeRC* tmp[], int n)
+// sap xep theo ten
+void sortbyname(nodeRC *tmp[], int n)
 {
 	for (int i = 0; i < n - 1; i++)
 	{
 		int minIndex = i;
-		for (int j = i + 1; j < n; j++) {
-			if (tmp[j]->data.LastName + tmp[j]->data.FirstName < tmp[minIndex]->data.LastName + tmp[minIndex]->data.FirstName) {
+		for (int j = i + 1; j < n; j++)
+		{
+			if (tmp[j]->data.LastName + tmp[j]->data.FirstName < tmp[minIndex]->data.LastName + tmp[minIndex]->data.FirstName)
+			{
 				minIndex = j;
 			}
 		}
-		if (minIndex != i) {
+		if (minIndex != i)
+		{
 			std::swap(tmp[i], tmp[minIndex]);
 		}
 	}
 }
-//duyet danh sach doc gia
-void displaytree(nodeRC* tmp[], int n, int count)//duyet mang de in ra 
+// duyet danh sach doc gia
+void displaytree(nodeRC *tmp[], int n, int count) // duyet mang de in ra
 {
 	gotoxy(2, 1);
 	cout << "       ";
 	int y = 0;
 	for (int i = count - 20; i < count; i++)
 	{
-		if (i == n) break;
+		if (i == n)
+			break;
 		displayReader(tmp[i], y);
 		y++;
 	}
@@ -395,7 +409,7 @@ void displaytree(nodeRC* tmp[], int n, int count)//duyet mang de in ra
 	cout << count / 20 << "/" << n / 20 + 1;
 }
 
-void resetpointerarray(nodeRC* tmp[], int n)
+void resetpointerarray(nodeRC *tmp[], int n)
 {
 	for (int i = 0; i < n + 1; i++)
 	{
@@ -403,9 +417,10 @@ void resetpointerarray(nodeRC* tmp[], int n)
 	}
 }
 
-void tranvertree(nodeRC* head, nodeRC* tmp[], int& n)//duyet cay dua vao mang con tro tmp
+void tranvertree(nodeRC *head, nodeRC *tmp[], int &n) // duyet cay dua vao mang con tro tmp
 {
-	if (head == nullptr) return;
+	if (head == nullptr)
+		return;
 	else
 	{
 		tmp[n] = head;
@@ -415,8 +430,8 @@ void tranvertree(nodeRC* head, nodeRC* tmp[], int& n)//duyet cay dua vao mang co
 	}
 }
 
-//danh sach doc gia
-void ReaderTable(nodeRC* tmp[], int n, int count)
+// danh sach doc gia
+void ReaderTable(nodeRC *tmp[], int n, int count)
 {
 	for (int i = 10; i <= 120; i++)
 	{
@@ -469,34 +484,40 @@ void displayDate(Date data)
 	cout << data.day << "/" << data.month << "/" << data.year;
 }
 
-void displayBAR(nodeBAR* head, int y, string name)
+void displayBAR(nodeBAR *head, int y, string name)
 {
-	gotoxy(10, y); cout << name;
-	gotoxy(30, y); cout << head->data.book->data.BookID;
-	gotoxy(40, y); displayDate(head->data.BorrowDate);
-	gotoxy(55, y); displayDate(head->data.ReturnDate);
+	gotoxy(10, y);
+	cout << name;
+	gotoxy(30, y);
+	cout << head->data.bookID;
+	gotoxy(40, y);
+	displayDate(head->data.BorrowDate);
+	gotoxy(55, y);
+	displayDate(head->data.ReturnDate);
 }
 
-void watchingReaderMode(ReaderList& rl)
+void watchingReaderMode(ReaderList &rl)
 {
 	int count = 20, n = 0;
-	nodeRC* tmp[MAX];
+	nodeRC *tmp[MAX];
 	tranvertree(rl.head, tmp, n);
 	ReaderTable(tmp, rl.size, count);
-	gotoxy(130, 10); cout << "ESC: Return to enter ID";
+	gotoxy(130, 10);
+	cout << "ESC: Return to enter ID";
 
 	while (true)
 	{
 		char c = _getch();
-		if (c == 27)//esc
+		if (c == 27) // esc
 		{
 			break;
 		}
-		else continue;
+		else
+			continue;
 	}
 }
 
-void deleteReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do xoa
+void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 {
 	char c;
 	gotoxy(11, 3);
@@ -504,15 +525,18 @@ void deleteReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do xoa
 	while (true)
 	{
 		c = _getch();
-		if (c == 13) //enter
+		if (c == 13) // enter
 		{
 			UnTick(wherex(), wherey());
 			int pos = count - 20 + (wherey() - 3) / 2;
 			string s = tmp[pos]->data.ID;
-			nodeRC* p = findprenode(rl.head, tmp[pos]);
-			if (p == nullptr) rl.head = deletenode(tmp[pos]);
-			else if (p->left == tmp[pos]) p->left = deletenode(tmp[pos]);
-			else p->right = deletenode(tmp[pos]);
+			nodeRC *p = findprenode(rl.head, tmp[pos]);
+			if (p == nullptr)
+				rl.head = deletenode(tmp[pos]);
+			else if (p->left == tmp[pos])
+				p->left = deletenode(tmp[pos]);
+			else
+				p->right = deletenode(tmp[pos]);
 			gotoxy(130, 30);
 			cout << "DELETE SUCCESSFULLY!!!!";
 			Sleep(2000);
@@ -521,102 +545,12 @@ void deleteReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do xoa
 			releaseID(rl.notusedid, MAX - rl.size, s);
 			break;
 		}
-		else if (c == 27)//esc
+		else if (c == 27) // esc
 		{
 			UnTick(wherex(), wherey());
 			break;
 		}
-		else if (c == 80)//down
-		{
-			if (count > rl.size && wherey() == 3 + 2 * (rl.size - 1 - (count - 20)))
-			{
-				UnTick(wherex(), wherey());
-				gotoxy(wherex(), 3);
-				Tick(wherex(), wherey());
-			}
-			else if (wherey() != 3 + 2 * 19) {
-				UnTick(wherex(), wherey());
-				gotoxy(wherex(), wherey() + 2);
-				Tick(wherex(), wherey());
-			}
-			else
-			{
-				UnTick(wherex(), wherey());
-				gotoxy(wherex(), 3);
-				Tick(wherex(), wherey());
-			}
-		}
-		else if (c == 72)//up
-		{
-			if (count > rl.size && wherey() == 3)
-			{
-				UnTick(wherex(), wherey());
-				gotoxy(wherex(), 3 + 2 * (rl.size - 1 - (count - 20)));
-				Tick(wherex(), wherey());
-			}
-			else if (wherey() != 3)
-			{
-				UnTick(wherex(), wherey());
-				gotoxy(wherex(), wherey() - 2);
-				Tick(wherex(), wherey());
-			}
-			else
-			{
-				UnTick(wherex(), wherey());
-				gotoxy(wherex(), 3 + 2 * 19);
-				Tick(wherex(), wherey());
-			}
-		}
-		else if (c == 75)///left
-		{
-			int y = 0;
-			if (count == 20) continue;
-			UnTick(wherex(), wherey());
-			count -= 20;
-			clearReaderTable();
-			displaytree(tmp, rl.size, count);
-			gotoxy(11, 3);
-			Tick(wherex(), wherey());
-		}
-		else if (c == 77)//right
-		{
-			int y = 0;
-			if (count >= rl.size) continue;
-			UnTick(wherex(), wherey());
-			count += 20;
-			clearReaderTable();
-			displaytree(tmp, rl.size, count);
-			gotoxy(11, 3);
-			Tick(wherex(), wherey());
-		}
-		else
-		{
-			continue;
-		}
-	}
-}
-
-void SettingReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do chinh sua
-{
-	char c;
-	gotoxy(11, 3);
-	Tick(wherex(), wherey());
-	while (true)
-	{
-		c = _getch();
-		if (c == 13) //enter
-		{
-			UnTick(wherex(), wherey());
-			int pos = count - 20 + (wherey() - 3) / 2;
-			tableSettingRC(tmp[pos], wherey());
-			break;
-		}
-		else if (c == 27)//esc
-		{
-			UnTick(wherex(), wherey());
-			break;
-		}
-		else if (c == 80)//down
+		else if (c == 80) // down
 		{
 			if (count > rl.size && wherey() == 3 + 2 * (rl.size - 1 - (count - 20)))
 			{
@@ -637,7 +571,7 @@ void SettingReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do chinh 
 				Tick(wherex(), wherey());
 			}
 		}
-		else if (c == 72)//up
+		else if (c == 72) // up
 		{
 			if (count > rl.size && wherey() == 3)
 			{
@@ -658,10 +592,11 @@ void SettingReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do chinh 
 				Tick(wherex(), wherey());
 			}
 		}
-		else if (c == 75)///left
+		else if (c == 75) /// left
 		{
 			int y = 0;
-			if (count == 20) continue;
+			if (count == 20)
+				continue;
 			UnTick(wherex(), wherey());
 			count -= 20;
 			clearReaderTable();
@@ -669,10 +604,11 @@ void SettingReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do chinh 
 			gotoxy(11, 3);
 			Tick(wherex(), wherey());
 		}
-		else if (c == 77)//right
+		else if (c == 77) // right
 		{
 			int y = 0;
-			if (count >= rl.size) continue;
+			if (count >= rl.size)
+				continue;
 			UnTick(wherex(), wherey());
 			count += 20;
 			clearReaderTable();
@@ -687,7 +623,100 @@ void SettingReaderMode(ReaderList& rl, nodeRC* tmp[], int& count)//che do chinh 
 	}
 }
 
-void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
+void SettingReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do chinh sua
+{
+	char c;
+	gotoxy(11, 3);
+	Tick(wherex(), wherey());
+	while (true)
+	{
+		c = _getch();
+		if (c == 13) // enter
+		{
+			UnTick(wherex(), wherey());
+			int pos = count - 20 + (wherey() - 3) / 2;
+			tableSettingRC(tmp[pos], wherey());
+			break;
+		}
+		else if (c == 27) // esc
+		{
+			UnTick(wherex(), wherey());
+			break;
+		}
+		else if (c == 80) // down
+		{
+			if (count > rl.size && wherey() == 3 + 2 * (rl.size - 1 - (count - 20)))
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3);
+				Tick(wherex(), wherey());
+			}
+			else if (wherey() != 3 + 2 * 19)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() + 2);
+				Tick(wherex(), wherey());
+			}
+			else
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3);
+				Tick(wherex(), wherey());
+			}
+		}
+		else if (c == 72) // up
+		{
+			if (count > rl.size && wherey() == 3)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + 2 * (rl.size - 1 - (count - 20)));
+				Tick(wherex(), wherey());
+			}
+			else if (wherey() != 3)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() - 2);
+				Tick(wherex(), wherey());
+			}
+			else
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + 2 * 19);
+				Tick(wherex(), wherey());
+			}
+		}
+		else if (c == 75) /// left
+		{
+			int y = 0;
+			if (count == 20)
+				continue;
+			UnTick(wherex(), wherey());
+			count -= 20;
+			clearReaderTable();
+			displaytree(tmp, rl.size, count);
+			gotoxy(11, 3);
+			Tick(wherex(), wherey());
+		}
+		else if (c == 77) // right
+		{
+			int y = 0;
+			if (count >= rl.size)
+				continue;
+			UnTick(wherex(), wherey());
+			count += 20;
+			clearReaderTable();
+			displaytree(tmp, rl.size, count);
+			gotoxy(11, 3);
+			Tick(wherex(), wherey());
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
+
+void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 {
 	SetBGColor(11);
 	SetColor(0);
@@ -733,7 +762,7 @@ void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
 		{
 			c = _getch();
 		}
-		if (c == 27)//khi nguoi dung nhan esc
+		if (c == 27) // khi nguoi dung nhan esc
 		{
 			system("cls");
 			break;
@@ -755,9 +784,9 @@ void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
 				clearReaderTable();
 				displaytree(tmp, rl.size, count);
 			}
-			HighLight(130, 3, 9);//quay lai highlight option 1
+			HighLight(130, 3, 9); // quay lai highlight option 1
 		}
-		else if (c == 72)//khi nguoi dung nhan UP
+		else if (c == 72) // khi nguoi dung nhan UP
 		{
 			if (wherey() == 3)
 			{
@@ -772,7 +801,7 @@ void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
 				HighLight(wherex(), wherey(), 9);
 			}
 		}
-		else if (c == 80)//khi nguoi dung nhan Down
+		else if (c == 80) // khi nguoi dung nhan Down
 		{
 			if (wherey() == 11)
 			{
@@ -787,20 +816,21 @@ void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
 				HighLight(wherex(), wherey(), 9);
 			}
 		}
-		else if (c == 75)///left
+		else if (c == 75) /// left
 		{
-			if (count == 20) continue;
+			if (count == 20)
+				continue;
 			UnHighLight(wherex(), wherey(), 9);
 			count -= 20;
 			clearReaderTable();
 			displaytree(tmp, rl.size, count);
 			gotoxy(130, 3);
 			HighLight(wherex(), wherey(), 9);
-
 		}
-		else if (c == 77)//right
+		else if (c == 77) // right
 		{
-			if (count >= rl.size) continue;
+			if (count >= rl.size)
+				continue;
 			UnHighLight(wherex(), wherey(), 9);
 			count += 20;
 			clearReaderTable();
@@ -808,7 +838,7 @@ void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
 			gotoxy(130, 3);
 			HighLight(wherex(), wherey(), 9);
 		}
-		else if (c == 13)//Khi nguoi dung nhan ENTER
+		else if (c == 13) // Khi nguoi dung nhan ENTER
 		{
 			SetBGColor(15);
 			if (wherey() == 3)
@@ -868,28 +898,28 @@ void controlReaderTable(ReaderList& rl, nodeRC* tmp[], int count)
 		}
 	}
 }
-//danh sach dau sach
-void tableEnterTOC(TableOfContentList& tl)
+// danh sach dau sach
+void tableEnterTOC(TableOfContentList &tl)
 {
-	TableOfContent* p = new TableOfContent;
+	TableOfContent *p = new TableOfContent;
 	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
 	gotoxy(x, y + height / 4);
-	cout << "Limit input characters of each category:\n ";//hdsd
+	cout << "Limit input characters of each category:\n "; // hdsd
 	gotoxy(x, y + height / 4 + 1);
-	cout << "Name - 34 chars";//hdsd
+	cout << "Name - 34 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 2);
-	cout << "Genre - 15 chars";//hdsd
+	cout << "Genre - 15 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 3);
-	cout << "Author - 32 chars";//hdsd
+	cout << "Author - 32 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 4);
-	cout << "Number Page - 5 chars";//hdsd
+	cout << "Number Page - 5 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 5);
-	cout << "Public Year - 4 chars";//hdsd
+	cout << "Public Year - 4 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 6);
-	cout << "ISBN - 6 chars";//hdsd
+	cout << "ISBN - 6 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 7);
-	cout << "The number of books - 2 chars";//hdsd
+	cout << "The number of books - 2 chars"; // hdsd
 	for (int i = x; i < x + width + 25; i++)
 	{
 		SetBGColor(14);
@@ -919,33 +949,56 @@ void tableEnterTOC(TableOfContentList& tl)
 
 	gotoxy(x + 3, y + 11);
 	p->BookName = EnterBookName(p->BookName);
-	if (p->BookName == "") { return; }
+	if (p->BookName == "")
+	{
+		return;
+	}
 	gotoxy(x + width - 79, y + 11);
 	p->Genre = EnterGenre(p->Genre);
-	if (p->Genre == "") { return; }
+	if (p->Genre == "")
+	{
+		return;
+	}
 	gotoxy(x + width - 59, y + 11);
 	p->Author = EnterAuthor(p->Author);
-	if (p->Author == "") { return; }
+	if (p->Author == "")
+	{
+		return;
+	}
 	gotoxy(x + width - 20, y + 11);
 	p->NumOfPage = enterNumPage(p->NumOfPage);
-	if (p->NumOfPage == "") { return; }
+	if (p->NumOfPage == "")
+	{
+		return;
+	}
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
-	if (p->PublicYear == "") { return; }
+	if (p->PublicYear == "")
+	{
+		return;
+	}
 	gotoxy(x + width + 10, y + 11);
 	p->ISBN = EnterISBN(p->ISBN);
-	if (p->ISBN == "") { return; }
+	if (p->ISBN == "")
+	{
+		return;
+	}
 	gotoxy(x + width - 45, y + 16);
 	p->dms.size = enterNumBooks(p->dms.size);
-	if (p->dms.size == 0) { return; }
+	if (p->dms.size == 0)
+	{
+		return;
+	}
 	p->dms = createBookList(p);
 	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *p);
-	if (n == 1) {
+	if (n == 1)
+	{
 		gotoxy(x, 20);
 		cout << "~ADD SUCCESSFULL!!!~";
 	}
-	else {
+	else
+	{
 		gotoxy(x, 20);
 		cout << "~ADD FAILURE!!!~";
 	}
@@ -953,8 +1006,9 @@ void tableEnterTOC(TableOfContentList& tl)
 	Sleep(1500);
 	// delete p;
 }
-void displayTOC(TableOfContent data, int& yTOC) {
-	gotoxy(2, yTOC);
+void displayTOC(TableOfContent data, int &yTOC)
+{
+	gotoxy(4, yTOC);
 	cout << data.ISBN;
 	gotoxy(11, yTOC);
 	cout << data.BookName;
@@ -968,9 +1022,11 @@ void displayTOC(TableOfContent data, int& yTOC) {
 	cout << data.PublicYear;
 }
 
-void displayBookList(TableOfContent data, int yTOC, int pos) {
-	nodeB* p = data.dms.head;
-	for (int i = 0; i < pos; i++) {
+void displayBookList(TableOfContent data, int yTOC, int pos)
+{
+	nodeB *p = data.dms.head;
+	for (int i = 0; i < pos; i++)
+	{
 		p = p->next;
 	}
 	gotoxy(126, yTOC);
@@ -979,10 +1035,13 @@ void displayBookList(TableOfContent data, int yTOC, int pos) {
 	cout << p->data.BookStatus;
 }
 
-void loadListTOC(TableOfContentList tl, int count) {
-	int yTOC = 3; //chi?`u cao ha`ng d?`u ti?n
-	for (int i = count - 19; i < count; i++) {
-		if (i == tl.size) {
+void loadListTOC(TableOfContentList tl, int count)
+{
+	int yTOC = 3; // chi?`u cao ha`ng d?`u ti?n
+	for (int i = count - 19; i < count; i++)
+	{
+		if (i == tl.size)
+		{
 			break;
 		}
 		displayTOC(*tl.ds[i], yTOC);
@@ -990,13 +1049,17 @@ void loadListTOC(TableOfContentList tl, int count) {
 	}
 }
 
-void loadListSearch(TableOfContentList tl, int count, int& flag) {
-	int yTOC = 3; //chi?`u cao ha`ng d?`u ti?n
-	for (int i = count - 19; i < count; i++) {
-		if (i == tl.size) {
+void loadListSearch(TableOfContentList tl, int count, int &flag)
+{
+	int yTOC = 3; // chi?`u cao ha`ng d?`u ti?n
+	for (int i = count - 19; i < count; i++)
+	{
+		if (i == tl.size)
+		{
 			break;
 		}
-		if (tl.ds[i] != tl.ds[i - 1]) {
+		if (tl.ds[i] != tl.ds[i - 1])
+		{
 			flag = i;
 		}
 		displayTOC(*tl.ds[i], yTOC);
@@ -1005,29 +1068,39 @@ void loadListSearch(TableOfContentList tl, int count, int& flag) {
 	}
 }
 
-void clearfilterBySearching() {
+void clearfilterBySearching()
+{
 	for (int i = 3; i < 3 + 2 * 19; i += 2)
 	{
 		gotoxy(2, i);
-		for (int j = 0; j < 6; j++) cout << " ";
+		for (int j = 0; j < 6; j++)
+			cout << " ";
 		gotoxy(10, i);
-		for (int j = 0; j < 36; j++) cout << " ";
+		for (int j = 0; j < 36; j++)
+			cout << " ";
 		gotoxy(48, i);
-		for (int j = 0; j < 15; j++) cout << " ";
+		for (int j = 0; j < 15; j++)
+			cout << " ";
 		gotoxy(65, i);
-		for (int j = 0; j < 32; j++) cout << " ";
+		for (int j = 0; j < 32; j++)
+			cout << " ";
 		gotoxy(99, i);
-		for (int j = 0; j < 11; j++) cout << " ";
+		for (int j = 0; j < 11; j++)
+			cout << " ";
 		gotoxy(112, i);
-		for (int j = 0; j < 11; j++) cout << " ";
+		for (int j = 0; j < 11; j++)
+			cout << " ";
 		gotoxy(125, i);
-		for (int j = 0; j < 9; j++) cout << " ";
+		for (int j = 0; j < 9; j++)
+			cout << " ";
 		gotoxy(135, i);
-		for (int j = 0; j < 4; j++) cout << " ";
+		for (int j = 0; j < 4; j++)
+			cout << " ";
 	}
-}//thieu 2 cot chua xu li
+} // thieu 2 cot chua xu li
 
-void controlfilterBySearching(TableOfContentList& tl, int count, int& flag) {
+void controlfilterBySearching(TableOfContentList &tl, int count, int &flag)
+{
 	while (true)
 	{
 		// nhan phim tu nguoi dung(up/down/enter)
@@ -1036,21 +1109,27 @@ void controlfilterBySearching(TableOfContentList& tl, int count, int& flag) {
 		{
 			c = _getch();
 		}
-		if (c == 27)//khi nguoi dung nhan esc
+		if (c == 27) // khi nguoi dung nhan esc
 		{
 			system("cls");
 			break;
 		}
-		else if (c == 75)///left
+		else if (c == 75) /// left
 		{
-			if (count == 19) { continue; }
+			if (count == 19)
+			{
+				continue;
+			}
 			count -= 19;
 			clearfilterBySearching();
 			loadListSearch(tl, count, flag);
 		}
-		else if (c == 77)//right
+		else if (c == 77) // right
 		{
-			if (count > tl.size) { continue; }
+			if (count > tl.size)
+			{
+				continue;
+			}
 			count += 19;
 			clearfilterBySearching();
 			loadListSearch(tl, count, flag);
@@ -1058,7 +1137,7 @@ void controlfilterBySearching(TableOfContentList& tl, int count, int& flag) {
 	}
 }
 
-void filterBySearching(TableOfContentList& tl, int count, int& flag)
+void filterBySearching(TableOfContentList &tl, int count, int &flag)
 {
 	gotoxy(1, 43);
 	SetBGColor(20);
@@ -1069,9 +1148,12 @@ void filterBySearching(TableOfContentList& tl, int count, int& flag)
 	inputSearch = EnterBookName(inputSearch);
 	SetBGColor(15);
 	system("cls");
-	if (inputSearch == "") { return; }
+	if (inputSearch == "")
+	{
+		return;
+	}
 	TableOfContentList l = saveToSearch(tl, inputSearch);
-	for (int i = 0; i <= 143; i++)//cha?y theo chi?`u da`i, tra?i -> pha?i
+	for (int i = 0; i <= 143; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1079,15 +1161,15 @@ void filterBySearching(TableOfContentList& tl, int count, int& flag)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2)//co? bao nhi?u thg in ra tu` tr?n xu??ng duo?i
+		for (int j = 4; j < 3 + 2 * 19; j += 2) // co? bao nhi?u thg in ra tu` tr?n xu??ng duo?i
 		{
 			gotoxy(i, j);
-			cout << char(95);//in ra d?u ga?ch ngang ngan ca?ch tu`ng ha`ng
+			cout << char(95); // in ra d?u ga?ch ngang ngan ca?ch tu`ng ha`ng
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ c??t ngan ca?ch tu`ng mu?c 
+	for (int i = 1; i < 3 + 2 * 19; i++) // ve~ c??t ngan ca?ch tu`ng mu?c
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1109,7 +1191,8 @@ void filterBySearching(TableOfContentList& tl, int count, int& flag)
 		cout << " ";
 	}
 	SetBGColor(15);
-	if (l.size == 0) {
+	if (l.size == 0)
+	{
 		gotoxy(60, 25);
 		cout << "Empty!!!";
 	}
@@ -1134,94 +1217,77 @@ void filterBySearching(TableOfContentList& tl, int count, int& flag)
 	SetBGColor(11);
 	SetColor(0);
 }
-void editTOC(TableOfContentList& tl) {
-	gotoxy(130, 40);
-	cout << "Enter ISBN: ";
-	string input = "";
-	input = EnterISBN(input);
-	TableOfContent* tmp = searchByISBN(tl, input);
-
-	if (tmp == NULL) {
-		gotoxy(130, 41);
-		cout << "ISBN not found!!!!!!";
-		Sleep(1000);
+void editTOC(TableOfContent *tmp, int y)
+{
+	SetColor(16);
+	ShowCur(true);
+	gotoxy(4, y);
+	tmp->ISBN = EnterISBN(tmp->ISBN);
+	if (tmp->ISBN == "")
+	{
+		gotoxy(1, y);
+		UnTick(wherex(), wherey());
 		return;
 	}
-	SetColor(16);
-	system("cls");
-	int x = 10, y = 2, width = 120, height = 80;
-	gotoxy(x, y + height / 4);
-	cout << "Limit input characters of each category:\n ";//hdsd
-	gotoxy(x, y + height / 4 + 1);
-	cout << "Name - 34 chars";//hdsd
-	gotoxy(x, y + height / 4 + 2);
-	cout << "Genre - 15 chars";//hdsd
-	gotoxy(x, y + height / 4 + 3);
-	cout << "Author - 32 chars";//hdsd
-	gotoxy(x, y + height / 4 + 4);
-	cout << "Number Page - 5 chars";//hdsd
-	gotoxy(x, y + height / 4 + 5);
-	cout << "Public Year - 4 chars";//hdsd
-	for (int i = x; i < x + width + 25; i++)
-	{
-		SetBGColor(14);
-		gotoxy(i, y + 8);
-		cout << " ";
-		gotoxy(i, y + 10);
-		cout << " ";
-		gotoxy(i, y + 12);
-		cout << " ";
-	}
-	SetBGColor(15);
-	gotoxy(x + 17, y + 9);
-	cout << "| NAME |";
-	gotoxy(x + width - 79, y + 9);
-	cout << "| GENRE | ";
-	gotoxy(x + width - 49, y + 9);
-	cout << "| AUTHOR | ";
-	gotoxy(x + width - 23, y + 9);
-	cout << "| NUMBER PAGE | ";
-	gotoxy(x + width - 6, y + 9);
-	cout << "| PUBLIC YEAR | ";
-	gotoxy(x + width + 10, y + 9);
-	cout << "| ISBN | ";
-	ShowCur(true);
-	gotoxy(x + 3, y + 11);
+	gotoxy(11, y);
 	tmp->BookName = EnterBookName(tmp->BookName);
-	if (tmp->BookName == "") { return; }
-	gotoxy(x + width - 79, y + 11);
+	if (tmp->BookName == "")
+	{
+		gotoxy(1, y);
+		UnTick(wherex(), wherey());
+		return;
+	}
+	gotoxy(49, y);
 	tmp->Genre = EnterGenre(tmp->Genre);
-	if (tmp->Genre == "") { return; }
-	gotoxy(x + width - 59, y + 11);
+	if (tmp->Genre == "")
+	{
+		gotoxy(1, y);
+		UnTick(wherex(), wherey());
+		return;
+	}
+	gotoxy(66, y);
 	tmp->Author = EnterAuthor(tmp->Author);
-	if (tmp->Author == "") { return; }
-	gotoxy(x + width - 20, y + 11);
+	if (tmp->Author == "")
+	{
+		gotoxy(1, y);
+		UnTick(wherex(), wherey());
+		return;
+	}
+	gotoxy(102, y);
 	tmp->NumOfPage = enterNumPage(tmp->NumOfPage);
-	if (tmp->NumOfPage == "") { return; }
-	gotoxy(x + width - 2, y + 11);
+	if (tmp->NumOfPage == "")
+	{
+		gotoxy(1, y);
+		UnTick(wherex(), wherey());
+		return;
+	}
+	gotoxy(116, y);
 	tmp->PublicYear = enterYear(tmp->PublicYear);
-	if (tmp->PublicYear == "") { return; }
-	gotoxy(x + width + 10, y + 11);
-	tmp->ISBN = EnterISBN(tmp->ISBN);
-	if (tmp->ISBN == "") { return; }
+	if (tmp->PublicYear == "")
+	{
+		gotoxy(1, y);
+		UnTick(wherex(), wherey());
+		return;
+	}
 	ShowCur(false);
-	int n = themTheoThuTuTheLoai(tl, *tmp);
 	delete tmp->dms.head;
 	tmp->dms = createBookList(tmp);
-	if (n == 0) {
-		gotoxy(x, 20);
-		cout << "~EDIT SUCCESSFULL!!!~";
-	}
-	else {
-		gotoxy(x, 20);
-		cout << "~EDIT FAILURE!!!~";
-	}
-	gotoxy(x, y + 15);
+	// if (n == 0) {
+	// 	gotoxy(x, 20);
+	// 	cout << "~EDIT SUCCESSFULL!!!~";
+	// }
+	// else {
+	// 	gotoxy(x, 20);
+	// 	cout << "~EDIT FAILURE!!!~";
+	// }
+	gotoxy(1, y);
+	UnTick(wherex(), wherey());
 	Sleep(1500);
 }
-void TableTOC(TableOfContentList& tl, int count)
+
+void TableTOC(TableOfContentList &tl, int count)
 {
-	for (int i = 0; i <= 124; i++)//cha?y theo chi?`u da`i, tra?i -> pha?i
+	for (int i = 0; i <= 124; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1229,15 +1295,15 @@ void TableTOC(TableOfContentList& tl, int count)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2)//co? bao nhi?u thg in ra tu` tr?n xu??ng duo?i
+		for (int j = 4; j < 3 + 2 * 19; j += 2) // co? bao nhi?u thg in ra tu` tr?n xu??ng duo?i
 		{
 			gotoxy(i, j);
-			cout << char(95);//in ra d?u ga?ch ngang ngan ca?ch tu`ng ha`ng
+			cout << char(95); // in ra d?u ga?ch ngang ngan ca?ch tu`ng ha`ng
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++)//ve~ c??t ngan ca?ch tu`ng mu?c 
+	for (int i = 1; i < 3 + 2 * 19; i++) // ve~ c??t ngan ca?ch tu`ng mu?c
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1255,7 +1321,8 @@ void TableTOC(TableOfContentList& tl, int count)
 		cout << " ";
 	}
 	SetBGColor(15);
-	if (tl.size == 0) {
+	if (tl.size == 0)
+	{
 		gotoxy(60, 25);
 		cout << "Empty!!!";
 	}
@@ -1276,442 +1343,565 @@ void TableTOC(TableOfContentList& tl, int count)
 	SetColor(0);
 }
 
-void clearTableTOC() {
+void clearTableTOC()
+{
 	for (int i = 3; i < 3 + 2 * 19; i += 2)
 	{
 		gotoxy(2, i);
-		for (int j = 0; j < 6; j++) cout << " ";
+		for (int j = 0; j < 6; j++)
+			cout << " ";
 		gotoxy(10, i);
-		for (int j = 0; j < 36; j++) cout << " ";
+		for (int j = 0; j < 36; j++)
+			cout << " ";
 		gotoxy(48, i);
-		for (int j = 0; j < 15; j++) cout << " ";
+		for (int j = 0; j < 15; j++)
+			cout << " ";
 		gotoxy(65, i);
-		for (int j = 0; j < 32; j++) cout << " ";
+		for (int j = 0; j < 32; j++)
+			cout << " ";
 		gotoxy(99, i);
-		for (int j = 0; j < 11; j++) cout << " ";
+		for (int j = 0; j < 11; j++)
+			cout << " ";
 		gotoxy(112, i);
-		for (int j = 0; j < 11; j++) cout << " ";
+		for (int j = 0; j < 11; j++)
+			cout << " ";
 		gotoxy(125, i);
-		for (int j = 0; j < 5; j++) cout << " ";
+		for (int j = 0; j < 5; j++)
+			cout << " ";
 	}
 }
 
-// void printBooklist(){}
-
-void controlTOCTable(TableOfContentList& tl, int count) {
-	SetBGColor(11);
-	ShowCur(false);
-	for (int i = 130; i <= 139; i++)//in ra ? chu?c nang
-	{
-		gotoxy(i, 3);
-		cout << " ";
-		gotoxy(i, 4);
-		cout << " ";
-		gotoxy(i, 5);
-		cout << " ";
-
-		gotoxy(i, 7);
-		cout << " ";
-		gotoxy(i, 8);
-		cout << " ";
-		gotoxy(i, 9);
-		cout << " ";
-
-		gotoxy(i, 11);
-		cout << " ";
-		gotoxy(i, 12);
-		cout << " ";
-		gotoxy(i, 13);
-		cout << " ";
-	}
-	gotoxy(133, 4);
-	cout << "ADD";
-	gotoxy(133, 8);
-	cout << "EDIT";
-	gotoxy(132, 12);
-	cout << "SEARCH";
-
-	HighLight(130, 3, 9);
-
+void ControlEditMode(TableOfContentList tl, int &count)
+{
+	gotoxy(1, 3);
+	Tick(wherex(), wherey());
 	while (true)
 	{
-		// nhan phim tu nguoi dung(up/down/enter)
 		char c = _getch();
-		if (c == -32)
-		{
-			c = _getch();
-		}
-		if (c == 27)//khi nguoi dung nhan esc
-		{
-			system("cls");
-			break;
-		}
-		if (c == 72)//khi nguoi dung nhan UP
-		{
+		if (c == 72)
+		{ // up
 			if (wherey() == 3)
 			{
-				UnHighLight(wherex(), wherey(), 9);
-				gotoxy(130, 11);
-				HighLight(wherex(), wherey(), 9);
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), 9);
-				gotoxy(130, wherey() - 4);
-				HighLight(wherex(), wherey(), 9);
-			}
-		}
-		else if (c == 80)//khi nguoi dung nhan Down
-		{
-			if (wherey() == 11)
-			{
-				UnHighLight(wherex(), wherey(), 9);
-				gotoxy(130, 3);
-				HighLight(wherex(), wherey(), 9);
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), 9);
-				gotoxy(130, wherey() + 4);
-				HighLight(wherex(), wherey(), 9);
-			}
-		}
-		else if (c == 75)///left
-		{
-			if (count == 19) { continue; }
-			UnHighLight(wherex(), wherey(), 9);
-			count -= 19;
-			clearTableTOC();
-			loadListTOC(tl, count);
-			gotoxy(130, 3);
-			HighLight(wherex(), wherey(), 9);
-		}
-		else if (c == 77)//right
-		{
-			if (count > tl.size) { continue; }
-			UnHighLight(wherex(), wherey(), 9);
-			count += 19;
-			clearTableTOC();
-			loadListTOC(tl, count);
-			gotoxy(130, 3);
-			HighLight(wherex(), wherey(), 9);
-		}
-		else if (c == 13)//Khi nguoi dung nhan ENTER
-		{
-			count = 19;
-			SetBGColor(15);
-			if (wherey() == 3) //add
-			{
-				system("cls");
-				tableEnterTOC(tl);
-				system("cls");
-				TableTOC(tl, count);
-				controlTOCTable(tl, count);
-				break;
-			}
-			else if (wherey() == 7) //edit
-			{
-				editTOC(tl);
-				system("cls");
-				TableTOC(tl, count);
-				controlTOCTable(tl, count);
-				break;
-			}
-			else //search
-			{
-				int flag = count - 19;
-				filterBySearching(tl, count, flag);
-				TableTOC(tl, count);
-				controlTOCTable(tl, count);
-				break;
-			}
-		}
-		else
-		{
-			continue;
-		}
-	}
-}
-void BARofReader(ReaderList& rl, TableOfContentList& tl)
-{
-
-	for (int i = 10; i <= 120; i++)
-	{
-		SetBGColor(6);
-		gotoxy(i, 0);
-		cout << " ";
-		gotoxy(i, 2);
-		cout << " ";
-		SetColor(16);
-		gotoxy(10, 1);
-		cout << " ";
-		gotoxy(30, 1);
-		cout << " ";
-		gotoxy(65, 1);
-		cout << " ";
-		gotoxy(85, 1);
-		cout << " ";
-		gotoxy(100, 1);
-		cout << " ";
-		gotoxy(120, 1);
-		cout << " ";
-	}
-	SetBGColor(15);
-	gotoxy(50, 3);
-	SetBGColor(15);
-	gotoxy(50, 4);
-}
-
-void controlBAR(ReaderList& rl, TableOfContentList& tl, int count) {
-	ShowCur(true);
-	gotoxy(50, 22);
-	cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";
-	gotoxy(50, 20);
-	cout << "ENTER CARD ID: ";
-	gotoxy(70, 20);
-	string id = EnterID();
-	ShowCur(false);
-
-	if (id == "") return;
-	if (id == " ")
-	{
-		system("cls");
-		watchingReaderMode(rl);
-		system("cls");
-		BARofReader(rl, tl);
-		return;
-	}
-
-	nodeRC* p = findReader(rl.head, id);
-	system("cls");
-	if (p == nullptr)
-	{
-		gotoxy(80, 20);
-		cout << "READER NOT FOUND";
-		Sleep(1500);
-		cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                    ";
-		system("cls");
-		BARofReader(rl, tl);
-		return;
-	}
-	if (p->data.dsmt.size == 0) cout << "NO BORROWED BOOK";
-	else for (int i = 0; i < p->data.dsmt.size; i++)
-	{
-		nodeBAR* a = p->data.dsmt.head;
-		string name = findBookName(tl, a->data.book->data.BookID);
-		displayBAR(a, 2 + i, name);
-		a = a->next;
-	}
-	BARofReader(rl, tl);
-	displayReader(p, -1);
-	Option(140, 3, 14, 0, "Borrow");
-	Option(140, 8, 14, 0, "Return");
-	HighLight(134, 2, 20);
-	while (true) {
-		char c = _getch();
-		if (c == -32) {
-			c = _getch();
-		}
-		if (c == 72) { //khi nguoi dung nhan up
-			if (wherey() == 2)
-			{
-				UnHighLight(wherex(), wherey(), 20);
-				gotoxy(wherex(), wherey() + 5);
-				HighLight(wherex(), wherey(), 20);
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), 20);
-				gotoxy(wherex(), wherey() - 5);
-				HighLight(wherex(), wherey(), 20);
-			}
-		}
-		else if (c == 80)//khi nguoi dung nhan Down
-		{
-			if (wherey() == 7)
-			{
-				UnHighLight(wherex(), wherey(), 20);
-				gotoxy(wherex(), wherey() - 5);
-				HighLight(wherex(), wherey(), 20);
-
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), 20);
-				gotoxy(wherex(), wherey() + 5);
-				HighLight(wherex(), wherey(), 20);
-			}
-		}
-		else if (c == 13) { //enter
-			if (wherey() == 2) {
-				system("cls");
-				TableTOC(tl, count);
-				controlTOCTable(tl, count);
-				system("cls");
-				// BARofReader(rl, tl);
-				controlBAR(rl, tl, count);
-				break;
-			}
-		}
-	}
-}
-//dieu khien tren menu chinh
-void Control(ReaderList& rl, TableOfContentList& tl)
-{
-	int x = 18; int y = 12; int width = 150; int height = 30;
-	//danh dau lua chon dau
-	gotoxy(x - 6, y + height / 4 + 1);
-
-	HighLight(wherex(), wherey(), width / 3);
-	while (true)
-	{
-		// nhan phim tu nguoi dung(up/down/enter)
-		char c = _getch();
-		if (c == -32)
-		{
-			c = _getch();
-		}
-		if (c == 27) continue;
-		else if (c == 72)//khi nguoi dung nhan UP
-		{
-			if (wherey() == y + height / 4 + 1)
-			{
-				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x - 6, y + height / 4 + 16 + 1);
-				HighLight(wherex(), wherey(), width / 3);
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x - 6, wherey() - 4);
-				HighLight(wherex(), wherey(), width / 3);
-			}
-		}
-		else if (c == 80)//khi nguoi dung nhan Down
-		{
-			if (wherey() == y + height / 4 + 16 + 1)
-			{
-				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x - 6, y + height / 4 + 1);
-				HighLight(wherex(), wherey(), width / 3);
-
-			}
-			else
-			{
-				UnHighLight(wherex(), wherey(), width / 3);
-				gotoxy(x - 6, wherey() + 4);
-				HighLight(wherex(), wherey(), width / 3);
-			}
-		}
-		else if (c == 13)//Khi nguoi dung nhan ENTER
-		{
-			SetBGColor(15);
-
-			if (wherey() == y + height / 4 + 16 + 1)//quit
-			{
-				system("cls");
-				int n = saveFileReader(rl);
-				int m = saveTOC(tl);
-				if (n == 0 || m == 0)
+				if (count > tl.size)
 				{
-					system("cls");
-					gotoxy(60, 20);
-					cout << "CAN'T SAVE!!!\n";
-					Sleep(1000);
+					UnTick(wherex(), wherey());
+					gotoxy(wherex(), tl.size - count + 21);
+					Tick(wherex(), wherey());
 				}
 				else
 				{
-					system("cls");
-					gotoxy(60, 20);
-					cout << "SAVING SUCCESSFUL!!!";
-					Sleep(1000);
+					UnTick(wherex(), wherey());
+					gotoxy(1, 39);
+					Tick(wherex(), wherey());
 				}
-				system("cls");
-				break;
 			}
-			else if (wherey() == y + height / 4 + 1)//option 1 (reader card)
+			else
 			{
-				system("cls");
-				int n = 0;
-				nodeRC* tmp[MAX];
-				tranvertree(rl.head, tmp, n);
-				sortbyID(tmp, n);
-				ReaderTable(tmp, rl.size, 20);
-				controlReaderTable(rl, tmp, 20);
-				system("cls");
-				boxMenu();
-				Control(rl, tl);
-				break;
-			}
-			else if (wherey() == y + height / 4 + 4 + 1)//option 2(table of content)
-			{
-				system("cls");
-				TableTOC(tl, 19);
-				controlTOCTable(tl, 19);
-				system("cls");
-				boxMenu();
-				Control(rl, tl);
-				break;
-			}
-			else if (wherey() == y + height / 4 + 8 + 1)//option 3 (borrow and return)
-			{
-				system("cls");
-				if (rl.size == 0)
-				{
-					gotoxy(80, 20);
-					cout << "EMPTY";
-					Sleep(2000);
-					cout << "\b\b\b\b\b     ";
-				}
-				else {
-					int count = 19;
-					controlBAR(rl, tl, count);
-				}
-				system("cls");
-				boxMenu();
-				Control(rl, tl);
-				break;
-			}
-			else if (wherey() == y + height / 4 + 12 + 1)//option 4;
-			{
-				system("cls");
-				boxMenu();
-				Control(rl, tl);
-				break;
+				UnTick(wherex(), wherey());
+				gotoxy(1, wherey() - 2);
+				Tick(wherex(), wherey());
 			}
 		}
-		else
-		{
-			continue;
+		else if (c == 80)
+		{ // down
+			if ((tl.size - count + 18) * 2 + 3 == wherey())
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(1, 3);
+				Tick(wherex(), wherey());
+			}
+			else if (wherey() == 39)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(1, 3);
+				Tick(wherex(), wherey());
+			}
+			else
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(1, wherey() + 2);
+				Tick(wherex(), wherey());
+			}
+		}
+			else if (c == 27)
+			{ // esc
+				UnTick(wherex(), wherey());
+				return;
+			}
+			else if (c == 13)
+			{ // enter
+				editTOC(tl.ds[count - 19 + (wherey() - 3) / 2], wherey());
+				break;
+			}
+			else if (c == 77)
+			{ // right
+				if (count >= tl.size)
+				{
+					continue;
+				}
+				else
+				{
+					UnTick(1, wherey());
+					count += 19;
+					clearTableTOC();
+					loadListTOC(tl, count);
+					gotoxy(1, 3);
+					Tick(wherex(), wherey());
+				}
+			}
+			else if (c == 75)
+			{ // left
+				if (count == 19)
+				{
+					continue;
+				}
+				else
+				{
+					UnTick(1, wherey());
+					count -= 19;
+					clearTableTOC();
+					loadListTOC(tl, count);
+					gotoxy(1, 3);
+					Tick(wherex(), wherey());
+				}
+			}
+			else
+			{
+				continue;
+			}
 		}
 	}
-}
 
-int main()
-{
-	SetBGColor(15);
-	resizeConsole(1300, 750);
-	ReaderList rl;
-	TableOfContentList tl;
-	DisableSelection();
-	DisableCtrButton(0, 1, 1);
-	DisableResizeWindow();
-	ShowCur(false);
-	//	loading();
-	int n = loadFileReader(rl);
-	int m = loadFileTOC(tl);
-	if (n == 0 || m == 0)
+	void controlTOCTable(TableOfContentList & tl, int count)
 	{
-		cout << "CAN'T LOAD FILE\n";
-		system("pause");
+		SetBGColor(11);
+		ShowCur(false);
+		for (int i = 130; i <= 139; i++) // in ra ? chu?c nang
+		{
+			gotoxy(i, 3);
+			cout << " ";
+			gotoxy(i, 4);
+			cout << " ";
+			gotoxy(i, 5);
+			cout << " ";
+
+			gotoxy(i, 7);
+			cout << " ";
+			gotoxy(i, 8);
+			cout << " ";
+			gotoxy(i, 9);
+			cout << " ";
+
+			gotoxy(i, 11);
+			cout << " ";
+			gotoxy(i, 12);
+			cout << " ";
+			gotoxy(i, 13);
+			cout << " ";
+		}
+		gotoxy(133, 4);
+		cout << "ADD";
+		gotoxy(133, 8);
+		cout << "EDIT";
+		gotoxy(132, 12);
+		cout << "SEARCH";
+
+		HighLight(130, 3, 9);
+
+		while (true)
+		{
+			// nhan phim tu nguoi dung(up/down/enter)
+			char c = _getch();
+			if (c == -32)
+			{
+				c = _getch();
+			}
+			if (c == 27) // khi nguoi dung nhan esc
+			{
+				system("cls");
+				break;
+			}
+			if (c == 72) // khi nguoi dung nhan UP
+			{
+				if (wherey() == 3)
+				{
+					UnHighLight(wherex(), wherey(), 9);
+					gotoxy(130, 11);
+					HighLight(wherex(), wherey(), 9);
+				}
+				else
+				{
+					UnHighLight(wherex(), wherey(), 9);
+					gotoxy(130, wherey() - 4);
+					HighLight(wherex(), wherey(), 9);
+				}
+			}
+			else if (c == 80) // khi nguoi dung nhan Down
+			{
+				if (wherey() == 11)
+				{
+					UnHighLight(wherex(), wherey(), 9);
+					gotoxy(130, 3);
+					HighLight(wherex(), wherey(), 9);
+				}
+				else
+				{
+					UnHighLight(wherex(), wherey(), 9);
+					gotoxy(130, wherey() + 4);
+					HighLight(wherex(), wherey(), 9);
+				}
+			}
+			else if (c == 75) /// left
+			{
+				if (count == 19)
+				{
+					continue;
+				}
+				UnHighLight(wherex(), wherey(), 9);
+				count -= 19;
+				clearTableTOC();
+				loadListTOC(tl, count);
+				gotoxy(130, 3);
+				HighLight(wherex(), wherey(), 9);
+			}
+			else if (c == 77) // right
+			{
+				if (count > tl.size)
+				{
+					continue;
+				}
+				UnHighLight(wherex(), wherey(), 9);
+				count += 19;
+				clearTableTOC();
+				loadListTOC(tl, count);
+				gotoxy(130, 3);
+				HighLight(wherex(), wherey(), 9);
+			}
+			else if (c == 13) // Khi nguoi dung nhan ENTER
+			{
+				count = 19;
+				SetBGColor(15);
+				if (wherey() == 3) // add
+				{
+					system("cls");
+					tableEnterTOC(tl);
+					system("cls");
+					TableTOC(tl, count);
+					controlTOCTable(tl, count);
+					break;
+				}
+				else if (wherey() == 7) // edit
+				{
+					ControlEditMode(tl, count);
+					TableTOC(tl, count);
+					controlTOCTable(tl, count);
+					break;
+				}
+				else // search
+				{
+					int flag = count - 19;
+					filterBySearching(tl, count, flag);
+					TableTOC(tl, count);
+					controlTOCTable(tl, count);
+					break;
+				}
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+	void BARofReader(ReaderList & rl, TableOfContentList & tl)
+	{
+
+		for (int i = 10; i <= 120; i++)
+		{
+			SetBGColor(6);
+			gotoxy(i, 0);
+			cout << " ";
+			gotoxy(i, 2);
+			cout << " ";
+			SetColor(16);
+			gotoxy(10, 1);
+			cout << " ";
+			gotoxy(30, 1);
+			cout << " ";
+			gotoxy(65, 1);
+			cout << " ";
+			gotoxy(85, 1);
+			cout << " ";
+			gotoxy(100, 1);
+			cout << " ";
+			gotoxy(120, 1);
+			cout << " ";
+		}
+		SetBGColor(15);
+		gotoxy(50, 3);
+		SetBGColor(15);
+		gotoxy(50, 4);
+	}
+
+	void controlBAR(ReaderList & rl, TableOfContentList & tl, int count)
+	{
+		ShowCur(true);
+		gotoxy(50, 22);
+		cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";
+		gotoxy(50, 20);
+		cout << "ENTER CARD ID: ";
+		gotoxy(70, 20);
+		string id = EnterID();
+		ShowCur(false);
+
+		if (id == "")
+			return;
+		if (id == " ")
+		{
+			system("cls");
+			watchingReaderMode(rl);
+			system("cls");
+			BARofReader(rl, tl);
+			return;
+		}
+
+		nodeRC *p = findReader(rl.head, id);
+		system("cls");
+		if (p == nullptr)
+		{
+			gotoxy(80, 20);
+			cout << "READER NOT FOUND";
+			Sleep(1500);
+			cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                    ";
+			system("cls");
+			BARofReader(rl, tl);
+			return;
+		}
+		if (p->data.dsmt.size == 0)
+			cout << "NO BORROWED BOOK";
+		else
+			for (int i = 0; i < p->data.dsmt.size; i++)
+			{
+				nodeBAR *a = p->data.dsmt.head;
+				string name = findBookName(tl, a->data.bookID);
+				displayBAR(a, 2 + i, name);
+				a = a->next;
+			}
+		BARofReader(rl, tl);
+		displayReader(p, -1);
+		Option(140, 3, 14, 0, "Borrow");
+		Option(140, 8, 14, 0, "Return");
+		HighLight(134, 2, 20);
+		while (true)
+		{
+			char c = _getch();
+			if (c == -32)
+			{
+				c = _getch();
+			}
+			if (c == 72)
+			{ // khi nguoi dung nhan up
+				if (wherey() == 2)
+				{
+					UnHighLight(wherex(), wherey(), 20);
+					gotoxy(wherex(), wherey() + 5);
+					HighLight(wherex(), wherey(), 20);
+				}
+				else
+				{
+					UnHighLight(wherex(), wherey(), 20);
+					gotoxy(wherex(), wherey() - 5);
+					HighLight(wherex(), wherey(), 20);
+				}
+			}
+			else if (c == 80) // khi nguoi dung nhan Down
+			{
+				if (wherey() == 7)
+				{
+					UnHighLight(wherex(), wherey(), 20);
+					gotoxy(wherex(), wherey() - 5);
+					HighLight(wherex(), wherey(), 20);
+				}
+				else
+				{
+					UnHighLight(wherex(), wherey(), 20);
+					gotoxy(wherex(), wherey() + 5);
+					HighLight(wherex(), wherey(), 20);
+				}
+			}
+			else if (c == 13)
+			{ // enter
+				if (wherey() == 2)
+				{
+					system("cls");
+					TableTOC(tl, count);
+					controlTOCTable(tl, count);
+					system("cls");
+					// BARofReader(rl, tl);
+					controlBAR(rl, tl, count);
+					break;
+				}
+			}
+		}
+	}
+	// dieu khien tren menu chinh
+	void Control(ReaderList & rl, TableOfContentList & tl)
+	{
+		int x = 18;
+		int y = 12;
+		int width = 150;
+		int height = 30;
+		// danh dau lua chon dau
+		gotoxy(x - 6, y + height / 4 + 1);
+
+		HighLight(wherex(), wherey(), width / 3);
+		while (true)
+		{
+			// nhan phim tu nguoi dung(up/down/enter)
+			char c = _getch();
+			if (c == -32)
+			{
+				c = _getch();
+			}
+			if (c == 27)
+				continue;
+			else if (c == 72) // khi nguoi dung nhan UP
+			{
+				if (wherey() == y + height / 4 + 1)
+				{
+					UnHighLight(wherex(), wherey(), width / 3);
+					gotoxy(x - 6, y + height / 4 + 16 + 1);
+					HighLight(wherex(), wherey(), width / 3);
+				}
+				else
+				{
+					UnHighLight(wherex(), wherey(), width / 3);
+					gotoxy(x - 6, wherey() - 4);
+					HighLight(wherex(), wherey(), width / 3);
+				}
+			}
+			else if (c == 80) // khi nguoi dung nhan Down
+			{
+				if (wherey() == y + height / 4 + 16 + 1)
+				{
+					UnHighLight(wherex(), wherey(), width / 3);
+					gotoxy(x - 6, y + height / 4 + 1);
+					HighLight(wherex(), wherey(), width / 3);
+				}
+				else
+				{
+					UnHighLight(wherex(), wherey(), width / 3);
+					gotoxy(x - 6, wherey() + 4);
+					HighLight(wherex(), wherey(), width / 3);
+				}
+			}
+			else if (c == 13) // Khi nguoi dung nhan ENTER
+			{
+				SetBGColor(15);
+
+				if (wherey() == y + height / 4 + 16 + 1) // quit
+				{
+					system("cls");
+					int n = saveFileReader(rl);
+					int m = saveTOC(tl);
+					if (n == 0 || m == 0)
+					{
+						system("cls");
+						gotoxy(60, 20);
+						cout << "CAN'T SAVE!!!\n";
+						Sleep(1000);
+					}
+					else
+					{
+						system("cls");
+						gotoxy(60, 20);
+						cout << "SAVING SUCCESSFUL!!!";
+						Sleep(1000);
+					}
+					system("cls");
+					break;
+				}
+				else if (wherey() == y + height / 4 + 1) // option 1 (reader card)
+				{
+					system("cls");
+					int n = 0;
+					nodeRC *tmp[MAX];
+					tranvertree(rl.head, tmp, n);
+					sortbyID(tmp, n);
+					ReaderTable(tmp, rl.size, 20);
+					controlReaderTable(rl, tmp, 20);
+					system("cls");
+					boxMenu();
+					Control(rl, tl);
+					break;
+				}
+				else if (wherey() == y + height / 4 + 4 + 1) // option 2(table of content)
+				{
+					system("cls");
+					TableTOC(tl, 19);
+					controlTOCTable(tl, 19);
+					system("cls");
+					boxMenu();
+					Control(rl, tl);
+					break;
+				}
+				else if (wherey() == y + height / 4 + 8 + 1) // option 3 (borrow and return)
+				{
+					system("cls");
+					if (rl.size == 0)
+					{
+						gotoxy(80, 20);
+						cout << "EMPTY";
+						Sleep(2000);
+						cout << "\b\b\b\b\b     ";
+					}
+					else
+					{
+						int count = 19;
+						controlBAR(rl, tl, count);
+					}
+					system("cls");
+					boxMenu();
+					Control(rl, tl);
+					break;
+				}
+				else if (wherey() == y + height / 4 + 12 + 1) // option 4;
+				{
+					system("cls");
+					boxMenu();
+					Control(rl, tl);
+					break;
+				}
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+
+	int main()
+	{
+		SetBGColor(0);
+		resizeConsole(1300, 750);
+		ReaderList rl;
+		TableOfContentList tl;
+		DisableSelection();
+		DisableCtrButton(0, 1, 1);
+		DisableResizeWindow();
+		ShowCur(false);
+		//	loading();
+		int n = loadFileReader(rl);
+		int m = loadFileTOC(tl);
+		if (n == 0 || m == 0)
+		{
+			cout << "CAN'T LOAD FILE\n";
+			system("pause");
+			return 0;
+		}
+		SetBGColor(15);
+		boxMenu();
+		Control(rl, tl);
+		delete rl.head;
+		releaseMemory(tl);
 		return 0;
 	}
-	SetBGColor(15);
-	boxMenu();
-	Control(rl, tl);
-	delete rl.head;
-	releaseMemory(tl);
-	return 0;
-}
-
-
