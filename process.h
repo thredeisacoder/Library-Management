@@ -23,7 +23,7 @@ string EnterID()
 		}
 		else if (c == 13)
 		{
-			if (s == ""||s.length()<4)
+			if (s == "" || s.length() < 4)
 			{
 				continue;
 			}
@@ -831,6 +831,19 @@ int enterNumBooks(int p)
 }
 
 
+int stringtoint(string l)
+{
+	int s = 0;
+	for (int i = 0; i < l.length(); i++)
+	{
+		if (l[i] >= '0' && l[i] <= '9')
+		{
+			s = s * 10 + int(l[i] - '0');
+		}
+	}
+	return s;
+}
+
 //loading file//
 
 int loadFileReader(ReaderList& rl)
@@ -857,6 +870,28 @@ int loadFileReader(ReaderList& rl)
 		getline(f, l);
 		if (l == "") break;
 		p->CardStatus;
+		getline(f, l);
+		p->dsmt.size = stringtoint(l);
+
+		for (int i = 0; i < p->dsmt.size; i++)
+		{
+			nodeBAR* b = new nodeBAR;
+			getline(f, l);
+			b->data.bookID = l;
+			getline(f, l);
+			b->data.BorrowDate.day = stringtoint(l);
+			getline(f, l);
+			b->data.BorrowDate.month = stringtoint(l);
+			getline(f, l);
+			b->data.BorrowDate.year = stringtoint(l);
+			getline(f, l);
+			b->data.ReturnDate.day = stringtoint(l);
+			getline(f, l);
+			b->data.ReturnDate.month = stringtoint(l);			
+			getline(f, l);
+			b->data.ReturnDate.year = stringtoint(l);
+			addBorrowedBook(p->dsmt,b);
+		}
 		addNodeReader(rl, *p);
 		rl.head = updateTreeAvl(rl.head);
 		delete p;
@@ -891,6 +926,15 @@ void printReader(fstream& f, nodeRC* p)
 	f << p->data.LastName << endl;
 	f << p->data.Gender << endl;
 	f << p->data.CardStatus << endl;
+	f << p->data.dsmt.size << endl;
+	nodeBAR* tmp = p->data.dsmt.head;
+	for (int i = 0; i < p->data.dsmt.size;i++)
+	{
+		f << tmp->data.bookID << endl;
+		f << tmp->data.BorrowDate.day << endl;
+		f << tmp->data.BorrowDate.month << endl;
+		f << tmp->data.BorrowDate.year << endl;
+	}
 }
 
 void loadlist(nodeRC* head, fstream& f)

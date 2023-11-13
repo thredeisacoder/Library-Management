@@ -369,7 +369,7 @@ void sortbyname(nodeRC* tmp[], int n)
 	{
 		int minIndex = i;
 		for (int j = i + 1; j < n; j++) {
-			if (tmp[j]->data.LastName+tmp[j]->data.FirstName < tmp[minIndex]->data.LastName+tmp[minIndex]->data.FirstName) {
+			if (tmp[j]->data.LastName + tmp[j]->data.FirstName < tmp[minIndex]->data.LastName + tmp[minIndex]->data.FirstName) {
 				minIndex = j;
 			}
 		}
@@ -469,7 +469,7 @@ void displayDate(Date data)
 	cout << data.day << "/" << data.month << "/" << data.year;
 }
 
-void displayBAR(nodeBAR* head, int y,string name)
+void displayBAR(nodeBAR* head, int y, string name)
 {
 	gotoxy(10, y); cout << name;
 	gotoxy(30, y); cout << head->data.book->data.BookID;
@@ -1432,7 +1432,7 @@ void controlTOCTable(TableOfContentList& tl, int count) {
 		}
 	}
 }
-void BARofReader(ReaderList& rl, TableOfContentList & tl)
+void BARofReader(ReaderList& rl, TableOfContentList& tl)
 {
 
 	for (int i = 10; i <= 120; i++)
@@ -1462,7 +1462,7 @@ void BARofReader(ReaderList& rl, TableOfContentList & tl)
 	gotoxy(50, 4);
 }
 
-void controlBAR(ReaderList& rl, TableOfContentList& tl, int count){
+void controlBAR(ReaderList& rl, TableOfContentList& tl, int count) {
 	ShowCur(true);
 	gotoxy(50, 22);
 	cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";
@@ -1481,7 +1481,7 @@ void controlBAR(ReaderList& rl, TableOfContentList& tl, int count){
 		BARofReader(rl, tl);
 		return;
 	}
-	
+
 	nodeRC* p = findReader(rl.head, id);
 	system("cls");
 	if (p == nullptr)
@@ -1491,7 +1491,7 @@ void controlBAR(ReaderList& rl, TableOfContentList& tl, int count){
 		Sleep(1500);
 		cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                    ";
 		system("cls");
-		BARofReader(rl,tl);
+		BARofReader(rl, tl);
 		return;
 	}
 	if (p->data.dsmt.size == 0) cout << "NO BORROWED BOOK";
@@ -1507,12 +1507,12 @@ void controlBAR(ReaderList& rl, TableOfContentList& tl, int count){
 	Option(140, 3, 14, 0, "Borrow");
 	Option(140, 8, 14, 0, "Return");
 	HighLight(134, 2, 20);
-	while(true){
+	while (true) {
 		char c = _getch();
-		if(c == -32){
+		if (c == -32) {
 			c = _getch();
 		}
-		if(c == 72){ //khi nguoi dung nhan up
+		if (c == 72) { //khi nguoi dung nhan up
 			if (wherey() == 2)
 			{
 				UnHighLight(wherex(), wherey(), 20);
@@ -1525,7 +1525,8 @@ void controlBAR(ReaderList& rl, TableOfContentList& tl, int count){
 				gotoxy(wherex(), wherey() - 5);
 				HighLight(wherex(), wherey(), 20);
 			}
-		}else if (c == 80)//khi nguoi dung nhan Down
+		}
+		else if (c == 80)//khi nguoi dung nhan Down
 		{
 			if (wherey() == 7)
 			{
@@ -1540,8 +1541,9 @@ void controlBAR(ReaderList& rl, TableOfContentList& tl, int count){
 				gotoxy(wherex(), wherey() + 5);
 				HighLight(wherex(), wherey(), 20);
 			}
-		}else if(c == 13){ //enter
-			if(wherey() == 2){
+		}
+		else if (c == 13) { //enter
+			if (wherey() == 2) {
 				system("cls");
 				TableTOC(tl, count);
 				controlTOCTable(tl, count);
@@ -1661,10 +1663,10 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 					Sleep(2000);
 					cout << "\b\b\b\b\b     ";
 				}
-				else{
+				else {
 					int count = 19;
-					controlBAR(rl,tl,count);
-				}	
+					controlBAR(rl, tl, count);
+				}
 				system("cls");
 				boxMenu();
 				Control(rl, tl);
@@ -1687,7 +1689,7 @@ void Control(ReaderList& rl, TableOfContentList& tl)
 
 int main()
 {
-	SetBGColor(0);
+	SetBGColor(15);
 	resizeConsole(1300, 750);
 	ReaderList rl;
 	TableOfContentList tl;

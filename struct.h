@@ -203,7 +203,7 @@ struct Date
 
 struct BorrowAndReturn
 {
-	nodeB* book = nullptr;
+	string bookID="";
 	Date BorrowDate;
 	Date ReturnDate;
 };
@@ -221,68 +221,70 @@ struct BorrowAndReturnList
 	int size = 0;
 };
 
-Date borrowTime(){
+Date borrowTime() {
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
-	time_t now = time(0);
-   	tm *ltm = localtime(&now);
+	time_t currentTime; // Assuming you have a time_t variable
+	time(&currentTime); // Get the current time
+
+	struct tm timeinfo;
+	localtime_s(&timeinfo, &currentTime);
+
 	// in ra các thành phần của cấu trúc tm struct
-	timeeee.year = 1900 + ltm->tm_year;
-	timeeee.month = 1 + ltm->tm_mon;
-	timeeee.day = ltm->tm_mday;
+	timeeee.year = 1900 + timeinfo.tm_year;
+	timeeee.month = 1 + timeinfo.tm_mon;
+	timeeee.day = timeinfo.tm_mday;
 	return timeeee;
 }
-int addBorrowedBook(BorrowAndReturnList& dsmt, nodeB* data)
+int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
 {
-	if(dsmt.size >= 3){
+	if (dsmt.size >= 3) {
 		return 0;
 	}
-	nodeBAR* newNode = new nodeBAR;
-	newNode->data.book = data;
-	newNode->data.BorrowDate = borrowTime();
+	if(p->data.BorrowDate.day==0)	p->data.BorrowDate = borrowTime();
 	// newNode->data.ReturnDate = ... ; thoi gian tra
-	newNode->data.book->data.BookStatus = 1;
-	if(dsmt.size == 0){
-		dsmt.head = newNode;
-		dsmt.tail = newNode;
+	if (dsmt.size == 0) {
+		dsmt.head = p;
+		dsmt.tail = p;
 		dsmt.size++;
 		return 1;
 	}
-	else{
-		dsmt.tail->next = newNode;
-		dsmt.tail = newNode;
+	else {
+		dsmt.tail->next = p;
+		dsmt.tail = p;
 		dsmt.size++;
 		return 1;
 	}
 	return 0;
-} 
-int returnedBook(BorrowAndReturnList& dsmt, nodeB* data){
-	if(dsmt.size == 0){
+}
+int returnedBook(BorrowAndReturnList& dsmt, nodeBAR* p) {
+	if (dsmt.size == 0) {
 		return 0;
 	}
 	nodeBAR* tmp = dsmt.head;
-	while(tmp != nullptr){
-		data->data.BookStatus = 0;
-		if(tmp->data.book == data){
-			if(tmp == dsmt.head){
+	while (tmp != nullptr) {
+		if (tmp==p) 
+		{
+			if (tmp == dsmt.head) 
+			{
 				dsmt.head = tmp->next;
-				tmp->data.book = nullptr;
 				dsmt.size--;
 				delete tmp;
 				return 1;
-			}else if(tmp == dsmt.tail){
-				if(dsmt.head->next == tmp){
+			}
+			else if (tmp == dsmt.tail) {
+				if (dsmt.head->next == tmp) {
 					dsmt.tail = dsmt.head;
-				}else{
+				}
+				else {
 					dsmt.tail = dsmt.head->next;
 				}
-				tmp->data.book = nullptr;
 				dsmt.size--;
 				delete tmp;
 				return 1;
-			}else{
+			}
+			else {
 				dsmt.head->next = dsmt.tail;
-				tmp->data.book = nullptr;
 				dsmt.size--;
 				delete tmp;
 				return 1;
@@ -465,7 +467,7 @@ nodeRC* updateTreeAvl(nodeRC* root)
 {
 	if (root == nullptr) return root;
 	else if (checkAvl(root)) return root;
-	
+
 	int balance = height(root->left) - height(root->right);
 
 	if (balance > 1) {
@@ -486,7 +488,7 @@ nodeRC* updateTreeAvl(nodeRC* root)
 			root = turnLeft(root);
 		}
 	}
-	
+
 	root->left = updateTreeAvl(root->left);
 	root->right = updateTreeAvl(root->right);
 
@@ -508,7 +510,7 @@ int addNodeReader(ReaderList& l, Reader data)
 		string newID = p->data.ID;
 		nodeRC* tmp = l.head;
 
-		while (tmp!=nullptr)
+		while (tmp != nullptr)
 		{
 			string ID = tmp->data.ID;
 			if (ID > newID)
@@ -627,10 +629,10 @@ nodeRC* deletenode(nodeRC* p)
 }
 ///////////////muon tra////////
 
-string findBookName(TableOfContentList tl,string id)
+string findBookName(TableOfContentList tl, string id)
 {
 	string isbn = "";
-	isbn+= id[0] + id[1] + id[2] + id[3] + id[4];
+	isbn += id[0] + id[1] + id[2] + id[3] + id[4];
 	for (int i = 0; i < tl.size; i++)
 	{
 		if (tl.ds[i]->ISBN == isbn)
