@@ -898,6 +898,40 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 		}
 	}
 }
+
+void clearTOCLine(int i)
+{
+		gotoxy(2, i);
+		for (int j = 0; j < 6; j++)
+			cout << " ";
+		gotoxy(10, i);
+		for (int j = 0; j < 36; j++)
+			cout << " ";
+		gotoxy(48, i);
+		for (int j = 0; j < 15; j++)
+			cout << " ";
+		gotoxy(65, i);
+		for (int j = 0; j < 32; j++)
+			cout << " ";
+		gotoxy(99, i);
+		for (int j = 0; j < 11; j++)
+			cout << " ";
+		gotoxy(112, i);
+		for (int j = 0; j < 11; j++)
+			cout << " ";
+		gotoxy(125, i);
+		for (int j = 0; j < 5; j++)
+			cout << " ";
+}
+
+void clearTableTOC()
+{
+	for (int i = 3; i < 3 + 2 * 19; i += 2)
+	{
+		clearTOCLine(i);
+	}
+}
+
 // danh sach dau sach
 void tableEnterTOC(TableOfContentList &tl)
 {
@@ -1222,64 +1256,81 @@ void editTOC(TableOfContent *tmp, int y)
 	SetColor(16);
 	ShowCur(true);
 	gotoxy(4, y);
-	tmp->ISBN = EnterISBN(tmp->ISBN);
-	if (tmp->ISBN == "")
+	TableOfContent* p=new TableOfContent(*tmp);
+	p->ISBN = EnterISBN(tmp->ISBN);
+	if (p->ISBN == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
+		clearTOCLine(y);
+		displayTOC(*tmp,y);
 		return;
 	}
 	gotoxy(11, y);
-	tmp->BookName = EnterBookName(tmp->BookName);
-	if (tmp->BookName == "")
+	p->BookName = EnterBookName(tmp->BookName);
+	if (p->BookName == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
+				clearTOCLine(y);
+
+		displayTOC(*tmp,y);
 		return;
 	}
 	gotoxy(49, y);
-	tmp->Genre = EnterGenre(tmp->Genre);
-	if (tmp->Genre == "")
+	p->Genre = EnterGenre(tmp->Genre);
+	if (p->Genre == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
+				clearTOCLine(y);
+
+				displayTOC(*tmp,y);
+
 		return;
 	}
 	gotoxy(66, y);
-	tmp->Author = EnterAuthor(tmp->Author);
-	if (tmp->Author == "")
+	p->Author = EnterAuthor(tmp->Author);
+	if (p->Author == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
+				clearTOCLine(y);
+
+				displayTOC(*tmp,y);
+
 		return;
 	}
 	gotoxy(102, y);
-	tmp->NumOfPage = enterNumPage(tmp->NumOfPage);
-	if (tmp->NumOfPage == "")
+	p->NumOfPage = enterNumPage(tmp->NumOfPage);
+	if (p->NumOfPage == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
+				clearTOCLine(y);
+
+				displayTOC(*tmp,y);
+
 		return;
 	}
-	gotoxy(116, y);
-	tmp->PublicYear = enterYear(tmp->PublicYear);
-	if (tmp->PublicYear == "")
+	gotoxy(116, y); 
+	p->PublicYear = enterYear(tmp->PublicYear);
+	if (p->PublicYear == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
+		clearTOCLine(y);
+		displayTOC(*tmp,y);
 		return;
 	}
 	ShowCur(false);
 	delete tmp->dms.head;
-	tmp->dms = createBookList(tmp);
-	// if (n == 0) {
-	// 	gotoxy(x, 20);
-	// 	cout << "~EDIT SUCCESSFULL!!!~";
-	// }
-	// else {
-	// 	gotoxy(x, 20);
-	// 	cout << "~EDIT FAILURE!!!~";
-	// }
+	delete tmp;
+	p->dms = createBookList(p);
+	tmp=p;
+	 	gotoxy(130, 20);
+	 	cout << "~EDIT SUCCESSFULL!!!~";
+
 	gotoxy(1, y);
 	UnTick(wherex(), wherey());
 	Sleep(1500);
@@ -1343,35 +1394,8 @@ void TableTOC(TableOfContentList &tl, int count)
 	SetColor(0);
 }
 
-void clearTableTOC()
-{
-	for (int i = 3; i < 3 + 2 * 19; i += 2)
-	{
-		gotoxy(2, i);
-		for (int j = 0; j < 6; j++)
-			cout << " ";
-		gotoxy(10, i);
-		for (int j = 0; j < 36; j++)
-			cout << " ";
-		gotoxy(48, i);
-		for (int j = 0; j < 15; j++)
-			cout << " ";
-		gotoxy(65, i);
-		for (int j = 0; j < 32; j++)
-			cout << " ";
-		gotoxy(99, i);
-		for (int j = 0; j < 11; j++)
-			cout << " ";
-		gotoxy(112, i);
-		for (int j = 0; j < 11; j++)
-			cout << " ";
-		gotoxy(125, i);
-		for (int j = 0; j < 5; j++)
-			cout << " ";
-	}
-}
 
-void ControlEditMode(TableOfContentList tl, int &count)
+void ControlEditMode(TableOfContentList& tl, int &count)
 {
 	gotoxy(1, 3);
 	Tick(wherex(), wherey());
@@ -1380,46 +1404,43 @@ void ControlEditMode(TableOfContentList tl, int &count)
 		char c = _getch();
 		if (c == 72)
 		{ // up
-			if (wherey() == 3)
+			if (count > tl.size && wherey() == 3)
 			{
-				if (count > tl.size)
-				{
-					UnTick(wherex(), wherey());
-					gotoxy(wherex(), tl.size - count + 21);
-					Tick(wherex(), wherey());
-				}
-				else
-				{
-					UnTick(wherex(), wherey());
-					gotoxy(1, 39);
-					Tick(wherex(), wherey());
-				}
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 1+ 2 * (tl.size - (count - 19)));
+				Tick(wherex(), wherey());
+			}
+			else if (wherey() != 3)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() - 2);
+				Tick(wherex(), wherey());
 			}
 			else
 			{
 				UnTick(wherex(), wherey());
-				gotoxy(1, wherey() - 2);
+				gotoxy(wherex(), 1+ 2 * 19);
 				Tick(wherex(), wherey());
 			}
 		}
 		else if (c == 80)
 		{ // down
-			if ((tl.size - count + 18) * 2 + 3 == wherey())
+			if (count > tl.size && wherey() == 1 + 2 * (tl.size - (count - 19)))
 			{
 				UnTick(wherex(), wherey());
-				gotoxy(1, 3);
+				gotoxy(wherex(), 3);
 				Tick(wherex(), wherey());
 			}
-			else if (wherey() == 39)
+			else if (wherey() != 1 + 2 * 19)
 			{
 				UnTick(wherex(), wherey());
-				gotoxy(1, 3);
+				gotoxy(wherex(), wherey() + 2);
 				Tick(wherex(), wherey());
 			}
 			else
 			{
 				UnTick(wherex(), wherey());
-				gotoxy(1, wherey() + 2);
+				gotoxy(wherex(), 3);
 				Tick(wherex(), wherey());
 			}
 		}
@@ -1447,6 +1468,7 @@ void ControlEditMode(TableOfContentList tl, int &count)
 					loadListTOC(tl, count);
 					gotoxy(1, 3);
 					Tick(wherex(), wherey());
+					continue;
 				}
 			}
 			else if (c == 75)
@@ -1463,6 +1485,7 @@ void ControlEditMode(TableOfContentList tl, int &count)
 					loadListTOC(tl, count);
 					gotoxy(1, 3);
 					Tick(wherex(), wherey());
+					continue;
 				}
 			}
 			else
@@ -1579,7 +1602,6 @@ void ControlEditMode(TableOfContentList tl, int &count)
 			}
 			else if (c == 13) // Khi nguoi dung nhan ENTER
 			{
-				count = 19;
 				SetBGColor(15);
 				if (wherey() == 3) // add
 				{
