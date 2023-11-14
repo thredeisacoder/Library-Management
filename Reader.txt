@@ -1,0 +1,252 @@
+0020
+Ta Quang
+An
+MALE
+1
+0
+0012
+Nguyen Thanh
+An
+MALE
+1
+0
+0007
+Tran Minh
+Khang
+MALE
+1
+0
+0004
+Nguyen Doan Cong
+Tien
+MALE
+1
+0
+0002
+Nguyen Van
+Thanh
+MALE
+1
+0
+0001
+Pham Van
+An
+MALE
+1
+0
+0000
+Tran Phi
+Hung
+MALE
+1
+0
+0003
+Nguyen Cao Thai
+Toan
+MALE
+1
+0
+0006
+Ly Trong
+An
+MALE
+1
+0
+0005
+Nguyen Hai
+Dong
+MALE
+1
+0
+0010
+Nguyen Quoc
+An
+MALE
+1
+0
+0009
+Ta Quang
+An
+MALE
+1
+0
+0008
+Pham Minh
+Duc
+MALE
+1
+0
+0011
+Nguyen Minh
+Hy
+MALE
+1
+0
+0017
+Nguyen Vu
+Chinh
+MALE
+1
+0
+0015
+Tran Quoc
+Huy
+MALE
+1
+0
+0014
+Pham Nguyen Quoc
+Huy
+MALE
+1
+0
+0013
+Lai Phuc
+Tuan
+MALE
+1
+0
+0016
+Tran Tuan
+Hai
+MALE
+1
+0
+0019
+Nguyen Trong Nhat
+Hoang
+MALE
+1
+0
+0018
+Do Viet
+Hung
+MALE
+1
+0
+0033
+Cao Duy
+Thai
+MALE
+1
+0
+0028
+Nguyen Bao
+Long
+MALE
+1
+0
+0025
+Do Minh Bao
+Huy
+MALE
+1
+0
+0023
+Mai Hoang
+Long
+MALE
+1
+0
+0022
+Nguyen Thanh
+Tam
+MALE
+1
+0
+0021
+Dang Nhat
+Nam
+MALE
+1
+0
+0024
+Sy
+Hung
+MALE
+1
+0
+0027
+Le Trang Hoang
+Vinh
+MALE
+1
+0
+0026
+Tran Cong
+Hau
+MALE
+1
+0
+0031
+Lam Thien
+Tan
+MALE
+1
+0
+0030
+Hang Gia
+Thinh
+MALE
+1
+0
+0029
+Dinh Tri
+Tai
+MALE
+1
+0
+0032
+Huynh Huu
+Tri
+MALE
+1
+0
+0038
+Luong Truong
+Dai
+MALE
+1
+0
+0036
+Nguyen Vu Viet
+Cuong
+MALE
+1
+0
+0035
+Nguyen Van
+Toan
+MALE
+1
+0
+0034
+Nguyen Duy
+Thai
+MALE
+1
+0
+0037
+Ho Van
+Duong
+MALE
+1
+0
+0040
+Le Tu Minh
+Loi
+MALE
+1
+0
+0039
+Nguyen Van
+Quang
+MALE
+1
+0
+0041
+Uong
+Son
+MALE
+1
+0

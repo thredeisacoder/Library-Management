@@ -1,3 +1,4 @@
+
 #pragma once
 #include "mylib.h"
 #include "struct.h"
@@ -475,7 +476,11 @@ void ReaderTable(nodeRC *tmp[], int n, int count)
 	cout << "GENDER";
 	gotoxy(108, 1);
 	cout << "STATUS";
-
+	if(n==0) 
+	{
+		gotoxy(130,20);
+		cout<<"EMPTY";
+	}
 	displaytree(tmp, n, count);
 }
 
@@ -525,7 +530,16 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 	while (true)
 	{
 		c = _getch();
-		if (c == 13) // enter
+		if(c==-32)
+		{
+			c=_getch();
+		}
+		if (c == 27) // esc
+		{
+			UnTick(wherex(), wherey());
+			break;
+		}
+		else if (c == 13) // enter
 		{
 			UnTick(wherex(), wherey());
 			int pos = count - 20 + (wherey() - 3) / 2;
@@ -543,11 +557,7 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 			cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
 			cout << "                             ";
 			releaseID(rl.notusedid, MAX - rl.size, s);
-			break;
-		}
-		else if (c == 27) // esc
-		{
-			UnTick(wherex(), wherey());
+			rl.size--;
 			break;
 		}
 		else if (c == 80) // down
@@ -872,7 +882,6 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 				gotoxy(132, 20);
 				deleteReaderMode(rl, tmp, count);
 				resetpointerarray(tmp, rl.size);
-				rl.size--;
 				int n = 0;
 				tranvertree(rl.head, tmp, n);
 				sortbyID(tmp, n);
@@ -1495,8 +1504,8 @@ void ControlEditMode(TableOfContentList& tl, int &count)
 		}
 	}
 
-	void controlTOCTable(TableOfContentList & tl, int count)
-	{
+void controlTOCTable(TableOfContentList & tl, int count)
+{
 		SetBGColor(11);
 		ShowCur(false);
 		for (int i = 130; i <= 139; i++) // in ra ? chu?c nang
@@ -1925,5 +1934,6 @@ void ControlEditMode(TableOfContentList& tl, int &count)
 		Control(rl, tl);
 		delete rl.head;
 		releaseMemory(tl);
+		//resetIDRCfile();
 		return 0;
 	}

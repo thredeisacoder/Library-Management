@@ -262,11 +262,11 @@ Van Hoc
 99
 2004
 3
-Vh01_01
+Vh01_03
 0
 Vh01_02
 0
-Vh01_03
+Vh01_01
 0
 Vh04
 Chiec Luoc Nga
@@ -275,13 +275,13 @@ Van Hoc
 27
 2004
 4
-Vh04_01
-0
-Vh04_02
+Vh04_04
 0
 Vh04_03
 0
-Vh04_04
+Vh04_02
+0
+Vh04_01
 0
 Vh03
 Nguoi Lai Do Song Da
@@ -290,9 +290,9 @@ Van Hoc
 104
 2004
 2
-Vh03_01
-0
 Vh03_02
+0
+Vh03_01
 0
 Vh02
 Vo Chong A Phu
@@ -301,9 +301,9 @@ Van Hoc
 1004
 2003
 2
-Vh02_01
-0
 Vh02_02
+0
+Vh02_01
 0
 Vh06
 Chiec La Cuoi Cung
@@ -312,7 +312,7 @@ Van Hoc
 22
 2004
 2
-Vh06_01
-0
 Vh06_02
+0
+Vh06_01
 0
