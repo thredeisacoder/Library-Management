@@ -1,5 +1,4 @@
 
-#pragma once
 #include "mylib.h"
 #include "struct.h"
 #include "process.h"
@@ -481,6 +480,8 @@ void ReaderTable(nodeRC *tmp[], int n, int count)
 		gotoxy(130,20);
 		cout<<"EMPTY";
 	}
+	gotoxy(122,40);
+	cout<<"Press SPACE to sort by Name/ID";
 	displaytree(tmp, n, count);
 }
 
@@ -730,6 +731,8 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 {
 	SetBGColor(11);
 	SetColor(0);
+	gotoxy(122,40);
+	cout<<"Press SPACE to sort by Name/ID";
 	for (int i = 130; i <= 139; i++)
 	{
 		gotoxy(i, 3);
@@ -765,7 +768,6 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 	bool x = true;
 	while (true)
 	{
-
 		// nhan phim tu nguoi dung(up/down/enter)
 		char c = _getch();
 		if (c == -32)
@@ -774,10 +776,11 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 		}
 		if (c == 27) // khi nguoi dung nhan esc
 		{
+		
 			system("cls");
 			break;
 		}
-		else if (c == 32)
+		else if (c == 32)//space // sap xep theo id va theo ten
 		{
 			UnHighLight(wherex(), wherey(), 9);
 			if (x == true)
@@ -855,6 +858,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			{
 				system("cls");
 				tableEnterRC(rl);
+				ShowCur(false);
 				system("cls");
 				int n = 0;
 				tranvertree(rl.head, tmp, n);
@@ -867,6 +871,8 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			}
 			else if (wherey() == 7)
 			{
+				gotoxy(122,40);
+				cout<<"                              ";
 				if (rl.size == 0)
 				{
 					system("cls");
@@ -893,6 +899,8 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			}
 			else
 			{
+				gotoxy(122,40);
+				cout<<"                              ";
 				SettingReaderMode(rl, tmp, count);
 				sortbyID(tmp, 0);
 				clearReaderTable();
@@ -906,6 +914,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			continue;
 		}
 	}
+
 }
 
 void clearTOCLine(int i)
@@ -1643,9 +1652,8 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			}
 		}
 	}
-	void BARofReader(ReaderList & rl, TableOfContentList & tl)
+	void BARofReader(nodeRC* p)
 	{
-
 		for (int i = 10; i <= 120; i++)
 		{
 			SetBGColor(6);
@@ -1671,6 +1679,8 @@ void controlTOCTable(TableOfContentList & tl, int count)
 		gotoxy(50, 3);
 		SetBGColor(15);
 		gotoxy(50, 4);
+		
+		
 	}
 
 	void controlBAR(ReaderList & rl, TableOfContentList & tl, int count)
@@ -1707,17 +1717,7 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			BARofReader(rl, tl);
 			return;
 		}
-		if (p->data.dsmt.size == 0)
-			cout << "NO BORROWED BOOK";
-		else
-			for (int i = 0; i < p->data.dsmt.size; i++)
-			{
-				nodeBAR *a = p->data.dsmt.head;
-				string name = findBookName(tl, a->data.bookID);
-				displayBAR(a, 2 + i, name);
-				a = a->next;
-			}
-		BARofReader(rl, tl);
+		BARofReader(p);
 		displayReader(p, -1);
 		Option(140, 3, 14, 0, "Borrow");
 		Option(140, 8, 14, 0, "Return");
@@ -1765,7 +1765,6 @@ void controlTOCTable(TableOfContentList & tl, int count)
 				{
 					system("cls");
 					TableTOC(tl, count);
-					controlTOCTable(tl, count);
 					system("cls");
 					// BARofReader(rl, tl);
 					controlBAR(rl, tl, count);
@@ -1891,6 +1890,7 @@ void controlTOCTable(TableOfContentList & tl, int count)
 						controlBAR(rl, tl, count);
 					}
 					system("cls");
+					SetBGColor(15);
 					boxMenu();
 					Control(rl, tl);
 					break;
