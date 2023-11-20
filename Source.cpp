@@ -1654,33 +1654,36 @@ void controlTOCTable(TableOfContentList & tl, int count)
 	}
 	void BARofReader(nodeRC* p)
 	{
+		SetBGColor(6);
+			gotoxy(10, 7);
+			cout << " ";
+			gotoxy(30, 7);
+			cout << " ";
+			gotoxy(65, 7);
+			cout << " ";
+			gotoxy(85, 7);
+			cout << " ";
+			gotoxy(100, 7);
+			cout << " ";
+			gotoxy(120, 7);
+			cout << " ";
 		for (int i = 10; i <= 120; i++)
 		{
 			SetBGColor(6);
-			gotoxy(i, 0);
+			gotoxy(i, 6);
 			cout << " ";
-			gotoxy(i, 2);
+			gotoxy(i, 8);
 			cout << " ";
-			SetColor(16);
-			gotoxy(10, 1);
+			gotoxy(i, 10);
 			cout << " ";
-			gotoxy(30, 1);
+			gotoxy(i, 12);
 			cout << " ";
-			gotoxy(65, 1);
+			gotoxy(i, 14);
 			cout << " ";
-			gotoxy(85, 1);
-			cout << " ";
-			gotoxy(100, 1);
-			cout << " ";
-			gotoxy(120, 1);
+			gotoxy(i, 16);
 			cout << " ";
 		}
 		SetBGColor(15);
-		gotoxy(50, 3);
-		SetBGColor(15);
-		gotoxy(50, 4);
-		
-		
 	}
 
 	void controlBAR(ReaderList & rl, TableOfContentList & tl, int count)
@@ -1701,7 +1704,6 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			system("cls");
 			watchingReaderMode(rl);
 			system("cls");
-			BARofReader(rl, tl);
 			return;
 		}
 
@@ -1714,11 +1716,12 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			Sleep(1500);
 			cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                    ";
 			system("cls");
-			BARofReader(rl, tl);
+			controlBAR(rl,tl,count);
+		//	BARofReader(rl, tl);
 			return;
 		}
 		BARofReader(p);
-		displayReader(p, -1);
+		displayReader(p, 2);
 		Option(140, 3, 14, 0, "Borrow");
 		Option(140, 8, 14, 0, "Return");
 		HighLight(134, 2, 20);
@@ -1765,10 +1768,25 @@ void controlTOCTable(TableOfContentList & tl, int count)
 				{
 					system("cls");
 					TableTOC(tl, count);
+					controlTOCTable(tl,count);
 					system("cls");
 					// BARofReader(rl, tl);
 					controlBAR(rl, tl, count);
 					break;
+				}
+				else
+				{
+					if(p->data.dsmt.size==0)
+					{
+						UnHighLight(wherex(),wherey(),20);
+						gotoxy(50,25);
+						cout<<"NO BORROWED BOOK";
+						Sleep(1000);
+						gotoxy(50,25);
+						cout<<"                 ";
+						HighLight(134, 2, 20);
+						continue;
+					}
 				}
 			}
 		}
