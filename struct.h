@@ -39,6 +39,7 @@ struct TableOfContent
 	string Genre;
 
 	BookList dms;
+	int BorrowTotal=0;
 };
 
 struct TableOfContentList
@@ -220,7 +221,7 @@ struct BorrowAndReturnList
 	int size = 0;
 };
 
-Date borrowTime(){
+Date currentTime(){
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
 	time_t now = time(0);
@@ -636,3 +637,20 @@ string findBookName(TableOfContentList tl, string id)
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

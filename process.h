@@ -1016,6 +1016,8 @@ int loadFileTOC(TableOfContentList& tl)
 			delete b;
 		}
 		themTheoThuTuTheLoai(tl, *p);
+		getline(f,l);
+		p->BorrowTotal=stringtoint(l);
 	}
 	f.close();
 	return 1;
@@ -1041,6 +1043,7 @@ int saveTOC(TableOfContentList& tl)
 			f << b->data.BookStatus << endl;
 			b = b->next;
 		}
+		f<<tl.ds[i]->BorrowTotal<<endl;
 	}
 	return 1;
 }
@@ -1083,4 +1086,64 @@ void resetIDRCfile()
 	f << "";
 	f.close();
 }
+
+
+int convertMonthtoDay(int month)
+{
+	switch(month)
+	{
+		case 1,3,5,7,8,10,12:
+			return 31;
+		case 2: return 28;
+		default: return 30;
+	}
+}
+
+int compareDate(Date returnDate)
+{
+	Date cur=currentTime();
+	
+	if(cur.year>returnDate.year)
+	{
+		return 1;
+	}
+	else if(cur.month>returnDate.month)
+	{
+		return 1;
+	}
+	else if(cur.day>returnDate.day)
+	{
+		return 1;
+	}
+	
+	return 0;
+}
+
+int countOverdueDay(Date returnDate)
+{
+	Date cur=currentTime();
+	int year=cur.year-returnDate.year);
+	int count=365*year;
+	int month=cur.month-returnDate.month;
+	if(month>0)
+	{
+		for(int i=returnDate.month+1;i<=cur.month;i++)
+		{
+			count+=convertMonthtoDay(i);
+		}
+	}
+	else
+	{
+		for(int i=cur.month+1;i<=returnDate.month;i++)
+		{
+			count-=convertMonthtoDay(i);
+		}
+	}
+	int day=cur.day-returnDate;
+	count+=day;
+	return count;
+}
+
+
+
 

@@ -217,6 +217,44 @@ void clearReaderTable()
 	}
 }
 
+void top10Borrow(TableOfContentList tl)
+{
+	for(int i=0;i<tl.size;i++)
+	{
+		for(int j=0;j<tl.size-1;j++)
+		{
+			if(tl.ds[j]->BorrowTotal>tl.ds[j+1]->BorrowTotal)
+			{
+				swap(tl.ds[j],tl.ds[j+1]);
+			}
+		}
+	}
+	
+	int n=tl.size-1;
+	int y=3;
+	while(n>tl.size-10&&n>0&&tl.ds[n]->BorrowTotal!=0)
+	{
+		displayTOC(tl.ds[n],y);
+		n--; y+=2;
+	}
+	char c;
+	while(true)
+	{
+		c=_getch();
+		if(c==27)
+		{
+			return;
+		}
+		else continue;
+	}
+}
+
+
+void OverdueReader(ReaderList rl)
+{
+	nodeRC*
+	
+}
 // in 1 doc gia
 void displayReader(nodeRC *p, int y) // in doc gia tren do cao y
 {
@@ -505,18 +543,52 @@ void displayBAR(nodeBAR *head, int y, string name)
 void watchingReaderMode(ReaderList &rl)
 {
 	int count = 20, n = 0;
+	bool sid=true;
 	nodeRC *tmp[MAX];
 	tranvertree(rl.head, tmp, n);
+	sortbyID(tmp,n);
 	ReaderTable(tmp, rl.size, count);
 	gotoxy(130, 10);
 	cout << "ESC: Return to enter ID";
-
 	while (true)
 	{
 		char c = _getch();
 		if (c == 27) // esc
 		{
 			break;
+		}
+		else if (c == 75) /// left
+		{
+			if (count == 20)
+				continue;
+			count -= 20;
+			clearReaderTable();
+			displaytree(tmp, rl.size, count);
+		}
+		else if (c == 77) // right
+		{
+			if (count >= rl.size)
+				continue;
+			count += 20;
+			clearReaderTable();
+			displaytree(tmp, rl.size, count);
+		}
+		else if(c==32)
+		{
+			clearReaderTable();
+			if(sid==true)
+			{
+				sid=false;
+				sortbyname(tmp,n);
+				displaytree(tmp,n,count);
+			}
+			else
+			{
+				sid=true;
+				sortbyID(tmp,n);
+				displaytree(tmp,n,count);
+			}
+			
 		}
 		else
 			continue;
@@ -1652,6 +1724,15 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			}
 		}
 	}
+	
+	void printBAR(nodeBAR *b,int y)
+	{
+		gotoxy(50,3+2*y);
+		cout<<b->data.bookID<<"  ";
+		cout<<b->data.BorrowDate.day<<"/"<<b->data.BorrowDate.month<<"/"<<b->data.BorrowDate.year<<"  ";
+		cout<<b->data.ReturnDate.day<<b->data.ReturnDate.month<<b->data.ReturnDate.year;
+	}
+	
 	void BARofReader(nodeRC* p)
 	{
 		SetBGColor(6);
@@ -1684,6 +1765,15 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			cout << " ";
 		}
 		SetBGColor(15);
+		int y=4;
+		nodeBAR* b=p->data.dsmt.head;
+		ShowCur(true);system("pause");ShowCur(false);
+		while(b!=nullptr)
+		{
+			printBAR(b,y);
+			b=b->next;
+			y+=2;
+		}
 	}
 
 	void controlBAR(ReaderList & rl, TableOfContentList & tl, int count)
@@ -1704,6 +1794,7 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			system("cls");
 			watchingReaderMode(rl);
 			system("cls");
+			controlBAR(rl,tl,count);
 			return;
 		}
 
@@ -1762,6 +1853,11 @@ void controlTOCTable(TableOfContentList & tl, int count)
 					HighLight(wherex(), wherey(), 20);
 				}
 			}
+			else if(c==27)
+			{
+				system("cls");
+				return;
+			}
 			else if (c == 13)
 			{ // enter
 				if (wherey() == 2)
@@ -1770,7 +1866,6 @@ void controlTOCTable(TableOfContentList & tl, int count)
 					TableTOC(tl, count);
 					controlTOCTable(tl,count);
 					system("cls");
-					// BARofReader(rl, tl);
 					controlBAR(rl, tl, count);
 					break;
 				}
@@ -1913,8 +2008,10 @@ void controlTOCTable(TableOfContentList & tl, int count)
 					Control(rl, tl);
 					break;
 				}
-				else if (wherey() == y + height / 4 + 12 + 1) // option 4;
+				else if (wherey() == y + height / 4 + 12 + 1) // option 4;(statistic)
 				{
+					system("cls");
+					top10Borrow(tl);
 					system("cls");
 					boxMenu();
 					Control(rl, tl);
