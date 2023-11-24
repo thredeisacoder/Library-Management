@@ -871,9 +871,9 @@ int loadFileReader(ReaderList& rl)
 		if (l == "") break;
 		p->CardStatus;
 		getline(f, l);
-		p->dsmt.size = stringtoint(l);
+		int size= stringtoint(l);
 
-		for (int i = 0; i < p->dsmt.size; i++)
+		for (int i = 0; i <size; i++)
 		{
 			nodeBAR* b = new nodeBAR;
 			getline(f, l);
@@ -884,12 +884,6 @@ int loadFileReader(ReaderList& rl)
 			b->data.BorrowDate.month = stringtoint(l);
 			getline(f, l);
 			b->data.BorrowDate.year = stringtoint(l);
-			getline(f, l);
-			b->data.ReturnDate.day = stringtoint(l);
-			getline(f, l);
-			b->data.ReturnDate.month = stringtoint(l);			
-			getline(f, l);
-			b->data.ReturnDate.year = stringtoint(l);
 			addBorrowedBook(p->dsmt,b);
 		}
 		addNodeReader(rl, *p);
@@ -1005,19 +999,15 @@ int loadFileTOC(TableOfContentList& tl)
 			b->data.BookID = l;
 			getline(f, l);
 			if (l == "") break;
-			int s = 0;
-			for (int i = 0; i < l.length(); i++) {
-				if (l[i] != 0 && l[i] != 1) { continue; }
-				s = s * pow(10, i) + (int)(l[i] - '0');//chuyen trang thai chu thanh so 
-			}
-			b->data.BookStatus = s;
+			b->data.BookStatus = stringtoint(l);
 			int n = addNodeBook(p->dms, b->data);
 			if (n == 0) break;
 			delete b;
 		}
-		themTheoThuTuTheLoai(tl, *p);
 		getline(f,l);
-		p->BorrowTotal=stringtoint(l);
+		p->BorrowTotal=stringtoint(l);		
+		themTheoThuTuTheLoai(tl, *p);
+		delete p;
 	}
 	f.close();
 	return 1;
@@ -1088,11 +1078,18 @@ void resetIDRCfile()
 }
 
 
+
 int convertMonthtoDay(int month)
 {
 	switch(month)
 	{
-		case 1,3,5,7,8,10,12:
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
 			return 31;
 		case 2: return 28;
 		default: return 30;
@@ -1122,7 +1119,7 @@ int compareDate(Date returnDate)
 int countOverdueDay(Date returnDate)
 {
 	Date cur=currentTime();
-	int year=cur.year-returnDate.year);
+	int year=cur.year-returnDate.year;
 	int count=365*year;
 	int month=cur.month-returnDate.month;
 	if(month>0)
@@ -1139,11 +1136,47 @@ int countOverdueDay(Date returnDate)
 			count-=convertMonthtoDay(i);
 		}
 	}
-	int day=cur.day-returnDate;
+	int day=cur.day-returnDate.day;
 	count+=day;
 	return count;
 }
 
 
 
+int TotalOverdue(nodeRC* p)
+{
+	nodeBAR* b=p->data.dsmt.head;
+	int total=0;
+	for(int i=0;i<p->data.dsmt.size;i++)
+	{
+		Date returnDate=b->data.ReturnDate;
+		if(returnDate.day==0||returnDate.month==0||returnDate.year==0)
+		{
+			b=b->next;
+		}
+		else
+		{
+			if(compareDate(b->data.ReturnDate))
+			{
+				total+=countOverdueDay(b->data.ReturnDate);
+			}
+			b=b->next;
+		}
+	}
+	return total;
+}
 
+
+int checkBorrowed(TableOfContent* p)
+{
+	int n=p->dms.size;
+	nodeB* tmp=p->dms.head;
+	for(int i=0;i<n;i++)
+	{
+		if(tmp->data.BookStatus==0)
+		{
+			return 0;
+		}
+	}
+	return 0;
+}

@@ -39,7 +39,19 @@ Tran Phi
 Hung
 MALE
 1
-0
+3
+It01_05
+25
+11
+2023
+It01_05
+25
+11
+2023
+It01_05
+25
+11
+2023
 0003
 Nguyen Cao Thai
 Toan
@@ -124,12 +136,6 @@ Hung
 MALE
 1
 0
-0033
-Cao Duy
-Thai
-MALE
-1
-0
 0028
 Nguyen Bao
 Long
@@ -178,6 +184,12 @@ Hau
 MALE
 1
 0
+0033
+Cao Duy
+Thai
+MALE
+1
+0
 0031
 Lam Thien
 Tan
@@ -202,12 +214,6 @@ Tri
 MALE
 1
 0
-0038
-Luong Truong
-Dai
-MALE
-1
-0
 0036
 Nguyen Vu Viet
 Cuong
@@ -223,6 +229,12 @@ MALE
 0034
 Nguyen Duy
 Thai
+MALE
+1
+0
+0038
+Luong Truong
+Dai
 MALE
 1
 0

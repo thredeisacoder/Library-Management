@@ -6,7 +6,7 @@ Chuyen Nganh
 2001
 5
 It01_05
-0
+1
 It01_04
 0
 It01_03
@@ -15,6 +15,7 @@ It01_02
 0
 It01_01
 0
+1
 It03
 Lap Trinh Java
 Na
@@ -23,15 +24,16 @@ Chuyen Nganh
 2001
 5
 It03_05
-0
+1
 It03_04
-0
+1
 It03_03
 0
 It03_02
 0
 It03_01
 0
+2
 It04
 Lap Trinh Javascript
 Na
@@ -53,6 +55,7 @@ It04_02
 0
 It04_01
 0
+0
 It02
 Lap Trinh Python
 Na
@@ -67,6 +70,7 @@ It02_03
 It02_02
 0
 It02_01
+0
 0
 B002
 Dai So Tuyen Tinh
@@ -89,6 +93,7 @@ B002_02
 0
 B002_01
 0
+0
 B001
 Giai Tich
 Na
@@ -105,6 +110,7 @@ B001_03
 B001_02
 0
 B001_01
+0
 0
 B004
 Giai Tich Fake
@@ -125,6 +131,7 @@ B004_02
 0
 B004_01
 0
+0
 B009
 Hoa Dai Cuong 1
 Na
@@ -143,6 +150,7 @@ B009_03
 B009_02
 0
 B009_01
+0
 0
 B005
 Tieng Anh Course 1
@@ -165,6 +173,7 @@ B005_02
 0
 B005_01
 0
+0
 B006
 Tieng Anh Course 2
 Na
@@ -180,6 +189,7 @@ B006_02
 0
 B006_01
 0
+0
 B008
 Toan Logic
 Na
@@ -194,6 +204,7 @@ B008_03
 B008_02
 0
 B008_01
+0
 0
 B003
 Toan Roi Rac
@@ -212,6 +223,7 @@ B003_02
 0
 B003_01
 0
+0
 B007
 Tieng Anh Course 3
 Na
@@ -224,6 +236,7 @@ B007_03
 B007_02
 0
 B007_01
+0
 0
 Kn01
 Ki Nang Thuyet Trinh
@@ -240,6 +253,7 @@ Kn01_02
 0
 Kn01_01
 0
+0
 Kn02
 Ki Nang Viet Code
 Na
@@ -255,6 +269,7 @@ Kn02_02
 0
 Kn02_01
 0
+0
 Vh01
 Chi Pheo
 Na
@@ -267,6 +282,7 @@ Vh01_03
 Vh01_02
 0
 Vh01_01
+0
 0
 Vh04
 Chiec Luoc Nga
@@ -283,6 +299,7 @@ Vh04_02
 0
 Vh04_01
 0
+0
 Vh03
 Nguoi Lai Do Song Da
 Na
@@ -293,6 +310,7 @@ Van Hoc
 Vh03_02
 0
 Vh03_01
+0
 0
 Vh02
 Vo Chong A Phu
@@ -305,6 +323,7 @@ Vh02_02
 0
 Vh02_01
 0
+0
 Vh06
 Chiec La Cuoi Cung
 Na
@@ -315,4 +334,5 @@ Van Hoc
 Vh06_02
 0
 Vh06_01
+0
 0

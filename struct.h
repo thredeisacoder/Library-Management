@@ -221,6 +221,7 @@ struct BorrowAndReturnList
 	int size = 0;
 };
 
+
 Date currentTime(){
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
@@ -237,8 +238,12 @@ int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
 	if (dsmt.size >= 3) {
 		return 0;
 	}
-	if(p->data.BorrowDate.day==0)	p->data.BorrowDate = borrowTime();
-	// newNode->data.ReturnDate = ... ; thoi gian tra
+	if(p->data.BorrowDate.day==0)
+	{
+		p->data.BorrowDate = currentTime();
+	}
+	p->data.ReturnDate=p->data.BorrowDate;
+	p->data.ReturnDate.day+=7;
 	if (dsmt.size == 0) {
 		dsmt.head = p;
 		dsmt.tail = p;
@@ -636,6 +641,7 @@ string findBookName(TableOfContentList tl, string id)
 			return tl.ds[i]->BookName;
 		}
 	}
+	return "";
 }
 
 
