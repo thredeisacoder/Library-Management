@@ -1966,6 +1966,8 @@ void BARofReader(nodeRC *p)
 	SetBGColor(15);
 	displayReader(p, 2);
 	int y = 4;
+	gotoxy(15, 1 + 2 * y);
+	cout << "BookID\t\t\t\t\t\t" << "Borrowed Date\t\t\t\t" << "Return Date";
 	nodeBAR *b = p->data.dsmt.head;
 	while (b != nullptr)
 	{
@@ -2177,6 +2179,7 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 					Sleep(1000);
 					gotoxy(50, 25);
 					cout << "                 ";
+					gotoxy(134, 2);
 					continue;
 				}
 				else
