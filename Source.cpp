@@ -217,7 +217,6 @@ void clearReaderTable()
 	}
 }
 
-
 // in 1 doc gia
 void displayReader(nodeRC *p, int y) // in doc gia tren do cao y
 {
@@ -476,13 +475,13 @@ void ReaderTable(nodeRC *tmp[], int n, int count)
 	cout << "GENDER";
 	gotoxy(108, 1);
 	cout << "STATUS";
-	if(n==0) 
+	if (n == 0)
 	{
-		gotoxy(130,20);
-		cout<<"EMPTY";
+		gotoxy(130, 20);
+		cout << "EMPTY";
 	}
-	gotoxy(122,40);
-	cout<<"Press SPACE to sort by Name/ID";
+	gotoxy(122, 40);
+	cout << "Press SPACE to sort by Name/ID";
 	displaytree(tmp, n, count);
 }
 
@@ -503,11 +502,11 @@ void displayBAR(nodeBAR *head, int y, string name)
 	displayDate(head->data.ReturnDate);
 }
 
-void watchingReaderMode(nodeRC* tmp[],int n)
+void watchingReaderMode(nodeRC *tmp[], int n)
 {
 	int count = 20;
-	bool sid=true;
-	sortbyID(tmp,n);
+	bool sid = true;
+	sortbyID(tmp, n);
 	ReaderTable(tmp, n, count);
 	gotoxy(130, 10);
 	cout << "ESC: Cancel";
@@ -534,22 +533,21 @@ void watchingReaderMode(nodeRC* tmp[],int n)
 			clearReaderTable();
 			displaytree(tmp, n, count);
 		}
-		else if(c==32)
+		else if (c == 32)
 		{
 			clearReaderTable();
-			if(sid==true)
+			if (sid == true)
 			{
-				sid=false;
-				sortbyname(tmp,n);
-				displaytree(tmp,n,count);
+				sid = false;
+				sortbyname(tmp, n);
+				displaytree(tmp, n, count);
 			}
 			else
 			{
-				sid=true;
-				sortbyID(tmp,n);
-				displaytree(tmp,n,count);
+				sid = true;
+				sortbyID(tmp, n);
+				displaytree(tmp, n, count);
 			}
-			
 		}
 		else
 			continue;
@@ -564,9 +562,9 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 	while (true)
 	{
 		c = _getch();
-		if(c==-32)
+		if (c == -32)
 		{
-			c=_getch();
+			c = _getch();
 		}
 		if (c == 27) // esc
 		{
@@ -764,8 +762,8 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 {
 	SetBGColor(11);
 	SetColor(0);
-	gotoxy(122,40);
-	cout<<"Press SPACE to sort by Name/ID";
+	gotoxy(122, 40);
+	cout << "Press SPACE to sort by Name/ID";
 	for (int i = 130; i <= 139; i++)
 	{
 		gotoxy(i, 3);
@@ -809,11 +807,11 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 		}
 		if (c == 27) // khi nguoi dung nhan esc
 		{
-		
+
 			system("cls");
 			break;
 		}
-		else if (c == 32)//space // sap xep theo id va theo ten
+		else if (c == 32) // space // sap xep theo id va theo ten
 		{
 			UnHighLight(wherex(), wherey(), 9);
 			if (x == true)
@@ -904,8 +902,8 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			}
 			else if (wherey() == 7)
 			{
-				gotoxy(122,40);
-				cout<<"                              ";
+				gotoxy(122, 40);
+				cout << "                              ";
 				if (rl.size == 0)
 				{
 					system("cls");
@@ -932,8 +930,8 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			}
 			else
 			{
-				gotoxy(122,40);
-				cout<<"                              ";
+				gotoxy(122, 40);
+				cout << "                              ";
 				SettingReaderMode(rl, tmp, count);
 				sortbyID(tmp, 0);
 				clearReaderTable();
@@ -942,38 +940,42 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 				break;
 			}
 		}
-		else if(c==9)//tab
+		else if (c == 9) // tab
 		{
-			gotoxy(130,20);
-			SetBGColor(9); cout<<"ENTER NAME TO FIND : "; SetBGColor(15);
-			string s="";
-			gotoxy(130,21);
-			ShowCur(true); s=EnterFirstName(s);ShowCur(false);
-			if (s=="") 
+			gotoxy(130, 20);
+			SetBGColor(9);
+			cout << "ENTER NAME TO FIND : ";
+			SetBGColor(15);
+			string s = "";
+			gotoxy(130, 21);
+			ShowCur(true);
+			s = EnterFirstName(s);
+			ShowCur(false);
+			if (s == "")
 			{
-				gotoxy(130,20);
-				cout<<"                                ";
+				gotoxy(130, 20);
+				cout << "                                ";
 				continue;
 			}
 			else
 			{
-				nodeRC* t[MAX];
-				int size=findReaderByName(tmp,t,rl.size,s);
-				if (size==0)
+				nodeRC *t[MAX];
+				int size = findReaderByName(tmp, t, rl.size, s);
+				if (size == 0)
 				{
-					gotoxy(130,20);
-					cout<<"                                ";
-					gotoxy(130,21);
-					cout<<"Reader can not be found";
+					gotoxy(130, 20);
+					cout << "                                ";
+					gotoxy(130, 21);
+					cout << "Reader can not be found";
 					Sleep(1500);
-					gotoxy(130,21);
-					cout<<"                        ";
+					gotoxy(130, 21);
+					cout << "                        ";
 					continue;
 				}
 				system("cls");
-				watchingReaderMode(t,size);
-				ReaderTable(tmp,size,count);
-				controlReaderTable(rl,tmp,count);
+				watchingReaderMode(t, size);
+				ReaderTable(tmp, size, count);
+				controlReaderTable(rl, tmp, count);
 				break;
 			}
 		}
@@ -982,32 +984,31 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			continue;
 		}
 	}
-
 }
 
 void clearTOCLine(int i)
 {
-		gotoxy(2, i);
-		for (int j = 0; j < 6; j++)
-			cout << " ";
-		gotoxy(10, i);
-		for (int j = 0; j < 36; j++)
-			cout << " ";
-		gotoxy(48, i);
-		for (int j = 0; j < 15; j++)
-			cout << " ";
-		gotoxy(65, i);
-		for (int j = 0; j < 32; j++)
-			cout << " ";
-		gotoxy(99, i);
-		for (int j = 0; j < 11; j++)
-			cout << " ";
-		gotoxy(112, i);
-		for (int j = 0; j < 11; j++)
-			cout << " ";
-		gotoxy(125, i);
-		for (int j = 0; j < 5; j++)
-			cout << " ";
+	gotoxy(2, i);
+	for (int j = 0; j < 6; j++)
+		cout << " ";
+	gotoxy(10, i);
+	for (int j = 0; j < 36; j++)
+		cout << " ";
+	gotoxy(48, i);
+	for (int j = 0; j < 15; j++)
+		cout << " ";
+	gotoxy(65, i);
+	for (int j = 0; j < 32; j++)
+		cout << " ";
+	gotoxy(99, i);
+	for (int j = 0; j < 11; j++)
+		cout << " ";
+	gotoxy(112, i);
+	for (int j = 0; j < 11; j++)
+		cout << " ";
+	gotoxy(125, i);
+	for (int j = 0; j < 5; j++)
+		cout << " ";
 }
 
 void clearTableTOC()
@@ -1219,7 +1220,6 @@ void clearfilterBySearching()
 	}
 } // thieu 2 cot chua xu li
 
-
 void filterBySearching(TableOfContentList &tl, int count, int &flag)
 {
 	for (int i = 0; i <= 143; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
@@ -1329,14 +1329,14 @@ void editTOC(TableOfContent *tmp, int y)
 	SetColor(16);
 	ShowCur(true);
 	gotoxy(4, y);
-	TableOfContent* p=new TableOfContent(*tmp);
+	TableOfContent *p = new TableOfContent(*tmp);
 	p->ISBN = EnterISBN(tmp->ISBN);
 	if (p->ISBN == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
 		clearTOCLine(y);
-		displayTOC(*tmp,y);
+		displayTOC(*tmp, y);
 		return;
 	}
 	gotoxy(11, y);
@@ -1345,9 +1345,9 @@ void editTOC(TableOfContent *tmp, int y)
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
-				clearTOCLine(y);
+		clearTOCLine(y);
 
-		displayTOC(*tmp,y);
+		displayTOC(*tmp, y);
 		return;
 	}
 	gotoxy(49, y);
@@ -1356,9 +1356,9 @@ void editTOC(TableOfContent *tmp, int y)
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
-				clearTOCLine(y);
+		clearTOCLine(y);
 
-				displayTOC(*tmp,y);
+		displayTOC(*tmp, y);
 
 		return;
 	}
@@ -1368,9 +1368,9 @@ void editTOC(TableOfContent *tmp, int y)
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
-				clearTOCLine(y);
+		clearTOCLine(y);
 
-				displayTOC(*tmp,y);
+		displayTOC(*tmp, y);
 
 		return;
 	}
@@ -1380,29 +1380,29 @@ void editTOC(TableOfContent *tmp, int y)
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
-				clearTOCLine(y);
+		clearTOCLine(y);
 
-				displayTOC(*tmp,y);
+		displayTOC(*tmp, y);
 
 		return;
 	}
-	gotoxy(116, y); 
+	gotoxy(116, y);
 	p->PublicYear = enterYear(tmp->PublicYear);
 	if (p->PublicYear == "")
 	{
 		gotoxy(1, y);
 		UnTick(wherex(), wherey());
 		clearTOCLine(y);
-		displayTOC(*tmp,y);
+		displayTOC(*tmp, y);
 		return;
 	}
 	ShowCur(false);
 	delete tmp->dms.head;
 	delete tmp;
 	p->dms = createBookList(p);
-	tmp=p;
-	 	gotoxy(130, 20);
-	 	cout << "~EDIT SUCCESSFULL!!!~";
+	tmp = p;
+	gotoxy(130, 20);
+	cout << "~EDIT SUCCESSFULL!!!~";
 
 	gotoxy(1, y);
 	UnTick(wherex(), wherey());
@@ -1467,22 +1467,21 @@ void TableTOC(TableOfContentList &tl, int count)
 	SetColor(0);
 }
 
-
-void TranverNotBorrowed(TableOfContentList& tl, TableOfContentList& tmp)
+void TranverNotBorrowed(TableOfContentList &tl, TableOfContentList &tmp)
 {
-	for(int i=0;i<tl.size;i++)
+	for (int i = 0; i < tl.size; i++)
 	{
-		if(!checkBorrowed(tl.ds[i])) 
+		if (!checkBorrowed(tl.ds[i]))
 		{
-			tmp.ds[i]=tl.ds[i];
+			tmp.ds[i] = tl.ds[i];
 			tmp.size++;
 		}
 	}
 }
 
-void BorrowMode(nodeRC* p,TableOfContentList& tl)
+void BorrowMode(nodeRC *p, TableOfContentList &tl)
 {
-	int count=19,flag=0;
+	int count = 19, flag = 0;
 	for (int i = 0; i <= 124; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
 	{
 		SetBGColor(6);
@@ -1534,31 +1533,30 @@ void BorrowMode(nodeRC* p,TableOfContentList& tl)
 	cout << "PAGE";
 	gotoxy(116, 1);
 	cout << "YEAR";
-	
-	TableOfContentList tmp;
-	
-	TranverNotBorrowed(tl,tmp);
-	
-	TableTOC(tmp,count);
 
-	
-	gotoxy(2,3);
-	Tick(2,3);
-	
-	while(true)
+	TableOfContentList tmp;
+
+	TranverNotBorrowed(tl, tmp);
+
+	TableTOC(tmp, count);
+
+	gotoxy(2, 3);
+	Tick(2, 3);
+
+	while (true)
 	{
-		char c=_getch();
-		if(c==27)//esc
+		char c = _getch();
+		if (c == 27) // esc
 		{
 			return;
 		}
-		else if(c==32)//space
+		else if (c == 32) // space
 		{
 			system("cls");
-			filterBySearching(tmp,count,flag);
-			controlfilterBySearching(tmp,count,flag);
+			filterBySearching(tmp, count, flag);
+			controlfilterBySearching(tmp, count, flag);
 			system("cls");
-			BorrowMode(p,tmp);
+			BorrowMode(p, tmp);
 			break;
 		}
 		else if (c == 75) /// left
@@ -1570,9 +1568,9 @@ void BorrowMode(nodeRC* p,TableOfContentList& tl)
 
 			count -= 19;
 			clearTableTOC();
-			loadListTOC(tmp,count);
-			gotoxy(2,3);
-			Tick(2,3);
+			loadListTOC(tmp, count);
+			gotoxy(2, 3);
+			Tick(2, 3);
 		}
 		else if (c == 77) // right
 		{
@@ -1583,82 +1581,84 @@ void BorrowMode(nodeRC* p,TableOfContentList& tl)
 
 			count += 19;
 			clearTableTOC();
-			loadListTOC(tmp,count);
-			gotoxy(2,3);
-			Tick(2,3);
+			loadListTOC(tmp, count);
+			gotoxy(2, 3);
+			Tick(2, 3);
 		}
-		else if(c==80)//down
+		else if (c == 80) // down
 		{
-			if(count-19+(wherey()-3)/2==tmp.size-1)
+			if (count - 19 + (wherey() - 3) / 2 == tmp.size - 1)
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(2,3);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(2, 3);
+				Tick(wherex(), wherey());
 			}
-			else if(wherey()==3+2*18)
+			else if (wherey() == 3 + 2 * 18)
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(2,3);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(2, 3);
+				Tick(wherex(), wherey());
 			}
 			else
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(2,wherey()+2);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(2, wherey() + 2);
+				Tick(wherex(), wherey());
 			}
 		}
-		else if(c==72)//up
+		else if (c == 72) // up
 		{
 
-			if(wherey()==3)
+			if (wherey() == 3)
 			{
-				if(count>=tmp.size)
+				if (count >= tmp.size)
 				{
-					UnTick(wherex(),wherey());
-					gotoxy(2,3+(tmp.size-(count-19)-1)*2);
-					Tick(wherex(),wherey());
+					UnTick(wherex(), wherey());
+					gotoxy(2, 3 + (tmp.size - (count - 19) - 1) * 2);
+					Tick(wherex(), wherey());
 					continue;
 				}
-				UnTick(wherex(),wherey());
-				gotoxy(wherex(),3+2*18);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + 2 * 18);
+				Tick(wherex(), wherey());
 			}
 			else
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(wherex(),wherey()-2);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() - 2);
+				Tick(wherex(), wherey());
 			}
 		}
-		else if(c==13)//enter
+		else if (c == 13) // enter
 		{
-			TableOfContent* t=tmp.ds[count-19+((wherey()-3)/2)];
-			nodeBAR* a=new nodeBAR;
-			nodeB* b=t->dms.head;
-			while(b!=nullptr)
+			TableOfContent *t = tmp.ds[count - 19 + ((wherey() - 3) / 2)];
+			nodeBAR *a = new nodeBAR;
+			nodeB *b = t->dms.head;
+			while (b != nullptr)
 			{
-				if(b->data.BookStatus==0)
+				if (b->data.BookStatus == 0)
 				{
-					a->data.bookID=b->data.BookID;
-					b->data.BookStatus=1;
+					a->data.bookID = b->data.BookID;
+					b->data.BookStatus = 1;
 					break;
 				}
-				else	b=b->next;
+				else
+					b = b->next;
 			}
 			system("cls");
-			addBorrowedBook(p->data.dsmt,a);
-			gotoxy(70,20);
-			cout<<"BORROW SUCCESSFULLY!!!";
+			addBorrowedBook(p->data.dsmt, a);
+			gotoxy(70, 20);
+			cout << "BORROW SUCCESSFULLY!!!";
 			t->BorrowTotal++;
 			Sleep(2000);
 			return;
 		}
-		else continue;
+		else
+			continue;
 	}
 }
 
-void ControlEditMode(TableOfContentList& tl, int &count)
+void ControlEditMode(TableOfContentList &tl, int &count)
 {
 	gotoxy(1, 3);
 	Tick(wherex(), wherey());
@@ -1670,7 +1670,7 @@ void ControlEditMode(TableOfContentList& tl, int &count)
 			if (count > tl.size && wherey() == 3)
 			{
 				UnTick(wherex(), wherey());
-				gotoxy(wherex(), 1+ 2 * (tl.size - (count - 19)));
+				gotoxy(wherex(), 1 + 2 * (tl.size - (count - 19)));
 				Tick(wherex(), wherey());
 			}
 			else if (wherey() != 3)
@@ -1682,7 +1682,7 @@ void ControlEditMode(TableOfContentList& tl, int &count)
 			else
 			{
 				UnTick(wherex(), wherey());
-				gotoxy(wherex(), 1+ 2 * 19);
+				gotoxy(wherex(), 1 + 2 * 19);
 				Tick(wherex(), wherey());
 			}
 		}
@@ -1707,58 +1707,58 @@ void ControlEditMode(TableOfContentList& tl, int &count)
 				Tick(wherex(), wherey());
 			}
 		}
-			else if (c == 27)
-			{ // esc
-				UnTick(wherex(), wherey());
-				return;
-			}
-			else if (c == 13)
-			{ // enter
-				editTOC(tl.ds[count - 19 + (wherey() - 3) / 2], wherey());
-				break;
-			}
-			else if (c == 77)
-			{ // right
-				if (count >= tl.size)
-				{
-					continue;
-				}
-				else
-				{
-					UnTick(1, wherey());
-					count += 19;
-					clearTableTOC();
-					loadListTOC(tl, count);
-					gotoxy(1, 3);
-					Tick(wherex(), wherey());
-					continue;
-				}
-			}
-			else if (c == 75)
-			{ // left
-				if (count == 19)
-				{
-					continue;
-				}
-				else
-				{
-					UnTick(1, wherey());
-					count -= 19;
-					clearTableTOC();
-					loadListTOC(tl, count);
-					gotoxy(1, 3);
-					Tick(wherex(), wherey());
-					continue;
-				}
-			}
-			else
+		else if (c == 27)
+		{ // esc
+			UnTick(wherex(), wherey());
+			return;
+		}
+		else if (c == 13)
+		{ // enter
+			editTOC(tl.ds[count - 19 + (wherey() - 3) / 2], wherey());
+			break;
+		}
+		else if (c == 77)
+		{ // right
+			if (count >= tl.size)
 			{
 				continue;
 			}
+			else
+			{
+				UnTick(1, wherey());
+				count += 19;
+				clearTableTOC();
+				loadListTOC(tl, count);
+				gotoxy(1, 3);
+				Tick(wherex(), wherey());
+				continue;
+			}
+		}
+		else if (c == 75)
+		{ // left
+			if (count == 19)
+			{
+				continue;
+			}
+			else
+			{
+				UnTick(1, wherey());
+				count -= 19;
+				clearTableTOC();
+				loadListTOC(tl, count);
+				gotoxy(1, 3);
+				Tick(wherex(), wherey());
+				continue;
+			}
+		}
+		else
+		{
+			continue;
 		}
 	}
+}
 
-void EnterToSearch(TableOfContentList tl ,TableOfContentList& l )
+void EnterToSearch(TableOfContentList tl, TableOfContentList &l)
 {
 	gotoxy(1, 43);
 	SetBGColor(20);
@@ -1773,448 +1773,444 @@ void EnterToSearch(TableOfContentList tl ,TableOfContentList& l )
 	{
 		return;
 	}
-	l=saveToSearch(tl,inputSearch);
+	l = saveToSearch(tl, inputSearch);
 }
 
-void controlTOCTable(TableOfContentList & tl, int count)
+void controlTOCTable(TableOfContentList &tl, int count)
 {
-		SetBGColor(11);
-		ShowCur(false);
-		for (int i = 130; i <= 139; i++) // in ra ? chu?c nang
+	SetBGColor(11);
+	ShowCur(false);
+	for (int i = 130; i <= 139; i++) // in ra ? chu?c nang
+	{
+		gotoxy(i, 3);
+		cout << " ";
+		gotoxy(i, 4);
+		cout << " ";
+		gotoxy(i, 5);
+		cout << " ";
+
+		gotoxy(i, 7);
+		cout << " ";
+		gotoxy(i, 8);
+		cout << " ";
+		gotoxy(i, 9);
+		cout << " ";
+
+		gotoxy(i, 11);
+		cout << " ";
+		gotoxy(i, 12);
+		cout << " ";
+		gotoxy(i, 13);
+		cout << " ";
+	}
+	gotoxy(133, 4);
+	cout << "ADD";
+	gotoxy(133, 8);
+	cout << "EDIT";
+	gotoxy(132, 12);
+	cout << "SEARCH";
+
+	HighLight(130, 3, 9);
+
+	while (true)
+	{
+		// nhan phim tu nguoi dung(up/down/enter)
+		char c = _getch();
+		if (c == -32)
 		{
-			gotoxy(i, 3);
-			cout << " ";
-			gotoxy(i, 4);
-			cout << " ";
-			gotoxy(i, 5);
-			cout << " ";
-
-			gotoxy(i, 7);
-			cout << " ";
-			gotoxy(i, 8);
-			cout << " ";
-			gotoxy(i, 9);
-			cout << " ";
-
-			gotoxy(i, 11);
-			cout << " ";
-			gotoxy(i, 12);
-			cout << " ";
-			gotoxy(i, 13);
-			cout << " ";
+			c = _getch();
 		}
-		gotoxy(133, 4);
-		cout << "ADD";
-		gotoxy(133, 8);
-		cout << "EDIT";
-		gotoxy(132, 12);
-		cout << "SEARCH";
-
-		HighLight(130, 3, 9);
-
-		while (true)
+		if (c == 27) // khi nguoi dung nhan esc
 		{
-			// nhan phim tu nguoi dung(up/down/enter)
-			char c = _getch();
-			if (c == -32)
+			SetBGColor(15);
+			break;
+		}
+		if (c == 72) // khi nguoi dung nhan UP
+		{
+			if (wherey() == 3)
 			{
-				c = _getch();
-			}
-			if (c == 27) // khi nguoi dung nhan esc
-			{			
-				SetBGColor(15);
-				break;
-			}
-			if (c == 72) // khi nguoi dung nhan UP
-			{
-				if (wherey() == 3)
-				{
-					UnHighLight(wherex(), wherey(), 9);
-					gotoxy(130, 11);
-					HighLight(wherex(), wherey(), 9);
-				}
-				else
-				{
-					UnHighLight(wherex(), wherey(), 9);
-					gotoxy(130, wherey() - 4);
-					HighLight(wherex(), wherey(), 9);
-				}
-			}
-			else if (c == 80) // khi nguoi dung nhan Down
-			{
-				if (wherey() == 11)
-				{
-					UnHighLight(wherex(), wherey(), 9);
-					gotoxy(130, 3);
-					HighLight(wherex(), wherey(), 9);
-				}
-				else
-				{
-					UnHighLight(wherex(), wherey(), 9);
-					gotoxy(130, wherey() + 4);
-					HighLight(wherex(), wherey(), 9);
-				}
-			}
-			else if (c == 75) /// left
-			{
-				if (count == 19)
-				{
-					continue;
-				}
 				UnHighLight(wherex(), wherey(), 9);
-				count -= 19;
-				SetBGColor(15);
-				clearTableTOC();			
-
-				loadListTOC(tl, count);
-				gotoxy(130, 3);
+				gotoxy(130, 11);
 				HighLight(wherex(), wherey(), 9);
-			}
-			else if (c == 77) // right
-			{
-				if (count > tl.size)
-				{
-					continue;
-				}
-				UnHighLight(wherex(), wherey(), 9);
-				count += 19;
-				SetBGColor(15);
-				clearTableTOC();
-				
-				loadListTOC(tl, count);
-				gotoxy(130, 3);
-				HighLight(wherex(), wherey(), 9);
-			}
-			else if (c == 13) // Khi nguoi dung nhan ENTER
-			{
-				SetBGColor(15);
-				if (wherey() == 3) // add
-				{
-					system("cls");
-					tableEnterTOC(tl);
-					system("cls");
-					TableTOC(tl, count);
-					controlTOCTable(tl, count);
-					break;
-				}
-				else if (wherey() == 7) // edit
-				{
-					ControlEditMode(tl, count);
-					TableTOC(tl, count);
-					controlTOCTable(tl, count);
-					break;
-				}
-				else // search
-				{
-					int flag = count - 19;
-					TableOfContentList l;
-					EnterToSearch(tl,l);
-					filterBySearching(l, count, flag);
-					controlfilterBySearching(l,count,flag);
-					SetBGColor(15);
-					TableTOC(tl, count);
-					controlTOCTable(tl, count);
-					break;
-				}
 			}
 			else
+			{
+				UnHighLight(wherex(), wherey(), 9);
+				gotoxy(130, wherey() - 4);
+				HighLight(wherex(), wherey(), 9);
+			}
+		}
+		else if (c == 80) // khi nguoi dung nhan Down
+		{
+			if (wherey() == 11)
+			{
+				UnHighLight(wherex(), wherey(), 9);
+				gotoxy(130, 3);
+				HighLight(wherex(), wherey(), 9);
+			}
+			else
+			{
+				UnHighLight(wherex(), wherey(), 9);
+				gotoxy(130, wherey() + 4);
+				HighLight(wherex(), wherey(), 9);
+			}
+		}
+		else if (c == 75) /// left
+		{
+			if (count == 19)
 			{
 				continue;
 			}
-		}
-	}
-	
-	void printBAR(nodeBAR *b,int y)
-	{
-		gotoxy(15,3+2*y);
-		cout<<b->data.bookID<<"\t\t\t\t\t\t";
-		cout<<b->data.BorrowDate.day<<"/"<<b->data.BorrowDate.month<<"/"<<b->data.BorrowDate.year<<"\t\t\t\t";
-		cout<<b->data.ReturnDate.day<<"/"<<b->data.ReturnDate.month<<"/"<<b->data.ReturnDate.year;
-	}
-	
-	void BARofReader(nodeRC* p)
-	{
-		SetBGColor(6);
-			gotoxy(10, 7);
-			cout << " ";
-			gotoxy(30, 7);
-			cout << " ";
-			gotoxy(65, 7);
-			cout << " ";
-			gotoxy(85, 7);
-			cout << " ";
-			gotoxy(100, 7);
-			cout << " ";
-			gotoxy(120, 7);
-			cout << " ";
-		for (int i = 10; i <= 120; i++)
-		{
-			SetBGColor(6);
-			gotoxy(i, 6);
-			cout << " ";
-			gotoxy(i, 8);
-			cout << " ";
-			gotoxy(i, 10);
-			cout << " ";
-			gotoxy(i, 12);
-			cout << " ";
-			gotoxy(i, 14);
-			cout << " ";
-			gotoxy(i, 16);
-			cout << " ";
-		}
-		SetBGColor(15);
-		displayReader(p,2);
-		int y=4;
-		nodeBAR* b=p->data.dsmt.head;
-		while(b!=nullptr)
-		{
-			printBAR(b,y);
-			b=b->next;
-			y++;
-		}
-	}
+			UnHighLight(wherex(), wherey(), 9);
+			count -= 19;
+			SetBGColor(15);
+			clearTableTOC();
 
-void resetBookStatus(TableOfContentList& tl, nodeBAR* b,string isbn)
-{
-	for(int i=0;i<tl.size;i++)
-	{
-		if(tl.ds[i]->ISBN==isbn)
+			loadListTOC(tl, count);
+			gotoxy(130, 3);
+			HighLight(wherex(), wherey(), 9);
+		}
+		else if (c == 77) // right
 		{
-			nodeB* t=tl.ds[i]->dms.head;
-			while(t!=nullptr)
+			if (count > tl.size)
 			{
-				if(t->data.BookID==b->data.bookID)
-				{
-					t->data.BookStatus=0;
-				}
-				t=t->next;
+				continue;
 			}
-		}		
+			UnHighLight(wherex(), wherey(), 9);
+			count += 19;
+			SetBGColor(15);
+			clearTableTOC();
+
+			loadListTOC(tl, count);
+			gotoxy(130, 3);
+			HighLight(wherex(), wherey(), 9);
+		}
+		else if (c == 13) // Khi nguoi dung nhan ENTER
+		{
+			SetBGColor(15);
+			if (wherey() == 3) // add
+			{
+				system("cls");
+				tableEnterTOC(tl);
+				system("cls");
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
+				break;
+			}
+			else if (wherey() == 7) // edit
+			{
+				ControlEditMode(tl, count);
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
+				break;
+			}
+			else // search
+			{
+				int flag = count - 19;
+				TableOfContentList l;
+				EnterToSearch(tl, l);
+				filterBySearching(l, count, flag);
+				controlfilterBySearching(l, count, flag);
+				SetBGColor(15);
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
+				break;
+			}
+		}
+		else
+		{
+			continue;
+		}
 	}
 }
 
-void returnMode(nodeRC* p,TableOfContentList& tl)
+void printBAR(nodeBAR *b, int y)
 {
-	gotoxy(10,3+2*4);
-	Tick(wherex(),wherey());
-	while(true)
+	gotoxy(15, 3 + 2 * y);
+	cout << b->data.bookID << "\t\t\t\t\t\t";
+	cout << b->data.BorrowDate.day << "/" << b->data.BorrowDate.month << "/" << b->data.BorrowDate.year << "\t\t\t\t";
+	cout << b->data.ReturnDate.day << "/" << b->data.ReturnDate.month << "/" << b->data.ReturnDate.year;
+}
+
+void BARofReader(nodeRC *p)
+{
+	SetBGColor(6);
+	gotoxy(10, 7);
+	cout << " ";
+	gotoxy(30, 7);
+	cout << " ";
+	gotoxy(65, 7);
+	cout << " ";
+	gotoxy(85, 7);
+	cout << " ";
+	gotoxy(100, 7);
+	cout << " ";
+	gotoxy(120, 7);
+	cout << " ";
+	for (int i = 10; i <= 120; i++)
 	{
-		char c=_getch();
-		if(c==27)//esc
+		SetBGColor(6);
+		gotoxy(i, 6);
+		cout << " ";
+		gotoxy(i, 8);
+		cout << " ";
+		gotoxy(i, 10);
+		cout << " ";
+		gotoxy(i, 12);
+		cout << " ";
+		gotoxy(i, 14);
+		cout << " ";
+		gotoxy(i, 16);
+		cout << " ";
+	}
+	SetBGColor(15);
+	displayReader(p, 2);
+	int y = 4;
+	nodeBAR *b = p->data.dsmt.head;
+	while (b != nullptr)
+	{
+		printBAR(b, y);
+		b = b->next;
+		y++;
+	}
+}
+
+void resetBookStatus(TableOfContentList &tl, nodeBAR *b, string isbn)
+{
+	for (int i = 0; i < tl.size; i++)
+	{
+		if (tl.ds[i]->ISBN == isbn)
+		{
+			nodeB *t = tl.ds[i]->dms.head;
+			while (t != nullptr)
+			{
+				if (t->data.BookID == b->data.bookID)
+				{
+					t->data.BookStatus = 0;
+				}
+				t = t->next;
+			}
+		}
+	}
+}
+
+void returnMode(nodeRC *p, TableOfContentList &tl)
+{
+	gotoxy(10, 3 + 2 * 4);
+	Tick(wherex(), wherey());
+	while (true)
+	{
+		char c = _getch();
+		if (c == 27) // esc
 		{
 			return;
 		}
-		else if(c==72)//up
+		else if (c == 72) // up
 		{
-			if(wherey()==3+4*2)
+			if (wherey() == 3 + 4 * 2)
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(wherex(),3+(3+p->data.dsmt.size)*2);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + (3 + p->data.dsmt.size) * 2);
+				Tick(wherex(), wherey());
 			}
 			else
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(wherex(),wherey()-2);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() - 2);
+				Tick(wherex(), wherey());
 			}
-		
 		}
-		else if(c==80)//down
+		else if (c == 80) // down
 		{
-			if(wherey()==3+(3+p->data.dsmt.size)*2)
+			if (wherey() == 3 + (3 + p->data.dsmt.size) * 2)
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(wherex(),3+2*4);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + 2 * 4);
+				Tick(wherex(), wherey());
 			}
 			else
 			{
-				UnTick(wherex(),wherey());
-				gotoxy(wherex(),wherey()+2);
-				Tick(wherex(),wherey());
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() + 2);
+				Tick(wherex(), wherey());
 			}
 		}
-		else if(c==13)//enter
+		else if (c == 13) // enter
 		{
-			UnTick(wherex(),wherey());
-			if(wherey()==3+2*4)//head
+			UnTick(wherex(), wherey());
+			if (wherey() == 3 + 2 * 4) // head
 			{
-				nodeBAR* b=p->data.dsmt.head;
-				string isbn="";
-				for(int i=0;i<4;i++)
+				nodeBAR *b = p->data.dsmt.head;
+				string isbn = "";
+				for (int i = 0; i < 4; i++)
 				{
-					isbn+=b->data.bookID[i];
+					isbn += b->data.bookID[i];
 				}
-				resetBookStatus(tl,b,isbn);
-				returnedBook(p->data.dsmt,b);
-
-				gotoxy(50,30);
-				cout<<"RETURN SUCCESSFULLY!!!";
+				resetBookStatus(tl, b, isbn);
+				returnedBook(p->data.dsmt, b);
+				gotoxy(50, 30);
+				cout << "RETURN SUCCESSFULLY!!!";
 				Sleep(2000);
 				break;
 			}
-			else if(wherey()==3+2*5)
+			else if (wherey() == 3 + 2 * 5)
 			{
-				nodeBAR* b=p->data.dsmt.head->next;
-				cout<<b->data.bookID; system("pause");
-				string isbn="";
-				for(int i=0;i<4;i++)
+				nodeBAR *b = p->data.dsmt.head->next;
+				string isbn = "";
+				for (int i = 0; i < 4; i++)
 				{
-					isbn+=b->data.bookID[i];
-				}				
-				resetBookStatus(tl,b,isbn);
-				returnedBook(p->data.dsmt,b);
-
-				gotoxy(50,30);
-				cout<<"RETURN SUCCESSFULLY!!!";
+					isbn += b->data.bookID[i];
+				}
+				resetBookStatus(tl, b, isbn);
+				returnedBook(p->data.dsmt, b);
+				gotoxy(50, 30);
+				cout << "RETURN SUCCESSFULLY!!!";
 				Sleep(2000);
 				break;
 			}
-			else 
+			else
 			{
-				nodeBAR* b=p->data.dsmt.tail;
-				string isbn="";
-				for(int i=0;i<4;i++)
+				nodeBAR *b = p->data.dsmt.tail;
+				string isbn = "";
+				for (int i = 0; i < 4; i++)
 				{
-					isbn+=b->data.bookID[i];
+					isbn += b->data.bookID[i];
 				}
-				resetBookStatus(tl,b,isbn);
-				returnedBook(p->data.dsmt,b);
-
-				gotoxy(50,30);
-				cout<<"RETURN SUCCESSFULLY!!!";
+				resetBookStatus(tl, b, isbn);
+				returnedBook(p->data.dsmt, b);
+				gotoxy(50, 30);
+				cout << "RETURN SUCCESSFULLY!!!";
 				Sleep(2000);
 				break;
 			}
 		}
-		else continue;
+		else
+			continue;
 	}
 }
 
-	void controlBAR(ReaderList & rl, TableOfContentList & tl, int count,nodeRC* p)
+void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
+{
+	Option(140, 3, 14, 0, "Borrow");
+	Option(140, 8, 14, 0, "Return");
+	HighLight(134, 2, 20);
+	while (true)
 	{
-		Option(140, 3, 14, 0, "Borrow");
-		Option(140, 8, 14, 0, "Return");
-		HighLight(134, 2, 20);
-		while (true)
+		char c = _getch();
+		if (c == -32)
 		{
-			char c = _getch();
-			if (c == -32)
+			c = _getch();
+		}
+		if (c == 72)
+		{ // khi nguoi dung nhan up
+			if (wherey() == 2)
 			{
-				c = _getch();
+				UnHighLight(wherex(), wherey(), 20);
+				gotoxy(wherex(), wherey() + 5);
+				HighLight(wherex(), wherey(), 20);
 			}
-			if (c == 72)
-			{ // khi nguoi dung nhan up
-				if (wherey() == 2)
-				{
-					UnHighLight(wherex(), wherey(), 20);
-					gotoxy(wherex(), wherey() + 5);
-					HighLight(wherex(), wherey(), 20);
-				}
-				else
-				{
-					UnHighLight(wherex(), wherey(), 20);
-					gotoxy(wherex(), wherey() - 5);
-					HighLight(wherex(), wherey(), 20);
-				}
-			}
-			else if (c == 80) // khi nguoi dung nhan Down
+			else
 			{
-				if (wherey() == 7)
-				{
-					UnHighLight(wherex(), wherey(), 20);
-					gotoxy(wherex(), wherey() - 5);
-					HighLight(wherex(), wherey(), 20);
-				}
-				else
-				{
-					UnHighLight(wherex(), wherey(), 20);
-					gotoxy(wherex(), wherey() + 5);
-					HighLight(wherex(), wherey(), 20);
-				}
+				UnHighLight(wherex(), wherey(), 20);
+				gotoxy(wherex(), wherey() - 5);
+				HighLight(wherex(), wherey(), 20);
 			}
-			else if(c==27)//esc
+		}
+		else if (c == 80) // khi nguoi dung nhan Down
+		{
+			if (wherey() == 7)
 			{
+				UnHighLight(wherex(), wherey(), 20);
+				gotoxy(wherex(), wherey() - 5);
+				HighLight(wherex(), wherey(), 20);
+			}
+			else
+			{
+				UnHighLight(wherex(), wherey(), 20);
+				gotoxy(wherex(), wherey() + 5);
+				HighLight(wherex(), wherey(), 20);
+			}
+		}
+		else if (c == 27) // esc
+		{
+			system("cls");
+			SetBGColor(15);
+			return;
+		}
+		else if (c == 13)
+		{ // enter
+			if (wherey() == 2)
+			{
+				if (p->data.dsmt.size == 3)
+				{
+					gotoxy(50, 25);
+					cout << "LIMIT REACHED! RETURN BEFORE BORROW!";
+					Sleep(2000);
+					gotoxy(50, 25);
+					cout << "                                         ";
+					gotoxy(134, 2);
+					continue;
+				}
+				else if (p->data.CardStatus == 0)
+				{
+					gotoxy(50, 25);
+					cout << "CARD IS LOCKED, CAN NOT BORROW!!";
+					Sleep(2000);
+					gotoxy(50, 25);
+					cout << "                                         ";
+					gotoxy(134, 2);
+					continue;
+				}
 				system("cls");
-				SetBGColor(15);
+				BorrowMode(p, tl);
+				system("cls");
+				BARofReader(p);
+				controlBAR(rl, tl, count, p);
 				return;
 			}
-			else if (c == 13)
-			{ // enter
-				if (wherey() == 2)
+			else
+			{
+				if (p->data.dsmt.size == 0)
 				{
-					if(p->data.dsmt.size==3)
-					{
-						gotoxy(50,25);
-						cout<<"LIMIT REACHED! RETURN BEFORE BORROW!";
-						Sleep(2000);
-						gotoxy(50,25);
-						cout<<"                                         ";
-						gotoxy(134,2);
-						continue;
-					}
-					else if(p->data.CardStatus==0)
-					{
-						gotoxy(50,25);
-						cout<<"CARD IS LOCKED, CAN NOT BORROW!!";
-						Sleep(2000);
-						gotoxy(50,25);
-						cout<<"                                         ";
-						gotoxy(134,2);
-						continue;
-					}
-					system("cls");
-					BorrowMode(p,tl);
-					system("cls"); 
-					BARofReader(p);
-					controlBAR(rl,tl,count,p);
-					return;
+					gotoxy(50, 25);
+					cout << "NO BORROWED BOOK";
+					Sleep(1000);
+					gotoxy(50, 25);
+					cout << "                 ";
+					continue;
 				}
 				else
 				{
-					if(p->data.dsmt.size==0)
+					returnMode(p, tl);
+					if (p->data.CardStatus == 0)
 					{
-						gotoxy(50,25);
-						cout<<"NO BORROWED BOOK";
-						Sleep(1000);
-						gotoxy(50,25);
-						cout<<"                 ";
-						continue;
-					}
-					else
-					{
-						returnMode(p,tl);
-						if(p->data.CardStatus==0)
+						if (TotalOverdue(p) <= 0)
 						{
-							if(TotalOverdue(p)<=0)
-							{
-								p->data.CardStatus=1;
-							}
+							p->data.CardStatus = 1;
 						}
-						system("cls");
-						BARofReader(p);
-						controlBAR(rl,tl,count,p);
-						break;
 					}
+					system("cls");
+					BARofReader(p);
+					controlBAR(rl, tl, count, p);
+					break;
 				}
 			}
 		}
 	}
+}
 
-nodeRC* EnterIDtoBorrowandReturn(ReaderList rl)
+nodeRC *EnterIDtoBorrowandReturn(ReaderList rl)
 {
 	system("cls");
 	ShowCur(true);
 	gotoxy(50, 22);
-	cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";	
+	cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";
 	gotoxy(50, 20);
 	cout << "ENTER CARD ID: ";
 	gotoxy(70, 20);
 	string id = EnterID();
 	ShowCur(false);
-	if (id =="")
+	if (id == "")
 	{
 		system("cls");
 		return nullptr;
@@ -2222,13 +2218,12 @@ nodeRC* EnterIDtoBorrowandReturn(ReaderList rl)
 	else if (id == " ")
 	{
 		system("cls");
-		nodeRC* tmp[MAX];
-		int size=0;
-		tranvertree(rl.head,tmp,size);
-		watchingReaderMode(tmp,size);
+		nodeRC *tmp[MAX];
+		int size = 0;
+		tranvertree(rl.head, tmp, size);
+		watchingReaderMode(tmp, size);
 		system("cls");
 		return EnterIDtoBorrowandReturn(rl);
-		
 	}
 	nodeRC *p = findReader(rl.head, id);
 	if (p == nullptr)
@@ -2240,7 +2235,7 @@ nodeRC* EnterIDtoBorrowandReturn(ReaderList rl)
 		system("cls");
 		return EnterIDtoBorrowandReturn(rl);
 	}
-	else 
+	else
 	{
 		system("cls");
 		return p;
@@ -2249,185 +2244,189 @@ nodeRC* EnterIDtoBorrowandReturn(ReaderList rl)
 
 void top10Borrow(TableOfContentList tl)
 {
-	for(int i=0;i<tl.size;i++)
+	for (int i = 0; i < tl.size; i++)
 	{
-		for(int j=0;j<tl.size-1;j++)
+		for (int j = 0; j < tl.size - 1; j++)
 		{
-			if(tl.ds[j]->BorrowTotal>tl.ds[j+1]->BorrowTotal)
+			if (tl.ds[j]->BorrowTotal > tl.ds[j + 1]->BorrowTotal)
 			{
-				swap(tl.ds[j],tl.ds[j+1]);
+				swap(tl.ds[j], tl.ds[j + 1]);
 			}
 		}
 	}
-	
-	int n=tl.size-1;
-	int y=3;
-	if(tl.ds[n]->BorrowTotal==0)
+
+	int n = tl.size - 1;
+	int y = 3;
+	if (tl.ds[n]->BorrowTotal == 0)
 	{
 		SetBGColor(9);
-		gotoxy(50,15);
-		cout<<"ALL BOOK ARE NOT BORROWED!!!";
+		gotoxy(50, 15);
+		cout << "ALL BOOK ARE NOT BORROWED!!!";
 		SetBGColor(15);
 	}
-	while(n>=tl.size-10&&n>=0&&tl.ds[n]->BorrowTotal>0)
+	while (n >= tl.size - 10 && n >= 0 && tl.ds[n]->BorrowTotal > 0)
 	{
-		displayTOC(*tl.ds[n],y);
-		cout <<"\t"<<tl.ds[n]->BorrowTotal;
-		n--; y+=2;
+		displayTOC(*tl.ds[n], y);
+		cout << "\t" << tl.ds[n]->BorrowTotal;
+		n--;
+		y += 2;
 	}
 	SetBGColor(9);
-	gotoxy(133,10); cout<<"ESC to quit";
+	gotoxy(133, 10);
+	cout << "ESC to quit";
 	SetBGColor(15);
 	char c;
-	
-	while(true)
+
+	while (true)
 	{
-		c=_getch();
-		if(c==27)//esc
+		c = _getch();
+		if (c == 27) // esc
 		{
 			return;
 		}
-		else continue;
+		else
+			continue;
 	}
 }
-void sortOverdue(int OverdueArr[],nodeRC* tmp[],int size)
+void sortOverdue(int OverdueArr[], nodeRC *tmp[], int size)
 {
-	for(int i=0;i<size;i++)
+	for (int i = 0; i < size; i++)
 	{
-		for(int j=0;j<size-1;j++)
+		for (int j = 0; j < size - 1; j++)
 		{
-			if(OverdueArr[j]<OverdueArr[j+1])
+			if (OverdueArr[j] < OverdueArr[j + 1])
 			{
-				swap(OverdueArr[j],OverdueArr[j+1]);
-				swap(tmp[j],tmp[j+1]);
+				swap(OverdueArr[j], OverdueArr[j + 1]);
+				swap(tmp[j], tmp[j + 1]);
 			}
 		}
 	}
 }
 
-void displayOverdue(nodeRC* tmp[], int OverdueArr[],int size,int count)
+void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)
 {
-	int y=3;
-	for(int i=count-20;i<count;i++)
+	int y = 3;
+	for (int i = count - 20; i < count; i++)
 	{
-		if(OverdueArr[i]==0||i==size-1) return;
+		if (OverdueArr[i] == 0 || i == size - 1)
+			return;
 		else
 		{
-			displayReader(tmp[i],y);
-			cout<<"     "<<OverdueArr[i];
-			y+=2;
+			displayReader(tmp[i], y);
+			cout << "     " << OverdueArr[i];
+			y += 2;
 		}
-		
 	}
 }
 
 void OverdueReader(ReaderList rl)
 {
-	int size=0;
-	nodeRC* tmp[MAX];
-	int* OverdueArr = new int[MAX];
+	int size = 0;
+	nodeRC *tmp[MAX];
+	int *OverdueArr = new int[MAX];
 
-	tranvertree(rl.head,tmp,size);
-	for(int i=0;i<size;i++)
+	tranvertree(rl.head, tmp, size);
+	for (int i = 0; i < size; i++)
 	{
-		OverdueArr[i]=TotalOverdue(tmp[i]);	
-		if(OverdueArr[i]==0)
+		OverdueArr[i] = TotalOverdue(tmp[i]);
+		if (OverdueArr[i] == 0)
 		{
-			OverdueArr[i]=OverdueArr[i+1];
-			OverdueArr[i+1]=0;
-			tmp[i]=tmp[i+1];
+			OverdueArr[i] = OverdueArr[i + 1];
+			OverdueArr[i + 1] = 0;
+			tmp[i] = tmp[i + 1];
 			size--;
 		}
 	}
-	
 
-	if(OverdueArr[size-1]==0)
+	if (OverdueArr[size - 1] == 0)
 	{
-		tmp[size-1]=nullptr;
-		size=0;
+		tmp[size - 1] = nullptr;
+		size = 0;
 	}
-	
 
-	if(size>0) sortOverdue(OverdueArr,tmp,size); 
-	else 
+	if (size > 0)
+		sortOverdue(OverdueArr, tmp, size);
+	else
 	{
 		SetBGColor(9);
-		gotoxy(50,15);
-		cout<<"NO OVERDUE READER";
+		gotoxy(50, 15);
+		cout << "NO OVERDUE READER";
 		SetBGColor(15);
 	}
 
-		SetBGColor(9);
-		gotoxy(120,10);
-		cout<<"ESC to quit";
-		SetBGColor(15);
-		
-	int count=20;
-	
-	while(true)
+	SetBGColor(9);
+	gotoxy(120, 10);
+	cout << "ESC to quit";
+	SetBGColor(15);
+
+	int count = 20;
+
+	while (true)
 	{
-		char c=_getch();
-		if(c==27)//esc
+		char c = _getch();
+		if (c == 27) // esc
 		{
 			break;
 		}
 		else if (c == 75) /// left
 		{
-			if (count == 20)  continue;
+			if (count == 20)
+				continue;
 			count -= 20;
 			clearReaderTable();
-			displayOverdue(tmp, OverdueArr,size,count);
+			displayOverdue(tmp, OverdueArr, size, count);
 		}
 		else if (c == 77) // right
 		{
-			if (count >= rl.size) continue;
+			if (count >= rl.size)
+				continue;
 			count += 20;
 			clearReaderTable();
-			displayOverdue(tmp, OverdueArr,size,count);
+			displayOverdue(tmp, OverdueArr, size, count);
 		}
-		else continue;
+		else
+			continue;
 	}
 	delete[] OverdueArr;
 }
 
-
-void Statistic(ReaderList rl,TableOfContentList tl)
+void Statistic(ReaderList rl, TableOfContentList tl)
 {
-	
-	Option(70,10,24,4,"TOP 10 BORROWED BOOKS");
-	Option(70,14,24,4,"OVERDUE READER LIST");
-	
-	HighLight(64,9,30);
-	while(true)
+
+	Option(70, 10, 24, 4, "TOP 10 BORROWED BOOKS");
+	Option(70, 14, 24, 4, "OVERDUE READER LIST");
+
+	HighLight(64, 9, 30);
+	while (true)
 	{
-		char c=_getch();
-		if(c==27)//esc
+		char c = _getch();
+		if (c == 27) // esc
 		{
 			return;
 		}
-		else if(c==72||c==80)//up & down
+		else if (c == 72 || c == 80) // up & down
 		{
-			if(wherey()==9)
+			if (wherey() == 9)
 			{
-				UnHighLight(wherex(),wherey(),30);
-				gotoxy(wherex(),wherey()+4);
-				HighLight(wherex(),wherey(),30);
+				UnHighLight(wherex(), wherey(), 30);
+				gotoxy(wherex(), wherey() + 4);
+				HighLight(wherex(), wherey(), 30);
 			}
 			else
 			{
-				UnHighLight(wherex(),wherey(),30);
-				gotoxy(wherex(),wherey()-4);
-				HighLight(wherex(),wherey(),30);
+				UnHighLight(wherex(), wherey(), 30);
+				gotoxy(wherex(), wherey() - 4);
+				HighLight(wherex(), wherey(), 30);
 			}
 		}
-		else if(c==13)//enter
+		else if (c == 13) // enter
 		{
-			if(wherey()==9)
+			if (wherey() == 9)
 			{
 				system("cls");
 				top10Borrow(tl);
 				system("cls");
-				Statistic(rl,tl);
+				Statistic(rl, tl);
 				break;
 			}
 			else
@@ -2435,17 +2434,17 @@ void Statistic(ReaderList rl,TableOfContentList tl)
 				system("cls");
 				OverdueReader(rl);
 				system("cls");
-				Statistic(rl,tl);
+				Statistic(rl, tl);
 				break;
 			}
 		}
-		else continue;
+		else
+			continue;
 	}
-
 }
 
 // dieu khien tren menu chinh
-void Control(ReaderList & rl, TableOfContentList & tl)
+void Control(ReaderList &rl, TableOfContentList &tl)
 {
 	int x = 18;
 	int y = 12;
@@ -2457,157 +2456,156 @@ void Control(ReaderList & rl, TableOfContentList & tl)
 	HighLight(wherex(), wherey(), width / 3);
 	while (true)
 	{
-			// nhan phim tu nguoi dung(up/down/enter)
-			char c = _getch();
-			if (c == -32)
+		// nhan phim tu nguoi dung(up/down/enter)
+		char c = _getch();
+		if (c == -32)
+		{
+			c = _getch();
+		}
+		if (c == 27)
+			continue;
+		else if (c == 72) // khi nguoi dung nhan UP
+		{
+			if (wherey() == y + height / 4 + 1)
 			{
-				c = _getch();
+				UnHighLight(wherex(), wherey(), width / 3);
+				gotoxy(x - 6, y + height / 4 + 16 + 1);
+				HighLight(wherex(), wherey(), width / 3);
 			}
-			if (c == 27)
-				continue;
-			else if (c == 72) // khi nguoi dung nhan UP
+			else
 			{
-				if (wherey() == y + height / 4 + 1)
-				{
-					UnHighLight(wherex(), wherey(), width / 3);
-					gotoxy(x - 6, y + height / 4 + 16 + 1);
-					HighLight(wherex(), wherey(), width / 3);
-				}
-				else
-				{
-					UnHighLight(wherex(), wherey(), width / 3);
-					gotoxy(x - 6, wherey() - 4);
-					HighLight(wherex(), wherey(), width / 3);
-				}
+				UnHighLight(wherex(), wherey(), width / 3);
+				gotoxy(x - 6, wherey() - 4);
+				HighLight(wherex(), wherey(), width / 3);
 			}
-			else if (c == 80) // khi nguoi dung nhan Down
+		}
+		else if (c == 80) // khi nguoi dung nhan Down
+		{
+			if (wherey() == y + height / 4 + 16 + 1)
 			{
-				if (wherey() == y + height / 4 + 16 + 1)
-				{
-					UnHighLight(wherex(), wherey(), width / 3);
-					gotoxy(x - 6, y + height / 4 + 1);
-					HighLight(wherex(), wherey(), width / 3);
-				}
-				else
-				{
-					UnHighLight(wherex(), wherey(), width / 3);
-					gotoxy(x - 6, wherey() + 4);
-					HighLight(wherex(), wherey(), width / 3);
-				}
+				UnHighLight(wherex(), wherey(), width / 3);
+				gotoxy(x - 6, y + height / 4 + 1);
+				HighLight(wherex(), wherey(), width / 3);
 			}
-			else if (c == 13) // Khi nguoi dung nhan ENTER
+			else
 			{
-				SetBGColor(15);
+				UnHighLight(wherex(), wherey(), width / 3);
+				gotoxy(x - 6, wherey() + 4);
+				HighLight(wherex(), wherey(), width / 3);
+			}
+		}
+		else if (c == 13) // Khi nguoi dung nhan ENTER
+		{
+			SetBGColor(15);
 
-				if (wherey() == y + height / 4 + 16 + 1) // quit
+			if (wherey() == y + height / 4 + 16 + 1) // quit
+			{
+				system("cls");
+				int n = saveFileReader(rl);
+				int m = saveTOC(tl);
+				if (n == 0 || m == 0)
 				{
 					system("cls");
-					int n = saveFileReader(rl);
-					int m = saveTOC(tl);
-					if (n == 0 || m == 0)
-					{
-						system("cls");
-						gotoxy(60, 20);
-						cout << "CAN'T SAVE!!!\n";
-						Sleep(1000);
-					}
-					else
-					{
-						system("cls");
-						gotoxy(60, 20);
-						cout << "SAVING SUCCESSFUL!!!";
-						Sleep(1000);
-					}
-					system("cls");
-					break;
+					gotoxy(60, 20);
+					cout << "CAN'T SAVE!!!\n";
+					Sleep(1000);
 				}
-				else if (wherey() == y + height / 4 + 1) // option 1 (reader card)
+				else
 				{
 					system("cls");
-					int n = 0;
-					nodeRC *tmp[MAX];
-					tranvertree(rl.head, tmp, n);
-					sortbyID(tmp, n);
-					ReaderTable(tmp, rl.size, 20);
-					controlReaderTable(rl, tmp, 20);
-					system("cls");
-					boxMenu();
-					Control(rl, tl);
-					break;
+					gotoxy(60, 20);
+					cout << "SAVING SUCCESSFUL!!!";
+					Sleep(1000);
 				}
-				else if (wherey() == y + height / 4 + 4 + 1) // option 2(table of content)
-				{
-					system("cls");
-					TableTOC(tl, 19);
-					controlTOCTable(tl, 19);
-					system("cls");
-					boxMenu();
-					Control(rl, tl);
-					break;
-				}
-				else if (wherey() == y + height / 4 + 8 + 1) // option 3 (borrow and return)
-				{
-					if (rl.size == 0)
-					{
-						gotoxy(80, 20);
-						cout << "EMPTY READERLIST";
-						Sleep(2000);
-						cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                 ";
-					}
-					else
-					{
-						int count=19;
-						nodeRC* p =EnterIDtoBorrowandReturn(rl);
-						if(p!=nullptr)
-						{
-							BARofReader(p);
-							controlBAR(rl,tl,count,p);
-						}
-					}
-					SetBGColor(15);
-					boxMenu();
-					Control(rl, tl);
-					break;
-				}
-				else if (wherey() == y + height / 4 + 12 + 1) // option 4;(statistic)
-				{
-					system("cls");
-					Statistic(rl,tl);
-					system("cls");
-					boxMenu();
-					Control(rl, tl);
-					break;
-				}
-				continue;
+				system("cls");
+				break;
 			}
+			else if (wherey() == y + height / 4 + 1) // option 1 (reader card)
+			{
+				system("cls");
+				int n = 0;
+				nodeRC *tmp[MAX];
+				tranvertree(rl.head, tmp, n);
+				sortbyID(tmp, n);
+				ReaderTable(tmp, rl.size, 20);
+				controlReaderTable(rl, tmp, 20);
+				system("cls");
+				boxMenu();
+				Control(rl, tl);
+				break;
+			}
+			else if (wherey() == y + height / 4 + 4 + 1) // option 2(table of content)
+			{
+				system("cls");
+				TableTOC(tl, 19);
+				controlTOCTable(tl, 19);
+				system("cls");
+				boxMenu();
+				Control(rl, tl);
+				break;
+			}
+			else if (wherey() == y + height / 4 + 8 + 1) // option 3 (borrow and return)
+			{
+				if (rl.size == 0)
+				{
+					gotoxy(80, 20);
+					cout << "EMPTY READERLIST";
+					Sleep(2000);
+					cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b                 ";
+				}
+				else
+				{
+					int count = 19;
+					nodeRC *p = EnterIDtoBorrowandReturn(rl);
+					if (p != nullptr)
+					{
+						BARofReader(p);
+						controlBAR(rl, tl, count, p);
+					}
+				}
+				SetBGColor(15);
+				boxMenu();
+				Control(rl, tl);
+				break;
+			}
+			else if (wherey() == y + height / 4 + 12 + 1) // option 4;(statistic)
+			{
+				system("cls");
+				Statistic(rl, tl);
+				system("cls");
+				boxMenu();
+				Control(rl, tl);
+				break;
+			}
+			continue;
+		}
 	}
 }
 
-
-	int main()
+int main()
+{
+	SetBGColor(0);
+	resizeConsole(1300, 750);
+	ReaderList rl;
+	TableOfContentList tl;
+	DisableSelection();
+	DisableCtrButton(0, 1, 1);
+	DisableResizeWindow();
+	ShowCur(false);
+	//	loading();
+	int n = loadFileReader(rl);
+	int m = loadFileTOC(tl);
+	if (n == 0 || m == 0)
 	{
-		SetBGColor(0);
-		resizeConsole(1300, 750);
-		ReaderList rl;
-		TableOfContentList tl;
-		DisableSelection();
-		DisableCtrButton(0, 1, 1);
-		DisableResizeWindow();
-		ShowCur(false);
-		//	loading();
-		int n = loadFileReader(rl);
-		int m = loadFileTOC(tl);
-		if (n == 0 || m == 0)
-		{
-			cout << "CAN'T LOAD FILE\n";
-			system("pause");
-			return 0;
-		}
-		SetBGColor(15);
-		boxMenu();
-		Control(rl, tl);
-		delete rl.head;
-		releaseMemory(tl);
-		//resetIDRCfile();
+		cout << "CAN'T LOAD FILE\n";
+		system("pause");
 		return 0;
 	}
+	SetBGColor(15);
+	boxMenu();
+	Control(rl, tl);
+	delete rl.head;
+	releaseMemory(tl);
+	// resetIDRCfile();
+	return 0;
+}

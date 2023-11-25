@@ -1078,4 +1078,3 @@ void resetIDRCfile()
 	f << "";
 	f.close();
 }
-

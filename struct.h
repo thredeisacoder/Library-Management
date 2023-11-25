@@ -18,13 +18,13 @@ struct Book
 struct nodeB
 {
 	Book data;
-	nodeB* next = nullptr;
+	nodeB *next = nullptr;
 };
 
 struct BookList
 {
-	nodeB* head = nullptr;
-	nodeB* tail = nullptr;
+	nodeB *head = nullptr;
+	nodeB *tail = nullptr;
 	int size = 0;
 };
 
@@ -39,15 +39,15 @@ struct TableOfContent
 	string Genre;
 
 	BookList dms;
-	int BorrowTotal=0;
+	int BorrowTotal = 0;
 };
 
 struct TableOfContentList
 {
-	TableOfContent* ds[MAX] = { nullptr };
+	TableOfContent *ds[MAX] = {nullptr};
 	int size = 0;
 };
-void releaseMemory(TableOfContentList& data)
+void releaseMemory(TableOfContentList &data)
 {
 	for (int i = 0; i < data.size; i++)
 	{
@@ -73,7 +73,7 @@ int compare(TableOfContentList tl, TableOfContent data)
 	return 1;
 } // done
 
-int addTail(TableOfContentList& tl, TableOfContent data)
+int addTail(TableOfContentList &tl, TableOfContent data)
 {
 	if (tl.size == MAX)
 	{
@@ -83,7 +83,7 @@ int addTail(TableOfContentList& tl, TableOfContent data)
 	tl.size++;
 	return 1;
 } // done
-int themTheoThuTuTheLoai(TableOfContentList& tl, TableOfContent data)
+int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent data)
 {
 	int locate;
 	if (tl.size == 0)
@@ -156,7 +156,7 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 // 	}
 // 	return NULL;
 // }
-string generateID(TableOfContent* p, int i)
+string generateID(TableOfContent *p, int i)
 {
 	string id = "";
 	if (i >= 0 && i < 9)
@@ -170,12 +170,12 @@ string generateID(TableOfContent* p, int i)
 	return id;
 }
 
-BookList createBookList(TableOfContent* p)
+BookList createBookList(TableOfContent *p)
 {
-	BookList* list = new BookList;
+	BookList *list = new BookList;
 	for (int i = 0; i < p->dms.size; i++)
 	{
-		nodeB* newNode = new nodeB;
+		nodeB *newNode = new nodeB;
 		newNode->data.BookStatus = 0;
 		newNode->data.BookID = generateID(p, i);
 		if (list->tail == nullptr)
@@ -203,7 +203,7 @@ struct Date
 
 struct BorrowAndReturn
 {
-	string bookID="";
+	string bookID = "";
 	Date BorrowDate;
 	Date ReturnDate;
 };
@@ -211,16 +211,15 @@ struct BorrowAndReturn
 struct nodeBAR
 {
 	BorrowAndReturn data;
-	nodeBAR* next = nullptr;
+	nodeBAR *next = nullptr;
 };
 
 struct BorrowAndReturnList
 {
-	nodeBAR* head = nullptr;
-	nodeBAR* tail = nullptr;
+	nodeBAR *head = nullptr;
+	nodeBAR *tail = nullptr;
 	int size = 0;
 };
-
 
 /////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
 struct Reader
@@ -237,23 +236,23 @@ struct Reader
 struct nodeRC
 {
 	Reader data;
-	nodeRC* left = nullptr;
-	nodeRC* right = nullptr;
+	nodeRC *left = nullptr;
+	nodeRC *right = nullptr;
 };
 
 struct ReaderList
 {
-	nodeRC* head = nullptr;
+	nodeRC *head = nullptr;
 	int size = 0;
-	string* notusedid = new string[MAX];
+	string *notusedid = new string[MAX];
 };
 
-
-Date currentTime(){
+Date currentTime()
+{
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
 	time_t now = time(0);
-   	tm *ltm = localtime(&now);
+	tm *ltm = localtime(&now);
 	// in ra các thành phần của cấu trúc tm struct
 	timeeee.year = 1900 + ltm->tm_year;
 	timeeee.month = 1 + ltm->tm_mon;
@@ -261,103 +260,100 @@ Date currentTime(){
 	return timeeee;
 }
 
-
-
 int convertMonthtoDay(int month)
 {
-	switch(month)
+	switch (month)
 	{
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			return 31;
-		case 2: return 28;
-		default: return 30;
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		return 31;
+	case 2:
+		return 28;
+	default:
+		return 30;
 	}
 }
 
 int compareDate(Date returnDate)
 {
-	Date cur=currentTime();
-	
-	if(cur.year>returnDate.year)
+	Date cur = currentTime();
+
+	if (cur.year > returnDate.year)
 	{
 		return 1;
 	}
-	else if(cur.month>returnDate.month)
+	else if (cur.month > returnDate.month)
 	{
 		return 1;
 	}
-	else if(cur.day>returnDate.day)
+	else if (cur.day > returnDate.day)
 	{
 		return 1;
 	}
-	
+
 	return 0;
 }
 
 int countOverdueDay(Date returnDate)
 {
-	Date cur=currentTime();
-	int year=cur.year-returnDate.year;
-	int count=365*year;
-	int month=cur.month-returnDate.month;
-	if(month>0)
+	Date cur = currentTime();
+	int year = cur.year - returnDate.year;
+	int count = 365 * year;
+	int month = cur.month - returnDate.month;
+	if (month > 0)
 	{
-		for(int i=returnDate.month+1;i<=cur.month;i++)
+		for (int i = returnDate.month + 1; i <= cur.month; i++)
 		{
-			count+=convertMonthtoDay(i);
+			count += convertMonthtoDay(i);
 		}
 	}
 	else
 	{
-		for(int i=cur.month+1;i<=returnDate.month;i++)
+		for (int i = cur.month + 1; i <= returnDate.month; i++)
 		{
-			count-=convertMonthtoDay(i);
+			count -= convertMonthtoDay(i);
 		}
 	}
-	int day=cur.day-returnDate.day;
-	count+=day;
+	int day = cur.day - returnDate.day;
+	count += day;
 	return count;
 }
 
-
-
-int TotalOverdue(nodeRC* p)
+int TotalOverdue(nodeRC *p)
 {
-	nodeBAR* b=p->data.dsmt.head;
-	int total=0;
-	for(int i=0;i<p->data.dsmt.size;i++)
+	nodeBAR *b = p->data.dsmt.head;
+	int total = 0;
+	for (int i = 0; i < p->data.dsmt.size; i++)
 	{
-		Date returnDate=b->data.ReturnDate;
-		if(returnDate.day==0||returnDate.month==0||returnDate.year==0)
+		Date returnDate = b->data.ReturnDate;
+		if (returnDate.day == 0 || returnDate.month == 0 || returnDate.year == 0)
 		{
-			b=b->next;
+			b = b->next;
 		}
 		else
 		{
-			if(compareDate(b->data.ReturnDate))
+			if (compareDate(b->data.ReturnDate))
 			{
-				total+=countOverdueDay(b->data.ReturnDate);
+				total += countOverdueDay(b->data.ReturnDate);
 			}
-			b=b->next;
+			b = b->next;
 		}
 	}
 	return total;
 }
 
-
-int checkBorrowed(TableOfContent* p)
+int checkBorrowed(TableOfContent *p)
 {
-	int n=p->dms.size;
-	nodeB* tmp=p->dms.head;
-	for(int i=0;i<n;i++)
+	int n = p->dms.size;
+	nodeB *tmp = p->dms.head;
+	for (int i = 0; i < n; i++)
 	{
-		if(tmp->data.BookStatus==0)
+		if (tmp->data.BookStatus == 0)
 		{
 			return 0;
 		}
@@ -365,17 +361,15 @@ int checkBorrowed(TableOfContent* p)
 	return 0;
 }
 
-
-
 Date HandleLogicalTime(Date time)
 {
 	time.day += 7;
-	if(time.day > convertMonthtoDay(time.month) && time.month < 12)
+	if (time.day > convertMonthtoDay(time.month) && time.month < 12)
 	{
 		time.day = time.day - convertMonthtoDay(time.month);
 		time.month++;
 	}
-	else if(time.day > convertMonthtoDay(time.month) && time.month == 12)
+	else if (time.day > convertMonthtoDay(time.month) && time.month == 12)
 	{
 		time.month = 1;
 		time.day = time.day - convertMonthtoDay(12);
@@ -384,23 +378,26 @@ Date HandleLogicalTime(Date time)
 	return time;
 }
 
-int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
+int addBorrowedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
 {
-	if (dsmt.size >= 3) {
+	if (dsmt.size >= 3)
+	{
 		return 0;
 	}
-	if(p->data.BorrowDate.day==0)
+	if (p->data.BorrowDate.day == 0)
 	{
 		p->data.BorrowDate = currentTime();
 	}
-	p->data.ReturnDate=HandleLogicalTime(p->data.BorrowDate);
-	if (dsmt.size == 0) {
+	p->data.ReturnDate = HandleLogicalTime(p->data.BorrowDate);
+	if (dsmt.size == 0)
+	{
 		dsmt.head = p;
 		dsmt.tail = p;
 		dsmt.size++;
 		return 1;
 	}
-	else {
+	else
+	{
 		dsmt.tail->next = p;
 		dsmt.tail = p;
 		dsmt.size++;
@@ -409,47 +406,55 @@ int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
 	return 0;
 }
 
-int returnedBook(BorrowAndReturnList& dsmt, nodeBAR* p) {
-	if (dsmt.size == 0) {
+int returnedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
+{
+	if (dsmt.size == 0)
+	{
 		return 0;
 	}
-	nodeBAR* tmp = dsmt.head;
-	while (tmp != nullptr) {
-		if (tmp==p) 
+	nodeBAR *tmp = dsmt.head;
+	while (tmp != nullptr)
+	{
+		if (tmp == p)
 		{
-			if (tmp == dsmt.head) 
+			if (tmp == dsmt.head)
 			{
 				dsmt.head = tmp->next;
 				dsmt.size--;
 				delete tmp;
 				return 1;
 			}
-			else if (tmp == dsmt.tail) {
-				if (dsmt.head->next == tmp) {
-					dsmt.tail = dsmt.head;
+			else if (p == dsmt.tail)
+			{
+				nodeBAR *prev = dsmt.head;
+				while (prev->next != p)
+				{
+					prev = prev->next;
 				}
-				else {
-					dsmt.tail = dsmt.head->next;
-				}
+
+				dsmt.tail = prev;
+				dsmt.tail->next = nullptr;
+				delete p;
 				dsmt.size--;
-				delete tmp;
+
+				if (dsmt.size == 0)
+				{
+					dsmt.head = dsmt.tail = nullptr;
+				}
+
 				return 1;
 			}
-			else {
-			/*	dsmt.head->next = dsmt.tail;
-				dsmt.size--;
-				tmp->next=nullptr;
+			else
+			{
+				nodeBAR *prev = dsmt.head;
+				while (prev->next != tmp)
+				{
+					prev = prev->next;
+				}
+				prev->next = tmp->next;
 				delete tmp;
-				return 1;*/
-				nodeBAR* prev = dsmt.head;
-    while (prev->next != tmp) {
-        prev = prev->next;
-    }
-    prev->next = tmp->next;
-    dsmt.size--;
-    tmp->next=nullptr;
-    delete tmp;
-    return 1;
+				dsmt.size--;
+				return 1;
 			}
 		}
 		tmp = tmp->next;
@@ -459,17 +464,17 @@ int returnedBook(BorrowAndReturnList& dsmt, nodeBAR* p) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-nodeB* makeNodeBook(Book data)
+nodeB *makeNodeBook(Book data)
 {
-	nodeB* p = new nodeB;
+	nodeB *p = new nodeB;
 	p->data = data;
 	p->next = nullptr;
 	return p;
 }
 
-int addNodeBook(BookList& l, Book data)
+int addNodeBook(BookList &l, Book data)
 {
-	nodeB* p = makeNodeBook(data);
+	nodeB *p = makeNodeBook(data);
 	if (l.head == nullptr)
 	{
 		l.head = p;
@@ -479,7 +484,7 @@ int addNodeBook(BookList& l, Book data)
 	}
 	else
 	{
-		nodeB* preB = l.head;
+		nodeB *preB = l.head;
 		if (p->data.BookID >= l.head->data.BookID)
 		{
 			p->next = l.head;
@@ -487,7 +492,7 @@ int addNodeBook(BookList& l, Book data)
 			++l.size;
 			return 1;
 		}
-		for (nodeB* i = l.head; i->next != nullptr; i = i->next) // duyet tu dau toi cuoi
+		for (nodeB *i = l.head; i->next != nullptr; i = i->next) // duyet tu dau toi cuoi
 		{
 			if (p->data.BookID >= i->data.BookID) // khi id cua sach can them >id cua i thi chen p truoc i
 			{
@@ -506,7 +511,7 @@ int addNodeBook(BookList& l, Book data)
 	return 0;
 }
 
-int deleteNodeBC(BookList& l, string ID)
+int deleteNodeBC(BookList &l, string ID)
 {
 	if (l.head == NULL) // khi danh sach rong thi ko xoa duoc
 	{
@@ -514,15 +519,15 @@ int deleteNodeBC(BookList& l, string ID)
 	}
 	else if (l.head->data.BookID == ID) // phan tu dau co id can xoa
 	{
-		nodeB* tmp = l.head;
+		nodeB *tmp = l.head;
 		l.head = tmp->next;
 		delete tmp;
 		return 1;
 	}
 	else
 	{
-		nodeB* tmp = l.head->next;
-		nodeB* pre = l.head;
+		nodeB *tmp = l.head->next;
+		nodeB *pre = l.head;
 		while (tmp != NULL)
 		{
 			if (tmp->data.BookID == ID)
@@ -541,16 +546,16 @@ int deleteNodeBC(BookList& l, string ID)
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////////
-nodeRC* makeNodeReader(Reader data)
+nodeRC *makeNodeReader(Reader data)
 {
-	nodeRC* p = new nodeRC;
+	nodeRC *p = new nodeRC;
 	p->data = data;
 	p->left = NULL;
 	p->right = NULL;
 	return p;
 }
 
-string createID(string* notusedid, int n) // tao ID doc gia
+string createID(string *notusedid, int n) // tao ID doc gia
 {
 
 	string s = notusedid[0];
@@ -561,66 +566,80 @@ string createID(string* notusedid, int n) // tao ID doc gia
 	return s;
 }
 
-void releaseID(string* notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
+void releaseID(string *notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
 {
 	notusedid[n] = ID;
 }
 
-int treeLevel(nodeRC* t) // tim do cao cua node
+int treeLevel(nodeRC *t) // tim do cao cua node
 {
-	if (t == nullptr) return -1;
-	if (t->left == nullptr && t->right == nullptr) return 1;
+	if (t == nullptr)
+		return -1;
+	if (t->left == nullptr && t->right == nullptr)
+		return 1;
 	return 1 + max(treeLevel(t->left), treeLevel(t->right));
 }
-bool checkAvl(nodeRC* root) // kiem tra cay la AVL hay chua
+bool checkAvl(nodeRC *root) // kiem tra cay la AVL hay chua
 {
-	if (root == nullptr)	return true;
-	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1) return false;
+	if (root == nullptr)
+		return true;
+	if (abs(treeLevel(root->left) - treeLevel(root->right)) > 1)
+		return false;
 	return checkAvl(root->left) && checkAvl(root->right);
 }
-nodeRC* turnRight(nodeRC* a) // xoay phai
+nodeRC *turnRight(nodeRC *a) // xoay phai
 {
-	nodeRC* b = a->left;
-	nodeRC* c = b->right;
+	nodeRC *b = a->left;
+	nodeRC *c = b->right;
 	a->left = c;
 	b->right = a;
 	return b;
 }
-nodeRC* turnLeft(nodeRC* a) // xoay trai
+nodeRC *turnLeft(nodeRC *a) // xoay trai
 {
-	nodeRC* b = a->right;
-	nodeRC* c = b->left;
+	nodeRC *b = a->right;
+	nodeRC *c = b->left;
 	a->right = c;
 	b->left = a;
 	return b;
 }
 
-int height(nodeRC* t) {
-	if (t == nullptr) return -1;
+int height(nodeRC *t)
+{
+	if (t == nullptr)
+		return -1;
 	return max(height(t->left), height(t->right)) + 1;
 }
 
-nodeRC* updateTreeAvl(nodeRC* root)
+nodeRC *updateTreeAvl(nodeRC *root)
 {
-	if (root == nullptr) return root;
-	else if (checkAvl(root)) return root;
+	if (root == nullptr)
+		return root;
+	else if (checkAvl(root))
+		return root;
 
 	int balance = height(root->left) - height(root->right);
 
-	if (balance > 1) {
-		if (height(root->left->left) >= height(root->left->right)) {
+	if (balance > 1)
+	{
+		if (height(root->left->left) >= height(root->left->right))
+		{
 			root = turnRight(root);
 		}
-		else {
+		else
+		{
 			root->left = turnLeft(root->left);
 			root = turnRight(root);
 		}
 	}
-	else if (balance < -1) {
-		if (height(root->right->right) >= height(root->right->left)) {
+	else if (balance < -1)
+	{
+		if (height(root->right->right) >= height(root->right->left))
+		{
 			root = turnLeft(root);
 		}
-		else {
+		else
+		{
 			root->right = turnRight(root->right);
 			root = turnLeft(root);
 		}
@@ -632,14 +651,15 @@ nodeRC* updateTreeAvl(nodeRC* root)
 	return root;
 }
 
-int addNodeReader(ReaderList& l, Reader data)
+int addNodeReader(ReaderList &l, Reader data)
 {
-	nodeRC* p = makeNodeReader(data);
-	if(TotalOverdue(p)>0)
+	nodeRC *p = makeNodeReader(data);
+	if (TotalOverdue(p) > 0)
 	{
-		p->data.CardStatus=0;
+		p->data.CardStatus = 0;
 	}
-	if (p->data.ID == "") p->data.ID = createID(l.notusedid, MAX - l.size);
+	if (p->data.ID == "")
+		p->data.ID = createID(l.notusedid, MAX - l.size);
 	if (l.head == nullptr)
 	{
 		l.head = p;
@@ -649,7 +669,7 @@ int addNodeReader(ReaderList& l, Reader data)
 	else
 	{
 		string newID = p->data.ID;
-		nodeRC* tmp = l.head;
+		nodeRC *tmp = l.head;
 
 		while (tmp != nullptr)
 		{
@@ -684,23 +704,24 @@ int addNodeReader(ReaderList& l, Reader data)
 	return 0;
 }
 
-int findReaderByName(nodeRC* tmp[],nodeRC* t[],int n,string name)
+int findReaderByName(nodeRC *tmp[], nodeRC *t[], int n, string name)
 {
-	int size=0;
-	for(int i=0;i<n;i++)
+	int size = 0;
+	for (int i = 0; i < n; i++)
 	{
-		string s=tmp[i]->data.FirstName + tmp[i]->data.LastName;
-		if(s.find(name)!=std::string::npos)
+		string s = tmp[i]->data.FirstName + tmp[i]->data.LastName;
+		if (s.find(name) != std::string::npos)
 		{
-			t[size++]=tmp[i];
+			t[size++] = tmp[i];
 		}
 	}
 	return size;
 }
 
-nodeRC* findmin(nodeRC* root)
+nodeRC *findmin(nodeRC *root)
 {
-	if (root->left == nullptr) return root;
+	if (root->left == nullptr)
+		return root;
 
 	while (root->left != nullptr)
 	{
@@ -709,27 +730,34 @@ nodeRC* findmin(nodeRC* root)
 	return root;
 }
 
-nodeRC* findReader(nodeRC* root, string id)
+nodeRC *findReader(nodeRC *root, string id)
 {
-	if (root == nullptr) return nullptr;
+	if (root == nullptr)
+		return nullptr;
 	else
 	{
-		if (root->data.ID == id) return root;
-		else if (root->data.ID < id) return findReader(root->right, id);
-		else return findReader(root->left, id);
+		if (root->data.ID == id)
+			return root;
+		else if (root->data.ID < id)
+			return findReader(root->right, id);
+		else
+			return findReader(root->left, id);
 	}
 }
 
-nodeRC* findprenode(nodeRC* root, nodeRC* p)
+nodeRC *findprenode(nodeRC *root, nodeRC *p)
 {
-	if (root == p) return nullptr;
-	if (root == nullptr) return nullptr;
-	nodeRC* pre = root;
+	if (root == p)
+		return nullptr;
+	if (root == nullptr)
+		return nullptr;
+	nodeRC *pre = root;
 	if (pre != nullptr)
 	{
 		while (pre->left != nullptr && pre->right != nullptr)
 		{
-			if (pre->left == p || pre->right == p) break;
+			if (pre->left == p || pre->right == p)
+				break;
 			else if (pre->data.ID > p->data.ID)
 			{
 				pre = pre->left;
@@ -741,10 +769,11 @@ nodeRC* findprenode(nodeRC* root, nodeRC* p)
 		}
 		return pre;
 	}
-	else return nullptr;
+	else
+		return nullptr;
 }
 
-nodeRC* deletenode(nodeRC* p)
+nodeRC *deletenode(nodeRC *p)
 {
 	if (p->left == nullptr && p->right == nullptr)
 	{
@@ -752,27 +781,28 @@ nodeRC* deletenode(nodeRC* p)
 	}
 	else if (p->left == nullptr)
 	{
-		nodeRC* a = p->right;
+		nodeRC *a = p->right;
 		delete p;
 		return a;
 	}
 	else if (p->right == nullptr)
 	{
-		nodeRC* a = p->left;
+		nodeRC *a = p->left;
 		delete p;
 		return a;
 	}
 	else
 	{
-		nodeRC* tmp = findmin(p->right);
+		nodeRC *tmp = findmin(p->right);
 		p->data.ID = tmp->data.ID;
 		p->data.FirstName = tmp->data.FirstName;
 		p->data.LastName = tmp->data.LastName;
 		p->data.Gender = tmp->data.Gender;
 		p->data.CardStatus = tmp->data.CardStatus;
 		p->data.dsmt = tmp->data.dsmt;
-		nodeRC* pre = findprenode(p->right, tmp);
-		if (pre == nullptr) p->right = deletenode(tmp);
+		nodeRC *pre = findprenode(p->right, tmp);
+		if (pre == nullptr)
+			p->right = deletenode(tmp);
 		else
 		{
 			pre->left = tmp->right;
@@ -796,20 +826,3 @@ string findBookName(TableOfContentList tl, string id)
 	}
 	return "";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
