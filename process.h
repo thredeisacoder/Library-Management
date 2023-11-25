@@ -886,6 +886,7 @@ int loadFileReader(ReaderList& rl)
 			b->data.BorrowDate.year = stringtoint(l);
 			addBorrowedBook(p->dsmt,b);
 		}
+
 		addNodeReader(rl, *p);
 		rl.head = updateTreeAvl(rl.head);
 		delete p;
@@ -928,6 +929,7 @@ void printReader(fstream& f, nodeRC* p)
 		f << tmp->data.BorrowDate.day << endl;
 		f << tmp->data.BorrowDate.month << endl;
 		f << tmp->data.BorrowDate.year << endl;
+		tmp=tmp->next;
 	}
 }
 
@@ -1077,106 +1079,3 @@ void resetIDRCfile()
 	f.close();
 }
 
-
-
-int convertMonthtoDay(int month)
-{
-	switch(month)
-	{
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			return 31;
-		case 2: return 28;
-		default: return 30;
-	}
-}
-
-int compareDate(Date returnDate)
-{
-	Date cur=currentTime();
-	
-	if(cur.year>returnDate.year)
-	{
-		return 1;
-	}
-	else if(cur.month>returnDate.month)
-	{
-		return 1;
-	}
-	else if(cur.day>returnDate.day)
-	{
-		return 1;
-	}
-	
-	return 0;
-}
-
-int countOverdueDay(Date returnDate)
-{
-	Date cur=currentTime();
-	int year=cur.year-returnDate.year;
-	int count=365*year;
-	int month=cur.month-returnDate.month;
-	if(month>0)
-	{
-		for(int i=returnDate.month+1;i<=cur.month;i++)
-		{
-			count+=convertMonthtoDay(i);
-		}
-	}
-	else
-	{
-		for(int i=cur.month+1;i<=returnDate.month;i++)
-		{
-			count-=convertMonthtoDay(i);
-		}
-	}
-	int day=cur.day-returnDate.day;
-	count+=day;
-	return count;
-}
-
-
-
-int TotalOverdue(nodeRC* p)
-{
-	nodeBAR* b=p->data.dsmt.head;
-	int total=0;
-	for(int i=0;i<p->data.dsmt.size;i++)
-	{
-		Date returnDate=b->data.ReturnDate;
-		if(returnDate.day==0||returnDate.month==0||returnDate.year==0)
-		{
-			b=b->next;
-		}
-		else
-		{
-			if(compareDate(b->data.ReturnDate))
-			{
-				total+=countOverdueDay(b->data.ReturnDate);
-			}
-			b=b->next;
-		}
-	}
-	return total;
-}
-
-
-int checkBorrowed(TableOfContent* p)
-{
-	int n=p->dms.size;
-	nodeB* tmp=p->dms.head;
-	for(int i=0;i<n;i++)
-	{
-		if(tmp->data.BookStatus==0)
-		{
-			return 0;
-		}
-	}
-	return 0;
-}

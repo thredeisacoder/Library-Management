@@ -503,16 +503,14 @@ void displayBAR(nodeBAR *head, int y, string name)
 	displayDate(head->data.ReturnDate);
 }
 
-void watchingReaderMode(ReaderList &rl)
+void watchingReaderMode(nodeRC* tmp[],int n)
 {
-	int count = 20, n = 0;
+	int count = 20;
 	bool sid=true;
-	nodeRC *tmp[MAX];
-	tranvertree(rl.head, tmp, n);
 	sortbyID(tmp,n);
-	ReaderTable(tmp, rl.size, count);
+	ReaderTable(tmp, n, count);
 	gotoxy(130, 10);
-	cout << "ESC: Return to enter ID";
+	cout << "ESC: Cancel";
 	while (true)
 	{
 		char c = _getch();
@@ -526,15 +524,15 @@ void watchingReaderMode(ReaderList &rl)
 				continue;
 			count -= 20;
 			clearReaderTable();
-			displaytree(tmp, rl.size, count);
+			displaytree(tmp, n, count);
 		}
 		else if (c == 77) // right
 		{
-			if (count >= rl.size)
+			if (count >= n)
 				continue;
 			count += 20;
 			clearReaderTable();
-			displaytree(tmp, rl.size, count);
+			displaytree(tmp, n, count);
 		}
 		else if(c==32)
 		{
@@ -941,6 +939,41 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 				clearReaderTable();
 				displaytree(tmp, rl.size, count);
 				controlReaderTable(rl, tmp, count);
+				break;
+			}
+		}
+		else if(c==9)//tab
+		{
+			gotoxy(130,20);
+			SetBGColor(9); cout<<"ENTER NAME TO FIND : "; SetBGColor(15);
+			string s="";
+			gotoxy(130,21);
+			ShowCur(true); s=EnterFirstName(s);ShowCur(false);
+			if (s=="") 
+			{
+				gotoxy(130,20);
+				cout<<"                                ";
+				continue;
+			}
+			else
+			{
+				nodeRC* t[MAX];
+				int size=findReaderByName(tmp,t,rl.size,s);
+				if (size==0)
+				{
+					gotoxy(130,20);
+					cout<<"                                ";
+					gotoxy(130,21);
+					cout<<"Reader can not be found";
+					Sleep(1500);
+					gotoxy(130,21);
+					cout<<"                        ";
+					continue;
+				}
+				system("cls");
+				watchingReaderMode(t,size);
+				ReaderTable(tmp,size,count);
+				controlReaderTable(rl,tmp,count);
 				break;
 			}
 		}
@@ -1893,10 +1926,10 @@ void controlTOCTable(TableOfContentList & tl, int count)
 	
 	void printBAR(nodeBAR *b,int y)
 	{
-		gotoxy(50,3+2*y);
-		cout<<b->data.bookID<<"  ";
-		cout<<b->data.BorrowDate.day<<"/"<<b->data.BorrowDate.month<<"/"<<b->data.BorrowDate.year<<"\t\t";
-		cout<<b->data.ReturnDate.day<<"/"<<b->data.ReturnDate.month<<"/"<<b->data.ReturnDate.year<<"\t\t";
+		gotoxy(15,3+2*y);
+		cout<<b->data.bookID<<"\t\t\t\t\t\t";
+		cout<<b->data.BorrowDate.day<<"/"<<b->data.BorrowDate.month<<"/"<<b->data.BorrowDate.year<<"\t\t\t\t";
+		cout<<b->data.ReturnDate.day<<"/"<<b->data.ReturnDate.month<<"/"<<b->data.ReturnDate.year;
 	}
 	
 	void BARofReader(nodeRC* p)
@@ -1941,6 +1974,124 @@ void controlTOCTable(TableOfContentList & tl, int count)
 			y++;
 		}
 	}
+
+void resetBookStatus(TableOfContentList& tl, nodeBAR* b,string isbn)
+{
+	for(int i=0;i<tl.size;i++)
+	{
+		if(tl.ds[i]->ISBN==isbn)
+		{
+			nodeB* t=tl.ds[i]->dms.head;
+			while(t!=nullptr)
+			{
+				if(t->data.BookID==b->data.bookID)
+				{
+					t->data.BookStatus=0;
+				}
+				t=t->next;
+			}
+		}		
+	}
+}
+
+void returnMode(nodeRC* p,TableOfContentList& tl)
+{
+	gotoxy(10,3+2*4);
+	Tick(wherex(),wherey());
+	while(true)
+	{
+		char c=_getch();
+		if(c==27)//esc
+		{
+			return;
+		}
+		else if(c==72)//up
+		{
+			if(wherey()==3+4*2)
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3+(3+p->data.dsmt.size)*2);
+				Tick(wherex(),wherey());
+			}
+			else
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),wherey()-2);
+				Tick(wherex(),wherey());
+			}
+		
+		}
+		else if(c==80)//down
+		{
+			if(wherey()==3+(3+p->data.dsmt.size)*2)
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),3+2*4);
+				Tick(wherex(),wherey());
+			}
+			else
+			{
+				UnTick(wherex(),wherey());
+				gotoxy(wherex(),wherey()+2);
+				Tick(wherex(),wherey());
+			}
+		}
+		else if(c==13)//enter
+		{
+			UnTick(wherex(),wherey());
+			if(wherey()==3+2*4)//head
+			{
+				nodeBAR* b=p->data.dsmt.head;
+				string isbn="";
+				for(int i=0;i<4;i++)
+				{
+					isbn+=b->data.bookID[i];
+				}
+				resetBookStatus(tl,b,isbn);
+				returnedBook(p->data.dsmt,b);
+
+				gotoxy(50,30);
+				cout<<"RETURN SUCCESSFULLY!!!";
+				Sleep(2000);
+				break;
+			}
+			else if(wherey()==3+2*5)
+			{
+				nodeBAR* b=p->data.dsmt.head->next;
+				cout<<b->data.bookID; system("pause");
+				string isbn="";
+				for(int i=0;i<4;i++)
+				{
+					isbn+=b->data.bookID[i];
+				}				
+				resetBookStatus(tl,b,isbn);
+				returnedBook(p->data.dsmt,b);
+
+				gotoxy(50,30);
+				cout<<"RETURN SUCCESSFULLY!!!";
+				Sleep(2000);
+				break;
+			}
+			else 
+			{
+				nodeBAR* b=p->data.dsmt.tail;
+				string isbn="";
+				for(int i=0;i<4;i++)
+				{
+					isbn+=b->data.bookID[i];
+				}
+				resetBookStatus(tl,b,isbn);
+				returnedBook(p->data.dsmt,b);
+
+				gotoxy(50,30);
+				cout<<"RETURN SUCCESSFULLY!!!";
+				Sleep(2000);
+				break;
+			}
+		}
+		else continue;
+	}
+}
 
 	void controlBAR(ReaderList & rl, TableOfContentList & tl, int count,nodeRC* p)
 	{
@@ -2004,6 +2155,16 @@ void controlTOCTable(TableOfContentList & tl, int count)
 						gotoxy(134,2);
 						continue;
 					}
+					else if(p->data.CardStatus==0)
+					{
+						gotoxy(50,25);
+						cout<<"CARD IS LOCKED, CAN NOT BORROW!!";
+						Sleep(2000);
+						gotoxy(50,25);
+						cout<<"                                         ";
+						gotoxy(134,2);
+						continue;
+					}
 					system("cls");
 					BorrowMode(p,tl);
 					system("cls"); 
@@ -2021,6 +2182,21 @@ void controlTOCTable(TableOfContentList & tl, int count)
 						gotoxy(50,25);
 						cout<<"                 ";
 						continue;
+					}
+					else
+					{
+						returnMode(p,tl);
+						if(p->data.CardStatus==0)
+						{
+							if(TotalOverdue(p)<=0)
+							{
+								p->data.CardStatus=1;
+							}
+						}
+						system("cls");
+						BARofReader(p);
+						controlBAR(rl,tl,count,p);
+						break;
 					}
 				}
 			}
@@ -2046,7 +2222,10 @@ nodeRC* EnterIDtoBorrowandReturn(ReaderList rl)
 	else if (id == " ")
 	{
 		system("cls");
-		watchingReaderMode(rl);
+		nodeRC* tmp[MAX];
+		int size=0;
+		tranvertree(rl.head,tmp,size);
+		watchingReaderMode(tmp,size);
 		system("cls");
 		return EnterIDtoBorrowandReturn(rl);
 		
@@ -2190,7 +2369,7 @@ void OverdueReader(ReaderList rl)
 		char c=_getch();
 		if(c==27)//esc
 		{
-			return;
+			break;
 		}
 		else if (c == 75) /// left
 		{
@@ -2208,6 +2387,7 @@ void OverdueReader(ReaderList rl)
 		}
 		else continue;
 	}
+	delete[] OverdueArr;
 }
 
 

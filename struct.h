@@ -222,6 +222,33 @@ struct BorrowAndReturnList
 };
 
 
+/////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
+struct Reader
+{
+	string ID = "";
+	string Gender = "";
+	string FirstName = "";
+	string LastName = "";
+	int CardStatus = 1;
+
+	BorrowAndReturnList dsmt;
+};
+
+struct nodeRC
+{
+	Reader data;
+	nodeRC* left = nullptr;
+	nodeRC* right = nullptr;
+};
+
+struct ReaderList
+{
+	nodeRC* head = nullptr;
+	int size = 0;
+	string* notusedid = new string[MAX];
+};
+
+
 Date currentTime(){
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
@@ -233,6 +260,130 @@ Date currentTime(){
 	timeeee.day = ltm->tm_mday;
 	return timeeee;
 }
+
+
+
+int convertMonthtoDay(int month)
+{
+	switch(month)
+	{
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			return 31;
+		case 2: return 28;
+		default: return 30;
+	}
+}
+
+int compareDate(Date returnDate)
+{
+	Date cur=currentTime();
+	
+	if(cur.year>returnDate.year)
+	{
+		return 1;
+	}
+	else if(cur.month>returnDate.month)
+	{
+		return 1;
+	}
+	else if(cur.day>returnDate.day)
+	{
+		return 1;
+	}
+	
+	return 0;
+}
+
+int countOverdueDay(Date returnDate)
+{
+	Date cur=currentTime();
+	int year=cur.year-returnDate.year;
+	int count=365*year;
+	int month=cur.month-returnDate.month;
+	if(month>0)
+	{
+		for(int i=returnDate.month+1;i<=cur.month;i++)
+		{
+			count+=convertMonthtoDay(i);
+		}
+	}
+	else
+	{
+		for(int i=cur.month+1;i<=returnDate.month;i++)
+		{
+			count-=convertMonthtoDay(i);
+		}
+	}
+	int day=cur.day-returnDate.day;
+	count+=day;
+	return count;
+}
+
+
+
+int TotalOverdue(nodeRC* p)
+{
+	nodeBAR* b=p->data.dsmt.head;
+	int total=0;
+	for(int i=0;i<p->data.dsmt.size;i++)
+	{
+		Date returnDate=b->data.ReturnDate;
+		if(returnDate.day==0||returnDate.month==0||returnDate.year==0)
+		{
+			b=b->next;
+		}
+		else
+		{
+			if(compareDate(b->data.ReturnDate))
+			{
+				total+=countOverdueDay(b->data.ReturnDate);
+			}
+			b=b->next;
+		}
+	}
+	return total;
+}
+
+
+int checkBorrowed(TableOfContent* p)
+{
+	int n=p->dms.size;
+	nodeB* tmp=p->dms.head;
+	for(int i=0;i<n;i++)
+	{
+		if(tmp->data.BookStatus==0)
+		{
+			return 0;
+		}
+	}
+	return 0;
+}
+
+
+
+Date HandleLogicalTime(Date time)
+{
+	time.day += 7;
+	if(time.day > convertMonthtoDay(time.month) && time.month < 12)
+	{
+		time.day = time.day - convertMonthtoDay(time.month);
+		time.month++;
+	}
+	else if(time.day > convertMonthtoDay(time.month) && time.month == 12)
+	{
+		time.month = 1;
+		time.day = time.day - convertMonthtoDay(12);
+		time.year++;
+	}
+	return time;
+}
+
 int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
 {
 	if (dsmt.size >= 3) {
@@ -242,8 +393,7 @@ int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
 	{
 		p->data.BorrowDate = currentTime();
 	}
-	p->data.ReturnDate=p->data.BorrowDate;
-	p->data.ReturnDate.day+=7;
+	p->data.ReturnDate=HandleLogicalTime(p->data.BorrowDate);
 	if (dsmt.size == 0) {
 		dsmt.head = p;
 		dsmt.tail = p;
@@ -258,6 +408,7 @@ int addBorrowedBook(BorrowAndReturnList& dsmt, nodeBAR* p)
 	}
 	return 0;
 }
+
 int returnedBook(BorrowAndReturnList& dsmt, nodeBAR* p) {
 	if (dsmt.size == 0) {
 		return 0;
@@ -285,41 +436,26 @@ int returnedBook(BorrowAndReturnList& dsmt, nodeBAR* p) {
 				return 1;
 			}
 			else {
-				dsmt.head->next = dsmt.tail;
+			/*	dsmt.head->next = dsmt.tail;
 				dsmt.size--;
+				tmp->next=nullptr;
 				delete tmp;
-				return 1;
+				return 1;*/
+				nodeBAR* prev = dsmt.head;
+    while (prev->next != tmp) {
+        prev = prev->next;
+    }
+    prev->next = tmp->next;
+    dsmt.size--;
+    tmp->next=nullptr;
+    delete tmp;
+    return 1;
 			}
 		}
 		tmp = tmp->next;
 	}
 	return 0;
 }
-/////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
-struct Reader
-{
-	string ID = "";
-	string Gender = "";
-	string FirstName = "";
-	string LastName = "";
-	int CardStatus = 1;
-
-	BorrowAndReturnList dsmt;
-};
-
-struct nodeRC
-{
-	Reader data;
-	nodeRC* left = nullptr;
-	nodeRC* right = nullptr;
-};
-
-struct ReaderList
-{
-	nodeRC* head = nullptr;
-	int size = 0;
-	string* notusedid = new string[MAX];
-};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -499,6 +635,10 @@ nodeRC* updateTreeAvl(nodeRC* root)
 int addNodeReader(ReaderList& l, Reader data)
 {
 	nodeRC* p = makeNodeReader(data);
+	if(TotalOverdue(p)>0)
+	{
+		p->data.CardStatus=0;
+	}
 	if (p->data.ID == "") p->data.ID = createID(l.notusedid, MAX - l.size);
 	if (l.head == nullptr)
 	{
@@ -544,6 +684,19 @@ int addNodeReader(ReaderList& l, Reader data)
 	return 0;
 }
 
+int findReaderByName(nodeRC* tmp[],nodeRC* t[],int n,string name)
+{
+	int size=0;
+	for(int i=0;i<n;i++)
+	{
+		string s=tmp[i]->data.FirstName + tmp[i]->data.LastName;
+		if(s.find(name)!=std::string::npos)
+		{
+			t[size++]=tmp[i];
+		}
+	}
+	return size;
+}
 
 nodeRC* findmin(nodeRC* root)
 {
