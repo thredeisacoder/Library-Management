@@ -39,19 +39,7 @@ Tran Phi
 Hung
 MALE
 1
-3
-It01_05
-25
-11
-2023
-It03_05
-25
-11
-2023
-It03_04
-25
-11
-2023
+0
 0003
 Nguyen Cao Thai
 Toan
