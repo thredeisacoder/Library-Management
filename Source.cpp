@@ -1473,7 +1473,7 @@ void TranverNotBorrowed(TableOfContentList &tl, TableOfContentList &tmp)
 	{
 		if (!checkBorrowed(tl.ds[i]))
 		{
-			tmp.ds[i] = tl.ds[i];
+			tmp.ds[tmp.size] = tl.ds[i];
 			tmp.size++;
 		}
 	}
@@ -1924,15 +1924,18 @@ void controlTOCTable(TableOfContentList &tl, int count)
 	}
 }
 
-void printBAR(nodeBAR *b, int y)
+void printBAR(nodeBAR *b, int y, TableOfContentList tl)
 {
-	gotoxy(15, 3 + 2 * y);
-	cout << b->data.bookID << "\t\t\t\t\t\t";
-	cout << b->data.BorrowDate.day << "/" << b->data.BorrowDate.month << "/" << b->data.BorrowDate.year << "\t\t\t\t";
+	string name = findBookName(tl, b->data.bookID);
+	gotoxy(12, 3 + 2 * y);
+	cout << b->data.bookID << "\t";
+	cout << name;
+	gotoxy(72, 3 + 2 * y);
+	cout << b->data.BorrowDate.day << "/" << b->data.BorrowDate.month << "/" << b->data.BorrowDate.year << "\t\t";
 	cout << b->data.ReturnDate.day << "/" << b->data.ReturnDate.month << "/" << b->data.ReturnDate.year;
 }
 
-void BARofReader(nodeRC *p)
+void BARofReader(nodeRC *p, TableOfContentList tl)
 {
 	SetBGColor(6);
 	gotoxy(10, 7);
@@ -1966,12 +1969,12 @@ void BARofReader(nodeRC *p)
 	SetBGColor(15);
 	displayReader(p, 2);
 	int y = 4;
-	gotoxy(15, 1 + 2 * y);
-	cout << "BookID\t\t\t\t\t\t" << "Borrowed Date\t\t\t\t" << "Return Date";
+	gotoxy(12, 1 + 2 * y);
+	cout << "BookID\t" << "Name\t\t\t\t\t\t" << "Borrowed Date\t\t" << "Return Date\t" << "Status";
 	nodeBAR *b = p->data.dsmt.head;
 	while (b != nullptr)
 	{
-		printBAR(b, y);
+		printBAR(b, y, tl);
 		b = b->next;
 		y++;
 	}
@@ -2166,7 +2169,7 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 				system("cls");
 				BorrowMode(p, tl);
 				system("cls");
-				BARofReader(p);
+				BARofReader(p, tl);
 				controlBAR(rl, tl, count, p);
 				return;
 			}
@@ -2193,7 +2196,7 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 						}
 					}
 					system("cls");
-					BARofReader(p);
+					BARofReader(p, tl);
 					controlBAR(rl, tl, count, p);
 					break;
 				}
@@ -2562,7 +2565,7 @@ void Control(ReaderList &rl, TableOfContentList &tl)
 					nodeRC *p = EnterIDtoBorrowandReturn(rl);
 					if (p != nullptr)
 					{
-						BARofReader(p);
+						BARofReader(p, tl);
 						controlBAR(rl, tl, count, p);
 					}
 				}

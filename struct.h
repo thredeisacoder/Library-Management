@@ -204,6 +204,7 @@ struct Date
 struct BorrowAndReturn
 {
 	string bookID = "";
+	int status = 0;
 	Date BorrowDate;
 	Date ReturnDate;
 };
@@ -357,8 +358,9 @@ int checkBorrowed(TableOfContent *p)
 		{
 			return 0;
 		}
+		tmp = tmp->next;
 	}
-	return 0;
+	return 1;
 }
 
 Date HandleLogicalTime(Date time)
@@ -816,7 +818,9 @@ nodeRC *deletenode(nodeRC *p)
 string findBookName(TableOfContentList tl, string id)
 {
 	string isbn = "";
-	isbn += id[0] + id[1] + id[2] + id[3] + id[4];
+	for(int i = 0; i < 4; i++){
+		isbn += id[i];
+	}
 	for (int i = 0; i < tl.size; i++)
 	{
 		if (tl.ds[i]->ISBN == isbn)
