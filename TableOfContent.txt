@@ -6,16 +6,16 @@ Chuyen Nganh
 2001
 5
 It01_05
-0
+1
 It01_04
 0
 It01_03
 0
 It01_02
-0
+2
 It01_01
 0
-1
+2
 It03
 Lap Trinh Java
 Na
@@ -24,16 +24,16 @@ Chuyen Nganh
 2001
 5
 It03_05
-0
+1
 It03_04
 0
 It03_03
-0
+2
 It03_02
 0
 It03_01
 0
-2
+3
 It04
 Lap Trinh Javascript
 Na
@@ -42,11 +42,11 @@ Chuyen Nganh
 2004
 7
 It04_07
-0
+1
 It04_06
 0
 It04_05
-0
+2
 It04_04
 0
 It04_03
@@ -55,7 +55,7 @@ It04_02
 0
 It04_01
 0
-0
+1
 It02
 Lap Trinh Python
 Na
@@ -64,14 +64,14 @@ Chuyen Nganh
 2010
 4
 It02_04
-0
+1
 It02_03
-0
+1
 It02_02
-0
+1
 It02_01
-0
-0
+1
+6
 B002
 Dai So Tuyen Tinh
 Na
@@ -80,7 +80,7 @@ Co Ban
 2001
 7
 B002_07
-0
+1
 B002_06
 0
 B002_05
@@ -88,12 +88,12 @@ B002_05
 B002_04
 0
 B002_03
-0
+2
 B002_02
 0
 B002_01
 0
-0
+1
 B001
 Giai Tich
 Na
@@ -102,7 +102,7 @@ Co Ban
 2004
 5
 B001_05
-0
+1
 B001_04
 0
 B001_03
@@ -111,9 +111,9 @@ B001_02
 0
 B001_01
 0
-0
+1
 B004
-Giai Tich Fake
+Giai Tich 2
 Na
 Co Ban
 222
@@ -308,10 +308,10 @@ Van Hoc
 2004
 2
 Vh03_02
-0
+1
 Vh03_01
 0
-0
+1
 Vh02
 Vo Chong A Phu
 Na
