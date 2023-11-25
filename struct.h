@@ -424,7 +424,7 @@ int returnedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
 				delete tmp;
 				return 1;
 			}
-			else if (p == dsmt.tail)
+			else if (dsmt.tail == p)
 			{
 				nodeBAR *prev = dsmt.head;
 				while (prev->next != p)
