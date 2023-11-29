@@ -1020,7 +1020,7 @@ void clearTableTOC()
 }
 
 // danh sach dau sach
-void tableEnterTOC(TableOfContentList &tl)
+void tableEnterTOC(TableOfContentList &tl, string &getISBN)
 {
 	TableOfContent *p = new TableOfContent;
 	SetColor(16);
@@ -1104,6 +1104,7 @@ void tableEnterTOC(TableOfContentList &tl)
 	{
 		return;
 	}
+	getISBN = p->ISBN;
 	gotoxy(x + width - 45, y + 16);
 	p->dms.size = enterNumBooks(p->dms.size);
 	if (p->dms.size == 0)
@@ -2163,11 +2164,20 @@ void controlTOCTable(TableOfContentList &tl, int count)
 			SetBGColor(15);
 			if (wherey() == 3) // add
 			{
+				count = 19;
+				string getISBN = "";
 				system("cls");
-				tableEnterTOC(tl);
+				tableEnterTOC(tl, getISBN);
 				system("cls");
-				TableTOC(tl, count);
-				controlTOCTable(tl, count);
+				if(count < tl.size){
+					for(int i = count - 19; i < count; i++){
+						if(tl.ds[i]->ISBN == getISBN){
+							break;
+						}
+					}
+					TableTOC(tl, count);
+					controlTOCTable(tl, count);
+				}
 				break;
 			}
 			else if (wherey() == 7) // edit
