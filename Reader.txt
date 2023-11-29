@@ -21,7 +21,11 @@ Nguyen Doan Cong
 Tien
 MALE
 1
-0
+1
+B002_06
+29
+11
+2023
 0002
 Nguyen Van
 Thanh
@@ -81,9 +85,13 @@ Nguyen Cao Thai
 Toan
 MALE
 1
-1
+2
 It02_01
 26
+11
+2023
+It03_01
+29
 11
 2023
 0006
@@ -97,7 +105,15 @@ Nguyen Hai
 Dong
 MALE
 1
-0
+2
+Kn02_04
+27
+11
+2023
+It03_02
+29
+11
+2023
 0010
 Nguyen Quoc
 An
@@ -164,6 +180,12 @@ Hung
 MALE
 1
 0
+0033
+Cao Duy
+Thai
+MALE
+1
+0
 0028
 Nguyen Bao
 Long
@@ -176,12 +198,6 @@ Huy
 MALE
 1
 0
-0023
-Mai Hoang
-Long
-MALE
-1
-0
 0022
 Nguyen Thanh
 Tam
@@ -191,6 +207,12 @@ MALE
 0021
 Dang Nhat
 Nam
+MALE
+1
+0
+0023
+Mai Hoang
+Long
 MALE
 1
 0
@@ -209,12 +231,6 @@ MALE
 0026
 Tran Cong
 Hau
-MALE
-1
-0
-0033
-Cao Duy
-Thai
 MALE
 1
 0
@@ -242,6 +258,12 @@ Tri
 MALE
 1
 0
+0038
+Luong Truong
+Dai
+MALE
+1
+0
 0036
 Nguyen Vu Viet
 Cuong
@@ -260,15 +282,15 @@ Thai
 MALE
 1
 0
-0038
-Luong Truong
-Dai
-MALE
-1
-0
 0037
 Ho Van
 Duong
+MALE
+1
+0
+0041
+Uong
+Son
 MALE
 1
 0
@@ -284,9 +306,23 @@ Quang
 MALE
 1
 0
-0041
-Uong
-Son
+0042
+Dinh Tri
+Tai
 MALE
 1
-0
+1
+B007_03
+29
+11
+2023
+0043
+Cao Duy
+Thai
+MALE
+1
+1
+Kn02_03
+29
+11
+2023

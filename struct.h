@@ -73,17 +73,23 @@ int compare(TableOfContentList tl, TableOfContent data)
 	return 1;
 } // done
 
-int addTail(TableOfContentList &tl, TableOfContent data)
+int addTail(TableOfContentList &tl, TableOfContent& data)
 {
 	if (tl.size == MAX)
 	{
 		return 0;
 	}
+	nodeB* tmp=data.dms.head;
+	while(tmp!=nullptr)
+	{
+		tmp->data.BookLocation+="No."+to_string(tl.size+1);
+		tmp=tmp->next;
+	}
 	tl.ds[tl.size] = new TableOfContent(data);
 	tl.size++;
 	return 1;
 } // done
-int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent data)
+int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent& data)
 {
 	int locate;
 	if (tl.size == 0)
@@ -102,6 +108,12 @@ int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent data)
 		for (int i = tl.size; i > locate; i--)
 		{
 			tl.ds[i] = tl.ds[i - 1];
+		}
+			nodeB* tmp=data.dms.head;
+		while(tmp!=nullptr)
+		{
+			tmp->data.BookLocation+="No."+to_string(tl.size+1);
+			tmp=tmp->next;
 		}
 		tl.ds[locate] = new TableOfContent(data);
 		tl.size++;
@@ -129,7 +141,8 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 	int index = 0;
 	for (int i = 0; i < tl.size; i++)
 	{
-		if (!tl.ds[i]->BookName.find(input)) // tim ten sach chua chuoi nguoi dung nhap
+		string name=tl.ds[i]->BookName;
+		if (name.find(input)!=std::string::npos) // tim ten sach chua chuoi nguoi dung nhap
 		{
 			for (int j = 0; j < tl.ds[i]->dms.size; j++)
 			{

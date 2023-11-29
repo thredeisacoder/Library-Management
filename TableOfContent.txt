@@ -30,10 +30,10 @@ It03_04
 It03_03
 2
 It03_02
-0
+1
 It03_01
-0
-3
+1
+7
 It04
 Lap Trinh Javascript
 Na
@@ -82,7 +82,7 @@ Co Ban
 B002_07
 1
 B002_06
-0
+1
 B002_05
 0
 B002_04
@@ -93,7 +93,7 @@ B002_02
 0
 B002_01
 0
-1
+2
 B001
 Giai Tich
 Na
@@ -232,12 +232,12 @@ Co Ban
 2019
 3
 B007_03
-0
+1
 B007_02
 0
 B007_01
 0
-0
+1
 Kn01
 Ki Nang Thuyet Trinh
 Na
@@ -262,14 +262,14 @@ Ki Nang
 1996
 4
 Kn02_04
-0
+1
 Kn02_03
-0
+1
 Kn02_02
 0
 Kn02_01
 0
-0
+2
 Vh01
 Chi Pheo
 Na
@@ -283,7 +283,7 @@ Vh01_02
 0
 Vh01_01
 0
-0
+1
 Vh04
 Chiec Luoc Nga
 Na
@@ -299,7 +299,7 @@ Vh04_02
 0
 Vh04_01
 0
-0
+1
 Vh03
 Nguoi Lai Do Song Da
 Na
@@ -335,4 +335,4 @@ Vh06_02
 0
 Vh06_01
 0
-0
+1
