@@ -253,7 +253,7 @@ void sortbyID(nodeRC *tmp[], int n)
 	}
 }
 // nhap doc gia moi
-void tableEnterRC(ReaderList &rl)
+string tableEnterRC(ReaderList &rl)
 {
 	ShowCur(true);
 	Reader *p = new Reader;
@@ -290,33 +290,36 @@ void tableEnterRC(ReaderList &rl)
 	if (p->FirstName == "")
 	{
 		delete p;
-		return;
+		return "";
 	}
 	gotoxy(x + width / 6 + 28, y + 11);
 	p->LastName = EnterLastName(p->LastName);
 	if (p->LastName == "")
 	{
 		delete p;
-		return;
+		return "";
 	}
 	gotoxy(x + width / 6 + 47, y + 11);
 	p->Gender = EnterGender(p->Gender);
 	if (p->Gender == "")
 	{
 		delete p;
-		return;
+		return "";
 	}
 	ShowCur(false);
 	gotoxy(x, y + 15);
+	string s= "";
 	int n = addNodeReader(rl, *p);
 	if (n == 1)
+	{
 		cout << "~ADD Successfully~";
-	else
-		cout << "Can not add";
+		s=p->ID;
+	}
+	else cout << "Can not add";
 	rl.head = updateTreeAvl(rl.head);
 	delete p;
-	gotoxy(x, y + 16);
 	Sleep(1000);
+	return s;
 }
 
 void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
@@ -533,7 +536,7 @@ void watchingReaderMode(nodeRC *tmp[], int n)
 			clearReaderTable();
 			displaytree(tmp, n, count);
 		}
-		else if (c == 32)
+		else if (c == 32)//space
 		{
 			clearReaderTable();
 			if (sid == true)
@@ -547,6 +550,43 @@ void watchingReaderMode(nodeRC *tmp[], int n)
 				sid = true;
 				sortbyID(tmp, n);
 				displaytree(tmp, n, count);
+			}
+		}
+		else if(c==9)//tab
+		{
+			gotoxy(130, 20);
+			SetBGColor(10);
+			cout << "ENTER NAME TO FIND : ";
+			SetBGColor(15);
+			string s = "";
+			gotoxy(130, 21);
+			ShowCur(true);
+			s = EnterFirstName(s);
+			ShowCur(false);
+			if (s == "")
+			{
+				gotoxy(130, 20);
+				cout << "                                ";
+				continue;
+			}
+			else
+			{
+				nodeRC *t[MAX];
+				int size = findReaderByName(tmp, t, n, s);
+				if (size == 0)
+				{
+					gotoxy(130, 20);
+					cout << "                                ";
+					gotoxy(130, 21);
+					cout << "Reader can not be found";
+					Sleep(1500);
+					gotoxy(130, 21);
+					cout << "                        ";
+					continue;
+				}
+				system("cls");
+				watchingReaderMode(t, size);
+				break;
 			}
 		}
 		else
@@ -888,12 +928,24 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			if (wherey() == 3)//add
 			{
 				system("cls");
-				tableEnterRC(rl);
+				string s=tableEnterRC(rl);
 				ShowCur(false);
-				system("cls");
 				int n = 0;
 				tranvertree(rl.head, tmp, n);
 				sortbyID(tmp, rl.size);
+				count=20;
+				cout<<s;system("pause");
+				if(s!="")
+				{
+					while(count<=rl.size)
+					{
+						if(tmp[count-20]->data.ID<=s&&tmp[count]->data.ID>=s)
+						{
+							break;
+						}
+						count+=20;
+					}
+				}
 				system("cls");
 				ReaderTable(tmp, rl.size, count);
 				controlReaderTable(rl, tmp, count);
@@ -1020,7 +1072,7 @@ void clearTableTOC()
 }
 
 // danh sach dau sach
-string tableEnterTOC(TableOfContentList &tl, string &getISBN)
+string tableEnterTOC(TableOfContentList &tl)
 {
 	TableOfContent *p = new TableOfContent;
 	SetColor(16);
@@ -1034,13 +1086,13 @@ string tableEnterTOC(TableOfContentList &tl, string &getISBN)
 	gotoxy(x, y + height / 4 + 3);
 	cout << "Author - 32 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 4);
-	cout << "Number Page - 5 chars"; // hdsd
+	cout << "Number Page - maximum:5 numbers"; // hdsd
 	gotoxy(x, y + height / 4 + 5);
-	cout << "Public Year - 4 chars"; // hdsd
+	cout << "Public Year - maximum: 4 numbers- Can not be larger than current year"; // hdsd
 	gotoxy(x, y + height / 4 + 6);
 	cout << "ISBN - 6 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 7);
-	cout << "The number of books - 2 chars"; // hdsd
+	cout << "The number of books - maximum 99"; // hdsd
 	for (int i = x; i < x + width + 25; i++)
 	{
 		SetBGColor(14);
@@ -1072,44 +1124,43 @@ string tableEnterTOC(TableOfContentList &tl, string &getISBN)
 	p->BookName = EnterBookName(p->BookName);
 	if (p->BookName == "")
 	{
-		return;
+		return "";
 	}
 	gotoxy(x + width - 79, y + 11);
 	p->Genre = EnterGenre(p->Genre);
 	if (p->Genre == "")
 	{
-		return;
+		return"";
 	}
 	gotoxy(x + width - 59, y + 11);
 	p->Author = EnterAuthor(p->Author);
 	if (p->Author == "")
 	{
-		return;
+		return"";
 	}
 	gotoxy(x + width - 20, y + 11);
 	p->NumOfPage = enterNumPage(p->NumOfPage);
 	if (p->NumOfPage == "")
 	{
-		return;
+		return"";
 	}
 	gotoxy(x + width - 2, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
 	if (p->PublicYear == "")
 	{
-		return;
+		return"";
 	}
 	gotoxy(x + width + 10, y + 11);
 	p->ISBN = EnterISBN(p->ISBN);
 	if (p->ISBN == "")
 	{
-		return;
+		return"";
 	}
-	getISBN = p->ISBN;
 	gotoxy(x + width - 45, y + 16);
 	p->dms.size = enterNumBooks(p->dms.size);
 	if (p->dms.size == 0)
 	{
-		return;
+		return"";
 	}
 	p->dms = createBookList(p);
 	ShowCur(false);
@@ -1174,7 +1225,7 @@ void loadListTOC(TableOfContentList tl, int count)
 	}
 }
 
-void loadListSearch(TableOfContentList tl, int count, int &flag)
+void loadListSearch(TableOfContentList tl, int& count, int &flag)
 {
 	int yTOC = 3; // chi?`u cao ha`ng d?`u ti?n
 	for (int i = count - 19; i < count; i++)
@@ -2100,7 +2151,7 @@ void controlTOCTable(TableOfContentList &tl, int count)
 			SetBGColor(15);
 			break;
 		}
-		if (c == 72) // khi nguoi dung nhan UP
+		else if (c == 72) // khi nguoi dung nhan UP
 		{
 			if (wherey() == 3)
 			{
@@ -2168,17 +2219,15 @@ void controlTOCTable(TableOfContentList &tl, int count)
 				count = 19;
 				system("cls");
 				string locateISBN = tableEnterTOC(tl);
-				system("cls");
-				while(count < tl.size){
-					for(int i = count - 19; i < count; i++){
-						if(tl.ds[i]->ISBN == locateISBN){
-							break;
-						}
+				if(locateISBN!="")
+					while(count <= tl.size){
+						if(tl.ds[count-19]->ISBN<=locateISBN &&locateISBN<=tl.ds[count]->ISBN) break;
+						else count+=19;
 					}
-					count+=19;
-				}
-					TableTOC(tl, count);
-					controlTOCTable(tl, count);
+				system("cls");
+
+				TableTOC(tl, count);
+				controlTOCTable(tl, count);
 				break;
 			}
 			else if (wherey() == 7) // edit
@@ -2216,7 +2265,6 @@ void controlTOCTable(TableOfContentList &tl, int count)
 				controlTOCTable(tl,count);
 				break;
 			} 
-			
 		}
 		else
 		{

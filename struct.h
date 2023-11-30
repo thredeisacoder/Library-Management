@@ -666,7 +666,7 @@ nodeRC *updateTreeAvl(nodeRC *root)
 	return root;
 }
 
-int addNodeReader(ReaderList &l, Reader data)
+int addNodeReader(ReaderList &l, Reader& data)
 {
 	nodeRC *p = makeNodeReader(data);
 	if (TotalOverdue(p) > 0)
@@ -674,7 +674,10 @@ int addNodeReader(ReaderList &l, Reader data)
 		p->data.CardStatus = 0;
 	}
 	if (p->data.ID == "")
+	{
 		p->data.ID = createID(l.notusedid, MAX - l.size);
+		data.ID=p->data.ID;
+	}
 	if (l.head == nullptr)
 	{
 		l.head = p;

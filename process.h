@@ -711,6 +711,8 @@ string enterName(string Name)
 
 string enterYear(string n)
 {
+	Date p=currentTime();
+	string s=to_string(p.year);
 	cout << n;
 	char c;
 	while (true)
@@ -720,9 +722,9 @@ string enterYear(string n)
 		{
 			return "";
 		}
-		if (c == 13)
+		if (c == 13)//enter
 		{
-			if (n == "") continue;
+			if (n == ""||n>s) continue;
 			else break;
 		}
 		else if (c == 8)
