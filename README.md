@@ -10,7 +10,7 @@ Thư viện: Ta tổ chức các danh sách sau:
 Chương trình có các chức năng sau: 
 - a. Nhập thẻ độc giả: thêm / xóa / hiệu chỉnh thông tin thẻ độc giả. Mã thẻ độc giả được chương trình tự động lấy ngẫu nhiên và không trùng với các mã thẻ độc giả cũ; Phái chỉ nhận ‘Nam’ hoặc ‘Nữ’; trạng thái thẻ = 0 khi thẻ bị khóa, trạng thái thẻ = 1 khi thẻ  đang hoạt động (được quyền mượn sách). 
 - b. In danh sách độc giả : in ra màn hình theo thứ tự tên+họ tăng dần hoặc theo thứ tự mã độc giả tăng dần theo yêu cầu của thủ thư.
-- c. Nhập thông tin đầu sách và đánh mã sách tự động (ISBN = 3 kí tự chữ + 3 kí tự số);(Mã sách = ISBN + 0001, số tăng dần);
+- c. Nhập thông tin đầu sách và đánh mã sách tự động (ISBN = 2 kí tự chữ + 2 kí tự số);(Mã sách = ISBN + 0001, số tăng dần);
 - d. In danh sách các đầu sách trong thư viện theo từng thể loại, trong từng thể loại thì in theo thứ tự tên sách tăng dần. (P->dms)
 - e. Tìm thông tin sách dựa vào tên sách : in ra các thông tin mã ISBN, tên sách, tác giả, năm xuất bản, thể loại, các mã sách , trạng thái mã sách trong thư viện.
 - f. Mượn sách : nhập vào mã thẻ độc giả, chương trình sẽ liệt kê các sách mà độc giả đang mượn. Mỗi độc giả chỉ được mượn tối đa 3 cuốn, không cho mượn khi giữ 1 sách quá hạn (7 ngày)
