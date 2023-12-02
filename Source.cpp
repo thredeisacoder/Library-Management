@@ -1,4 +1,3 @@
-
 #include "mylib.h"
 #include "struct.h"
 #include "process.h"
@@ -259,11 +258,13 @@ string tableEnterRC(ReaderList &rl)
 	Reader *p = new Reader;
 	SetColor(16);
 	int x = 10, y = 2, width = 120, height = 80;
-	gotoxy(x, y + height / 4);
+	SetBGColor(10);
+	gotoxy(x+width/4, y + height / 4);
 	cout << "GENDER: 1 FOR MALE OR 2 FOR FEMALE !";
-	gotoxy(x, y + height / 4 + 1);
+	gotoxy(x+width/4, y + height / 4 + 1);
 	cout << "STATUS: 0(LOCKED) OR 1(UNLOCKED)";
-	for (int i = x + width / 6; i < x + width * 5 / 6; i++)
+	SetBGColor(10);
+	for (int i = x + width / 6; i < x + width * 4/5-5; i++)
 	{
 		SetBGColor(14);
 		gotoxy(i, y + 8);
@@ -273,18 +274,26 @@ string tableEnterRC(ReaderList &rl)
 		gotoxy(i, y + 12);
 		cout << " ";
 	}
+	for(int i=0;i<=2;i+=2)
+	{
+		gotoxy(30,11+i); cout<<" ";
+		gotoxy(56,11+i); cout<<" ";
+		gotoxy(70,11+i); cout<<" ";
+		gotoxy(85,11+i); cout<<" ";
+		gotoxy(100,11+i); cout<<" ";
+	}
 	SetBGColor(15);
-	gotoxy(x + width / 6 + 1, y + 9);
-	cout << "| FIRST NAME | ";
-	gotoxy(x + width / 6 + 25, y + 9);
-	cout << " | LAST NAME | ";
+	gotoxy(x + width / 6 + 8, y + 9);
+	cout << "FIRST NAME";
+	gotoxy(x + width / 6 + 28, y + 9);
+	cout << "LAST NAME";
 	gotoxy(x + width / 6 + 45, y + 9);
-	cout << " | GENDER | ";
+	cout << "GENDER";
 	gotoxy(x + width / 6 + 60, y + 9);
-	cout << " | STATUS | ";
+	cout << "STATUS";
 
-	gotoxy(x + width / 6 + 62, y + 11);
-	cout << p->CardStatus;
+	gotoxy(x + width / 6 + 57, y + 11);
+	cout << p->CardStatus<<"(activated)";
 	gotoxy(x + width / 6 + 1, y + 11);
 	p->FirstName = EnterFirstName(p->FirstName);
 	if (p->FirstName == "")
@@ -299,7 +308,7 @@ string tableEnterRC(ReaderList &rl)
 		delete p;
 		return "";
 	}
-	gotoxy(x + width / 6 + 47, y + 11);
+	gotoxy(x + width / 6 + 44, y + 11);
 	p->Gender = EnterGender(p->Gender);
 	if (p->Gender == "")
 	{
@@ -615,6 +624,19 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 		{
 			UnTick(wherex(), wherey());
 			int pos = count - 20 + (wherey() - 3) / 2;
+			if(tmp[pos]->data.dsmt.size!=0)
+			{
+				SetBGColor(20);
+				SetColor(10);
+				gotoxy(130,20);
+				cout<<"BORROWING, CAN'T DELETE";
+				Sleep(1500);
+				SetBGColor(15);
+				SetColor(0);
+				gotoxy(130,20);
+				cout<<"                        ";
+				break;
+			}
 			string s = tmp[pos]->data.ID;
 			nodeRC *p = findprenode(rl.head, tmp[pos]);
 			if (p == nullptr)
@@ -626,8 +648,8 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 			gotoxy(130, 30);
 			cout << "DELETE SUCCESSFULLY!!!!";
 			Sleep(2000);
-			cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-			cout << "                             ";
+			gotoxy(130,30);
+			cout << "                           ";
 			releaseID(rl.notusedid, MAX - rl.size, s);
 			rl.size--;
 			break;
@@ -934,7 +956,6 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 				tranvertree(rl.head, tmp, n);
 				sortbyID(tmp, rl.size);
 				count=20;
-				cout<<s;system("pause");
 				if(s!="")
 				{
 					while(count<=rl.size)
@@ -967,7 +988,6 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 					controlReaderTable(rl, tmp, count);
 					break;
 				}
-
 				gotoxy(132, 20);
 				deleteReaderMode(rl, tmp, count);
 				resetpointerarray(tmp, rl.size);
@@ -1093,7 +1113,7 @@ string tableEnterTOC(TableOfContentList &tl)
 	cout << "ISBN - 6 chars"; // hdsd
 	gotoxy(x, y + height / 4 + 7);
 	cout << "The number of books - maximum 99"; // hdsd
-	for (int i = x; i < x + width + 25; i++)
+	for (int i = x; i < x + width + 18; i++)
 	{
 		SetBGColor(14);
 		gotoxy(i, y + 8);
@@ -1102,19 +1122,41 @@ string tableEnterTOC(TableOfContentList &tl)
 		cout << " ";
 		gotoxy(i, y + 12);
 		cout << " ";
+		for(int j=0;j<=2;j+=2)
+		{
+			gotoxy(x,11+j);		cout<<" ";
+			gotoxy(x+30,11+j);  cout<<" ";
+			gotoxy(x+50,11+j);  cout<<" ";
+			gotoxy(x+86,11+j);  cout<<" ";
+			gotoxy(x+104,11+j); cout<<" ";
+			gotoxy(x+122,11+j); cout<<" ";
+			gotoxy(x+137,11+j); cout<<" ";
+		}
 	}
+	
+	for(int i=0;i<=40;i++)
+	{
+		gotoxy(x+width-65+i,y+14); cout<<" ";
+		gotoxy(x+width-65+i,y+17); cout<<" ";
+	}
+	gotoxy(x+width-65,y+15); cout<<"  ";
+	gotoxy(x+width-26,y+15); cout<<"  ";
+	gotoxy(x+width-65,y+16); cout<<"  ";
+	gotoxy(x+width-26,y+16); cout<<"  ";
+	
+	
 	SetBGColor(15);
-	gotoxy(x + 17, y + 9);
+	gotoxy(x + 10, y + 9);
 	cout << "| NAME |";
-	gotoxy(x + width - 79, y + 9);
+	gotoxy(x + width - 83, y + 9);
 	cout << "| GENRE | ";
-	gotoxy(x + width - 49, y + 9);
+	gotoxy(x + width - 57, y + 9);
 	cout << "| AUTHOR | ";
-	gotoxy(x + width - 23, y + 9);
+	gotoxy(x + width - 32, y + 9);
 	cout << "| NUMBER PAGE | ";
-	gotoxy(x + width - 6, y + 9);
+	gotoxy(x + width - 14, y + 9);
 	cout << "| PUBLIC YEAR | ";
-	gotoxy(x + width + 10, y + 9);
+	gotoxy(x + width + 6, y + 9);
 	cout << "| ISBN | ";
 	gotoxy(x + width - 59, y + 15);
 	cout << "| Enter the number of books | ";
@@ -1126,31 +1168,31 @@ string tableEnterTOC(TableOfContentList &tl)
 	{
 		return "";
 	}
-	gotoxy(x + width - 79, y + 11);
+	gotoxy(x + width - 87, y + 11);
 	p->Genre = EnterGenre(p->Genre);
 	if (p->Genre == "")
 	{
 		return"";
 	}
-	gotoxy(x + width - 59, y + 11);
+	gotoxy(x + width - 67, y + 11);
 	p->Author = EnterAuthor(p->Author);
 	if (p->Author == "")
 	{
 		return"";
 	}
-	gotoxy(x + width - 20, y + 11);
+	gotoxy(x + width - 27, y + 11);
 	p->NumOfPage = enterNumPage(p->NumOfPage);
 	if (p->NumOfPage == "")
 	{
 		return"";
 	}
-	gotoxy(x + width - 2, y + 11);
+	gotoxy(x + width - 10, y + 11);
 	p->PublicYear = enterYear(p->PublicYear);
 	if (p->PublicYear == "")
 	{
 		return"";
 	}
-	gotoxy(x + width + 10, y + 11);
+	gotoxy(x + width + 6, y + 11);
 	p->ISBN = EnterISBN(p->ISBN);
 	if (p->ISBN == "")
 	{
@@ -1877,6 +1919,7 @@ void deleteTOCMode(TableOfContentList& tl,int &count)
 		}
 		else if (c == 13)
 		{ // enter
+			
 			int pos=count - 19 + (wherey() - 3) / 2;
 			nodeB* tmp=tl.ds[pos]->dms.head;
 			while(tmp!=nullptr)
@@ -2005,7 +2048,7 @@ void liquidatingMode(TableOfContentList& tl,int &count)
 		else if (c == 27)
 		{ // esc
 			UnTick(wherex(), wherey());
-			return;
+			break;
 		}
 		else if (c == 13)
 		{ // enter
@@ -2260,8 +2303,6 @@ void controlTOCTable(TableOfContentList &tl, int count)
 			else//liquidate
 			{
 				liquidatingMode(tl,count);
-				system("cls");
-				TableTOC(tl,count);
 				controlTOCTable(tl,count);
 				break;
 			} 
@@ -2556,8 +2597,24 @@ nodeRC *EnterIDtoBorrowandReturn(ReaderList rl)
 {
 	system("cls");
 	ShowCur(true);
+	SetBGColor(9);
+	for(int i=0;i<=65;i++)
+	{
+		gotoxy(45+i,19); cout<<" ";
+		gotoxy(45+i,21);cout<<" ";
+		gotoxy(45+i,23);cout<<" ";
+		for(int j=0;j<=4;j++)
+		{
+			gotoxy(45,19+j); cout<<" ";
+			gotoxy(110,19+j); cout<<" ";
+		}
+	}
+	SetBGColor(20);
+	SetColor(15);
 	gotoxy(50, 22);
 	cout << "NOTE: only 4 numbers!, enter SPACE to open Reader List";
+	SetBGColor(15);
+	SetColor(0);
 	gotoxy(50, 20);
 	cout << "ENTER CARD ID: ";
 	gotoxy(70, 20);
@@ -2995,15 +3052,17 @@ int main()
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
 	ShowCur(false);
-//	loading();
+	//loading();
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
+	
 	if (n == 0 || m == 0)
 	{
 		cout << "CAN'T LOAD FILE\n";
 		system("pause");
 		return 0;
 	}
+	
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);

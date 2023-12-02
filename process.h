@@ -66,8 +66,16 @@ string EnterISBN(string s)
 		}
 		if (c == 13)//enter
 		{
-			if (s == "")
+			if (s.length()<4)
 			{
+				int x=wherex();
+				int y=wherey();
+				SetColor(20);
+				gotoxy(130,25); cout<<"NOT ENOUGH 4 CHARS";
+				SetColor(0);
+				Sleep(1500);
+				gotoxy(130,25); cout<<"                   ";
+				gotoxy(x,y);
 				continue;
 			}
 			else break;
@@ -724,7 +732,20 @@ string enterYear(string n)
 		}
 		if (c == 13)//enter
 		{
-			if (n == ""||n>s) continue;
+			if (n == ""||(n>s&&s.length()==n.length())||n=="0000"||n=="0"||n=="00"||n=="000")
+			{
+				int x=wherex();
+				int y=wherey();
+				SetColor(20);
+				gotoxy(130,24);
+				cout<<"INVALID YEAR";
+				SetColor(0);
+				Sleep(1500);
+				gotoxy(130,24);
+				cout<<"            ";
+				gotoxy(x,y);
+				continue;
+			}
 			else break;
 		}
 		else if (c == 8)
@@ -767,7 +788,7 @@ string enterNumPage(string n)
 		}
 		else if (c == 8)
 		{
-			if (n == "") continue;
+			if (n == ""||n=="0000"||n=="0"||n=="00"||n=="000") continue;
 			putchar('\b');
 			putchar(' ');
 			putchar('\b');
