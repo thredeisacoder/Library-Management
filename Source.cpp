@@ -1506,12 +1506,12 @@ void editTOC(TableOfContent* &tmp, int y)
 	tmp->dms.head==nullptr;
 	delete tmp;
 	tmp = p;
-	gotoxy(130, 20);
+	gotoxy(130, 25);
 	cout << "~EDIT SUCCESSFULL!!!~";
-
 	gotoxy(1, y);
 	UnTick(wherex(), wherey());
 	Sleep(1500);
+	system("cls");
 }
 
 void TableTOC(TableOfContentList &tl, int count)
@@ -2057,14 +2057,19 @@ void liquidatingMode(TableOfContentList& tl,int &count)
 			if(n==1)
 			{
 				system("cls");
+				gotoxy(70, 20);
 				cout<<"LIQUIDATE SUCCESSFULLY";
 				Sleep(1500);
+				system("cls");
 			}
 			else
 			{
 				UnTick(wherex(),wherey());
+				system("cls");
+				gotoxy(70, 20);
 				cout<<"CAN NOT LIQUIDATE";
 				Sleep(1500); 
+				system("cls");
 			}
 			break;
 		}
@@ -2303,6 +2308,7 @@ void controlTOCTable(TableOfContentList &tl, int count)
 			else//liquidate
 			{
 				liquidatingMode(tl,count);
+				TableTOC(tl, count);
 				controlTOCTable(tl,count);
 				break;
 			} 
