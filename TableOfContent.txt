@@ -1,6 +1,6 @@
 It01
 Lap Trinh Cpp
-Na
+Bjarne Stroustrup
 Chuyen Nganh
 240
 2001
@@ -18,7 +18,7 @@ It01_01
 2
 It03
 Lap Trinh Java
-Na
+Herbert Schildt
 Chuyen Nganh
 300
 2001
@@ -36,7 +36,7 @@ It03_01
 7
 It04
 Lap Trinh Javascript
-Na
+Elisabeth Robson
 Chuyen Nganh
 310
 2004
@@ -58,7 +58,7 @@ It04_01
 1
 It02
 Lap Trinh Python
-Na
+Eric Matthes
 Chuyen Nganh
 230
 2010
@@ -74,7 +74,7 @@ It02_01
 6
 B002
 Dai So Tuyen Tinh
-Na
+Bui Xuan Dieu
 Co Ban
 400
 2001
@@ -96,7 +96,7 @@ B002_01
 2
 B001
 Giai Tich
-Na
+Pham Ngoc Anh
 Co Ban
 200
 2004
@@ -114,7 +114,7 @@ B001_01
 1
 B004
 Giai Tich 2
-Na
+Bui Xuan Dieu
 Co Ban
 222
 2004
@@ -134,7 +134,7 @@ B004_01
 0
 B009
 Hoa Dai Cuong 1
-Na
+Nguyen Dinh Chi
 Co Ban
 300
 2004
@@ -192,7 +192,7 @@ B006_01
 0
 B008
 Toan Logic
-Na
+Pham Van An
 Co Ban
 102
 2004
@@ -208,7 +208,7 @@ B008_01
 0
 B003
 Toan Roi Rac
-Na
+Hoang Nhat Quy
 Co Ban
 152
 2004
@@ -240,7 +240,7 @@ B007_01
 1
 Kn01
 Ki Nang Thuyet Trinh
-Na
+Nguyen Hai Dong
 Ki Nang
 2001
 2022
@@ -256,7 +256,7 @@ Kn01_01
 0
 Kn02
 Ki Nang Viet Code
-Na
+Tran Phi Hung
 Ki Nang
 222
 1996
@@ -272,7 +272,7 @@ Kn02_01
 2
 Vh01
 Chi Pheo
-Na
+Nam Cao
 Van Hoc
 99
 2004
@@ -286,7 +286,7 @@ Vh01_01
 1
 Vh04
 Chiec Luoc Nga
-Na
+Nguyen Quang Sang
 Van Hoc
 27
 2004
@@ -302,7 +302,7 @@ Vh04_01
 1
 Vh03
 Nguoi Lai Do Song Da
-Na
+Nguyen Tuan
 Van Hoc
 104
 2004
@@ -314,7 +314,7 @@ Vh03_01
 1
 Vh02
 Vo Chong A Phu
-Na
+To Hoai
 Van Hoc
 1004
 2003
@@ -326,7 +326,7 @@ Vh02_01
 0
 Vh06
 Chiec La Cuoi Cung
-Na
+O Henry
 Van Hoc 
 22
 2004
