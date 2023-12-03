@@ -2795,23 +2795,30 @@ void OverdueReader(ReaderList rl)
 	for (int i = 0; i < size; i++)
 	{
 		OverdueArr[i] = TotalOverdue(tmp[i]);
-		if (OverdueArr[i] == 0)
-		{
-			OverdueArr[i] = OverdueArr[i + 1];
-			OverdueArr[i + 1] = 0;
-			tmp[i] = tmp[i + 1];
-			size--;
+		// if (OverdueArr[i] == 0)
+		// {
+		// 	OverdueArr[i] = OverdueArr[i + 1];
+		// 	OverdueArr[i + 1] = 0;
+		// 	tmp[i] = tmp[i + 1];
+		// 	size--;
+		// }
+	}
+
+	// if (OverdueArr[size - 1] == 0)
+	// {
+	// 	tmp[size - 1] = nullptr;
+	// 	size = 0;
+	// }
+
+	if (size > 0){
+		sortOverdue(OverdueArr, tmp, size);
+		for(int i = 0; i < size; i++){
+			if(OverdueArr[i] > 0){
+				gotoxy(120, 2);
+				cout << OverdueArr[i] << endl;
+			}
 		}
 	}
-
-	if (OverdueArr[size - 1] == 0)
-	{
-		tmp[size - 1] = nullptr;
-		size = 0;
-	}
-
-	if (size > 0)
-		sortOverdue(OverdueArr, tmp, size);
 	else
 	{
 		SetBGColor(10);

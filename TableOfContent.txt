@@ -192,7 +192,7 @@ B006_01
 0
 B008
 Toan Logic
-Pham Van An
+Nguyen Van Long
 Co Ban
 102
 2004
@@ -240,7 +240,7 @@ B007_01
 1
 Kn01
 Ki Nang Thuyet Trinh
-Nguyen Hai Dong
+Chu Hong Son
 Ki Nang
 2001
 2022
@@ -256,7 +256,7 @@ Kn01_01
 0
 Kn02
 Ki Nang Viet Code
-Tran Phi Hung
+Nguyen Cao Thang
 Ki Nang
 222
 1996

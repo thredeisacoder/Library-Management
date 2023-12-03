@@ -296,7 +296,6 @@ int convertMonthtoDay(int month)
 int compareDate(Date returnDate)
 {
 	Date cur = currentTime();
-
 	if (cur.year > returnDate.year)
 	{
 		return 1;
@@ -309,7 +308,6 @@ int compareDate(Date returnDate)
 	{
 		return 1;
 	}
-
 	return 0;
 }
 
@@ -319,6 +317,7 @@ int countOverdueDay(Date returnDate)
 	int year = cur.year - returnDate.year;
 	int count = 365 * year;
 	int month = cur.month - returnDate.month;
+	int day;
 	if (month > 0)
 	{
 		for (int i = returnDate.month + 1; i <= cur.month; i++)
@@ -326,14 +325,14 @@ int countOverdueDay(Date returnDate)
 			count += convertMonthtoDay(i);
 		}
 	}
-	else
+	if(month < 0)
 	{
 		for (int i = cur.month + 1; i <= returnDate.month; i++)
 		{
 			count -= convertMonthtoDay(i);
 		}
 	}
-	int day = cur.day - returnDate.day;
+	day = cur.day - returnDate.day;
 	count += day;
 	return count;
 }
