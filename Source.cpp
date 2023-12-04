@@ -578,7 +578,7 @@ void ReaderTable(nodeRC *tmp[], int n, int count)
 		gotoxy(130, 20);
 		cout << "EMPTY";
 	}
-	gotoxy(122, 40);
+	gotoxy(125, 40);
 	cout << "Press SPACE to sort by Name/ID";
 	displaytree(tmp, n, count);
 }
@@ -920,7 +920,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 {
 	SetBGColor(11);
 	SetColor(0);
-	gotoxy(122, 40);
+	gotoxy(125, 40);
 	cout << "Press SPACE to sort by Name/ID";
 	for (int i = 130; i <= 139; i++)
 	{
@@ -2470,7 +2470,7 @@ void BARofReader(nodeRC *p, TableOfContentList tl)
 	displayReader(p, 2);
 	int y = 4;
 	gotoxy(12, 1 + 2 * y);
-	cout << "BookID\t" << "Name\t\t\t\t\t\t" << "Borrowed Date\t\t" << "Return Date\t" << "Status";
+	cout << "BookID\t" << "Name\t\t\t\t\t\t" << "Borrowed Date\t\t" << "Return Date\t";
 	nodeBAR *b = p->data.dsmt.head;
 	while (b != nullptr)
 	{
@@ -3068,7 +3068,11 @@ void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)
 		{
 			displayReader(tmp[i], y);
 			gotoxy(wherex()+10,wherey());
-			cout<< OverdueArr[i];
+			if(OverdueArr[i] <= 1){
+				cout<< OverdueArr[i] << "(day)";
+			}else{
+				cout<< OverdueArr[i] << "(days)";
+			}
 			y ++;
 		}
 	}
