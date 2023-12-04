@@ -173,9 +173,12 @@ void UnHighLight(int x, int y, int width) // tat thanh sang
 	gotoxy(x, y);
 }
 
+
+
 void Tick(int x, int y) // danh dau
 {
 	SetBGColor(20);
+	gotoxy(x,y);
 	cout << "  ";
 	gotoxy(x, y);
 	SetBGColor(15);
@@ -183,8 +186,91 @@ void Tick(int x, int y) // danh dau
 void UnTick(int x, int y) // huy danh dau
 {
 	SetBGColor(15);
+	gotoxy(x,y);
 	cout << "  ";
 	gotoxy(x, y);
+}
+
+int confirm(int x,int y)
+{
+	gotoxy(x,y);
+	SetBGColor(9);
+	for(int i=-1;i<=16;i++)
+	{
+		for(int j=-1;j<=6;j++)
+		{
+			if((i>-1&&i<16)&&(j>-1&&j<6)) continue;
+			gotoxy(x+i,y+j);
+			cout<<" ";
+		}
+	}
+	SetBGColor(20);
+	for(int i=0;i<=15;i++ )
+	{
+		for(int j=0;j<=5;j++)
+		{
+			gotoxy(x+i,y+j);
+			cout<<" ";
+		}		
+	}
+	SetColor(9);
+	gotoxy(x+2,y+1);
+	cout<<"ARE YOU SURE?";
+	gotoxy(x+2,y+3); cout<<"YES";
+	gotoxy(x+10,y+3); cout<<"NO";
+	SetColor(0);
+	SetBGColor(15);
+	gotoxy(x+2,y+3); cout<<"YES";
+	while(true)
+	{
+		char c=_getch();
+		if(c==13)//enter
+		{
+			if(wherex()<=x+5) 
+			{
+				for(int i=-1;i<=16;i++ )
+				{
+					for(int j=-1;j<=6;j++)
+					{
+						gotoxy(x+i,y+j);
+						cout<<" ";
+					}		
+				}
+				return 1;
+			}
+			else
+			{
+				for(int i=-1;i<=16;i++ )
+				{
+					for(int j=-1;j<=6;j++)
+					{
+						gotoxy(x+i,y+j);
+						cout<<" ";
+					}		
+				}
+				return 0;
+			}
+		}
+		else if(c==75||c==77)//left or right
+		{
+			if(wherex()<=x+5)
+			{
+				SetBGColor(20);
+				gotoxy(x+2,y+3); cout<<"YES";
+				SetBGColor(15);
+				gotoxy(x+10,y+3);cout<<"NO";
+			}
+			else 
+			{
+				SetBGColor(20);
+				gotoxy(x+10,y+3); cout<<"NO";
+				SetBGColor(15);
+				gotoxy(x+2,y+3);cout<<"YES";		
+			}
+			continue;
+		}
+		else continue;
+	}
 }
 
 void clearReaderLine(int i)
@@ -621,8 +707,9 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 			break;
 		}
 		else if (c == 13) // enter
-		{
+		{	
 			UnTick(wherex(), wherey());
+			int x=wherex(); int y=wherey();
 			int pos = count - 20 + (wherey() - 3) / 2;
 			if(tmp[pos]->data.dsmt.size!=0)
 			{
@@ -637,7 +724,16 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 				cout<<"                        ";
 				break;
 			}
-			string s = tmp[pos]->data.ID;
+			else 
+			{
+				int a=confirm(130,20);
+				if(a==0) 
+				{
+					Tick(x,y);
+					continue;
+				}
+			}
+			string s=tmp[pos]->data.ID;
 			nodeRC *p = findprenode(rl.head, tmp[pos]);
 			if (p == nullptr)
 				rl.head = deletenode(tmp[pos]);
@@ -1870,8 +1966,8 @@ void deleteTOCMode(TableOfContentList& tl,int &count)
 	while (true)
 	{
 		char c = _getch();
-		if (c == 72)
-		{ // up
+		if (c == 72)//up
+		{ 
 			if (count > tl.size && wherey() == 3)
 			{
 				UnTick(wherex(), wherey());
@@ -1918,8 +2014,9 @@ void deleteTOCMode(TableOfContentList& tl,int &count)
 			return;
 		}
 		else if (c == 13)
-		{ // enter
-			
+		{ // enter			
+			int x=wherex(),y=wherey();
+			UnTick(wherex(),wherey());
 			int pos=count - 19 + (wherey() - 3) / 2;
 			nodeB* tmp=tl.ds[pos]->dms.head;
 			while(tmp!=nullptr)
@@ -1930,11 +2027,18 @@ void deleteTOCMode(TableOfContentList& tl,int &count)
 					cout<<"BEING BORROWED, CAN'T DELETE!";
 					Sleep(1500);
 					gotoxy(127,30);
-					cout<<"                              ";
+					cout<<"                               ";
 					return;
 				}
 				tmp=tmp->next;
 			}
+			int a=confirm(130,20);
+			if(a==0)
+			{
+				Tick(x,y);
+				continue;
+			}
+			
 			delete tl.ds[pos];
 			for(int i=pos;i<tl.size-1;i++) tl.ds[i]=tl.ds[i+1];
 			tl.size--;
@@ -2395,6 +2499,8 @@ void resetBookStatus(TableOfContentList &tl, nodeBAR *b, string isbn)
 	}
 }
 
+
+
 void returnMode(nodeRC *p, TableOfContentList &tl)
 {
 	gotoxy(10, 3 + 2 * 4);
@@ -2490,10 +2596,125 @@ void returnMode(nodeRC *p, TableOfContentList &tl)
 	}
 }
 
+void lostBook(TableOfContentList& tl,nodeBAR* b,string isbn)
+{
+	nodeB* tmp;
+	for(int i=0;i<tl.size;i++)
+	{
+		if(tl.ds[i]->ISBN==isbn)
+		{
+			tmp=tl.ds[i]->dms.head;
+			break;
+		}
+	}
+	while(tmp!=nullptr)
+	{
+		if(tmp->data.BookID==b->data.bookID) break;
+		tmp=tmp->next;
+	}
+	tmp->data.BookStatus=2;
+}
+
+void lostMode(nodeRC* p,TableOfContentList& tl)
+{
+	gotoxy(10, 3 + 2 * 4);
+	Tick(wherex(), wherey());
+	while (true)
+	{
+		char c = _getch();
+		if (c == 27) // esc
+		{
+			return;
+		}
+		else if (c == 72) // up
+		{
+			if (wherey() == 3 + 4 * 2)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + (3 + p->data.dsmt.size) * 2);
+				Tick(wherex(), wherey());
+			}
+			else
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() - 2);
+				Tick(wherex(), wherey());
+			}
+		}
+		else if (c == 80) // down
+		{
+			if (wherey() == 3 + (3 + p->data.dsmt.size) * 2)
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), 3 + 2 * 4);
+				Tick(wherex(), wherey());
+			}
+			else
+			{
+				UnTick(wherex(), wherey());
+				gotoxy(wherex(), wherey() + 2);
+				Tick(wherex(), wherey());
+			}
+		}
+		else if (c == 13) // enter
+		{
+			UnTick(wherex(), wherey());
+			if (wherey() == 3 + 2 * 4) // head
+			{
+				nodeBAR *b = p->data.dsmt.head;
+				string isbn = "";
+				for (int i = 0; i < 4; i++)
+				{
+					isbn += b->data.bookID[i];
+				}
+				lostBook(tl,b,isbn);
+				returnedBook(p->data.dsmt,b);
+				gotoxy(50, 30);
+				cout << "SUCCESSFULLY!!!";
+				Sleep(2000);
+				break;
+			}
+			else if (wherey() == 3 + 2 * 5)
+			{
+				nodeBAR *b = p->data.dsmt.head->next;
+				string isbn = "";
+				for (int i = 0; i < 4; i++)
+				{
+					isbn += b->data.bookID[i];
+				}
+				lostBook(tl,b,isbn);
+				returnedBook(p->data.dsmt,b);
+				gotoxy(50, 30);
+				cout << "SUCCESSFULLY!!!";
+				Sleep(2000);
+				break;
+			}
+			else
+			{
+				nodeBAR *b = p->data.dsmt.tail;
+				string isbn = "";
+				for (int i = 0; i < 4; i++)
+				{
+					isbn += b->data.bookID[i];
+				}
+				lostBook(tl,b,isbn);
+				returnedBook(p->data.dsmt,b);
+				gotoxy(50, 30);
+				cout << "SUCCESSFULLY!!!";
+				Sleep(2000);
+				break;
+			}
+		}
+		else
+			continue;
+	}
+}
+
 void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 {
-	Option(140, 3, 14, 0, "Borrow");
-	Option(140, 8, 14, 0, "Return");
+	Option(140, 3, 14, 0, "BORROW");
+	Option(140, 8, 14, 0, "RETURN");
+	Option(140,13,14,0,"LOST");
 	HighLight(134, 2, 20);
 	while (true)
 	{
@@ -2507,7 +2728,7 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 			if (wherey() == 2)
 			{
 				UnHighLight(wherex(), wherey(), 20);
-				gotoxy(wherex(), wherey() + 5);
+				gotoxy(wherex(), wherey() + 10);
 				HighLight(wherex(), wherey(), 20);
 			}
 			else
@@ -2519,10 +2740,10 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 		}
 		else if (c == 80) // khi nguoi dung nhan Down
 		{
-			if (wherey() == 7)
+			if (wherey() == 12)
 			{
 				UnHighLight(wherex(), wherey(), 20);
-				gotoxy(wherex(), wherey() - 5);
+				gotoxy(wherex(), wherey() - 10);
 				HighLight(wherex(), wherey(), 20);
 			}
 			else
@@ -2569,7 +2790,7 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 				controlBAR(rl, tl, count, p);
 				return;
 			}
-			else
+			else if(wherey()==7)
 			{
 				if (p->data.dsmt.size == 0)
 				{
@@ -2592,6 +2813,27 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 					system("cls");
 					BARofReader(p, tl);
 					controlBAR(rl, tl, count, p);
+					break;
+				}
+			}
+			else
+			{
+				if(p->data.dsmt.size==0)
+				{
+					gotoxy(50, 25);
+					cout << "NO BORROWED BOOK";
+					Sleep(1000);
+					gotoxy(50, 25);
+					cout << "                 ";
+					gotoxy(134, 2);
+					continue;
+				}
+				else
+				{
+					lostMode(p,tl);
+					system("cls");
+					BARofReader(p,tl);
+					controlBAR(rl,tl,count,p);
 					break;
 				}
 			}
@@ -2771,53 +3013,83 @@ void sortOverdue(int OverdueArr[], nodeRC *tmp[], int size)
 
 void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)
 {
-	int y = 3;
+	int y = 0;
+		for (int i = 10; i <= 136; i++)
+	{
+		SetBGColor(6);
+		gotoxy(i, 0);
+		cout << " ";
+		gotoxy(i, 2);
+		cout << " ";
+		SetColor(16);
+		for (int j = 4; j < 3 + 2 * 20; j += 2)
+		{
+			gotoxy(i, j);
+			cout << char(95);
+		}
+		gotoxy(i, 3 + 2 * 20);
+		cout << " ";
+	}
+	for (int i = 1; i < 3 + 2 * 20; i++)
+	{
+		gotoxy(10, i);
+		cout << " ";
+		gotoxy(30, i);
+		cout << " ";
+		gotoxy(65, i);
+		cout << " ";
+		gotoxy(85, i);
+		cout << " ";
+		gotoxy(100, i);
+		cout << " ";
+		gotoxy(120, i);
+		cout << " ";
+		gotoxy(136,i);
+		cout<<" ";
+	}
+	SetBGColor(15);
+	gotoxy(17, 1);
+	cout << "ID";
+	gotoxy(45, 1);
+	cout << "FIRST NAME";
+	gotoxy(72, 1);
+	cout << "LAST NAME";
+	gotoxy(90, 1);
+	cout << "GENDER";
+	gotoxy(108, 1);
+	cout << "STATUS";
+	gotoxy(122,1);
+	cout<<"TOTAL OVERDUE";
 	for (int i = count - 20; i < count; i++)
 	{
-		if (OverdueArr[i] == 0 || i == size - 1)
+		if (OverdueArr[i] <= 0 || i == size )
 			return;
 		else
 		{
 			displayReader(tmp[i], y);
-			cout << "     " << OverdueArr[i];
-			y += 2;
+			gotoxy(wherex()+10,wherey());
+			cout<< OverdueArr[i];
+			y ++;
 		}
 	}
 }
 
 void OverdueReader(ReaderList rl)
 {
-	int size = 0;
+	int size = 0; int count=20;
 	nodeRC *tmp[MAX];
 	int *OverdueArr = new int[MAX];
 
 	tranvertree(rl.head, tmp, size);
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < rl.size; i++)
 	{
 		OverdueArr[i] = TotalOverdue(tmp[i]);
-		// if (OverdueArr[i] == 0)
-		// {
-		// 	OverdueArr[i] = OverdueArr[i + 1];
-		// 	OverdueArr[i + 1] = 0;
-		// 	tmp[i] = tmp[i + 1];
-		// 	size--;
-		// }
+		if(OverdueArr[i]<=0) size--;
 	}
 
-	// if (OverdueArr[size - 1] == 0)
-	// {
-	// 	tmp[size - 1] = nullptr;
-	// 	size = 0;
-	// }
-
 	if (size > 0){
-		sortOverdue(OverdueArr, tmp, size);
-		for(int i = 0; i < size; i++){
-			if(OverdueArr[i] > 0){
-				gotoxy(120, 2);
-				cout << OverdueArr[i] << endl;
-			}
-		}
+		sortOverdue(OverdueArr, tmp, rl.size);
+		displayOverdue(tmp,OverdueArr,size,count);
 	}
 	else
 	{
@@ -2828,11 +3100,9 @@ void OverdueReader(ReaderList rl)
 	}
 
 	SetBGColor(10);
-	gotoxy(120, 10);
+	gotoxy(140, 10);
 	cout << "ESC to quit";
 	SetBGColor(15);
-
-	int count = 20;
 
 	while (true)
 	{
@@ -2847,14 +3117,24 @@ void OverdueReader(ReaderList rl)
 				continue;
 			count -= 20;
 			clearReaderTable();
+			for(int i=3;i<3+20*2;i+=2)
+			{
+				gotoxy(122,i);
+				cout<<"        ";
+			}
 			displayOverdue(tmp, OverdueArr, size, count);
 		}
 		else if (c == 77) // right
 		{
-			if (count >= rl.size)
+			if (count >= size)
 				continue;
 			count += 20;
 			clearReaderTable();
+			for(int i=3;i<3+20*2;i+=2)
+			{
+				gotoxy(122,i);
+				cout<<"        ";
+			}
 			displayOverdue(tmp, OverdueArr, size, count);
 		}
 		else
