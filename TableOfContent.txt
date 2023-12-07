@@ -26,14 +26,14 @@ Chuyen Nganh
 It03_05
 1
 It03_04
-0
+1
 It03_03
 2
 It03_02
 1
 It03_01
 1
-7
+8
 It04
 Lap Trinh Javascript
 Elisabeth Robson
@@ -93,7 +93,7 @@ B002_02
 0
 B002_01
 0
-2
+3
 B001
 Giai Tich
 Pham Ngoc Anh
@@ -182,14 +182,14 @@ Co Ban
 2017
 4
 B006_04
-0
+1
 B006_03
 0
 B006_02
 0
 B006_01
 0
-0
+1
 B008
 Toan Logic
 Nguyen Van Long
@@ -214,7 +214,7 @@ Co Ban
 2004
 5
 B003_05
-0
+1
 B003_04
 0
 B003_03
@@ -223,7 +223,7 @@ B003_02
 0
 B003_01
 0
-0
+1
 B007
 Tieng Anh Course 3
 Na
