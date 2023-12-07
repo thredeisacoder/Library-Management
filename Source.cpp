@@ -3349,7 +3349,7 @@ int main()
 	DisableCtrButton(0, 1, 1);
 	DisableResizeWindow();
 	ShowCur(false);
-	//loading();
+	loading();
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
 	

@@ -30,7 +30,7 @@ B002_06
 Nguyen Van
 Thanh
 MALE
-1
+0
 3
 It02_04
 26
@@ -48,7 +48,7 @@ It02_02
 Pham Van
 An
 MALE
-1
+0
 3
 B002_07
 26
@@ -66,7 +66,7 @@ B001_05
 Tran Phi
 Hung
 MALE
-1
+0
 3
 It03_05
 20
@@ -84,7 +84,7 @@ It04_07
 Nguyen Cao Thai
 Toan
 MALE
-1
+0
 2
 It02_01
 26
@@ -104,7 +104,7 @@ MALE
 Nguyen Hai
 Dong
 MALE
-1
+0
 2
 Kn02_04
 27
@@ -156,12 +156,6 @@ Huy
 MALE
 1
 0
-0013
-Lai Phuc
-Tuan
-MALE
-1
-0
 0016
 Tran Tuan
 Hai
@@ -185,7 +179,19 @@ Cao Duy
 Thai
 MALE
 1
-0
+3
+B003_05
+6
+12
+2023
+B006_04
+6
+12
+2023
+It03_04
+6
+12
+2023
 0028
 Nguyen Bao
 Long
