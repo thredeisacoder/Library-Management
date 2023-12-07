@@ -14,7 +14,6 @@ struct Book
 	int BookStatus = 0;
 	string BookLocation = "";
 };
-/////////////////////////////////////////////Danh muc sach/////////////////////////////////////////////////
 struct nodeB
 {
 	Book data;
@@ -28,7 +27,6 @@ struct BookList
 	int size = 0;
 };
 
-///////////////////////////////////////////////dau sach/////////////////////////////////
 struct TableOfContent
 {
 	string ISBN;
@@ -47,7 +45,77 @@ struct TableOfContentList
 	TableOfContent *ds[MAX] = {nullptr};
 	int size = 0;
 };
-void releaseMemory(TableOfContentList &data)
+struct Date
+{
+	int day = 0;
+	int month = 0;
+	int year = 0;
+};
+
+struct BorrowAndReturn
+{
+	string bookID = "";
+	int status = 0;
+	Date BorrowDate;
+	Date ReturnDate;
+};
+
+struct nodeBAR
+{
+	BorrowAndReturn data;
+	nodeBAR *next = nullptr;
+};
+
+struct BorrowAndReturnList
+{
+	nodeBAR *head = nullptr;
+	nodeBAR *tail = nullptr;
+	int size = 0;
+};
+
+struct Reader
+{
+	string ID = "";
+	string Gender = "";
+	string FirstName = "";
+	string LastName = "";
+	int CardStatus = 1;
+
+	BorrowAndReturnList dsmt;
+};
+
+struct nodeRC
+{
+	Reader data;
+	nodeRC *left = nullptr;
+	nodeRC *right = nullptr;
+};
+
+struct ReaderList
+{
+	nodeRC *head = nullptr;
+	int size = 0;
+	string *notusedid = new string[MAX];
+};
+
+nodeB *makeNodeBook(Book data)
+{
+	nodeB *p = new nodeB;
+	p->data = data;
+	p->next = nullptr;
+	return p;
+}
+
+nodeRC *makeNodeReader(Reader data)
+{
+	nodeRC *p = new nodeRC;
+	p->data = data;
+	p->left = NULL;
+	p->right = NULL;
+	return p;
+}
+
+void releaseMemory(TableOfContentList &data)//giai phong bo nho
 {
 	for (int i = 0; i < data.size; i++)
 	{
@@ -57,7 +125,7 @@ void releaseMemory(TableOfContentList &data)
 	data.size = 0; // ??t k?ch thu?c v? 0 d? d?nh d?u danh s?ch r?ng
 }
 
-int compare(TableOfContentList tl, TableOfContent data)
+int compare(TableOfContentList tl, TableOfContent data)//kiem tra dau sach co trung hay khong
 {
 	for (int i = 0; i < tl.size; i++)
 	{
@@ -73,7 +141,7 @@ int compare(TableOfContentList tl, TableOfContent data)
 	return 1;
 } // done
 
-int addTail(TableOfContentList &tl, TableOfContent& data)
+int addTail(TableOfContentList &tl, TableOfContent& data)//them duoi
 {
 	if (tl.size == MAX)
 	{
@@ -89,7 +157,7 @@ int addTail(TableOfContentList &tl, TableOfContent& data)
 	tl.size++;
 	return 1;
 } // done
-int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent& data)
+int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent& data)//them dau sach theo thu tu the loai
 {
 	int locate;
 	if (tl.size == 0)
@@ -123,19 +191,9 @@ int themTheoThuTuTheLoai(TableOfContentList &tl, TableOfContent& data)
 		return 0;
 	}
 	return 1;
-} // done
+}
 
-// TableOfContent *searchByName(TableOfContentList tl, string input)
-// {
-// 	for (int i = 0; i < tl.size; i++)
-// 		if (tl.ds[i]->BookName.find(input))
-// 		{
-// 			return tl.ds[i];
-// 		}
-// 	return NULL;
-// }
-
-TableOfContentList saveToSearch(TableOfContentList tl, string input)
+TableOfContentList saveToSearch(TableOfContentList tl, string input)//loc de dau sach sau khi tim kiem
 {
 	TableOfContentList tmp;
 	int index = 0;
@@ -154,22 +212,7 @@ TableOfContentList saveToSearch(TableOfContentList tl, string input)
 	}
 	return tmp;
 }
-// TableOfContent* searchByISBN(TableOfContentList tl, string data)
-// {
-// 	if (tl.size == 0)
-// 		return NULL;
-// 	for (int i = 0; i < tl.size; i++)
-// 	{
-// 		if (tl.ds[i]->ISBN == data)
-// 		{
-// 			TableOfContent* p = tl.ds[i];
-// 			tl.ds[i] = NULL;
-// 			return p;
-// 		}
-// 	}
-// 	return NULL;
-// }
-string generateID(TableOfContent *p, int i)
+string generateID(TableOfContent *p, int i)//tao id tu dong
 {
 	string id = "";
 	if (i >= 0 && i < 9)
@@ -183,7 +226,7 @@ string generateID(TableOfContent *p, int i)
 	return id;
 }
 
-BookList createBookList(TableOfContent *p)
+BookList createBookList(TableOfContent *p)//tao danh muc sach
 {
 	BookList *list = new BookList;
 	for (int i = 0; i < p->dms.size; i++)
@@ -206,62 +249,7 @@ BookList createBookList(TableOfContent *p)
 	return *list;
 }
 
-/////////////////////////////////////////////muon tra/////////////////////////////////////////////////
-struct Date
-{
-	int day = 0;
-	int month = 0;
-	int year = 0;
-};
-
-struct BorrowAndReturn
-{
-	string bookID = "";
-	int status = 0;
-	Date BorrowDate;
-	Date ReturnDate;
-};
-
-struct nodeBAR
-{
-	BorrowAndReturn data;
-	nodeBAR *next = nullptr;
-};
-
-struct BorrowAndReturnList
-{
-	nodeBAR *head = nullptr;
-	nodeBAR *tail = nullptr;
-	int size = 0;
-};
-
-/////////////////////////////////////////////DOC GIA/////////////////////////////////////////////////
-struct Reader
-{
-	string ID = "";
-	string Gender = "";
-	string FirstName = "";
-	string LastName = "";
-	int CardStatus = 1;
-
-	BorrowAndReturnList dsmt;
-};
-
-struct nodeRC
-{
-	Reader data;
-	nodeRC *left = nullptr;
-	nodeRC *right = nullptr;
-};
-
-struct ReaderList
-{
-	nodeRC *head = nullptr;
-	int size = 0;
-	string *notusedid = new string[MAX];
-};
-
-Date currentTime()
+Date currentTime()//thoi gian hien tai
 {
 	Date timeeee;
 	// thời gian hiện tại tính theo hệ thống
@@ -274,7 +262,7 @@ Date currentTime()
 	return timeeee;
 }
 
-int convertMonthtoDay(int month)
+int convertMonthtoDay(int month)//chuyen thang thanh ngay
 {
 	switch (month)
 	{
@@ -293,7 +281,7 @@ int convertMonthtoDay(int month)
 	}
 }
 
-int compareDate(Date returnDate)
+int compareDate(Date returnDate)//so sanh thoi gian
 {
 	Date cur = currentTime();
 	if (cur.year > returnDate.year)
@@ -311,7 +299,7 @@ int compareDate(Date returnDate)
 	return 0;
 }
 
-int countOverdueDay(Date returnDate)
+int countOverdueDay(Date returnDate)//dem ngay qua han
 {
 	Date cur = currentTime();
 	int year = cur.year - returnDate.year;
@@ -337,7 +325,7 @@ int countOverdueDay(Date returnDate)
 	return count;
 }
 
-int TotalOverdue(nodeRC *p)
+int TotalOverdue(nodeRC *p)//tinh tong ngay qua han
 {
 	nodeBAR *b = p->data.dsmt.head;
 	int total = 0;
@@ -360,7 +348,7 @@ int TotalOverdue(nodeRC *p)
 	return total;
 }
 
-int checkBorrowed(TableOfContent *p)
+int checkBorrowed(TableOfContent *p)//kiem tra con sach de muon khong
 {
 	int n = p->dms.size;
 	nodeB *tmp = p->dms.head;
@@ -375,7 +363,7 @@ int checkBorrowed(TableOfContent *p)
 	return 1;
 }
 
-Date HandleLogicalTime(Date time)
+Date HandleLogicalTime(Date time)//xu li thoi gian theo dung logic
 {
 	time.day += 7;
 	if (time.day > convertMonthtoDay(time.month) && time.month < 12)
@@ -392,7 +380,7 @@ Date HandleLogicalTime(Date time)
 	return time;
 }
 
-int addBorrowedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
+int addBorrowedBook(BorrowAndReturnList &dsmt, nodeBAR *p)//muonn sach
 {
 	if (dsmt.size >= 3)
 	{
@@ -420,7 +408,7 @@ int addBorrowedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
 	return 0;
 }
 
-int returnedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
+int returnedBook(BorrowAndReturnList &dsmt, nodeBAR *p)//tra sach
 {
 	if (dsmt.size == 0)
 	{
@@ -476,17 +464,7 @@ int returnedBook(BorrowAndReturnList &dsmt, nodeBAR *p)
 	return 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-nodeB *makeNodeBook(Book data)
-{
-	nodeB *p = new nodeB;
-	p->data = data;
-	p->next = nullptr;
-	return p;
-}
-
-int addNodeBook(BookList &l, Book data)
+int addNodeBook(BookList &l, Book data)//them sach vao danh muc sach
 {
 	nodeB *p = makeNodeBook(data);
 	if (l.head == nullptr)
@@ -525,50 +503,6 @@ int addNodeBook(BookList &l, Book data)
 	return 0;
 }
 
-int deleteNodeBC(BookList &l, string ID)
-{
-	if (l.head == NULL) // khi danh sach rong thi ko xoa duoc
-	{
-		return 0;
-	}
-	else if (l.head->data.BookID == ID) // phan tu dau co id can xoa
-	{
-		nodeB *tmp = l.head;
-		l.head = tmp->next;
-		delete tmp;
-		return 1;
-	}
-	else
-	{
-		nodeB *tmp = l.head->next;
-		nodeB *pre = l.head;
-		while (tmp != NULL)
-		{
-			if (tmp->data.BookID == ID)
-			{
-				pre->next = tmp->next;
-				delete tmp;
-				return 1;
-			}
-			else
-			{
-				pre = tmp;
-				tmp = tmp->next;
-			}
-		}
-		return 0;
-	}
-}
-////////////////////////////////////////////////////////////////////////////////////////
-nodeRC *makeNodeReader(Reader data)
-{
-	nodeRC *p = new nodeRC;
-	p->data = data;
-	p->left = NULL;
-	p->right = NULL;
-	return p;
-}
-
 string createID(string *notusedid, int n) // tao ID doc gia
 {
 
@@ -580,9 +514,10 @@ string createID(string *notusedid, int n) // tao ID doc gia
 	return s;
 }
 
-void releaseID(string *notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
+void releaseID(string *notusedid, int &n, string ID) // tra lai id sau khi xoa de dung cho lan sau
 {
 	notusedid[n] = ID;
+	n++;
 }
 
 int treeLevel(nodeRC *t) // tim do cao cua node
@@ -618,14 +553,7 @@ nodeRC *turnLeft(nodeRC *a) // xoay trai
 	return b;
 }
 
-int height(nodeRC *t)
-{
-	if (t == nullptr)
-		return -1;
-	return max(height(t->left), height(t->right)) + 1;
-}
-
-nodeRC *updateTreeAvl(nodeRC *root)
+nodeRC *updateTreeAvl(nodeRC *root)//cap nhat cay avl
 {
 	if (root == nullptr)
 		return root;
@@ -665,7 +593,7 @@ nodeRC *updateTreeAvl(nodeRC *root)
 	return root;
 }
 
-int addNodeReader(ReaderList &l, Reader& data)
+int addNodeReader(ReaderList &l, Reader& data)//them node reader
 {
 	nodeRC *p = makeNodeReader(data);
 	if (TotalOverdue(p) > 0)
@@ -721,7 +649,7 @@ int addNodeReader(ReaderList &l, Reader& data)
 	return 0;
 }
 
-int findReaderByName(nodeRC *tmp[], nodeRC *t[], int n, string name)
+int findReaderByName(nodeRC *tmp[], nodeRC *t[], int n, string name)//tim doc gia bang ten
 {
 	int size = 0;
 	for (int i = 0; i < n; i++)
@@ -735,7 +663,7 @@ int findReaderByName(nodeRC *tmp[], nodeRC *t[], int n, string name)
 	return size;
 }
 
-nodeRC *findmin(nodeRC *root)
+nodeRC *findmin(nodeRC *root)//tim min
 {
 	if (root->left == nullptr)
 		return root;
@@ -747,7 +675,7 @@ nodeRC *findmin(nodeRC *root)
 	return root;
 }
 
-nodeRC *findReader(nodeRC *root, string id)
+nodeRC *findReader(nodeRC *root, string id)//tim doc gia
 {
 	if (root == nullptr)
 		return nullptr;
@@ -762,7 +690,7 @@ nodeRC *findReader(nodeRC *root, string id)
 	}
 }
 
-nodeRC *findprenode(nodeRC *root, nodeRC *p)
+nodeRC *findprenode(nodeRC *root, nodeRC *p)//tim node truoc node can xu li
 {
 	if (root == p)
 		return nullptr;
@@ -790,7 +718,7 @@ nodeRC *findprenode(nodeRC *root, nodeRC *p)
 		return nullptr;
 }
 
-nodeRC *deletenode(nodeRC *p)
+nodeRC *deletenode(nodeRC *p)//xoa node
 {
 	if (p->left == nullptr && p->right == nullptr)
 	{
@@ -828,9 +756,8 @@ nodeRC *deletenode(nodeRC *p)
 		return p;
 	}
 }
-///////////////muon tra////////
 
-string findBookName(TableOfContentList tl, string id)
+string findBookName(TableOfContentList tl, string id)//tim ten sach ID
 {
 	string isbn = "";
 	for(int i = 0; i < 4; i++){

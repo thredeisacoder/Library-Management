@@ -956,7 +956,7 @@ void printReader(fstream& f, nodeRC* p)
 	}
 }
 
-void loadlist(nodeRC* head, fstream& f)
+void loadlist(nodeRC* head, fstream& f)//doc danh sach
 {
 	if (head == nullptr) return;
 
@@ -965,7 +965,7 @@ void loadlist(nodeRC* head, fstream& f)
 	loadlist(head->right, f);
 }
 
-int saveFileReader(ReaderList& rl)
+int saveFileReader(ReaderList& rl)//luu danh sach doc gia
 {
 	fstream f;
 	f.open("Reader.txt", ios::out);
@@ -1038,7 +1038,7 @@ int loadFileTOC(TableOfContentList& tl)
 	return 1;
 }
 
-int saveTOC(TableOfContentList& tl)
+int saveTOC(TableOfContentList& tl)//doc gia vao file
 {
 	fstream f;
 	f.open("TableOfContent.txt", ios::out);
@@ -1063,7 +1063,7 @@ int saveTOC(TableOfContentList& tl)
 	return 1;
 }
 
-void printlogo()
+void printlogo()//in logo
 {
 	fstream f;
 	f.open("logo.txt", ios::in);
@@ -1083,7 +1083,7 @@ void printlogo()
 	f.close();
 }
 
-void resetIDRCfile()
+void resetIDRCfile()//reset ID trong file ID
 {
 	fstream f("idrcnotused.txt");
 	for (int i = 0; i < 10000; i++)

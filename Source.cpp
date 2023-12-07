@@ -273,7 +273,7 @@ int confirm(int x,int y)
 	}
 }
 
-void clearReaderLine(int i)
+void clearReaderLine(int i)//xoa dong khi xoa
 {
 	gotoxy(6, i);
 	cout << "   ";
@@ -294,7 +294,7 @@ void clearReaderLine(int i)
 		cout << " ";
 }
 
-void clearReaderTable()
+void clearReaderTable()//xoa noi dung giu khung
 {
 	for (int i = 3; i < 3 + 2 * 20; i += 2)
 	{
@@ -324,7 +324,7 @@ void displayReader(nodeRC *p, int y) // in doc gia tren do cao y
 	else if (s == 0)
 		cout << "0 (locked)";
 }
-void sortbyID(nodeRC *tmp[], int n)
+void sortbyID(nodeRC *tmp[], int n)//sap xep theo ID
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -471,7 +471,7 @@ void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
 	Sleep(1000);
 }
 // sap xep theo ten
-void sortbyname(nodeRC *tmp[], int n)
+void sortbyname(nodeRC *tmp[], int n)//sap xep theo ten (bubble sort)
 {
 	for (int i = 0; i < n - 1; i++)
 	{
@@ -583,12 +583,12 @@ void ReaderTable(nodeRC *tmp[], int n, int count)
 	displaytree(tmp, n, count);
 }
 
-void displayDate(Date data)
+void displayDate(Date data)//In ngay thang
 {
 	cout << data.day << "/" << data.month << "/" << data.year;
 }
 
-void displayBAR(nodeBAR *head, int y, string name)
+void displayBAR(nodeBAR *head, int y, string name)//In danh sach muon tra
 {
 	gotoxy(10, y);
 	cout << name;
@@ -600,7 +600,7 @@ void displayBAR(nodeBAR *head, int y, string name)
 	displayDate(head->data.ReturnDate);
 }
 
-void watchingReaderMode(nodeRC *tmp[], int n)
+void watchingReaderMode(nodeRC *tmp[], int n)//hien bang reader va cac chuc nang
 {
 	int count = 20;
 	bool sid = true;
@@ -664,7 +664,7 @@ void watchingReaderMode(nodeRC *tmp[], int n)
 				cout << "                                ";
 				continue;
 			}
-			else
+			else//Khi khong tim thay reader
 			{
 				nodeRC *t[MAX];
 				int size = findReaderByName(tmp, t, n, s);
@@ -713,8 +713,8 @@ void deleteReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do xoa
 			int pos = count - 20 + (wherey() - 3) / 2;
 			if(tmp[pos]->data.dsmt.size!=0)
 			{
-				SetBGColor(20);
-				SetColor(10);
+				SetBGColor(7);
+				SetColor(20);
 				gotoxy(130,20);
 				cout<<"BORROWING, CAN'T DELETE";
 				Sleep(1500);
@@ -916,7 +916,7 @@ void SettingReaderMode(ReaderList &rl, nodeRC *tmp[], int &count) // che do chin
 	}
 }
 
-void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
+void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)//cac nut chuc nang cho reader mode
 {
 	SetBGColor(11);
 	SetColor(0);
@@ -950,7 +950,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 	gotoxy(132, 8);
 	cout << "DELETE";
 	gotoxy(133, 12);
-	cout << "SET";
+	cout << "EDIT";
 
 	SetBGColor(15);
 	HighLight(130, 3, 9);
@@ -1072,7 +1072,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			else if (wherey() == 7)//delete
 			{
 				gotoxy(122, 40);
-				cout << "                              ";
+				cout << "                                      ";
 				if (rl.size == 0)
 				{
 					system("cls");
@@ -1098,7 +1098,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 			}
 			else
 			{
-				gotoxy(122, 40);//set
+				gotoxy(122, 40);//edit
 				cout << "                              ";
 				SettingReaderMode(rl, tmp, count);
 				sortbyID(tmp, 0);
@@ -1108,7 +1108,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 				break;
 			}
 		}
-		else if (c == 9) // tab
+		else if (c == 9) // tab (chuc nang an)
 		{
 			gotoxy(130, 20);
 			SetBGColor(10);
@@ -1154,7 +1154,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)
 	}
 }
 
-void clearTOCLine(int i)
+void clearTOCLine(int i)//Xoa dong
 {
 	gotoxy(2, i);
 	for (int j = 0; j < 6; j++)
@@ -1240,7 +1240,7 @@ string tableEnterTOC(TableOfContentList &tl)
 	gotoxy(x+width-65,y+16); cout<<"  ";
 	gotoxy(x+width-26,y+16); cout<<"  ";
 	
-	
+	//hien thi muc luc tren bang
 	SetBGColor(15);
 	gotoxy(x + 10, y + 9);
 	cout << "| NAME |";
@@ -1257,7 +1257,7 @@ string tableEnterTOC(TableOfContentList &tl)
 	gotoxy(x + width - 59, y + 15);
 	cout << "| Enter the number of books | ";
 	ShowCur(true);
-
+	//Nhap dau sach
 	gotoxy(x + 3, y + 11);
 	p->BookName = EnterBookName(p->BookName);
 	if (p->BookName == "")
@@ -1303,7 +1303,7 @@ string tableEnterTOC(TableOfContentList &tl)
 	p->dms = createBookList(p);
 	ShowCur(false);
 	int n = themTheoThuTuTheLoai(tl, *p);
-	if (n == 1)
+	if (n == 1)//thong bao sau khi nhap
 	{
 		gotoxy(x, 20);
 		cout << "~ADD SUCCESSFULL!!!~";
@@ -1318,7 +1318,7 @@ string tableEnterTOC(TableOfContentList &tl)
 	// delete p;
 	return p->ISBN;
 }
-void displayTOC(TableOfContent data, int &yTOC)
+void displayTOC(TableOfContent data, int &yTOC)//Hien thi noi dung dau sach
 {
 	gotoxy(4, yTOC);
 	cout << data.ISBN;
@@ -1334,7 +1334,7 @@ void displayTOC(TableOfContent data, int &yTOC)
 	cout << data.PublicYear;
 }
 
-void displayBookList(TableOfContent data, int yTOC, int pos)
+void displayBookList(TableOfContent data, int yTOC, int pos)//Hien thi danh muc sach
 {
 	nodeB *p = data.dms.head;
 	for (int i = 0; i < pos; i++)
@@ -1349,7 +1349,7 @@ void displayBookList(TableOfContent data, int yTOC, int pos)
 	cout<<p->data.BookLocation;
 }
 
-void loadListTOC(TableOfContentList tl, int count)
+void loadListTOC(TableOfContentList tl, int count)//duyet va in dau sach
 {
 	int yTOC = 3; // chi?`u cao ha`ng d?`u ti?n
 	for (int i = count - 19; i < count; i++)
@@ -1363,7 +1363,7 @@ void loadListTOC(TableOfContentList tl, int count)
 	}
 }
 
-void loadListSearch(TableOfContentList tl, int& count, int &flag)
+void loadListSearch(TableOfContentList tl, int& count, int &flag)//duyet va in ra danh sach khi tim
 {
 	int yTOC = 3; // chi?`u cao ha`ng d?`u ti?n
 	for (int i = count - 19; i < count; i++)
@@ -1382,7 +1382,7 @@ void loadListSearch(TableOfContentList tl, int& count, int &flag)
 	}
 }
 
-void clearfilterBySearching()
+void clearfilterBySearching()//Xoa danh sach sau khi tra
 {
 	for (int i = 3; i < 3 + 2 * 19; i += 2)
 	{
@@ -1414,11 +1414,11 @@ void clearfilterBySearching()
 		for(int j=0;j<7;j++)
 			cout<<" ";
 	}
-} // thieu 2 cot chua xu li
+}
 
-void filterBySearching(TableOfContentList &tl, int count, int &flag)
+void filterBySearching(TableOfContentList &tl, int count, int &flag)//sap xep sau khi search
 {
-	for (int i = 0; i <= 152; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
+	for (int i = 0; i <= 152; i++) // chay theo chieu dai tu trai sang phai
 	{
 		SetBGColor(6);
 		gotoxy(i, 0);
@@ -1426,15 +1426,15 @@ void filterBySearching(TableOfContentList &tl, int count, int &flag)
 		gotoxy(i, 2);
 		cout << " ";
 		SetColor(0);
-		for (int j = 4; j < 3 + 2 * 19; j += 2) // co? bao nhi?u thg in ra tu` tr?n xu??ng duo?i
+		for (int j = 4; j < 3 + 2 * 19; j += 2) //In ra tu tren xuong duoi
 		{
 			gotoxy(i, j);
-			cout << char(95); // in ra d?u ga?ch ngang ngan ca?ch tu`ng ha`ng
+			cout << char(95); // in ra dau sach ngan cach tung dong
 		}
 		gotoxy(i, 3 + 2 * 19);
 		cout << " ";
 	}
-	for (int i = 1; i < 3 + 2 * 19; i++) // ve~ c??t ngan ca?ch tu`ng mu?c
+	for (int i = 1; i < 3 + 2 * 19; i++) // ve cot ngan cach tung dong
 	{
 		gotoxy(0, i);
 		cout << " ";
@@ -1463,6 +1463,7 @@ void filterBySearching(TableOfContentList &tl, int count, int &flag)
 		gotoxy(60, 25);
 		cout << "Empty!!!";
 	}
+	//in ra cac muc sach
 	gotoxy(3, 1);
 	cout << "ISBN";
 	gotoxy(26, 1);
@@ -1485,7 +1486,7 @@ void filterBySearching(TableOfContentList &tl, int count, int &flag)
 	SetColor(0);
 }
 
-void controlfilterBySearching(TableOfContentList &tl, int count, int &flag)
+void controlfilterBySearching(TableOfContentList &tl, int count, int &flag)//dieu khien nut xoa
 {
 	while (true)
 	{
@@ -1525,22 +1526,14 @@ void controlfilterBySearching(TableOfContentList &tl, int count, int &flag)
 	}
 }
 
-void editTOC(TableOfContent* &tmp, int y)
+void editTOC(TableOfContent* &tmp, int y)//sua dau sach
 {
 	SetColor(16);
 	ShowCur(true);
 	gotoxy(4, y);
 	TableOfContent *p = new TableOfContent(*tmp);
-/*	p->ISBN = EnterISBN(tmp->ISBN);
-	if (p->ISBN == "")
-	{
-		gotoxy(1, y);
-		UnTick(wherex(), wherey());
-		clearTOCLine(y);
-		displayTOC(*tmp, y);
-		return;
-	}*/
 	gotoxy(11, y);
+	//sua dau sach
 	p->BookName = EnterBookName(tmp->BookName);
 	if (p->BookName == "")
 	{
@@ -1610,7 +1603,7 @@ void editTOC(TableOfContent* &tmp, int y)
 	system("cls");
 }
 
-void TableTOC(TableOfContentList &tl, int count)
+void TableTOC(TableOfContentList &tl, int count)//Bang dau sach
 {
 	for (int i = 0; i <= 124; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
 	{
@@ -1668,7 +1661,7 @@ void TableTOC(TableOfContentList &tl, int count)
 	SetColor(0);
 }
 
-void TranverNotBorrowed(TableOfContentList &tl, TableOfContentList &tmp)
+void TranverNotBorrowed(TableOfContentList &tl, TableOfContentList &tmp)//duyet sach chua muon
 {
 	for (int i = 0; i < tl.size; i++)
 	{
@@ -1680,7 +1673,7 @@ void TranverNotBorrowed(TableOfContentList &tl, TableOfContentList &tmp)
 	}
 }
 
-void BorrowMode(nodeRC *p, TableOfContentList &tl)
+void BorrowMode(nodeRC *p, TableOfContentList &tl)//che do muon
 {
 	int count = 19, flag = 0;
 	for (int i = 0; i <= 124; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
@@ -1717,7 +1710,7 @@ void BorrowMode(nodeRC *p, TableOfContentList &tl)
 		cout << " ";
 	}
 	SetBGColor(15);
-	if (tl.size == 0)
+	if (tl.size == 0)//thong bao neu danh sach trong
 	{
 		gotoxy(60, 25);
 		cout << "Empty!!!";
@@ -1859,7 +1852,7 @@ void BorrowMode(nodeRC *p, TableOfContentList &tl)
 	}
 }
 
-void ControlEditMode(TableOfContentList &tl, int &count)
+void ControlEditMode(TableOfContentList &tl, int &count)//chuc nang cua che do chinh sua
 {
 	gotoxy(1, 3);
 	Tick(wherex(), wherey());
@@ -1959,7 +1952,7 @@ void ControlEditMode(TableOfContentList &tl, int &count)
 	}
 }
 
-void deleteTOCMode(TableOfContentList& tl,int &count)
+void deleteTOCMode(TableOfContentList& tl,int &count)//che do xoa dau sach 
 {
 	gotoxy(1, 3);
 	Tick(wherex(), wherey());
@@ -2085,7 +2078,7 @@ void deleteTOCMode(TableOfContentList& tl,int &count)
 	}
 }
 
-int liquidatingBook(nodeB* p)
+int liquidatingBook(nodeB* p)//thanh li
 {
 	if(p==nullptr) return 0;
 	
@@ -2100,7 +2093,7 @@ int liquidatingBook(nodeB* p)
 	return 0;
 }
 
-void liquidatingMode(TableOfContentList& tl,int &count)
+void liquidatingMode(TableOfContentList& tl,int &count)//che do thanh li
 {
 	gotoxy(1, 3);
 	Tick(wherex(), wherey());
@@ -2218,7 +2211,7 @@ void liquidatingMode(TableOfContentList& tl,int &count)
 	}
 }
 
-void EnterToSearch(TableOfContentList tl, TableOfContentList &l)
+void EnterToSearch(TableOfContentList tl, TableOfContentList &l)//nhap ten sach de tim kiem
 {
 	gotoxy(1, 43);
 	SetBGColor(20);
@@ -2236,7 +2229,7 @@ void EnterToSearch(TableOfContentList tl, TableOfContentList &l)
 	l = saveToSearch(tl, inputSearch);
 }
 
-void controlTOCTable(TableOfContentList &tl, int count)
+void controlTOCTable(TableOfContentList &tl, int count)//dieu khien dau sach
 {
 	SetBGColor(11);
 	ShowCur(false);
@@ -2424,7 +2417,7 @@ void controlTOCTable(TableOfContentList &tl, int count)
 	}
 }
 
-void printBAR(nodeBAR *b, int y, TableOfContentList tl)
+void printBAR(nodeBAR *b, int y, TableOfContentList tl)//in ra thong tin muon tra
 {
 	string name = findBookName(tl, b->data.bookID);
 	gotoxy(12, 3 + 2 * y);
@@ -2435,7 +2428,7 @@ void printBAR(nodeBAR *b, int y, TableOfContentList tl)
 	cout << b->data.ReturnDate.day << "/" << b->data.ReturnDate.month << "/" << b->data.ReturnDate.year;
 }
 
-void BARofReader(nodeRC *p, TableOfContentList tl)
+void BARofReader(nodeRC *p, TableOfContentList tl)//in ra thong va sach dang muon
 {
 	SetBGColor(6);
 	gotoxy(10, 7);
@@ -2480,7 +2473,7 @@ void BARofReader(nodeRC *p, TableOfContentList tl)
 	}
 }
 
-void resetBookStatus(TableOfContentList &tl, nodeBAR *b, string isbn)
+void resetBookStatus(TableOfContentList &tl, nodeBAR *b, string isbn)//tra sach reset status ve 0
 {
 	for (int i = 0; i < tl.size; i++)
 	{
@@ -2501,7 +2494,7 @@ void resetBookStatus(TableOfContentList &tl, nodeBAR *b, string isbn)
 
 
 
-void returnMode(nodeRC *p, TableOfContentList &tl)
+void returnMode(nodeRC *p, TableOfContentList &tl)//che do tra sach
 {
 	gotoxy(10, 3 + 2 * 4);
 	Tick(wherex(), wherey());
@@ -2596,7 +2589,7 @@ void returnMode(nodeRC *p, TableOfContentList &tl)
 	}
 }
 
-void lostBook(TableOfContentList& tl,nodeBAR* b,string isbn)
+void lostBook(TableOfContentList& tl,nodeBAR* b,string isbn)//mat sach 
 {
 	nodeB* tmp;
 	for(int i=0;i<tl.size;i++)
@@ -2615,7 +2608,7 @@ void lostBook(TableOfContentList& tl,nodeBAR* b,string isbn)
 	tmp->data.BookStatus=2;
 }
 
-void lostMode(nodeRC* p,TableOfContentList& tl)
+void lostMode(nodeRC* p,TableOfContentList& tl)//che do mat sach
 {
 	gotoxy(10, 3 + 2 * 4);
 	Tick(wherex(), wherey());
@@ -2710,7 +2703,7 @@ void lostMode(nodeRC* p,TableOfContentList& tl)
 	}
 }
 
-void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
+void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)//chuc nang dieu khien muon tra
 {
 	Option(140, 3, 14, 0, "BORROW");
 	Option(140, 8, 14, 0, "RETURN");
@@ -2765,9 +2758,13 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 			{
 				if (p->data.dsmt.size == 3)
 				{
+					SetBGColor(7);
+					SetColor(20);
 					gotoxy(50, 25);
 					cout << "LIMIT REACHED! RETURN BEFORE BORROW!";
 					Sleep(2000);
+					SetBGColor(15);
+					SetColor(0);
 					gotoxy(50, 25);
 					cout << "                                         ";
 					gotoxy(134, 2);
@@ -2841,7 +2838,7 @@ void controlBAR(ReaderList &rl, TableOfContentList &tl, int count, nodeRC *p)
 	}
 }
 
-nodeRC *EnterIDtoBorrowandReturn(ReaderList rl)
+nodeRC *EnterIDtoBorrowandReturn(ReaderList rl)//nhap id de vao che do muon tra
 {
 	system("cls");
 	ShowCur(true);
@@ -2900,7 +2897,7 @@ nodeRC *EnterIDtoBorrowandReturn(ReaderList rl)
 	}
 }
 
-void top10Borrow(TableOfContentList tl)
+void top10Borrow(TableOfContentList tl)//thong ke 10 dau sach duoc muon nhieu nhat
 {
 		for (int i = 0; i <= 133; i++) // cha?y theo chi?`u da`i, tra?i -> pha?i
 	{
@@ -2996,7 +2993,7 @@ void top10Borrow(TableOfContentList tl)
 			continue;
 	}
 }
-void sortOverdue(int OverdueArr[], nodeRC *tmp[], int size)
+void sortOverdue(int OverdueArr[], nodeRC *tmp[], int size)//sap xep danh sach doc gia qua han
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -3011,7 +3008,7 @@ void sortOverdue(int OverdueArr[], nodeRC *tmp[], int size)
 	}
 }
 
-void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)
+void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)//in ra danh sach doc gia qua han
 {
 	int y = 0;
 		for (int i = 10; i <= 136; i++)
@@ -3078,7 +3075,7 @@ void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)
 	}
 }
 
-void OverdueReader(ReaderList rl)
+void OverdueReader(ReaderList rl)//che do xem danh sach qua han
 {
 	int size = 0; int count=20;
 	nodeRC *tmp[MAX];
@@ -3147,7 +3144,7 @@ void OverdueReader(ReaderList rl)
 	delete[] OverdueArr;
 }
 
-void Statistic(ReaderList rl, TableOfContentList tl)
+void Statistic(ReaderList rl, TableOfContentList tl)//chuc nang thong ke
 {
 
 	Option(70, 10, 24, 4, "TOP 10 BORROWED BOOKS");
@@ -3342,14 +3339,14 @@ void Control(ReaderList &rl, TableOfContentList &tl)
 int main()
 {
 	SetBGColor(0);
-	resizeConsole(1300, 750);
+	resizeConsole(1300, 750);//thay doi kich thuong console
 	ReaderList rl;
 	TableOfContentList tl;
-	DisableSelection();
-	DisableCtrButton(0, 1, 1);
-	DisableResizeWindow();
-	ShowCur(false);
-	loading();
+	DisableSelection();//tat khong cho boi den
+	DisableCtrButton(0, 1, 1);//tat chuc nang phong to va an console
+	DisableResizeWindow();//tat khong cho thay doi kich thuoc console
+	ShowCur(false);//an con tro
+	loading();//man hinh loading
 	int n = loadFileReader(rl);
 	int m = loadFileTOC(tl);
 	
@@ -3363,8 +3360,7 @@ int main()
 	SetBGColor(15);
 	boxMenu();
 	Control(rl, tl);
-	delete rl.head;
-	releaseMemory(tl);
-	// resetIDRCfile();
+	delete rl.head;//giai phong bo nho
+	releaseMemory(tl);//giai phong bo nho
 	return 0;
 }
