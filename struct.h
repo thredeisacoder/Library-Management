@@ -514,10 +514,9 @@ string createID(string *notusedid, int n) // tao ID doc gia
 	return s;
 }
 
-void releaseID(string *notusedid, int &n, string ID) // tra lai id sau khi xoa de dung cho lan sau
+void releaseID(string *notusedid, int n, string ID) // tra lai id sau khi xoa de dung cho lan sau
 {
 	notusedid[n] = ID;
-	n++;
 }
 
 int treeLevel(nodeRC *t) // tim do cao cua node
@@ -551,6 +550,12 @@ nodeRC *turnLeft(nodeRC *a) // xoay trai
 	a->right = c;
 	b->left = a;
 	return b;
+}
+int height(nodeRC *t)
+{
+	if (t == nullptr)
+		return -1;
+	return max(height(t->left), height(t->right)) + 1;
 }
 
 nodeRC *updateTreeAvl(nodeRC *root)//cap nhat cay avl

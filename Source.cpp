@@ -213,7 +213,7 @@ int confirm(int x,int y)
 			cout<<" ";
 		}		
 	}
-	SetColor(9);
+	SetColor(15);
 	gotoxy(x+2,y+1);
 	cout<<"ARE YOU SURE?";
 	gotoxy(x+2,y+3); cout<<"YES";
@@ -370,9 +370,9 @@ string tableEnterRC(ReaderList &rl)
 	}
 	SetBGColor(15);
 	gotoxy(x + width / 6 + 8, y + 9);
-	cout << "FIRST NAME";
-	gotoxy(x + width / 6 + 28, y + 9);
 	cout << "LAST NAME";
+	gotoxy(x + width / 6 + 28, y + 9);
+	cout << "FIRST NAME";
 	gotoxy(x + width / 6 + 45, y + 9);
 	cout << "GENDER";
 	gotoxy(x + width / 6 + 60, y + 9);
@@ -434,6 +434,7 @@ void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
 		delete data;
 		clearReaderLine(y);
 		displayReader(p, (y - 3) / 2);
+		ShowCur(false);
 		return;
 	}
 	gotoxy(70, y);
@@ -443,6 +444,7 @@ void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
 		delete data;
 		clearReaderLine(y);
 		displayReader(p, (y - 3) / 2);
+		ShowCur(false);
 		return;
 	}
 	gotoxy(90, y);
@@ -452,17 +454,18 @@ void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
 		delete data;
 		clearReaderLine(y);
 		displayReader(p, (y - 3) / 2);
+		ShowCur(false);
 		return;
 	}
 	gotoxy(105, y);
-	data->CardStatus = EnterStatus(p->data.CardStatus);
+/*	data->CardStatus = EnterStatus(p->data.CardStatus);
 	if (data->CardStatus == -1)
 	{
 		delete data;
 		clearReaderLine(y);
 		displayReader(p, (y - 3) / 2);
 		return;
-	}
+	}*/
 	p->data = *data;
 
 	clearReaderLine(y);
@@ -566,9 +569,9 @@ void ReaderTable(nodeRC *tmp[], int n, int count)
 	gotoxy(17, 1);
 	cout << "ID";
 	gotoxy(45, 1);
-	cout << "FIRST NAME";
-	gotoxy(72, 1);
 	cout << "LAST NAME";
+	gotoxy(72, 1);
+	cout << "FIRST NAME";
 	gotoxy(90, 1);
 	cout << "GENDER";
 	gotoxy(108, 1);
@@ -1099,7 +1102,7 @@ void controlReaderTable(ReaderList &rl, nodeRC *tmp[], int count)//cac nut chuc 
 			else
 			{
 				gotoxy(122, 40);//edit
-				cout << "                              ";
+				cout << "                                  ";
 				SettingReaderMode(rl, tmp, count);
 				sortbyID(tmp, 0);
 				clearReaderTable();
@@ -3048,9 +3051,9 @@ void displayOverdue(nodeRC *tmp[], int OverdueArr[], int size, int count)//in ra
 	gotoxy(17, 1);
 	cout << "ID";
 	gotoxy(45, 1);
-	cout << "FIRST NAME";
-	gotoxy(72, 1);
 	cout << "LAST NAME";
+	gotoxy(72, 1);
+	cout << "FIRST NAME";
 	gotoxy(90, 1);
 	cout << "GENDER";
 	gotoxy(108, 1);
