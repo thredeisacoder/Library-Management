@@ -999,6 +999,7 @@ int loadFileTOC(TableOfContentList& tl)
 		getline(f, l);
 		p->ISBN = l;
 		getline(f, l);
+		if (l == "") break;
 		p->BookName = l;
 		getline(f, l);
 		if (l == "") break;

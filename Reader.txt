@@ -1,6 +1,6 @@
-0020
-Ta Quang
-An
+0025
+Do Minh Bao
+Huy
 MALE
 1
 0
@@ -20,7 +20,7 @@ MALE
 Nguyen Doan Cong
 Tien
 MALE
-1
+0
 1
 B002_06
 29
@@ -138,6 +138,12 @@ Hy
 MALE
 1
 0
+0021
+Dang Nhat
+Nam
+MALE
+1
+0
 0017
 Nguyen Vu
 Chinh
@@ -174,45 +180,9 @@ Hung
 MALE
 1
 0
-0033
-Cao Duy
-Thai
-MALE
-1
-3
-B003_05
-6
-12
-2023
-B006_04
-6
-12
-2023
-It03_04
-6
-12
-2023
-0028
-Nguyen Bao
-Long
-MALE
-1
-0
-0025
-Do Minh Bao
-Huy
-MALE
-1
-0
-0022
-Nguyen Thanh
-Tam
-MALE
-1
-0
-0021
-Dang Nhat
-Nam
+0020
+Ta Quang
+An
 MALE
 1
 0
@@ -222,9 +192,33 @@ Long
 MALE
 1
 0
+0022
+Nguyen Thanh
+Tam
+MALE
+1
+0
 0024
 Sy
 Hung
+MALE
+1
+0
+0035
+Nguyen Van
+Toan
+MALE
+1
+0
+0031
+Lam Thien
+Tan
+MALE
+1
+0
+0028
+Nguyen Bao
+Long
 MALE
 1
 0
@@ -240,12 +234,6 @@ Hau
 MALE
 1
 0
-0031
-Lam Thien
-Tan
-MALE
-1
-0
 0030
 Hang Gia
 Thinh
@@ -258,27 +246,27 @@ Tai
 MALE
 1
 0
+0033
+Cao Duy
+Thai
+MALE
+0
+3
+B003_05
+6
+12
+2023
+B006_04
+6
+12
+2023
+It03_04
+6
+12
+2023
 0032
 Huynh Huu
 Tri
-MALE
-1
-0
-0038
-Luong Truong
-Dai
-MALE
-1
-0
-0036
-Nguyen Vu Viet
-Cuong
-MALE
-1
-0
-0035
-Nguyen Van
-Toan
 MALE
 1
 0
@@ -288,15 +276,21 @@ Thai
 MALE
 1
 0
+0038
+Luong Truong
+Dai
+MALE
+1
+0
 0037
 Ho Van
 Duong
 MALE
 1
 0
-0041
-Uong
-Son
+0036
+Nguyen Vu Viet
+Cuong
 MALE
 1
 0
@@ -316,17 +310,23 @@ MALE
 Dinh Tri
 Tai
 MALE
-1
+0
 1
 B007_03
 29
 11
 2023
+0041
+Uong
+Son
+MALE
+1
+0
 0043
 Cao Duy
 Thai
 MALE
-1
+0
 1
 Kn02_03
 29

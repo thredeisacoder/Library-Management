@@ -616,7 +616,8 @@ void watchingReaderMode(nodeRC *tmp[], int n)//hien bang reader va cac chuc nang
 		char c = _getch();
 		if (c == 27) // esc
 		{
-			break;
+			system("cls");
+			return;
 		}
 		else if (c == 75) /// left
 		{
@@ -684,8 +685,11 @@ void watchingReaderMode(nodeRC *tmp[], int n)//hien bang reader va cac chuc nang
 				}
 				system("cls");
 				watchingReaderMode(t, size);
-				break;
+				size = n;
+				system("cls");
+				return;
 			}
+			watchingReaderMode(tmp, n);
 		}
 		else
 			continue;
@@ -2594,7 +2598,7 @@ void returnMode(nodeRC *p, TableOfContentList &tl)//che do tra sach
 
 void lostBook(TableOfContentList& tl,nodeBAR* b,string isbn)//mat sach 
 {
-	nodeB* tmp;
+	nodeB* tmp = nullptr;
 	for(int i=0;i<tl.size;i++)
 	{
 		if(tl.ds[i]->ISBN==isbn)
@@ -3149,7 +3153,6 @@ void OverdueReader(ReaderList rl)//che do xem danh sach qua han
 
 void Statistic(ReaderList rl, TableOfContentList tl)//chuc nang thong ke
 {
-
 	Option(70, 10, 24, 4, "TOP 10 BORROWED BOOKS");
 	Option(70, 14, 24, 4, "OVERDUE READER LIST");
 
@@ -3342,11 +3345,12 @@ void Control(ReaderList &rl, TableOfContentList &tl)
 int main()
 {
 	SetBGColor(0);
-	resizeConsole(1300, 750);//thay doi kich thuong console
+	//resizeConsole(1300, 750);//thay doi kich thuong console
+	fullscreen();
 	ReaderList rl;
 	TableOfContentList tl;
 	DisableSelection();//tat khong cho boi den
-	DisableCtrButton(0, 1, 1);//tat chuc nang phong to va an console
+	//DisableCtrButton(0, 1, 1);//tat chuc nang phong to va an console
 	DisableResizeWindow();//tat khong cho thay doi kich thuoc console
 	ShowCur(false);//an con tro
 	loading();//man hinh loading
