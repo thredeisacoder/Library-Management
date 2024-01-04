@@ -324,17 +324,19 @@ void displayReader(nodeRC *p, int y) // in doc gia tren do cao y
 	else if (s == 0)
 		cout << "0 (locked)";
 }
-void sortbyID(nodeRC *tmp[], int n)//sap xep theo ID
+void sortbyID(nodeRC *tmp[], int n)//sap xep theo ID(insertion sort)
 {
-	for (int i = 0; i < n; i++)
+	for (int i = 1; i < n; i++)
 	{
-		for (int j = i + 1; j < n; j++)
+		nodeRC* t=tmp[i];
+		int j=i-1;
+		while(j>=0)
 		{
-			if (tmp[i]->data.ID > tmp[j]->data.ID)
-			{
-				swap(tmp[i], tmp[j]);
-			}
+			if(tmp[j]->data.ID<t->data.ID) break;
+			tmp[j+1]=tmp[j];
+			j--;
 		}
+		tmp[j+1]=t;
 	}
 }
 // nhap doc gia moi
@@ -474,22 +476,20 @@ void tableSettingRC(nodeRC *p, int y) // chinh sua thong tin doc gia
 	Sleep(1000);
 }
 // sap xep theo ten
-void sortbyname(nodeRC *tmp[], int n)//sap xep theo ten (bubble sort)
+void sortbyname(nodeRC *tmp[], int n)//sap xep theo ten (insertion sort)
 {
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 1; i < n ; i++)
 	{
-		int minIndex = i;
-		for (int j = i + 1; j < n; j++)
-		{
-			if (tmp[j]->data.LastName + tmp[j]->data.FirstName < tmp[minIndex]->data.LastName + tmp[minIndex]->data.FirstName)
+		nodeRC* t=tmp[i];
+		int j=i-1;
+
+			while ((j>=0))
 			{
-				minIndex = j;
+				if((tmp[j]->data.LastName + tmp[j]->data.FirstName < t->data.LastName + t->data.FirstName)) break;
+				tmp[j+1]=tmp[j];
+				j--;
 			}
-		}
-		if (minIndex != i)
-		{
-			std::swap(tmp[i], tmp[minIndex]);
-		}
+		tmp[j+1]=t;
 	}
 }
 // duyet danh sach doc gia
