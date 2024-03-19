@@ -26,4 +26,4 @@ Chương trình có các chức năng sau:
 <hr  width="100%" align="center" />
 My partner: <a href="https://github.com/hungphitran">hungphitran</a>
 Deadline: 15/12/2023
-<hr  width="100%" align="center" />
+<hr  width="0%" align="center" />
