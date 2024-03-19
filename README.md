@@ -25,5 +25,5 @@ Chương trình có các chức năng sau:
 <img src="Lib.jpg" />
 <hr  width="100%" align="center" />
 My partner: <a href="https://github.com/hungphitran">hungphitran</a>
-<hr  width="100%" align="center" />
 Deadline: 15/12/2023
+<hr  width="100%" align="center" />
