@@ -24,5 +24,5 @@ Chương trình có các chức năng sau:
 <h2>Mindmap: </h2>
 <img src="Lib.jpg" />
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-My partner: [hungphitran](https://github.com/hungphitran)
+My partner: <a href="https://github.com/hungphitran">hungphitran</a>
 Deadline: 15/12/2023
