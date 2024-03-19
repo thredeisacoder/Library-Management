@@ -24,8 +24,8 @@ Chương trình có các chức năng sau:
 <h2>Mindmap: </h2>
 <img src="Lib.jpg" />
 <hr  width="100%" align="center" />
-My partner: <a href="https://github.com/hungphitran">hungphitran</a>
-Score: 8.5/10
+<br> My partner: <a href="https://github.com/hungphitran">hungphitran</a> </br>
+<br> Score: 8.5/10 </br>
 <hr  width="100%" align="center" />
 <br> Deadline: 15/12/2023 </br>
 
