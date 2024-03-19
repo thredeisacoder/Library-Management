@@ -23,6 +23,7 @@ Chương trình có các chức năng sau:
 <hr  width="100%" align="center" />
 <h2>Mindmap: </h2>
 <img src="Lib.jpg" />
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<hr  width="100%" align="center" />
 My partner: <a href="https://github.com/hungphitran">hungphitran</a>
+<hr  width="100%" align="center" />
 Deadline: 15/12/2023
